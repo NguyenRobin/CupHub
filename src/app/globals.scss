@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  // width: 100vw;
+  width: 100%;
+  min-height: 100vh;
+  // overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  // align-items: center;
+  background-color: grey;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

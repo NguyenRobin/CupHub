@@ -1,0 +1,19 @@
+.modal {
+  display: none;
+  position: absolute;
+  /* Centrera modalen inom wrapper */
+  // height: 100%;
+  width: 100%;
+  z-index: 999;
+}
+
+.modal.display {
+  display: flex;
+}
+
+.modal-content {
+  background-color: #fff;
+  position: fixed;
+  width: 32rem; //! PROBLEM. THEN SKA ANPASSA SIG AUTOMATISKT
+  height: 100%;
+}
