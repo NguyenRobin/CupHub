@@ -20,59 +20,73 @@ const dummyData = [
     icon: <GoTrophy className="icon" />,
     title: "Turneringsskapare",
     content:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro, minima inventore nesciunt eos unde cum ab quas dignissimos alias exercitationem delectus neque cupiditate consectetur repellendus ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus et! Nobis deleniti tempora dignissimos sequi ratione consectetur fugit, at, commodi ex beatae consequatur.",
+      "Vår turneringsskapare låter dig skapa och hantera turneringar med några få klick. Anpassa format, regler och deltagarlistor enkelt och håll koll på all nödvändig information på ett ställe. Med ett användarvänligt gränssnitt blir det enkelt att organisera professionella turneringar.",
   },
   {
     id: "team-administration",
     icon: <MdOutlineAdminPanelSettings className="icon" />,
     title: "Lagadministration",
     content:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro, minima inventore nesciunt eos unde cum ab quas dignissimos alias exercitationem delectus neque cupiditate consectetur repellendus ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus et! Nobis deleniti tempora dignissimos sequi ratione consectetur fugit, at, commodi ex beatae consequatur.",
+      "Hantera lagens information effektivt med vår lagadministrationsfunktion. Du kan enkelt lägga till, ta bort och redigera spelare och personal. Håll koll på kontaktinformation, betalningsstatus och andra viktiga detaljer för varje lag.",
   },
   {
     id: "players-information",
     icon: <IoIosContact className="icon" />,
     title: "Spelinformation",
     content:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro, minima inventore nesciunt eos unde cum ab quas dignissimos alias exercitationem delectus neque cupiditate consectetur repellendus ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus et! Nobis deleniti tempora dignissimos sequi ratione consectetur fugit, at, commodi ex beatae consequatur.",
+      "Ge spelare och fans all nödvändig spelinformation direkt i appen. Från matchtider och platser till domarlistor och resultat - allt är lättillgängligt. Med pushnotiser håller alla sig uppdaterade med de senaste ändringarna.",
   },
   {
     id: "schedule",
     icon: <TbTournament className="icon" />,
-    title: "Spelschemagenerering",
+    title: "Lottning av spelschema",
     content:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro, minima inventore nesciunt eos unde cum ab quas dignissimos alias exercitationem delectus neque cupiditate consectetur repellendus ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus et! Nobis deleniti tempora dignissimos sequi ratione consectetur fugit, at, commodi ex beatae consequatur.",
+      "Slipp manuella misstag och spara tid med vår spelschemagenerator. Den automatiserar schemaläggningen baserat på dina inställningar och förutsättningar, vilket gör det enkelt att skapa rättvisa och balanserade spelscheman.",
   },
   {
     id: "live-tv",
     icon: <MdLiveTv className="icon" />,
     title: "Liveresultat",
     content:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro, minima inventore nesciunt eos unde cum ab quas dignissimos alias exercitationem delectus neque cupiditate consectetur repellendus ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus et! Nobis deleniti tempora dignissimos sequi ratione consectetur fugit, at, commodi ex beatae consequatur.",
+      "Håll engagemanget uppe med liveresultat och uppdateringar i realtid. Följ matchens utveckling direkt i appen och ge fansen en upplevelse som om de vore på plats.",
   },
   {
     id: "payments",
     icon: <MdOutlinePayment className="icon" />,
     title: "Betalningshantering",
     content:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro, minima inventore nesciunt eos unde cum ab quas dignissimos alias exercitationem delectus neque cupiditate consectetur repellendus ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus et! Nobis deleniti tempora dignissimos sequi ratione consectetur fugit, at, commodi ex beatae consequatur.",
+      "Hantera alla betalningar smidigt och säkert. Vår betalningshanteringsfunktion gör det enkelt att ta emot betalningar för turneringsavgifter, lagavgifter och annat. Du får en tydlig översikt över alla transaktioner och kan enkelt följa upp obetalda fakturor.",
   },
   {
     id: "communication",
     icon: <GrContact className="icon" />,
     title: "Kommunikation",
     content:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro, minima inventore nesciunt eos unde cum ab quas dignissimos alias exercitationem delectus neque cupiditate consectetur repellendus ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus et! Nobis deleniti tempora dignissimos sequi ratione consectetur fugit, at, commodi ex beatae consequatur.",
+      "Förbättra kommunikationen med våra verktyg för meddelanden och notifikationer. Skicka viktiga meddelanden till hela laget eller specifika grupper och säkerställ att ingen missar viktig information. Med inbyggd chatt och e-postintegration blir kommunikationen smidigare än någonsin.",
   },
 ];
 
-export default function Home() {
-  const [isScrolling, setIsScrolling] = useState<string | null>(null);
+export default function HomePage() {
+  const [scrollToElement, setScrollToElement] = useState<string | null>(null);
 
-  const handleToggle = (title: string) => {
-    setIsScrolling(title);
-  };
-  console.log(isScrolling);
+  function handleClick(event: React.SyntheticEvent) {
+    event.preventDefault();
+    const id = event.currentTarget.id;
+    const element = document.getElementById(String(id)) as HTMLElement;
+    const yOffset = -200;
+    const y = element?.getBoundingClientRect()?.top + window.scrollY + yOffset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+    setScrollToElement(id);
+  }
+
+  function test(id: string) {
+    setScrollToElement(id);
+    const element = document.getElementById(String(id)) as HTMLElement;
+    const yOffset = -200;
+    const y = element?.getBoundingClientRect()?.top + window.scrollY + yOffset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }
+
   return (
     <section className="wrapper">
       <Header />
@@ -111,243 +125,54 @@ export default function Home() {
               klick.
             </p>
             <ul>
-              {dummyData.map((section) => (
-                <li key={section.id}>
-                  <Link
-                    href={`#${section.id}`}
-                    onClick={() => handleToggle(section.id)}
-                  >
-                    {section.icon}
-                    {section.title}
-                  </Link>
+              {dummyData.map((feature) => (
+                <li key={feature.id} onClick={() => test(feature.id)}>
+                  <button>
+                    {feature.icon}
+                    {feature.title}
+                  </button>
                 </li>
               ))}
-              <li>
-                {/* <GoTrophy className="icon" /> */}
-                <Link
-                  href="#tournament"
-                  onClick={() => handleToggle("tournament")}
-                >
-                  <GoTrophy className="icon" />
-                  Turneringsskapare
-                </Link>
-                {/* Turneringsskapare */}
-              </li>
-              <li>
-                <Link
-                  href="#team-administration"
-                  onClick={() => handleToggle("teamAdministration")}
-                >
-                  <MdOutlineAdminPanelSettings className="icon" />
-                  Lagadministration
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#players-information"
-                  onClick={() => handleToggle("playersInformation")}
-                >
-                  <IoIosContact className="icon" />
-                  Spelinformation
-                </Link>
-              </li>
-
-              <li>
-                <Link href="#schedule" onClick={() => handleToggle("schedule")}>
-                  <TbTournament className="icon" />
-                  Spelschemagenerering
-                </Link>
-              </li>
-              <li>
-                <Link href="#live-tv" onClick={() => handleToggle("liveTV")}>
-                  <MdLiveTv className="icon" />
-                  Liveresultat
-                </Link>
-              </li>
-              <li>
-                <Link href="#payments" onClick={() => handleToggle("payments")}>
-                  <MdOutlinePayment className="icon" />
-                  Betalningshantering
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#communication"
-                  onClick={() => handleToggle("communication")}
-                >
-                  <GrContact className="icon" />
-                  Kommunikation
-                </Link>
-              </li>
             </ul>
           </section>
         </section>
 
+        {/* NEW SECTION */}
         <section className="feature-container">
           {dummyData.map((feature) => (
             <section
               key={feature.id}
-              className={`feature-container_feature ${
-                isScrolling === feature.id ? "full" : ""
-              }`}
+              className={`feature-container_feature
+                ${scrollToElement === feature.id ? "scroll-to-view" : ""}`}
               id={feature.id}
+              onClick={handleClick}
             >
-              {feature.icon}
+              <i className="icon">{feature.icon}</i>
+
               <section>
                 <h2>{feature.title}</h2>
                 <p>{feature.content}</p>
+                {scrollToElement === feature.id && (
+                  <Link href={feature.id}>Läs mer</Link>
+                )}
               </section>
             </section>
           ))}
-
-          {/* <section
-            className={`feature-container_feature ${
-              isScrolling.tournament ? "full" : ""
-            }`}
-            id="tournament"
-          >
-            <GoTrophy className="feature-container_feature-icon" />
-
-            <section>
-              <h2>Turneringsskapare</h2>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro,
-                minima inventore nesciunt eos unde cum ab quas dignissimos alias
-                exercitationem delectus neque cupiditate consectetur repellendus
-                ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus
-                et! Nobis deleniti tempora dignissimos sequi ratione consectetur
-                fugit, at, commodi ex beatae consequatur.
-              </p>
-            </section>
-          </section>
-
-          <section
-            // className="feature-container_feature"
-            className={`feature-container_feature ${
-              isScrolling.teamAdministration ? "full" : ""
-            }`}
-            id="team-administration"
-          >
-            <MdOutlineAdminPanelSettings className="feature-container_feature-icon" />
-            <section>
-              <h2>Lagadministration</h2>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro,
-                minima inventore nesciunt eos unde cum ab quas dignissimos alias
-                exercitationem delectus neque cupiditate consectetur repellendus
-                ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus
-                et! Nobis deleniti tempora dignissimos sequi ratione consectetur
-                fugit, at, commodi ex beatae consequatur.
-              </p>
-            </section>
-          </section>
-
-          <section
-            // className="feature-container_feature"
-            className={`feature-container_feature ${
-              isScrolling.playersInformation ? "full" : ""
-            }`}
-            id="players-information"
-          >
-            <IoIosContact className="feature-container_feature-icon" />
-            <section>
-              <h2>Spelinformation</h2>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro,
-                minima inventore nesciunt eos unde cum ab quas dignissimos alias
-                exercitationem delectus neque cupiditate consectetur repellendus
-                ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus
-                et! Nobis deleniti tempora dignissimos sequi ratione consectetur
-                fugit, at, commodi ex beatae consequatur.
-              </p>
-            </section>
-          </section>
-
-          <section
-            //  className="feature-container_feature"
-            className={`feature-container_feature ${
-              isScrolling.schedule ? "full" : ""
-            }`}
-            id="schedule"
-          >
-            <TbTournament className="feature-container_feature-icon" />
-            <section>
-              <h2>Spelschemagenerering</h2>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro,
-                minima inventore nesciunt eos unde cum ab quas dignissimos alias
-                exercitationem delectus neque cupiditate consectetur repellendus
-                ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus
-                et! Nobis deleniti tempora dignissimos sequi ratione consectetur
-                fugit, at, commodi ex beatae consequatur.
-              </p>
-            </section>
-          </section>
-
-          <section
-            // className="feature-container_feature"
-            className={`feature-container_feature ${
-              isScrolling.liveTV ? "full" : ""
-            }`}
-            id="live-tv"
-          >
-            <MdLiveTv className="feature-container_feature-icon" />
-            <section>
-              <h2>Liveresultat</h2>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro,
-                minima inventore nesciunt eos unde cum ab quas dignissimos alias
-                exercitationem delectus neque cupiditate consectetur repellendus
-                ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus
-                et! Nobis deleniti tempora dignissimos sequi ratione consectetur
-                fugit, at, commodi ex beatae consequatur.
-              </p>
-            </section>
-          </section>
-
-          <section
-            // className="feature-container_feature"
-            className={`feature-container_feature ${
-              isScrolling.payments ? "full" : ""
-            }`}
-            id="payments"
-          >
-            <MdOutlinePayment className="feature-container_feature-icon" />
-            <section>
-              <h2>Betalningshantering</h2>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro,
-                minima inventore nesciunt eos unde cum ab quas dignissimos alias
-                exercitationem delectus neque cupiditate consectetur repellendus
-                ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus
-                et! Nobis deleniti tempora dignissimos sequi ratione consectetur
-                fugit, at, commodi ex beatae consequatur.
-              </p>
-            </section>
-          </section>
-
-          <section
-            // className="feature-container_feature"
-            className={`feature-container_feature ${
-              isScrolling.communication ? "full" : ""
-            }`}
-            id="communication"
-          >
-            <GrContact className="feature-container_feature-icon" />
-            <section>
-              <h2>Kommunikation</h2>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro,
-                minima inventore nesciunt eos unde cum ab quas dignissimos alias
-                exercitationem delectus neque cupiditate consectetur repellendus
-                ipsam magni enim eveniet nemo harum vel, nisi ut nobis, ducimus
-                et! Nobis deleniti tempora dignissimos sequi ratione consectetur
-                fugit, at, commodi ex beatae consequatur.
-              </p>
-            </section>
-          </section> */}
         </section>
 
+        {/* NEW SECTION */}
+        <section className="pricing-container">
+          <section className="pricing-container">
+            <h2>Välj den Perfekta Planen för Din Organisation</h2>
+            <p>
+              Våra prisplaner erbjuder något för alla, från grundläggande
+              funktioner för små team till avancerade verktyg för stora
+              organisationer. Hitta den plan som passar just dig!
+            </p>
+          </section>
+        </section>
+
+        {/* NEW SECTION */}
         <section className="testimonials">
           <section className="testimonials-slide">
             <section className="slide">
@@ -429,6 +254,7 @@ export default function Home() {
         </section>
       </main>
 
+      {/* FOOTER */}
       <footer className="footer-container">
         <section>
           <h3>Om Oss</h3>

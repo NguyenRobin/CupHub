@@ -120,21 +120,25 @@
         align-items: center;
         // justify-content: center;
         gap: 1rem;
-        color: #fff;
 
-        a {
+        button {
+          background-color: transparent;
           display: flex;
+          color: #fff;
+          border: none;
           // justify-content: flex-start;
           align-items: center;
           gap: 1rem;
           padding: 2rem;
           width: 100%;
+          border-radius: 5rem;
+          transition: 0.2s;
         }
 
-        a:hover {
-          background-color: black;
+        button:hover {
+          background-color: rgba(0, 0, 0, 0.552);
           cursor: pointer;
-          border-radius: 5rem;
+
           // padding: 2rem;
         }
         .icon {
@@ -163,8 +167,13 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    padding: 2rem;
+    background-color: rgb(245, 245, 247);
+    border-radius: 1rem;
+    border: 1px solid green;
+    cursor: pointer;
 
-    &-icon {
+    .icon {
       color: green;
       font-size: $font-size-5xl;
     }
@@ -174,15 +183,28 @@
       justify-content: center;
       align-items: center;
       gap: 1rem;
+
+      p {
+        font-size: $font-size-sm;
+      }
+
+      a {
+        background-color: #008000;
+        padding: 1rem 1.5rem;
+        color: #fff;
+        border-radius: 5rem;
+      }
     }
   }
 }
 
-.feature-container_feature.full {
-  height: 50vh;
+.feature-container_feature.scroll-to-view {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  // height: 100vh;
+  border: none;
+  background-color: #fff;
 }
 
 @keyframes slide {
@@ -192,6 +214,11 @@
   to {
     transform: translateX(-100%);
   }
+}
+
+.pricing-container {
+  background-color: #008000;
+  padding: 2.5rem;
 }
 
 .testimonials {
@@ -231,7 +258,6 @@
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto;
   gap: 2.5rem;
-
   section {
     display: flex;
     flex-direction: column;
@@ -247,7 +273,8 @@
       gap: 0.5rem;
       color: #fff;
       li {
-        font-size: $font-size-sm;
+        font-size: $font-size-xs;
+        color: #cfcece;
       }
     }
   }
