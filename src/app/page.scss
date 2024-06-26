@@ -2,7 +2,7 @@
 @import "../styles/typography.scss";
 
 .wrapper {
-  width: 32rem;
+  // width: 32rem;
   // border: 1px solid red;
   // height: 100%;
   background-color: #fff;
@@ -18,7 +18,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   padding: 8rem;
-
+  width: 100%;
   &__info {
     display: flex;
     flex-direction: column;
@@ -54,6 +54,8 @@
 }
 
 .idea-container {
+  width: 100%;
+
   section {
     display: flex;
     flex-direction: column;
@@ -91,6 +93,7 @@
 .features-container {
   background-color: green;
   padding: 2.5rem;
+  width: 100%;
   section {
     display: flex;
     flex-direction: column;
@@ -161,6 +164,7 @@
   flex-direction: column;
   align-items: center;
   gap: 2.5rem;
+  width: 100%;
 
   &_feature {
     display: flex;
@@ -172,6 +176,7 @@
     border-radius: 1rem;
     border: 1px solid green;
     cursor: pointer;
+    width: 100%;
 
     .icon {
       color: green;
@@ -207,18 +212,87 @@
   background-color: #fff;
 }
 
+.pricing-container {
+  background-color: #008000;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  &_pricing-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    h2,
+    p {
+      text-align: center;
+      color: #fff;
+    }
+    h2 {
+      letter-spacing: $spacing-xs;
+    }
+  }
+
+  .price-card {
+    section {
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.5rem;
+      border-radius: 1rem;
+
+      section {
+        display: flex;
+
+        h4 {
+          font-size: $font-size-lg;
+          color: #818181;
+        }
+        h2 {
+          font-size: $font-size-2xl;
+        }
+      }
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        list-style: none;
+        margin-bottom: 2rem;
+
+        li {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          .check-icon {
+            font-size: $font-size-lg;
+            color: #008000;
+          }
+        }
+      }
+
+      button {
+        background-color: #008000;
+        color: #fff;
+        padding: 1rem;
+        border: none;
+        cursor: pointer;
+        border-radius: 0.5rem;
+        width: 50%;
+      }
+    }
+  }
+}
+
 @keyframes slide {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-100%);
+    transform: translateX(calc(-100% - 3.5rem));
   }
-}
-
-.pricing-container {
-  background-color: #008000;
-  padding: 2.5rem;
 }
 
 .testimonials {
@@ -228,6 +302,7 @@
   // position: relative;
   padding: 2rem;
   display: flex;
+  gap: 3.5rem;
 }
 
 .testimonials:hover .testimonials-slide {
@@ -238,7 +313,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 3.5rem;
   animation: 10s slide infinite linear;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+
+    p {
+      font-size: $font-size-sm;
+    }
+  }
 }
 
 .slide {
@@ -248,7 +336,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 3.5rem;
 }
 
 .footer-container {
@@ -258,6 +346,8 @@
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto;
   gap: 2.5rem;
+  width: 100%;
+
   section {
     display: flex;
     flex-direction: column;

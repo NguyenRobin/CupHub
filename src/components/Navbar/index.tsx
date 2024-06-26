@@ -40,8 +40,8 @@ function NavBar() {
       <label className="switch">
         <input type="checkbox" />
         <span className="slider round">
-          <GoSun className="theme-light_mode" />
           <IoMoonSharp className="theme-dark_mode" />
+          <GoSun className="theme-light_mode" />
         </span>
       </label>
     </nav>

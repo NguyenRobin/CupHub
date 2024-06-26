@@ -7,7 +7,7 @@ type Props = {
 
 function Modal({ children, isOpen }: Props) {
   return (
-    <div className={`modal ${isOpen ? "display" : ""}`}>
+    <div className={`modal ${isOpen ? "show" : ""}`}>
       <div className="modal-content">{children}</div>
     </div>
   );

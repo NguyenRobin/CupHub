@@ -11,9 +11,11 @@ import { IoIosContact } from "react-icons/io";
 import { MdLiveTv } from "react-icons/md";
 import { MdOutlinePayment } from "react-icons/md";
 import { GrContact } from "react-icons/gr";
+import { FaCheck } from "react-icons/fa6";
 import Link from "next/link";
 import { useState } from "react";
-
+import teamDummyData from "../dummyData/data.json";
+console.log(teamDummyData.teams);
 const dummyData = [
   {
     id: "tournament",
@@ -162,94 +164,158 @@ export default function HomePage() {
 
         {/* NEW SECTION */}
         <section className="pricing-container">
-          <section className="pricing-container">
-            <h2>Välj den Perfekta Planen för Din Organisation</h2>
+          <section className="pricing-container_pricing-title">
+            <h2>Välj den perfekta planen för er organisation</h2>
             <p>
               Våra prisplaner erbjuder något för alla, från grundläggande
               funktioner för små team till avancerade verktyg för stora
               organisationer. Hitta den plan som passar just dig!
             </p>
           </section>
+
+          <section className="price-card">
+            <section>
+              <section>
+                <h4>Gratis Plan</h4>
+                <h2>0 kr/månad</h2>
+                <h6></h6>
+              </section>
+              <ul>
+                <li>
+                  <FaCheck className="check-icon" /> Skapa en tunering
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> En användare
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Begränsad lagring
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Grundläggande support
+                </li>
+              </ul>
+              <button>Välj plan</button>
+            </section>
+          </section>
+
+          <section className="price-card">
+            <section>
+              <section>
+                <h4>Månads Plan</h4>
+                <h2>249 kr/Månad</h2>
+              </section>
+              <ul>
+                <li>
+                  <FaCheck className="check-icon" /> Full tillgång till alla
+                  funktioner
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Obegränsat antal användare
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Obegränsad lagring
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Prioriterad support
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Tillgång till gemenskap och
+                  forum
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Riskfri: 15 dagars
+                  återbetalningsperiod
+                </li>
+              </ul>
+              <button>Välj plan</button>
+            </section>
+          </section>
+
+          <section className="price-card">
+            <section>
+              <section>
+                <h4>Årlig Plan</h4>
+                <h2>1999 kr/År</h2>
+                <h6></h6>
+              </section>
+              <ul>
+                <li>
+                  <FaCheck className="check-icon" /> Spara 34% jämfört med den
+                  månatliga planen
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Full tillgång till alla
+                  funktioner
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Obegränsat antal användare
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Obegränsad lagring
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Prioriterad support
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Tillgång till gemenskap och
+                  forum
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Riskfri: 15 dagars
+                  återbetalningsperiod
+                </li>
+              </ul>
+              <button>Välj plan</button>
+            </section>
+          </section>
+
+          <section className="price-card">
+            <section>
+              <section>
+                <h4>Specifik funktion</h4>
+                <h2>250 kr/Funktion</h2>
+              </section>
+              <ul>
+                <li>
+                  <FaCheck className="check-icon" /> Köp specifika
+                  premiumfunktioner en gång
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Livstidstillgång till köpta
+                  funktioner
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Tillgång till relevanta
+                  uppdateringar
+                </li>
+                <li>
+                  <FaCheck className="check-icon" /> Riskfri: 15 dagars
+                  återbetalningsperiod
+                </li>
+              </ul>
+              <button>Välj plan</button>
+            </section>
+          </section>
         </section>
 
         {/* NEW SECTION */}
         <section className="testimonials">
           <section className="testimonials-slide">
-            <section className="slide">
-              <Image
-                src="https://upload.wikimedia.org/wikipedia/commons/8/84/IFK_Uppsala_logo.svg"
-                height={50}
-                width={50}
-                alt="ifk-uppsala-logo"
-              />
-              <p>Ifk Uppsala</p>
-            </section>
-            <section className="slide">
-              <Image
-                src="https://upload.wikimedia.org/wikipedia/commons/8/84/IFK_Uppsala_logo.svg"
-                height={50}
-                width={50}
-                alt="ifk-uppsala-logo"
-              />
-              <p>Sirius</p>
-            </section>
-            <section className="slide">
-              <Image
-                src="https://upload.wikimedia.org/wikipedia/commons/8/84/IFK_Uppsala_logo.svg"
-                height={50}
-                width={50}
-                alt="ifk-uppsala-logo"
-              />
-              <p>Dalkurd</p>
-            </section>
-            <section className="slide">
-              <Image
-                src="https://upload.wikimedia.org/wikipedia/commons/8/84/IFK_Uppsala_logo.svg"
-                height={50}
-                width={50}
-                alt="ifk-uppsala-logo"
-              />
-              <p>Ik Uppsala</p>
-            </section>
+            {teamDummyData.teams.map((team) => (
+              <section key={team.id}>
+                <Image src={team.logo} height={80} width={80} alt={team.name} />
+                <p>{team.name}</p>
+              </section>
+            ))}
           </section>
 
           <section className="testimonials-slide">
-            <section className="slide">
-              <Image
-                src="https://upload.wikimedia.org/wikipedia/commons/8/84/IFK_Uppsala_logo.svg"
-                height={50}
-                width={50}
-                alt="ifk-uppsala-logo"
-              />
-              <p>Ifk Uppsala</p>
-            </section>
-            <section className="slide">
-              <Image
-                src="https://upload.wikimedia.org/wikipedia/commons/8/84/IFK_Uppsala_logo.svg"
-                height={50}
-                width={50}
-                alt="ifk-uppsala-logo"
-              />
-              <p>Sirius</p>
-            </section>
-            <section className="slide">
-              <Image
-                src="https://upload.wikimedia.org/wikipedia/commons/8/84/IFK_Uppsala_logo.svg"
-                height={50}
-                width={50}
-                alt="ifk-uppsala-logo"
-              />
-              <p>Dalkurd</p>
-            </section>
-            <section className="slide">
-              <Image
-                src="https://upload.wikimedia.org/wikipedia/commons/8/84/IFK_Uppsala_logo.svg"
-                height={50}
-                width={50}
-                alt="ifk-uppsala-logo"
-              />
-              <p>Ik Uppsala</p>
-            </section>
+            {teamDummyData.teams.map((team) => (
+              <section key={team.id}>
+                <Image src={team.logo} height={80} width={80} alt={team.name} />
+                <p>{team.name}</p>
+              </section>
+            ))}
           </section>
         </section>
       </main>

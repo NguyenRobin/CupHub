@@ -1,0 +1,24 @@
+{
+  "teams": [
+    {
+      "id": 1,
+      "name": "Gamla Upsala SK",
+      "logo": "/Gamla_Upsala_SK_logo.svg.png"
+    },
+    {
+      "id": 2,
+      "name": "IK Uppsala",
+      "logo": "/ik_uppsala-logo.png"
+    },
+    {
+      "id": 3,
+      "name": "IK Sirius",
+      "logo": "/IK_Sirius_logo.svg.png"
+    },
+    {
+      "id": 4,
+      "name": "IFK Uppsala",
+      "logo": "/IFK_Uppsala_logo.svg.png"
+    }
+  ]
+}

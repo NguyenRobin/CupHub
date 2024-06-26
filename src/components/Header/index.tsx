@@ -7,6 +7,7 @@ import { useState } from "react";
 import Modal from "../Modal";
 import NavBar from "../Navbar";
 import { GiSoccerBall } from "react-icons/gi";
+
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
 

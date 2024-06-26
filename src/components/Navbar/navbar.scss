@@ -90,14 +90,14 @@
 input:not(:checked) + .slider {
   background-color: white;
   .theme-dark_mode {
-    color: #fff;
+    color: #000;
   }
 }
 
 input:checked + .slider {
   background-color: #000;
   .theme-light_mode {
-    color: #000;
+    color: #fff;
   }
 }
 
@@ -127,12 +127,14 @@ input:checked + .slider:before {
 .theme-light_mode {
   position: absolute;
   font-size: 2rem;
-  left: 12%;
-  color: #fff;
+  right: 12%;
+  color: #000;
 }
 
 .theme-dark_mode {
   position: absolute;
   font-size: 2rem;
+  left: 12%;
   right: 12%;
+  color: #fff;
 }
