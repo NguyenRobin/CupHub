@@ -303,7 +303,7 @@ export default function HomePage() {
           <section className="testimonials-slide">
             {teamDummyData.teams.map((team) => (
               <section key={team.id}>
-                <Image src={team.logo} height={80} width={80} alt={team.name} />
+                <Image src={team.logo} height={65} width={65} alt={team.name} />
                 <p>{team.name}</p>
               </section>
             ))}
@@ -312,7 +312,7 @@ export default function HomePage() {
           <section className="testimonials-slide">
             {teamDummyData.teams.map((team) => (
               <section key={team.id}>
-                <Image src={team.logo} height={80} width={80} alt={team.name} />
+                <Image src={team.logo} height={65} width={65} alt={team.name} />
                 <p>{team.name}</p>
               </section>
             ))}
