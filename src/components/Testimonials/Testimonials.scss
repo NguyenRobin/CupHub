@@ -1,0 +1,56 @@
+@import "../../styles/variables.scss";
+@import "../../styles/typography.scss";
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - 3.5rem));
+  }
+}
+
+.testimonials {
+  overflow: hidden;
+  background-color: $bg-color-secondary;
+
+  white-space: nowrap;
+  // position: relative;
+  padding: 2rem;
+  display: flex;
+  gap: 3.5rem;
+}
+
+.testimonials:hover .testimonials-slide {
+  animation-play-state: paused;
+}
+
+.testimonials-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3.5rem;
+  animation: 10s slide infinite linear;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+
+    p {
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+.slide {
+  margin: 0 4rem; // left & right
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3.5rem;
+}

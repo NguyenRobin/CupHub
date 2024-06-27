@@ -1,0 +1,32 @@
+@import "../../styles/variables.scss";
+@import "../../styles/typography.scss";
+
+.idea-container {
+  width: 100%;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 2.5rem;
+
+    h2 {
+      color: $txt-color-primary;
+      font-size: $font-size-3xl;
+    }
+    p {
+      font-size: $font-size-md;
+    }
+
+    button {
+      cursor: pointer;
+      border-radius: 5rem;
+      padding: 1.5rem;
+      background-color: $bg-color-primary;
+      color: $color-primary;
+      border: none;
+    }
+  }
+}

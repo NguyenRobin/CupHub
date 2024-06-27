@@ -1,0 +1,125 @@
+@import "../../styles/variables.scss";
+@import "../../styles/typography.scss";
+
+.features-container {
+  background-color: $bg-color-primary;
+  padding: 2.5rem;
+  width: 100%;
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    h2 {
+      color: $color-primary;
+      font-size: $font-size-3xl;
+      text-align: center;
+    }
+    p {
+      font-size: $font-size-lg;
+      text-align: center;
+      color: $color-primary;
+    }
+    ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      // gap: 0.8rem;
+      border: 1px solid $border-color-secondary;
+      border-radius: 1rem;
+      li {
+        list-style-type: none;
+        font-size: $font-size-lg;
+        display: flex;
+        align-items: center;
+        button {
+          background-color: transparent;
+          display: flex;
+          color: $color-primary;
+          border: none;
+          // justify-content: flex-start;
+          align-items: center;
+          gap: 1rem;
+          padding: 2rem;
+          width: 100%;
+          height: 100%;
+          transition: 0.2s;
+          font-size: $font-size-md;
+
+          span {
+            border-radius: 50%;
+            border: 1px solid #bababa;
+            padding: 1rem;
+            background-color: rgb(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+
+        button:hover {
+          background-color: rgba(0, 0, 0, 0.552);
+          cursor: pointer;
+        }
+        .icon {
+          font-size: $font-size-3xl;
+        }
+      }
+    }
+  }
+}
+
+.feature-container {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  width: 100%;
+
+  &_feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    background-color: $card-bg-primary;
+    border-radius: 1rem;
+    border: 1px solid $border-color-primary;
+    cursor: pointer;
+    width: 100%;
+
+    .icon {
+      color: $bg-color-primary;
+      font-size: $font-size-5xl;
+    }
+    section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+
+      p {
+        font-size: $font-size-sm;
+      }
+
+      a {
+        background-color: $bg-color-primary;
+        padding: 1rem 1.5rem;
+        color: $color-primary;
+        border-radius: 5rem;
+      }
+    }
+  }
+}
+
+.feature-container_feature.scroll-to-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: #fff;
+}
