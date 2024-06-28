@@ -1,3 +1,4 @@
+@use "../../styles/variables.scss" as *;
 @import "../../styles/typography.scss";
 
 .header {
@@ -9,7 +10,7 @@
   border-bottom: 1px solid green;
   position: sticky;
   top: 0;
-  background-color: #fff;
+  background-color: $bg-color-secondary;
   z-index: 999;
   &-logo {
     font-size: $font-size-md;
@@ -20,17 +21,25 @@
   &-icons {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 2rem;
 
     &__hamburger {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       border: 1.5px solid green;
       cursor: pointer;
       padding: 0.5rem;
       border-radius: 1rem;
+
+      &-icon {
+        cursor: pointer;
+      }
     }
   }
 }
 
-.icon {
-  cursor: pointer;
-}
+// .icon {
+//   cursor: pointer;
+// }

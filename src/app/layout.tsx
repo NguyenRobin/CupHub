@@ -1,7 +1,10 @@
+"use-client";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { Poppins } from "next/font/google";
+import { DarkModeProvider } from "@/context/DarkModeContext";
 import "./globals.scss";
 
 const inter = Poppins({
@@ -21,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <DarkModeProvider>{children}</DarkModeProvider>
+      </body>
     </html>
   );
 }

@@ -30,14 +30,14 @@ function Header() {
 
         <section className="header-icons">
           <section className="">
-            <IoIosSearch size={30} className="icon" />
+            <IoIosSearch size={30} className="header-icons__search-icon" />
           </section>
 
           <section className="header-icons__hamburger" onClick={handleOnClick}>
             {!isOpen ? (
-              <IoIosMenu size={30} className="icon" />
+              <IoIosMenu size={30} className="header-icons__hamburger-icon" />
             ) : (
-              <RxCross2 size={30} className="icon" />
+              <RxCross2 size={30} className="header-icons__hamburger-icon" />
             )}
           </section>
         </section>
