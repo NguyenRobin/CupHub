@@ -1,3 +1,5 @@
+@import "../../styles/dark.scss";
+
 .modal {
   display: none;
   position: absolute;
@@ -34,5 +36,11 @@
   }
   to {
     top: -100%;
+  }
+}
+
+.dark {
+  .modal-content {
+    background-color: $dark-bg-primary;
   }
 }

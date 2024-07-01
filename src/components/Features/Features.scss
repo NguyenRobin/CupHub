@@ -1,5 +1,6 @@
 @import "../../styles/variables.scss";
 @import "../../styles/typography.scss";
+@import "../../styles/dark.scss";
 
 .features-container {
   background-color: $bg-color-primary;
@@ -125,4 +126,33 @@
   justify-content: center;
   border: none;
   background-color: #fff;
+}
+
+.dark {
+  .features-container {
+    background-color: $dark-bg-primary;
+
+    section {
+      h2 {
+        // color: $txt-color-primary;
+      }
+      ul {
+        background-color: $dark-bg-secondary;
+      }
+    }
+  }
+
+  .feature-container {
+    background-color: $dark-bg-primary;
+
+    section {
+      background-color: $dark-bg-secondary;
+      h2 {
+        color: $dark-text-primary;
+      }
+      p {
+        color: $dark-text-secondary;
+      }
+    }
+  }
 }

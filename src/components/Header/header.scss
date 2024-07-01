@@ -1,5 +1,6 @@
 @use "../../styles/variables.scss" as *;
 @import "../../styles/typography.scss";
+@import "../../styles/dark.scss";
 
 .header {
   display: flex;
@@ -12,6 +13,7 @@
   top: 0;
   background-color: $bg-color-secondary;
   z-index: 999;
+
   &-logo {
     font-size: $font-size-md;
     cursor: pointer;
@@ -40,6 +42,11 @@
   }
 }
 
-// .icon {
-//   cursor: pointer;
-// }
+.dark {
+  .header {
+    background-color: $dark-bg-primary;
+  }
+  .header-icons {
+    color: $dark-icon-primary;
+  }
+}

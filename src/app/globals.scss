@@ -1,66 +1,80 @@
 @import "../../src/styles/variables.scss";
 
-:root {
-  &.dark {
-    background-color: #2d2d30;
-    main {
-      // background-color: #2d2d30;
-    }
-    .header {
-      background-color: #2d2d30;
-    }
+// :root {
+//   &.dark {
+//     background-color: #2d2d30;
+//     main {
+//       // background-color: #2d2d30;
+//     }
+//     .header {
+//       background-color: #2d2d30;
+//     }
 
-    .idea-container {
-      background-color: #2d2d30;
-      section {
-        background-color: #3e3e42;
-        color: #fff;
-      }
-      img {
-        background-color: rgb(255, 255, 255, 0.4);
-        width: 100%;
-        padding: 1rem;
-      }
-    }
-    .header-icons__search-icon,
-    .header-icons__hamburger-icon {
-      color: #fff;
-    }
-    .features-container {
-      background-color: #2d2d30;
+//     .idea-container {
+//       background-color: #2d2d30;
+//       section {
+//         background-color: #3e3e42;
+//         color: #fff;
+//         border: 1px solid #fff;
+//       }
+//       img {
+//         // background-color: rgb(255, 255, 255, 0.4);
+//         width: 100%;
+//         padding: 1rem;
+//       }
+//     }
+//     .header-icons__search-icon,
+//     .header-icons__hamburger-icon {
+//       color: #fff;
+//     }
+//     .features-container {
+//       background-color: #2d2d30;
 
-      section {
-        ul {
-          background-color: #3e3e42;
-        }
-      }
-    }
+//       section {
+//         ul {
+//           background-color: #3e3e42;
+//         }
+//       }
+//     }
 
-    .feature-container {
-      background-color: #2d2d30;
-    }
+//     .feature-container {
+//       background-color: #2d2d30;
 
-    .pricing-container {
-      background-color: #2d2d30;
-    }
+//       section {
+//         background-color: #3e3e42;
 
-    footer {
-      background-color: #2d2d30;
-    }
+//         section {
+//           h2 {
+//             color: #fff;
+//           }
+//           p {
+//             color: rgb(167, 167, 167);
+//           }
+//         }
+//       }
+//     }
 
-    .modal-content {
-      background-color: #2d2d30;
-      color: #fff;
-    }
+//     .pricing-container {
+//       background-color: #2d2d30;
+//     }
 
-    .nav-container {
-      li {
-        background-color: #3e3e42;
-        border-radius: 1rem;
-      }
-    }
-  }
-}
+//     footer {
+//       background-color: #2d2d30;
+//     }
+
+//     .modal-content {
+//       background-color: #2d2d30;
+//       color: #fff;
+//     }
+
+//     .nav-container {
+//       li {
+//         background-color: #3e3e42;
+//         border-radius: 1rem;
+//       }
+//     }
+//   }
+// }
 
 * {
   box-sizing: border-box;

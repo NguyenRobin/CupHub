@@ -1,5 +1,6 @@
 @import "../../styles/variables.scss";
 @import "../../styles/typography.scss";
+@import "../../styles/dark.scss";
 
 .footer-container {
   background-color: $bg-color-primary;
@@ -29,5 +30,11 @@
         color: #cfcece;
       }
     }
+  }
+}
+
+.dark {
+  .footer-container {
+    background-color: $dark-bg-primary;
   }
 }

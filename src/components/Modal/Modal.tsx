@@ -1,4 +1,4 @@
-import "./modal.scss";
+import "./Modal.scss";
 
 type Props = {
   children: React.ReactNode;

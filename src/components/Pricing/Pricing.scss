@@ -1,5 +1,6 @@
 @import "../../styles/variables.scss";
 @import "../../styles/typography.scss";
+@import "../../styles/dark.scss";
 
 .pricing-container {
   background-color: $bg-color-primary;
@@ -22,5 +23,11 @@
     h2 {
       letter-spacing: $spacing-xs;
     }
+  }
+}
+
+.dark {
+  .pricing-container {
+    background-color: $dark-bg-primary;
   }
 }

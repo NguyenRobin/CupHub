@@ -5,11 +5,11 @@ import { BsSend } from "react-icons/bs";
 import { GrGroup } from "react-icons/gr";
 import { IoMoonSharp } from "react-icons/io5";
 import { GoSun } from "react-icons/go";
-import { useTheme } from "@/context/DarkModeContext";
+import { useTheme } from "@/context/ThemeContext";
 import { useEffect, useState } from "react";
 
 function NavBar() {
-  const { isDarkMode, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const [isChecked, setIsChecked] = useState(false);
 
   function handleIsChecked() {
@@ -18,13 +18,11 @@ function NavBar() {
   }
 
   useEffect(() => {
-    if (isDarkMode) {
+    if (theme === "dark") {
       setIsChecked(true);
     }
-  }, [isDarkMode]);
+  }, [theme]);
 
-  console.log(isChecked);
-  console.log(isDarkMode);
   return (
     <nav className="nav-container">
       <ul>
