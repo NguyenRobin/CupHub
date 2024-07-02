@@ -7,6 +7,7 @@ import { useState } from "react";
 import Modal from "../Modal/Modal";
 import NavBar from "../Navbar/NavBar";
 import { GiSoccerBall } from "react-icons/gi";
+import { CiSearch } from "react-icons/ci";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +31,7 @@ function Header() {
 
         <section className="header-icons">
           <section className="">
-            <IoIosSearch size={30} className="header-icons__search-icon" />
+            <CiSearch size={30} className="header-icons__search-icon" />
           </section>
 
           <section className="header-icons__hamburger" onClick={handleOnClick}>

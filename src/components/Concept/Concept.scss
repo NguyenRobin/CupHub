@@ -12,23 +12,29 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    padding: 2.5rem;
     border-radius: 1rem;
-    h2 {
-      color: $txt-color-primary;
-      font-size: $font-size-3xl;
-    }
-    p {
-      font-size: $font-size-md;
-    }
 
-    button {
-      cursor: pointer;
-      border-radius: 5rem;
-      padding: 1.5rem;
-      background-color: $bg-color-primary;
-      color: $color-primary;
-      border: none;
+    .idea-text {
+      h2 {
+        color: $txt-color-primary;
+        font-size: $font-size-3xl;
+      }
+      p {
+        text-align: center;
+        font-size: $font-size-lg;
+      }
+    }
+    .idea-cta {
+      padding-bottom: 1.5rem;
+
+      button {
+        cursor: pointer;
+        border-radius: 5rem;
+        padding: 1.5rem;
+        background-color: $bg-color-primary;
+        color: $color-primary;
+        border: none;
+      }
     }
   }
 }
@@ -37,10 +43,15 @@
   .idea-container {
     background-color: $dark-bg-primary;
 
-    section {
+    .idea-text {
+      p {
+        color: $dark-text-primary;
+      }
+    }
+    .idea-cta {
       background-color: $dark-bg-secondary;
       border: 1px solid $dark-border-primary;
-
+      width: 100%;
       p {
         color: $dark-text-primary;
       }

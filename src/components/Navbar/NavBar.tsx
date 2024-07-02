@@ -3,10 +3,9 @@ import "./Navbar.scss";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsSend } from "react-icons/bs";
 import { GrGroup } from "react-icons/gr";
-import { IoMoonSharp } from "react-icons/io5";
-import { GoSun } from "react-icons/go";
 import { useTheme } from "@/context/ThemeContext";
 import { useEffect, useState } from "react";
+import SwitchMode from "../SwitchMode/SwitchMode";
 
 function NavBar() {
   const { theme, toggleTheme } = useTheme();
@@ -55,13 +54,7 @@ function NavBar() {
         </li>
       </ul>
 
-      <label className="switch">
-        <input type="checkbox" checked={isChecked} onChange={handleIsChecked} />
-        <span className="slider round">
-          <IoMoonSharp className="theme-dark_mode" />
-          <GoSun className="theme-light_mode" />
-        </span>
-      </label>
+      <SwitchMode isChecked={isChecked} onChange={handleIsChecked} />
     </nav>
   );
 }

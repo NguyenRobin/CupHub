@@ -1,0 +1,62 @@
+@use "../../../styles/variables.scss" as *;
+@import "../../../styles/typography.scss";
+@import "../../../styles/dark.scss";
+
+.nav-dashboard-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1.5rem;
+  border-bottom: 1px solid green;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: $bg-color-secondary;
+
+  &__admin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-size: $font-size-6xl;
+    cursor: pointer;
+
+    &-profile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid green;
+      border-radius: 1rem;
+      overflow: hidden;
+      img {
+        padding: 0.5rem;
+        border-radius: 1rem;
+        object-fit: contain;
+        // transform: scale(2.5);
+      }
+    }
+    svg {
+      padding: 0.5rem;
+      border: 1px solid green;
+      border-radius: 1rem;
+    }
+  }
+  &__icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    cursor: pointer;
+  }
+}
+
+.dark {
+  .nav-dashboard-container {
+    background-color: $dark-bg-primary;
+
+    svg {
+      color: $dark-border-primary;
+    }
+  }
+}

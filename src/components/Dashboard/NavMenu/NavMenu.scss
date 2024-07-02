@@ -1,0 +1,56 @@
+@import "../../../styles/typography.scss";
+@import "../../../styles/dark.scss";
+@import "../../../styles/variables.scss";
+
+.navMenu-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style-type: none;
+
+  &__category {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    cursor: pointer;
+
+    section {
+      display: flex;
+      gap: 1rem;
+
+      svg {
+        font-size: $font-size-3xl;
+      }
+      p {
+        font-size: $font-size-lg;
+      }
+
+      .arrow {
+        font-size: $font-size-2xl;
+        margin-left: auto;
+      }
+    }
+  }
+
+  &__subcategory {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-left: 4rem;
+
+    li {
+      font-size: $font-size-md;
+    }
+  }
+}
+
+.dark {
+  .navMenu-container__category {
+    background-color: $dark-bg-secondary;
+    border-radius: 1rem;
+    color: $dark-text-primary;
+  }
+}
