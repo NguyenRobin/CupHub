@@ -1,6 +1,5 @@
 import SwitchMode from "@/components/SwitchMode/SwitchMode";
 import { useTheme } from "@/context/ThemeContext";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { RxDashboard } from "react-icons/rx";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -11,21 +10,22 @@ import { GrChatOption } from "react-icons/gr";
 import { RiTeamLine } from "react-icons/ri";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { MdKeyboardArrowDown } from "react-icons/md";
-
+import Link from "next/link";
 import "./NavMenu.scss";
 
-function NavMenu() {
+type Props = {
+  closeModal: () => boolean;
+};
+
+function NavMenu({ closeModal }: Props) {
   const { theme, toggleTheme } = useTheme();
   const [isChecked, setIsChecked] = useState(false);
-
   const [showMenu, setShowMenu] = useState<string | null>(null);
 
   function handleIsChecked() {
     setIsChecked((prev) => !prev);
     toggleTheme();
   }
-
-  console.log(showMenu);
 
   useEffect(() => {
     if (theme === "dark") {
@@ -36,26 +36,36 @@ function NavMenu() {
   function handleOnClick(title: string) {
     setShowMenu((prev) => (prev === title ? null : title));
   }
+
   return (
     <section className="navMenu-container">
-      <section className="navMenu-container__category">
-        <section onClick={() => handleOnClick("dashboard")}>
+      <Link
+        href="/dashboard"
+        onClick={closeModal}
+        className={`navMenu-container__category ${
+          showMenu === "dashboard" ? "active" : ""
+        }`}
+      >
+        <section
+          onClick={() => handleOnClick("dashboard")}
+          style={{ alignSelf: "start" }}
+        >
           <RxDashboard />
           <p>Dashboard</p>
 
-          {showMenu !== "dashboard" ? (
+          {/* {showMenu !== "dashboard" ? (
             <MdKeyboardArrowRight className="arrow" />
           ) : (
             <MdKeyboardArrowDown className="arrow" />
-          )}
+          )} */}
         </section>
 
-        {showMenu === "dashboard" && (
+        {/* {showMenu === "dashboard" && (
           <ul className="navMenu-container__subcategory">
             <li>Översikt</li>
           </ul>
-        )}
-      </section>
+        )} */}
+      </Link>
 
       <section className="navMenu-container__category">
         <section onClick={() => handleOnClick("event")}>

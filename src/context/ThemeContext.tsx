@@ -22,7 +22,7 @@ export function ThemeProvider({ children }: Props) {
     setTheme((theme) => (theme === "light" ? "dark" : "light"));
     document.documentElement.classList.toggle("dark");
   }
-  console.log(theme);
+
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}

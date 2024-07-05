@@ -1,12 +1,12 @@
 "use client";
 import "./page.scss";
-import Header from "@/components/Header/Header";
-import HeroBanner from "@/components/HeroBanner/HeroBanner";
-import Concept from "@/components/Concept/Concept";
-import Features from "@/components/Features/Features";
-import Pricing from "@/components/Pricing/Pricing";
-import Testimonials from "@/components/Testimonials/Testimonials";
-import Footer from "@/components/Footer/Footer";
+import Header from "@/components/LandingPage/Nav/Nav";
+import HeroBanner from "@/components/LandingPage/HeroBanner/HeroBanner";
+import Concept from "@/components/LandingPage/Concept/Concept";
+import Features from "@/components/LandingPage/Features/Features";
+import Pricing from "@/components/LandingPage/Pricing/Pricing";
+import Testimonials from "@/components/LandingPage/Testimonials/Testimonials";
+import Footer from "@/components/LandingPage/Footer/Footer";
 
 export default function HomePage() {
   return (

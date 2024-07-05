@@ -1,0 +1,33 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/typography.scss";
+@import "../../../styles/dark.scss";
+
+.pricing-container {
+  background-color: $bg-color-primary;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  &_pricing-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    h2,
+    p {
+      text-align: center;
+      color: $color-primary;
+    }
+    h2 {
+      letter-spacing: $spacing-xs;
+    }
+  }
+}
+
+.dark {
+  .pricing-container {
+    background-color: $dark-bg-primary;
+  }
+}

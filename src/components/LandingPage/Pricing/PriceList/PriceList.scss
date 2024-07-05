@@ -1,0 +1,13 @@
+@import "../../../../styles/variables.scss";
+@import "../../../../styles/typography.scss";
+@import "../../../../styles/dark.scss";
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  .check-icon {
+    font-size: $font-size-lg;
+    color: #008000;
+  }
+}

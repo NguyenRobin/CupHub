@@ -1,0 +1,12 @@
+@import "../../styles//typography.scss";
+@import "../../styles/variables.scss";
+
+.dashboard {
+  position: relative;
+}
+
+.main-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}

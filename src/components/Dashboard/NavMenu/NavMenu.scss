@@ -11,6 +11,7 @@
   &__category {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 2rem;
     border-radius: 1rem;
     padding: 0.5rem;
@@ -18,8 +19,10 @@
 
     section {
       display: flex;
+      // justify-content: center;
+      // align-items: center;
       gap: 1rem;
-
+      width: 100%;
       svg {
         font-size: $font-size-3xl;
       }
@@ -53,4 +56,8 @@
     border-radius: 1rem;
     color: $dark-text-primary;
   }
+}
+
+.navMenu-container__category.active {
+  // background-color: $bg-color-primary;
 }

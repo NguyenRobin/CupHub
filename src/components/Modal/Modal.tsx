@@ -2,12 +2,12 @@ import "./Modal.scss";
 
 type Props = {
   children: React.ReactNode;
-  isOpen: boolean;
+  isActive: boolean;
 };
 
-function Modal({ children, isOpen }: Props) {
+function Modal({ children, isActive }: Props) {
   return (
-    <div className={`modal ${isOpen ? "show" : ""}`}>
+    <div className={`modal ${isActive ? "display" : ""}`}>
       <div className="modal-content">{children}</div>
     </div>
   );

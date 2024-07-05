@@ -11,16 +11,17 @@ import Modal from "@/components/Modal/Modal";
 import NavMenu from "../NavMenu/NavMenu";
 
 function NavDashBoard() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [showNavigation, setShowNavigation] = useState(false);
 
   function handleOnClick() {
-    setIsOpen((prev) => !prev);
+    setShowNavigation((prev) => !prev);
   }
+
   return (
     <>
       <nav className="nav-dashboard-container">
         <section className="nav-dashboard-container__admin">
-          <section className="nav-dashboard-container__admin-profile">
+          <section>
             <Image
               height={44}
               width={44}
@@ -28,8 +29,15 @@ function NavDashBoard() {
               alt="user profile image"
             />
           </section>
-          <IoIosNotificationsOutline />
-          <CiSearch />
+
+          <section className="notification">
+            <span>1</span>
+            <IoIosNotificationsOutline />
+          </section>
+
+          <section>
+            <CiSearch />
+          </section>
         </section>
 
         <section className="nav-dashboard-container__icons">
@@ -37,7 +45,7 @@ function NavDashBoard() {
             className="nav-dashboard-container__hamburger"
             onClick={handleOnClick}
           >
-            {!isOpen ? (
+            {!showNavigation ? (
               <IoIosMenu
                 size={30}
                 className="nav-dashboard-container__hamburger-icon"
@@ -52,9 +60,9 @@ function NavDashBoard() {
         </section>
       </nav>
 
-      {isOpen && (
-        <Modal isOpen={isOpen}>
-          <NavMenu />
+      {showNavigation && (
+        <Modal isActive={showNavigation}>
+          <NavMenu closeModal={handleOnClick} />
         </Modal>
       )}
     </>
