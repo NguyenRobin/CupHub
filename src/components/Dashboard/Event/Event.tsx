@@ -17,7 +17,7 @@ function Event() {
         className="event__type"
       >
         <section className="event__type--information">
-          <h3>Turnering</h3>
+          <h3>Gruppspel + Slutspel</h3>
           <p>Varje grupp spelar en turnering där alla möter alla.</p>
         </section>
 

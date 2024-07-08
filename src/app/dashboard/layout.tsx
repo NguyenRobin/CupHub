@@ -9,7 +9,7 @@ function layout({ children }: Props) {
   return (
     <section className="dashboard">
       <NavDashBoard />
-      <main className="main-content">{children}</main>
+      <main className="main-container">{children}</main>
     </section>
   );
 }

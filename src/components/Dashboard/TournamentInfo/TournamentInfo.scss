@@ -1,0 +1,31 @@
+@import "../../../styles/typography.scss";
+@import "../../../styles/variables.scss";
+@import "../../../styles/dark.scss";
+
+.tournament-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+
+  &__label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    p {
+      font-size: $font-size-lg;
+      width: 100%;
+      font-weight: 300;
+    }
+    input {
+      font-size: $font-size-xl; // on phone less the 16px will zoom in and fuck the design up
+      width: 100%;
+      border: 1px solid $border-color-primary;
+      padding: 0.5rem;
+    }
+  }
+  // input {
+  //   border: 1px solid $border-color-primary;
+  // }
+}

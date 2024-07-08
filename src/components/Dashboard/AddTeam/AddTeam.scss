@@ -1,0 +1,61 @@
+@import "../../../styles/typography.scss";
+@import "../../../styles/variables.scss";
+@import "../../../styles/dark.scss";
+
+.addTeam-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+
+  &__label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    p {
+      font-size: $font-size-lg;
+      width: 100%;
+      font-weight: 300;
+    }
+    input {
+      font-size: $font-size-xl; // on phone less the 16px will zoom in and fuck the design up
+      padding: 0.5rem;
+      width: 100%;
+      border: 1px solid $border-color-primary;
+    }
+  }
+  &__teams {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 5rem;
+    input {
+      font-size: $font-size-xl;
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid $border-color-primary;
+    }
+  }
+
+  &__group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    p {
+      font-size: $font-size-lg;
+      width: 100%;
+      font-weight: 300;
+    }
+
+    select {
+      font-size: $font-size-2xl;
+
+      padding: 0.5rem;
+      border: 1px solid $border-color-primary;
+      width: 100%;
+    }
+  }
+}

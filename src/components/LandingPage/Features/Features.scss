@@ -89,9 +89,10 @@
     align-items: center;
     gap: 1rem;
     padding: 2rem;
-    background-color: $card-bg-primary;
+    // background-color: $card-bg-primary;
+    background-color: #edf4f0;
+    border: 1px solid #bad7c6;
     border-radius: 1rem;
-    border: 1px solid $border-color-primary;
     cursor: pointer;
     width: 100%;
 
@@ -105,9 +106,13 @@
       justify-content: center;
       align-items: center;
       gap: 1rem;
-
+      h2 {
+        color: #197842;
+        font-weight: 500;
+      }
       p {
         font-size: $font-size-sm;
+        color: #424242;
       }
 
       a {

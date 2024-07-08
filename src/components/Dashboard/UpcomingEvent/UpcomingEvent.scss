@@ -16,18 +16,21 @@
     gap: 1rem;
 
     svg {
-      font-size: $font-size-3xl;
+      font-size: $font-size-xl;
     }
 
     h2 {
-      font-size: $font-size-3xl;
+      font-size: $font-size-xl;
+      font-weight: 400;
     }
   }
 
   .upcomingEvent {
     background-color: #f1f3f5;
+    border: 1px solid $border-color-primary;
     padding: 1rem;
     display: flex;
+    // align-items: flex-end;
     align-items: center;
     gap: 2rem;
     border-radius: 1rem;
@@ -73,12 +76,13 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: flex-end;
       gap: 1rem;
 
       h3 {
-        font-size: $font-size-xl;
+        font-size: $font-size-lg;
         padding-left: 0.5rem;
+        font-weight: 400;
       }
     }
 
@@ -88,10 +92,12 @@
       // gap: 0.5rem;
 
       svg {
-        font-size: $font-size-3xl;
+        font-size: $font-size-xl;
+        color: rgb(157, 155, 155);
       }
       p {
-        font-size: $font-size-lg;
+        font-size: $font-size-sm;
+        font-weight: 300;
       }
 
       &-info {
