@@ -6,6 +6,7 @@ import Image from "next/image";
 import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
 import AddTeam from "../AddTeam/AddTeam";
 import TournamentInfo from "../TournamentInfo/TournamentInfo";
+import PlayoffForm from "../PlayoffForm/PlayoffForm";
 
 type Form = {
   name: string;
@@ -14,9 +15,10 @@ type Form = {
   win: number;
   draw: number;
   loss: number;
+  teamsPerGroupAdvancing: number;
 };
 
-type KeyValues = "rounds" | "win" | "draw" | "loss";
+type KeyValue = "rounds" | "win" | "draw" | "loss" | "teamsPerGroupAdvancing";
 
 function CreateTournamentForm() {
   const [form, setForm] = useState<Form>({
@@ -26,6 +28,7 @@ function CreateTournamentForm() {
     win: 3,
     draw: 1,
     loss: 0,
+    teamsPerGroupAdvancing: 1,
   });
 
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -34,7 +37,7 @@ function CreateTournamentForm() {
     setForm((prevState) => ({ ...prevState, [name]: value }));
   }
 
-  const handleIncrement = (key: KeyValues) => {
+  const handleIncrement = (key: KeyValue) => {
     if (form[key] === 9) return;
     setForm((prevState) => {
       if (typeof prevState[key] === "number") {
@@ -47,7 +50,7 @@ function CreateTournamentForm() {
     });
   };
 
-  const handleDecrement = (key: KeyValues) => {
+  const handleDecrement = (key: KeyValue) => {
     if (form[key] === 0) return;
 
     setForm((prevState) => {
@@ -63,7 +66,7 @@ function CreateTournamentForm() {
 
   function handleOnSubmit(e: React.MouseEvent<HTMLFormElement, MouseEvent>) {
     e.preventDefault();
-    if (form.name === "") return;
+    // if (form.name === "") return;
 
     setForm({
       name: "",
@@ -72,7 +75,10 @@ function CreateTournamentForm() {
       win: 3,
       draw: 1,
       loss: 0,
+      teamsPerGroupAdvancing: 1,
     });
+
+    console.log(form);
   }
   return (
     <>
@@ -156,6 +162,25 @@ function CreateTournamentForm() {
             </section>
           </label>
 
+          <label className="tournament-form__label" htmlFor="lost">
+            <p>Antal lag per grupp vidare till slutspel</p>
+            <section className="">
+              <button
+                type="button"
+                onClick={() => handleDecrement("teamsPerGroupAdvancing")}
+              >
+                <span>-</span>
+              </button>
+              <span>{form.teamsPerGroupAdvancing}</span>
+              <button
+                type="button"
+                onClick={() => handleIncrement("teamsPerGroupAdvancing")}
+              >
+                <span>+</span>
+              </button>
+            </section>
+          </label>
+
           <input
             type="submit"
             value="Nästa"
@@ -163,6 +188,8 @@ function CreateTournamentForm() {
           />
         </form>
       </CardRuleLayout>
+
+      <PlayoffForm />
     </>
   );
 }
