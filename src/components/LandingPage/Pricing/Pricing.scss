@@ -13,15 +13,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
 
-    h2,
+    h2 {
+      color: $color-primary;
+      font-size: $font-size-3xl;
+      text-align: center;
+      font-weight: 400;
+    }
     p {
       text-align: center;
       color: $color-primary;
-    }
-    h2 {
-      letter-spacing: $spacing-xs;
+      font-size: $font-size-sm;
+      font-weight: 200;
     }
   }
 }

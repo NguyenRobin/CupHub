@@ -1,69 +1,208 @@
 import React, { useState } from "react";
 import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
 import "./AddTeam.scss";
+import Group from "../Group/Group";
+
+type TeamStats = {
+  id: number;
+  name: string;
+  played: number;
+  won: number;
+  drawn: number;
+  lost: number;
+  goals_for: number;
+  goals_against: number;
+  points: number;
+};
+type ShowGroupPreview = {
+  group: string;
+  teams: TeamStats[];
+}[];
 
 function AddTeam() {
   const [teams, setTeams] = useState([
     {
       id: 1,
       name: "Lag 1",
+      played: 0,
+      won: 0,
+      drawn: 0,
+      lost: 0,
+      goals_for: 0,
+      goals_against: 0,
+      points: 0,
     },
     {
       id: 2,
       name: "Lag 2",
+      played: 0,
+      won: 0,
+      drawn: 0,
+      lost: 0,
+      goals_for: 0,
+      goals_against: 0,
+      points: 0,
     },
   ]);
 
-  const [totalGroups, setTotalGroups] = useState<number | null>(null);
+  const [showGroupPreview, setShowGroupPreview] = useState<ShowGroupPreview>([
+    {
+      group: "A",
+      teams: [
+        {
+          id: 1,
+          name: "Lag 1",
+          played: 0,
+          won: 0,
+          drawn: 0,
+          lost: 0,
+          goals_for: 0,
+          goals_against: 0,
+          points: 0,
+        },
+        {
+          id: 2,
+
+          name: "Lag 2",
+          played: 0,
+          won: 0,
+          drawn: 0,
+          lost: 0,
+          goals_for: 0,
+          goals_against: 0,
+          points: 0,
+        },
+      ],
+    },
+  ]);
+  const [selectGroupAmount, setSelectGroupAmount] = useState(1);
+
+  function splitTeamPerGroup(totalTeams: number, totalGroups: number) {
+    const totalTeamPerGroup = Math.floor(totalTeams / totalGroups);
+    const leftOverTeams = totalTeams % totalGroups; // if totalTeamPerGroup is not even
+    const allGroups: any = [];
+
+    let currentIndex = 0;
+
+    for (let i = 0; i < totalGroups; i++) {
+      const newGroup = { group: String.fromCharCode(65 + i), teams: [] };
+      allGroups.push(newGroup);
+
+      for (let j = 0; j < totalTeamPerGroup; j++) {
+        allGroups[i].teams.push(teams[currentIndex]);
+        currentIndex++;
+      }
+    }
+
+    function generateRandomIndex() {
+      return Math.floor(Math.random() * totalGroups);
+    }
+
+    for (let i = 0; i < leftOverTeams; i++) {
+      let index = generateRandomIndex();
+      const randomGroup = allGroups[index];
+      randomGroup.teams.push(teams[currentIndex]);
+      currentIndex++;
+    }
+    setShowGroupPreview(allGroups);
+  }
 
   function handleChangeTotalTeams(e: React.ChangeEvent<HTMLInputElement>) {
     const currentValue = +e.target.value;
     const difference = currentValue - teams.length;
+
+    if (currentValue < 2) return;
 
     if (currentValue > teams.length && currentValue > 2 && currentValue <= 32) {
       Array.from(Array(difference).keys()).map((team) => {
         const id = teams.length + (team + 1);
 
         const newTeam = {
-          id,
+          id: id,
           name: `Lag ${id}`,
+          played: 0,
+          won: 0,
+          drawn: 0,
+          lost: 0,
+          goals_for: 0,
+          goals_against: 0,
+          points: 0,
         };
         setTeams((teams) => [...teams, newTeam]);
+
+        setShowGroupPreview((prev) =>
+          prev.map((group) => ({
+            ...group,
+            teams: [
+              ...group.teams,
+              {
+                id,
+                name: `Lag ${id}`,
+                played: 0,
+                won: 0,
+                drawn: 0,
+                lost: 0,
+                goals_for: 0,
+                goals_against: 0,
+                points: 0,
+              },
+            ],
+          }))
+        );
       });
     } else if (currentValue < teams.length && currentValue >= 2) {
       setTeams((teams) => [...teams].splice(0, currentValue));
+
+      setShowGroupPreview((prev) =>
+        prev.map((group) => ({
+          ...group,
+          teams: [...group.teams].splice(0, currentValue),
+        }))
+      );
     }
   }
 
   function handleChangeTeamName(e: React.ChangeEvent<HTMLInputElement>) {
     const { value, id } = e.target;
 
+    console.log("id", id);
     setTeams((prev) =>
       prev.map((team) => (team.id === +id ? { ...team, name: value } : team))
     );
+
+    setShowGroupPreview((prev) =>
+      prev.map((group) => {
+        // Return a new group object
+        return {
+          ...group,
+          teams: group.teams.map((team) => {
+            // Check if the team's id matches
+            if (team.id === +id) {
+              // Return a new team object with the updated name
+              return { ...team, name: value };
+            }
+            // Return the original team if there's no match
+            return team;
+          }),
+        };
+      })
+    );
   }
 
-  function handleSelectGroupAmount(e: React.ChangeEvent<HTMLSelectElement>) {
+  function handleSelectAmountOfGroups(e: React.ChangeEvent<HTMLSelectElement>) {
     const value = +e.target.value;
-    setTotalGroups(value);
+    setSelectGroupAmount(value);
+    splitTeamPerGroup(teams.length, value);
   }
+
   function handleOnSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    console.log(teams, totalGroups);
+    // console.log(teams, selectGroupAmount);
   }
 
-  function approvedGroups(totalTeams: number): number[] {
-    // om antalet lag < 3 endast 1 grupp ska kunna skapas
-    // om antalet lag <= 5 endast 1 eller 2 grupper ska kuna visas
-    // om antalet lag <= 7 endast 1,2,3 grupper
-    // om antalet lag <= 9 endast 1,2,3,4 grupper
-    // om antalet lag <= 11 endast 1,2,3,4,5 grupper
-    // om antalet lag <= 13 endast 1,2,3,4,5,6 grupper
-    // om antalet lag <= 15 endast 1,2,3,4,5,6,7 grupper
-    // om antalet lag <= 17 endast 1,2,3,4,5,6,7,8 grupper
-    // om antalet lag <= 19 endast 1,2,3,4,5,6,7,8,9 grupper
-    const options = [];
+  function validateApprovedGroups(totalTeams: number): number[] {
+    const maxGroups = [];
 
     let maxAmountOfGroups = 1;
     if (totalTeams <= 3) {
@@ -101,13 +240,13 @@ function AddTeam() {
     }
 
     for (let i = 1; i <= maxAmountOfGroups; i++) {
-      options.push(i);
+      maxGroups.push(i);
     }
 
-    return options;
+    return maxGroups;
   }
 
-  const numberOfGroups = approvedGroups(teams.length);
+  const numberOfGroupsToChoice = validateApprovedGroups(teams.length);
 
   return (
     <CardRuleLayout title="Antal lag">
@@ -145,13 +284,19 @@ function AddTeam() {
           <select
             name="groups"
             id="groupAmount-select"
-            onChange={handleSelectGroupAmount}
+            onChange={handleSelectAmountOfGroups}
           >
-            {numberOfGroups.map((value) => (
+            {numberOfGroupsToChoice.map((value) => (
               <option key={value}>{value}</option>
             ))}
           </select>
         </label>
+
+        <section>
+          Exempel på grupper:
+          <Group data={showGroupPreview} />
+        </section>
+
         <input
           type="submit"
           value="Nästa"

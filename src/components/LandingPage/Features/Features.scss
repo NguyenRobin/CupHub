@@ -19,11 +19,13 @@
       color: $color-primary;
       font-size: $font-size-3xl;
       text-align: center;
+      font-weight: 400;
     }
     p {
-      font-size: $font-size-lg;
       text-align: center;
       color: $color-primary;
+      font-size: $font-size-sm;
+      font-weight: 200;
     }
     ul {
       display: flex;

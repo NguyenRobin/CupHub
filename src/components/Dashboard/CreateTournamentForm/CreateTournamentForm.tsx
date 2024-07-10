@@ -7,6 +7,7 @@ import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
 import AddTeam from "../AddTeam/AddTeam";
 import TournamentInfo from "../TournamentInfo/TournamentInfo";
 import PlayoffForm from "../PlayoffForm/PlayoffForm";
+import Group from "../Group/Group";
 
 type Form = {
   name: string;
@@ -188,8 +189,8 @@ function CreateTournamentForm() {
           />
         </form>
       </CardRuleLayout>
-
       <PlayoffForm />
+      {/* <Group /> */}
     </>
   );
 }

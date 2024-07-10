@@ -11,7 +11,7 @@ type Form = {
   quarterfinal: number;
   roundOf16: number;
   roundOf32: number;
-  roundOf62: number;
+  roundOf64: number;
 };
 
 export type KeyValue =
@@ -20,17 +20,17 @@ export type KeyValue =
   | "quarterfinal"
   | "roundOf16"
   | "roundOf32"
-  | "roundOf62";
+  | "roundOf64";
 
 function PlayoffForm() {
   const [form, setForm] = useState<Form>({
     elimination: "single",
     final: 1,
-    semifinal: 1,
-    quarterfinal: 1,
-    roundOf16: 1,
-    roundOf32: 1,
-    roundOf62: 1,
+    semifinal: 2,
+    quarterfinal: 4,
+    roundOf16: 8,
+    roundOf32: 16,
+    roundOf64: 32,
   });
 
   function handleIncrement(key: KeyValue) {
@@ -47,7 +47,7 @@ function PlayoffForm() {
     });
   }
 
-  function handleDecrement(key) {
+  function handleDecrement(key: KeyValue) {
     if (form[key] === 0) return;
 
     setForm((prev) => {
@@ -69,11 +69,11 @@ function PlayoffForm() {
     setForm({
       elimination: "single",
       final: 1,
-      semifinal: 1,
-      quarterfinal: 1,
-      roundOf16: 1,
-      roundOf32: 1,
-      roundOf62: 1,
+      semifinal: 2,
+      quarterfinal: 4,
+      roundOf16: 8,
+      roundOf32: 16,
+      roundOf64: 32,
     });
 
     // console.log(form);
@@ -82,7 +82,7 @@ function PlayoffForm() {
   return (
     <CardRuleLayout title="Slutspelsinställningar - Antalet matcher">
       <form className="playoff-form" onSubmit={handleOnSubmit}>
-        <p>{form.elimination}</p>
+        <p>Enkel eliminering</p>
         <Rule
           label="Final"
           value={form.final}
@@ -115,9 +115,9 @@ function PlayoffForm() {
         />
         <Rule
           label="64-delsfinal"
-          value={form.roundOf62}
-          handleIncrement={() => handleIncrement("roundOf62")}
-          handleDecrement={() => handleDecrement("roundOf62")}
+          value={form.roundOf64}
+          handleIncrement={() => handleIncrement("roundOf64")}
+          handleDecrement={() => handleDecrement("roundOf64")}
         />
 
         <input
