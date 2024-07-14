@@ -6,7 +6,10 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  background-color: #dee2e6;
+  background-color: #fff;
+  // border: 1px solid $border-color-primary;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
   padding: 1rem;
   border-radius: 1rem;
 
@@ -27,6 +30,8 @@
 
   .upcomingEvent {
     background-color: #f1f3f5;
+    background-color: #fff;
+
     border: 1px solid $border-color-primary;
     padding: 1rem;
     display: flex;

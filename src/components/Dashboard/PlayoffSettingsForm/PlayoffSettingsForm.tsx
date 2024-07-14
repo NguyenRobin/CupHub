@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./PlayoffForm.scss";
+import "./PlayoffSettingsForm.scss";
 import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
 import Rule from "../Rule/Rule";
 // import { KeyValue } from "@/types";
@@ -22,7 +22,7 @@ export type KeyValue =
   | "roundOf32"
   | "roundOf64";
 
-function PlayoffForm() {
+function PlayoffSettingsForm() {
   const [form, setForm] = useState<Form>({
     elimination: "single",
     final: 1,
@@ -81,7 +81,7 @@ function PlayoffForm() {
 
   return (
     <CardRuleLayout title="Slutspelsinställningar - Antalet matcher">
-      <form className="playoff-form" onSubmit={handleOnSubmit}>
+      <form className="playoff-settings-form" onSubmit={handleOnSubmit}>
         <p>Enkel eliminering</p>
         <Rule
           label="Final"
@@ -130,4 +130,4 @@ function PlayoffForm() {
   );
 }
 
-export default PlayoffForm;
+export default PlayoffSettingsForm;

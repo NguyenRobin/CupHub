@@ -1,16 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import "./CreateTournamentForm.scss";
+import "./GroupSettingsForm.scss";
 import Image from "next/image";
 import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
-import AddTeam from "../AddTeam/AddTeam";
-import TournamentInfo from "../TournamentInfo/TournamentInfo";
-import PlayoffForm from "../PlayoffForm/PlayoffForm";
-import Group from "../Group/Group";
 
 type Form = {
-  name: string;
   image: string | null;
   rounds: number;
   win: number;
@@ -21,11 +16,10 @@ type Form = {
 
 type KeyValue = "rounds" | "win" | "draw" | "loss" | "teamsPerGroupAdvancing";
 
-function CreateTournamentForm() {
+function GroupSettingsForm() {
   const [form, setForm] = useState<Form>({
-    name: "",
     image: null,
-    rounds: 2,
+    rounds: 1,
     win: 3,
     draw: 1,
     loss: 0,
@@ -72,7 +66,7 @@ function CreateTournamentForm() {
     setForm({
       name: "",
       image: null,
-      rounds: 2,
+      rounds: 1,
       win: 3,
       draw: 1,
       loss: 0,
@@ -80,39 +74,36 @@ function CreateTournamentForm() {
     });
 
     console.log(form);
+    localStorage.setItem("groupSettings", JSON.stringify(form));
   }
   return (
     <>
-      <TournamentInfo />
-      <AddTeam />
       <CardRuleLayout title="Gruppspelsinställningar">
-        <form onSubmit={handleOnSubmit} action="" className="tournament-form">
-          {/* <label className="tournament-form__label" htmlFor="name">
-            <p>Namn</p>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              minLength={3}
-              value={form.name}
-              onChange={handleOnChange}
-            />
-          </label> */}
-
-          {/* <label className="tournament-form__label" htmlFor="image">
+        <form
+          onSubmit={handleOnSubmit}
+          action=""
+          className="group-settings-form"
+        >
+          {/* <label className="group-settings-form__label" htmlFor="image">
             <p>Omslag</p>
             <input
               type="file"
               id="image"
               name="filename"
-              className="tournament-form__label--upload-file"
+              className="group-settings-form__label--upload-file"
             />
           </label> */}
 
-          <label className="tournament-form__label" htmlFor="rounds">
+          <label className="group-settings-form__label" htmlFor="rounds">
             <p>Antal möten</p>
             <section className="">
-              <button type="button" onClick={() => handleDecrement("rounds")}>
+              <button
+                type="button"
+                onClick={() => {
+                  if (form.rounds <= 1) return;
+                  handleDecrement("rounds");
+                }}
+              >
                 <span>-</span>
               </button>
               <span>{form.rounds}</span>
@@ -122,7 +113,7 @@ function CreateTournamentForm() {
             </section>
           </label>
 
-          <label className="tournament-form__label" htmlFor="win">
+          <label className="group-settings-form__label" htmlFor="win">
             <p>Poäng för vinst</p>
             <section className="">
               <button type="button" onClick={() => handleDecrement("win")}>
@@ -136,7 +127,7 @@ function CreateTournamentForm() {
             </section>
           </label>
 
-          <label className="tournament-form__label" htmlFor="draw">
+          <label className="group-settings-form__label" htmlFor="draw">
             <p>Poäng för oavgjort</p>
             <section className="">
               <button type="button" onClick={() => handleDecrement("draw")}>
@@ -150,7 +141,7 @@ function CreateTournamentForm() {
             </section>
           </label>
 
-          <label className="tournament-form__label" htmlFor="lost">
+          <label className="group-settings-form__label" htmlFor="lost">
             <p>Poäng för förlust</p>
             <section className="">
               <button type="button" onClick={() => handleDecrement("loss")}>
@@ -163,12 +154,15 @@ function CreateTournamentForm() {
             </section>
           </label>
 
-          <label className="tournament-form__label" htmlFor="lost">
+          <label className="group-settings-form__label" htmlFor="lost">
             <p>Antal lag per grupp vidare till slutspel</p>
             <section className="">
               <button
                 type="button"
-                onClick={() => handleDecrement("teamsPerGroupAdvancing")}
+                onClick={() => {
+                  if (form.teamsPerGroupAdvancing <= 1) return;
+                  handleDecrement("teamsPerGroupAdvancing");
+                }}
               >
                 <span>-</span>
               </button>
@@ -185,14 +179,12 @@ function CreateTournamentForm() {
           <input
             type="submit"
             value="Nästa"
-            className="tournament-form__submit-btn"
+            className="group-settings-form__submit-btn"
           />
         </form>
       </CardRuleLayout>
-      <PlayoffForm />
-      {/* <Group /> */}
     </>
   );
 }
 
-export default CreateTournamentForm;
+export default GroupSettingsForm;

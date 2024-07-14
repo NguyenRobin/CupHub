@@ -9,6 +9,9 @@
   background-color: #dee2e6;
   padding: 1rem;
   border-radius: 1rem;
+  background-color: #fff;
+  // border: 1px solid $border-color-primary;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
   &__title {
     display: flex;
@@ -31,6 +34,8 @@
     justify-content: space-between;
     align-items: center;
     background-color: #f1f3f5;
+    background-color: #fff;
+
     padding: 1rem;
     border-radius: 1rem;
     border: 1px solid $border-color-primary;

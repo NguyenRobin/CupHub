@@ -5,7 +5,7 @@
 .addTeam-form {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+  gap: 3rem;
 
   &__label {
     display: flex;
@@ -17,37 +17,44 @@
       font-size: $font-size-lg;
       width: 100%;
       font-weight: 300;
+      text-align: center;
     }
-    input {
+    input,
+    select {
       font-size: $font-size-xl; // on phone less the 16px will zoom in and fuck the design up
       padding: 0.5rem;
       width: 100%;
       border: 1px solid $border-color-primary;
+      border: 1px solid lightgray;
     }
   }
   &__teams {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    margin-bottom: 5rem;
+    // margin-bottom: 5rem;
     input {
       font-size: $font-size-xl;
       width: 100%;
       padding: 0.5rem;
       border: 1px solid $border-color-primary;
+      border: 1px solid lightgray;
     }
   }
 
   &__group {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    // justify-content: space-between;
+    // align-items: center;
+    // justify-content: center;
     gap: 1rem;
 
     p {
       font-size: $font-size-lg;
       width: 100%;
       font-weight: 300;
+      text-align: center;
     }
 
     select {
@@ -57,5 +64,23 @@
       border: 1px solid $border-color-primary;
       width: 100%;
     }
+  }
+
+  &__submit-btn {
+    margin-top: 5rem;
+    background-color: transparent;
+    border: 0.5px solid lightgray;
+    padding: 1rem;
+    border-radius: 2rem;
+    color: black;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: $font-size-xl;
+    background-color: $color-primary;
+    background: linear-gradient(90deg, #e1fff0, #b1ffd0);
+  }
+
+  &__submit-btn:hover {
+    background: lightblue;
   }
 }

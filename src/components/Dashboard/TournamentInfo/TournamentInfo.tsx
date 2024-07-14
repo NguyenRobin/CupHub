@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./TournamentInfo.scss";
 import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 type Form = {
   name: string;
   description?: string;
@@ -9,6 +11,8 @@ type Form = {
 };
 
 function TournamentInfo() {
+  const router = useRouter();
+  const pathname = usePathname();
   const [form, setForm] = useState<Form>({
     name: "",
     description: "",
@@ -22,8 +26,11 @@ function TournamentInfo() {
   }
 
   const handleOnSubmit = (e: React.MouseEvent<HTMLFormElement, MouseEvent>) => {
-    e: React.O.preventDefault();
+    e.preventDefault();
+
+    router.push("/dashboard/create-tournament/add-team");
     console.log(form);
+    localStorage.setItem("tournamentInfo", JSON.stringify(form));
   };
 
   return (
@@ -76,7 +83,7 @@ function TournamentInfo() {
         <input
           type="submit"
           value="Nästa"
-          className="tournament-form__submit-btn"
+          className="tournament-info__submit-btn"
         />
       </form>
     </CardRuleLayout>

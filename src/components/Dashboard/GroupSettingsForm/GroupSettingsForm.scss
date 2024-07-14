@@ -2,7 +2,7 @@
 @import "../../../styles/variables.scss";
 @import "../../../styles/dark.scss";
 
-.tournament-form {
+.group-settings-form {
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
@@ -47,6 +47,7 @@
         height: 3rem;
         border-radius: 50%;
         border: 1.4px solid $border-color-primary;
+        border: 1px solid lightgray;
 
         cursor: pointer;
 
@@ -64,7 +65,7 @@
   &__submit-btn {
     margin-top: 5rem;
     background-color: transparent;
-    border: 1px solid green;
+    border: 0.5px solid lightgray;
     padding: 1rem;
     border-radius: 2rem;
     color: black;
@@ -72,6 +73,7 @@
     font-weight: bold;
     font-size: $font-size-xl;
     background-color: $color-primary;
+    background: linear-gradient(90deg, #e1fff0, #b1ffd0);
   }
 
   &__submit-btn:hover {

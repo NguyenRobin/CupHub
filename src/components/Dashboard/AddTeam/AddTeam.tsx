@@ -1,8 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
 import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
 import "./AddTeam.scss";
 import Group from "../Group/Group";
-
+import { useRouter } from "next/navigation";
 type TeamStats = {
   id: number;
   name: string;
@@ -20,6 +22,8 @@ type ShowGroupPreview = {
 }[];
 
 function AddTeam() {
+  const router = useRouter();
+
   const [teams, setTeams] = useState([
     {
       id: 1,
@@ -107,7 +111,9 @@ function AddTeam() {
     setShowGroupPreview(allGroups);
   }
 
-  function handleChangeTotalTeams(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChangeTotalTeams(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
     const currentValue = +e.target.value;
     const difference = currentValue - teams.length;
 
@@ -197,8 +203,16 @@ function AddTeam() {
 
   function handleOnSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    // console.log(teams, selectGroupAmount);
+    router.push("/dashboard/create-tournament/group-settings");
+    console.log(teams, selectGroupAmount);
+    console.log(showGroupPreview);
+    localStorage.setItem(
+      "addTeam",
+      JSON.stringify({
+        teamAmount: teams.length,
+        totalGroups: selectGroupAmount,
+      })
+    );
   }
 
   function validateApprovedGroups(totalTeams: number): number[] {
@@ -251,9 +265,18 @@ function AddTeam() {
   return (
     <CardRuleLayout title="Antal lag">
       <form onSubmit={handleOnSubmit} action="" className="addTeam-form">
-        <label htmlFor="teams" className="addTeam-form__label">
+        <label
+          htmlFor="teams"
+          className="addTeam-form__label"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
           <p>Ange antalet lag</p>
-          <input
+          {/* <input
             type="number"
             id="teams"
             name="teams"
@@ -261,7 +284,16 @@ function AddTeam() {
             max="32"
             defaultValue={teams.length}
             onChange={handleChangeTotalTeams}
-          />
+          /> */}
+          <select name="team" id="" onChange={handleChangeTotalTeams}>
+            {Array.from({ length: 31 }, (_, i) => {
+              return (
+                <option key={i + 2} value={i + 2}>
+                  {i + 2}
+                </option>
+              );
+            })}
+          </select>
         </label>
 
         <label className="addTeam-form__teams">
@@ -292,15 +324,22 @@ function AddTeam() {
           </select>
         </label>
 
-        <section>
-          Exempel på grupper:
+        <section
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1.5rem",
+            // marginTop: "5rem",
+          }}
+        >
+          <h3> Exempel på grupper:</h3>
           <Group data={showGroupPreview} />
         </section>
 
         <input
           type="submit"
           value="Nästa"
-          className="tournament-form__submit-btn"
+          className="addTeam-form__submit-btn"
         />
       </form>
     </CardRuleLayout>

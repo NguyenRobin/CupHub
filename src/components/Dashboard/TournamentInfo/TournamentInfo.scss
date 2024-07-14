@@ -22,8 +22,26 @@
       font-size: $font-size-xl; // on phone less the 16px will zoom in and fuck the design up
       width: 100%;
       border: 1px solid $border-color-primary;
+      border: 1px solid lightgray;
       padding: 0.5rem;
     }
+  }
+  &__submit-btn {
+    margin-top: 5rem;
+    background-color: transparent;
+    border: 0.5px solid lightgray;
+    padding: 1rem;
+    border-radius: 2rem;
+    color: black;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: $font-size-xl;
+    background-color: $color-primary;
+    background: linear-gradient(90deg, #e1fff0, #b1ffd0);
+  }
+
+  &__submit-btn:hover {
+    background: lightblue;
   }
   // input {
   //   border: 1px solid $border-color-primary;

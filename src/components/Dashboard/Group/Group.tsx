@@ -98,10 +98,10 @@ const data = {
 
 function Group({ data }: any) {
   return (
-    <section className="group">
+    <section className="groups">
       {data?.map((group) => {
         return (
-          <section key={group.group} style={{ marginBottom: "2rem" }}>
+          <section className="group" key={group.group}>
             <section key={group.group} className="group-header">
               <section className="group-header__sort">
                 <span>#</span>

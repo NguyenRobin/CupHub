@@ -12,10 +12,7 @@ function Event() {
         <h2>Skapa och Hantera</h2>
       </section>
 
-      <Link
-        href="/dashboard/create-tournament/tournament"
-        className="event__type"
-      >
+      <Link href="/dashboard/create-tournament/info" className="event__type">
         <section className="event__type--information">
           <h3>Gruppspel + Slutspel</h3>
           <p>Varje grupp spelar en turnering där alla möter alla.</p>
