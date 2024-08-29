@@ -1,9 +1,12 @@
 import React from "react";
-import UpcomingEvent from "../UpcomingEvent/UpcomingEvent";
+
 import Event from "../Event/Event";
 import "./Overview.scss";
+import UpcomingEvents from "../UpcomingEvents/UpcomingEvents";
 
 function Overview() {
+  const data = [];
+  console.log(data.length);
   return (
     <section className="overview">
       <section className="overview__welcome-text">
@@ -11,7 +14,7 @@ function Overview() {
       </section>
 
       <section className="overview__listing">
-        <UpcomingEvent />
+        <UpcomingEvents events={data} />
         <Event />
       </section>
     </section>
