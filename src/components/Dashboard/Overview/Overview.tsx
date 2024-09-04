@@ -1,5 +1,3 @@
-import React from "react";
-
 import Event from "../Event/Event";
 import "./Overview.scss";
 import UpcomingEvents from "../UpcomingEvents/UpcomingEvents";

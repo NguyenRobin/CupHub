@@ -2,12 +2,13 @@ import React from "react";
 import Bracket from "../Bracket/Bracket";
 
 function BracketViewDesktop({ data }) {
+  console.log(data, "BracketViewDesktop");
   return (
     <div className={`match-bracket-stage__elimination desktop`}>
-      {data.rounds.map((el) => (
+      {data.playoff.map((el) => (
         <div
-          key={el.name}
-          className={`match-bracket-stage__elimination--${el.name
+          key={el.round}
+          className={`match-bracket-stage__elimination--${el.round
             .toLowerCase()
             .split(" ")
             .join("")}`}
@@ -19,16 +20,16 @@ function BracketViewDesktop({ data }) {
               alignItems: "center",
             }}
           >
-            <h2>{el.name}</h2>
+            <h2>{el.round}</h2>
           </div>
           {el.matches.map((el, i) => (
-            <div className={"card"} key={el.awayTeam}>
+            <div className={"card"} key={el.round}>
               <Bracket
-                key={el.homeTeam}
-                homeTeam={el.homeTeam}
-                homeTeamScore={el.homeTeamScore}
-                awayTeam={el.awayTeam}
-                awayTeamScore={el.awayTeamScore}
+                key={i}
+                homeTeam={el.homeTeam.name}
+                homeTeamScore={el.homeTeam.score}
+                awayTeam={el.awayTeam.name}
+                awayTeamScore={el.awayTeam.score}
               />
             </div>
           ))}

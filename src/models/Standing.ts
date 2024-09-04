@@ -1,0 +1,47 @@
+import mongoose, { Schema, model, Types } from "mongoose";
+
+interface IStanding {
+  tournament_id: Types.ObjectId;
+  name: string;
+  standings: {
+    team_id: Types.ObjectId;
+    team: string;
+    win: number;
+    draw: number;
+    loss: number;
+    goal: number;
+    goal_difference: number;
+    matches_played: number;
+    points: number;
+  }[];
+}
+
+const standingSchema = new Schema<IStanding>(
+  {
+    tournament_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tournament",
+      required: true,
+    },
+    name: { type: String, required: true },
+    standings: [
+      {
+        team_id: { type: mongoose.Types.ObjectId, ref: "Team", required: true },
+        team: { type: String, required: true },
+        win: { type: Number, required: true },
+        draw: { type: Number, required: true },
+        loss: { type: Number, required: true },
+        goal: { type: Number, required: true },
+        goal_difference: { type: Number, required: true },
+        matches_played: { type: Number, required: true },
+        points: { type: Number, required: true },
+      },
+    ],
+  },
+  { timestamps: true }
+);
+
+const StandingModel =
+  mongoose.models.Standing || model<IStanding>("Standing", standingSchema);
+
+export default StandingModel;

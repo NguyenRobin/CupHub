@@ -6,23 +6,23 @@ function BracketViewMobile({ data }) {
     <div className={`match-bracket-stage__elimination mobile`}>
       {data.map((el) => (
         <div
-          key={el.name}
-          className={`match-bracket-stage__elimination--${el.name
+          key={el.round}
+          className={`match-bracket-stage__elimination--${el.round
             .toLowerCase()
             .split(" ")
             .join("")}`}
         >
-          {el.matches.map((el, i) => (
+          {data.matches?.map(
             <div className={`card`} key={el.awayTeam}>
               <Bracket
-                key={el.homeTeam}
-                homeTeam={el.homeTeam}
-                homeTeamScore={el.homeTeamScore}
-                awayTeam={el.awayTeam}
-                awayTeamScore={el.awayTeamScore}
+                key={el?.homeTeam}
+                homeTeam={el?.homeTeam?.name || ""}
+                homeTeamScore={el?.homeTeam?.score || ""}
+                awayTeam={el?.awayTeam?.name}
+                awayTeamScore={el?.awayTeamScore?.score || ""}
               />
             </div>
-          ))}
+          )}
         </div>
       ))}
     </div>

@@ -3,9 +3,11 @@ import "./TournamentInfo.scss";
 import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import AddTeam from "../AddTeam/AddTeam";
 type Form = {
   name: string;
   description?: string;
+  sport?: string;
   startDate: string;
   endDate: string;
 };
@@ -13,9 +15,11 @@ type Form = {
 function TournamentInfo() {
   const router = useRouter();
   const pathname = usePathname();
+  const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>({
     name: "",
     description: "",
+    sport: "",
     startDate: "",
     endDate: "",
   });
@@ -86,6 +90,7 @@ function TournamentInfo() {
           className="tournament-info__submit-btn"
         />
       </form>
+      <AddTeam />
     </CardRuleLayout>
   );
 }
