@@ -32,4 +32,3 @@ function BracketViewMobile({ data }) {
 }
 
 export default BracketViewMobile;
-//test
