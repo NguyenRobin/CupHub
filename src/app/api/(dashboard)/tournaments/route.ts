@@ -110,57 +110,121 @@ async function addTournamentToTournamentCollectionDB(body, userId) {
   const created = await newTournament.save();
   return created;
 }
-function createMatchesBasedOnKnockoutStage() {}
-function buildBracketRounds(total_groups, teamsPerGroupAdvancing) {
+// function createMatchesBasedOnKnockoutStage() {}
+// function buildBracketRounds(total_groups, teamsPerGroupAdvancing) {
+//   const amountOfTeamsToPlayOff = total_groups * teamsPerGroupAdvancing;
+//   const stage = ["final", "semifinal", "quarterfinal", "round 16", "round 32"];
+//   const result = [];
+
+//   let stagesToFinal = 0;
+//   if (amountOfTeamsToPlayOff === 32) {
+//     stagesToFinal = 4; // round 32
+//   }
+//   if (amountOfTeamsToPlayOff === 16) {
+//     stagesToFinal = 3; // round 16
+//   }
+//   if (amountOfTeamsToPlayOff === 8) {
+//     stagesToFinal = 2; // quarterfinal
+//   }
+//   if (amountOfTeamsToPlayOff === 4) {
+//     stagesToFinal = 1; // semifinal
+//   }
+//   if (amountOfTeamsToPlayOff === 2) {
+//     stagesToFinal = 0; // final
+//   }
+
+//   let currentStage = amountOfTeamsToPlayOff;
+//   console.log("amountOfTeamsToPlayOff", amountOfTeamsToPlayOff);
+//   for (let i = stagesToFinal; i >= 0; i--) {
+//     // create the current amount of matches based on stage.
+//     const arr = Array.from({ length: currentStage });
+//     console.log("arr", arr);
+//     const newObj = {
+//       round: stage[i], // ex final, semifinal
+//       matches: arr.map(() => {
+//         return {
+//           match_id: null,
+//           homeTeam: {
+//             team_id: null,
+//             name: null,
+//             score: null,
+//           },
+//           awayTeam: {
+//             team_id: null,
+//             name: null,
+//             score: null,
+//           },
+//           location: null,
+//           date: null,
+//         };
+//       }),
+//     };
+
+//     result.push(newObj);
+
+//     // In every stage only the winnng team will proceed to next stage. So half of the others will get eliminated.
+//     currentStage = currentStage / 2;
+//     console.log("currentStage", currentStage);
+//   }
+//   return result;
+// }
+
+function buildBracketRounds(
+  total_groups: number,
+  teamsPerGroupAdvancing: number
+) {
   const amountOfTeamsToPlayOff = total_groups * teamsPerGroupAdvancing;
   const stage = ["final", "semifinal", "quarterfinal", "round 16", "round 32"];
   const result = [];
 
-  let stagesToFinal = 0; // final
+  let stagesToFinal = 0;
+
+  // Bestäm antal steg till final beroende på antalet lag som går vidare
   if (amountOfTeamsToPlayOff === 32) {
     stagesToFinal = 4; // round 32
-  }
-  if (amountOfTeamsToPlayOff === 16) {
+  } else if (amountOfTeamsToPlayOff === 16) {
     stagesToFinal = 3; // round 16
-  }
-  if (amountOfTeamsToPlayOff === 8) {
+  } else if (amountOfTeamsToPlayOff === 8) {
     stagesToFinal = 2; // quarterfinal
-  }
-  if (amountOfTeamsToPlayOff === 4) {
+  } else if (amountOfTeamsToPlayOff === 4) {
     stagesToFinal = 1; // semifinal
+  } else if (amountOfTeamsToPlayOff === 2) {
+    stagesToFinal = 0; // final
   }
 
-  let currentStage = amountOfTeamsToPlayOff;
+  let currentTeams = amountOfTeamsToPlayOff;
 
+  // Iterera genom stegen och skapa matcher
   for (let i = stagesToFinal; i >= 0; i--) {
-    // create the current amount of matches based on stage.
-    const arr = Array.from({ length: currentStage });
+    const matchesInRound = currentTeams / 2;
+
+    // if (matchesInRound < 1) break; // Om inga matcher kan spelas, avsluta
+
     const newObj = {
       round: stage[i], // ex final, semifinal
-      matches: arr.map(() => {
-        return {
-          match_id: null,
-          homeTeam: {
-            team_id: null,
-            name: null,
-            score: null,
-          },
-          awayTeam: {
-            team_id: null,
-            name: null,
-            score: null,
-          },
-          location: null,
-          date: new Date(),
-        };
-      }),
+      matches: Array.from({ length: matchesInRound }).map(() => ({
+        match_id: null,
+        homeTeam: {
+          team_id: null,
+          name: null,
+          score: null,
+        },
+        awayTeam: {
+          team_id: null,
+          name: null,
+          score: null,
+        },
+        location: null,
+        date: null,
+      })),
     };
 
     result.push(newObj);
 
-    // In every stage only the winnng team will proceed to next stage. So half of the others will get eliminated.
-    currentStage = currentStage / 2;
+    // Halvera antalet lag för nästa runda
+    currentTeams = matchesInRound;
   }
+
   return result;
 }
 
@@ -249,7 +313,7 @@ export async function POST(request: Request) {
       }
       await connectToMongoDB();
       const playoff = buildBracketRounds(total_groups, teamsPerGroupAdvancing);
-
+      console.log("playoff", playoff);
       const newRound = new RoundModel({
         tournament_id: Types.ObjectId.createFromHexString(
           "66d85a735a777728d90d2e77"

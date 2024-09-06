@@ -1,7 +1,10 @@
 import React from "react";
 import Bracket from "../Bracket/Bracket";
 
+type Data = {};
+
 function BracketViewMobile({ data }) {
+  console.log(data, "viewMobile");
   return (
     <div className={`match-bracket-stage__elimination mobile`}>
       {data.map((el) => (
@@ -12,17 +15,16 @@ function BracketViewMobile({ data }) {
             .split(" ")
             .join("")}`}
         >
-          {data.matches?.map(
-            <div className={`card`} key={el.awayTeam}>
+          {el.matches?.map((match, i) => (
+            <div className={"card"} key={`${i}`}>
               <Bracket
-                key={el?.homeTeam}
-                homeTeam={el?.homeTeam?.name || ""}
-                homeTeamScore={el?.homeTeam?.score || ""}
-                awayTeam={el?.awayTeam?.name}
-                awayTeamScore={el?.awayTeamScore?.score || ""}
+                homeTeam={match.homeTeam.name}
+                homeTeamScore={match.homeTeam.score}
+                awayTeam={match.awayTeam.name}
+                awayTeamScore={match.awayTeam.score}
               />
             </div>
-          )}
+          ))}
         </div>
       ))}
     </div>
