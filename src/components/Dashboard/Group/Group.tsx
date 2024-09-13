@@ -97,6 +97,10 @@ const data = {
 };
 
 function Group({ data }: any) {
+  // if (!data.length) {
+  //   return <p>loading..</p>;
+  // }
+
   return (
     <section className="groups">
       {data?.map((group) => {

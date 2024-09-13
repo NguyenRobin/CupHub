@@ -9,11 +9,11 @@
   width: 100%;
   padding: 1.5rem;
   border-bottom: 1px solid $border-color-primary;
-  position: sticky;
+  // position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 99999999;
+  z-index: 1000000000;
   background-color: $nav-bg-color;
-
   &__admin {
     display: flex;
     justify-content: center;

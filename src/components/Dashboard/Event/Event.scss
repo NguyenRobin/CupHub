@@ -7,7 +7,7 @@
   flex-direction: column;
   gap: 1.5rem;
   background-color: #dee2e6;
-  padding: 1rem;
+  // padding: 1rem;
   border-radius: 1rem;
   background-color: #fff;
   // border: 1px solid $border-color-primary;
@@ -15,9 +15,10 @@
 
   &__title {
     display: flex;
-    align-items: center;
+    // align-items: center;
     gap: 1rem;
-
+    padding: 1rem;
+    // border-bottom: 1px solid rgba(0, 0, 0, 0.16);
     svg {
       font-size: $font-size-3xl;
     }
@@ -36,9 +37,9 @@
     background-color: #f1f3f5;
     background-color: #fff;
 
-    padding: 1rem;
-    border-radius: 1rem;
-    border: 1px solid $border-color-primary;
+    padding: 1.5rem;
+    // border-radius: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
 
     &--information {
       display: flex;

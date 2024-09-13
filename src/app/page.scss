@@ -7,5 +7,6 @@
   height: 100%;
 }
 .main-content {
+  margin-top: 7rem; // bases on the nac height to make it show the full element height
   background-color: $bg-color-secondary;
 }

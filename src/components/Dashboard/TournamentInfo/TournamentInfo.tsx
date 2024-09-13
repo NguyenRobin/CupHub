@@ -3,7 +3,7 @@ import "./TournamentInfo.scss";
 import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import AddTeam from "../AddTeam/AddTeam";
+
 type Form = {
   name: string;
   description?: string;
@@ -90,7 +90,6 @@ function TournamentInfo() {
           className="tournament-info__submit-btn"
         />
       </form>
-      <AddTeam />
     </CardRuleLayout>
   );
 }

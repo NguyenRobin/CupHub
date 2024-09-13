@@ -9,8 +9,6 @@ function page() {
   return (
     <section>
       <TournamentInfo />
-      {/* <AddTeam /> */}
-      {/* <GroupSettingsForm /> */}
     </section>
   );
 }

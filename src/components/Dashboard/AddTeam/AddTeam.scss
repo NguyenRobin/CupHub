@@ -77,7 +77,8 @@
     font-weight: bold;
     font-size: $font-size-xl;
     background-color: $color-primary;
-    background: linear-gradient(90deg, #e1fff0, #b1ffd0);
+    // background: linear-gradient(90deg, #e1fff0, #b1ffd0);
+    border: 1.5px solid grey;
   }
 
   &__submit-btn:hover {

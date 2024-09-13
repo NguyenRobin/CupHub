@@ -19,6 +19,13 @@ export async function GET(
     await connectToMongoDB();
 
     const playoff = await RoundModel.findOne({ tournament_id });
+
+    if (!playoff) {
+      return NextResponse.json({
+        message: `No playoff found with ID ${tournament_id}`,
+        status: 400,
+      });
+    }
     return NextResponse.json({ status: 200, message: "success", playoff });
   } catch (error: any) {
     return NextResponse.json({

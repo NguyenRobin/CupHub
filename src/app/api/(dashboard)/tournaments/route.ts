@@ -110,64 +110,6 @@ async function addTournamentToTournamentCollectionDB(body, userId) {
   const created = await newTournament.save();
   return created;
 }
-// function createMatchesBasedOnKnockoutStage() {}
-// function buildBracketRounds(total_groups, teamsPerGroupAdvancing) {
-//   const amountOfTeamsToPlayOff = total_groups * teamsPerGroupAdvancing;
-//   const stage = ["final", "semifinal", "quarterfinal", "round 16", "round 32"];
-//   const result = [];
-
-//   let stagesToFinal = 0;
-//   if (amountOfTeamsToPlayOff === 32) {
-//     stagesToFinal = 4; // round 32
-//   }
-//   if (amountOfTeamsToPlayOff === 16) {
-//     stagesToFinal = 3; // round 16
-//   }
-//   if (amountOfTeamsToPlayOff === 8) {
-//     stagesToFinal = 2; // quarterfinal
-//   }
-//   if (amountOfTeamsToPlayOff === 4) {
-//     stagesToFinal = 1; // semifinal
-//   }
-//   if (amountOfTeamsToPlayOff === 2) {
-//     stagesToFinal = 0; // final
-//   }
-
-//   let currentStage = amountOfTeamsToPlayOff;
-//   console.log("amountOfTeamsToPlayOff", amountOfTeamsToPlayOff);
-//   for (let i = stagesToFinal; i >= 0; i--) {
-//     // create the current amount of matches based on stage.
-//     const arr = Array.from({ length: currentStage });
-//     console.log("arr", arr);
-//     const newObj = {
-//       round: stage[i], // ex final, semifinal
-//       matches: arr.map(() => {
-//         return {
-//           match_id: null,
-//           homeTeam: {
-//             team_id: null,
-//             name: null,
-//             score: null,
-//           },
-//           awayTeam: {
-//             team_id: null,
-//             name: null,
-//             score: null,
-//           },
-//           location: null,
-//           date: null,
-//         };
-//       }),
-//     };
-
-//     result.push(newObj);
-
-//     // In every stage only the winnng team will proceed to next stage. So half of the others will get eliminated.
-//     currentStage = currentStage / 2;
-//     console.log("currentStage", currentStage);
-//   }
-//   return result;
-// }
 
 function buildBracketRounds(
   total_groups: number,
@@ -192,11 +134,11 @@ function buildBracketRounds(
     stagesToFinal = 0; // final
   }
 
-  let currentTeams = amountOfTeamsToPlayOff;
+  let currentRound = amountOfTeamsToPlayOff;
 
   // Iterera genom stegen och skapa matcher
   for (let i = stagesToFinal; i >= 0; i--) {
-    const matchesInRound = currentTeams / 2;
+    const matchesInRound = currentRound / 2;
 
     // if (matchesInRound < 1) break; // Om inga matcher kan spelas, avsluta
 
@@ -221,8 +163,7 @@ function buildBracketRounds(
 
     result.push(newObj);
 
-    // Halvera antalet lag för nästa runda
-    currentTeams = matchesInRound;
+    currentRound = matchesInRound;
   }
 
   return result;
@@ -242,6 +183,13 @@ async function updateNewTournamentCollectionWithTeamsParticipating(
   return updatedTournament;
 }
 
+function validatePossibleTeamsPerGroupGoingToPlayoff(
+  totalTeams: number,
+  totalGroups: number
+) {
+  const possibleTotal = totalTeams / totalGroups;
+  console.log("possibleTotal", possibleTotal);
+}
 export async function POST(request: Request) {
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get("userId");
@@ -295,7 +243,7 @@ export async function POST(request: Request) {
       if (total_teams < 0 || total_teams !== teams_participating.length) {
         return NextResponse.json({
           message:
-            "Invalid total_teams. Must be greater than 0. total_teams also have same value as teams_participating",
+            "Invalid total_teams. Must be greater than 0. total_teams must have same value as teams_participating",
           status: 400,
         });
       }
@@ -304,16 +252,74 @@ export async function POST(request: Request) {
         total_groups,
       } = body;
 
-      if (!teamsPerGroupAdvancing || !total_groups) {
+      const possiblePlayoffRounds = [2, 4, 8, 16, 32];
+      const rounds = [
+        "Final",
+        "Semifinal",
+        "Quarterfinal",
+        "Round 16",
+        "Round 32",
+      ];
+      const totalTeamsGoingToPlayoff = total_groups * teamsPerGroupAdvancing;
+      const totalPossibleTeamsPerGroupGoingToPlayoff = Math.floor(
+        total_teams / total_groups
+      );
+      console.log("totalTeamsGoingToPlayoff", totalTeamsGoingToPlayoff);
+      console.log(
+        "totalPossibleTeamsPerGroupGoingToPlayoff",
+        totalPossibleTeamsPerGroupGoingToPlayoff
+      );
+
+      validatePossibleTeamsPerGroupGoingToPlayoff(total_teams, total_groups);
+      if (
+        possiblePlayoffRounds.includes(totalTeamsGoingToPlayoff) &&
+        possiblePlayoffRounds.includes(teamsPerGroupAdvancing) &&
+        totalTeamsGoingToPlayoff <= total_teams
+      ) {
         return NextResponse.json({
-          message:
-            "teamsPerGroupAdvancing & total_groups is required when creating a group stage with knockout",
-          status: 400,
+          status: 200,
+          message: "success YEHE",
+          totalTeamsGoingToPlayoff: totalTeamsGoingToPlayoff,
         });
       }
+      return NextResponse.json({
+        message: `Based on the amount of teams and groups, the possible playoff schedule is: ${possiblePlayoffRounds
+          .filter((num) => num <= total_teams)
+          .reduce((output, num) => {
+            if (num === 2) {
+              return `${rounds[0]}`;
+            } else if (num === 4) {
+              return `${rounds[0]} and ${rounds[1]}`;
+            } else if (num === 8) {
+              return `${rounds[0]}, ${rounds[1]} and ${rounds[2]}`;
+            } else if (num === 16) {
+              return `${rounds[0]}, ${rounds[1]}, ${rounds[2]} and ${rounds[3]}`;
+            } else if (num === 32) {
+              return `${rounds[0]}, ${rounds[1]}, ${rounds[2]}, ${rounds[3]} and ${rounds[4]}`;
+            }
+            return output;
+          }, "")}. Which means teamsPerGroupAdvancing can be: ${totalPossibleTeamsPerGroupGoingToPlayoff}`,
+        status: 400,
+      });
+
+      // if (
+      //   !teamsPerGroupAdvancing ||
+      //   !total_groups ||
+      //   totalTeamsGoingToPlayoff > MAXIMUM_TEAMS_TO_PLAYOFF
+      // ) {
+      //   return NextResponse.json({
+      //     message:
+      //       "teamsPerGroupAdvancing & total_groups is required when creating a group stage with knockout",
+      //     status: 400,
+      //   });
+      // }
+
+      // 1) maximum number of teams allowed 64
+      // 2) maximum number of groups allowed 64 / 2 = 32 groups
+
       await connectToMongoDB();
       const playoff = buildBracketRounds(total_groups, teamsPerGroupAdvancing);
-      console.log("playoff", playoff);
+      // console.log("playoff", playoff);
       const newRound = new RoundModel({
         tournament_id: Types.ObjectId.createFromHexString(
           "66d85a735a777728d90d2e77"
@@ -321,8 +327,6 @@ export async function POST(request: Request) {
         status,
         playoff,
       });
-
-      console.log(newRound.playoff[0].matches);
       await newRound.save();
     }
 

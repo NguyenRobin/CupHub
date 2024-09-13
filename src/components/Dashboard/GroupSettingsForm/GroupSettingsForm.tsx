@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./GroupSettingsForm.scss";
 import Image from "next/image";
 import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
@@ -17,6 +17,10 @@ type Form = {
 type KeyValue = "rounds" | "win" | "draw" | "loss" | "teamsPerGroupAdvancing";
 
 function GroupSettingsForm() {
+  const [groupSettings, setGroupSettings] = useState({
+    teamAmount: null,
+    totalGroups: null,
+  });
   const [form, setForm] = useState<Form>({
     image: null,
     rounds: 1,
@@ -25,6 +29,21 @@ function GroupSettingsForm() {
     loss: 0,
     teamsPerGroupAdvancing: 1,
   });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storage = localStorage.getItem("addTeam");
+      if (storage) {
+        const products = JSON.parse(storage);
+        setGroupSettings(products);
+      }
+    }
+  }, []);
+
+  const possiblePlayoffRounds = [2, 4, 8, 16, 32];
+  const totalTeams = groupSettings.teamAmount!;
+  const totalGroups = groupSettings.totalGroups!;
+  const totalTeamsGoingToPlayoff = totalGroups * form.teamsPerGroupAdvancing;
 
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -73,8 +92,18 @@ function GroupSettingsForm() {
       teamsPerGroupAdvancing: 1,
     });
 
-    console.log(form);
-    localStorage.setItem("groupSettings", JSON.stringify(form));
+    if (
+      possiblePlayoffRounds.includes(totalTeamsGoingToPlayoff) &&
+      totalTeamsGoingToPlayoff <= totalTeams
+    ) {
+      localStorage.setItem("groupSettings", JSON.stringify(form));
+    } else {
+      window.alert(
+        `Possible playoff schedule is ${possiblePlayoffRounds}. You have a total of ${totalTeams} teams. Which means please select a playoff round ${possiblePlayoffRounds.filter(
+          (num) => num <= totalTeams
+        )}`
+      );
+    }
   }
   return (
     <>
@@ -107,7 +136,13 @@ function GroupSettingsForm() {
                 <span>-</span>
               </button>
               <span>{form.rounds}</span>
-              <button type="button" onClick={() => handleIncrement("rounds")}>
+              <button
+                type="button"
+                onClick={() => {
+                  if (form.rounds >= 1) return;
+                  handleIncrement("rounds");
+                }}
+              >
                 <span>+</span>
               </button>
             </section>
