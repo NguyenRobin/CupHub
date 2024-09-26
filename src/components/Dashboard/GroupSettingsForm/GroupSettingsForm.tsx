@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import "./GroupSettingsForm.scss";
-import Image from "next/image";
 import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
 
 type Form = {
@@ -83,7 +82,6 @@ function GroupSettingsForm() {
     // if (form.name === "") return;
 
     setForm({
-      name: "",
       image: null,
       rounds: 1,
       win: 3,
@@ -105,6 +103,22 @@ function GroupSettingsForm() {
       );
     }
   }
+
+  const testGroups = [
+    {
+      group: "A",
+      teams: ["team1", "team2", "team3", "team4"],
+    },
+    {
+      group: "B",
+      teams: ["team5", "team6", "team7"],
+    },
+    {
+      group: "C",
+      teams: ["team8", "team9", "team10"],
+    },
+  ];
+
   return (
     <>
       <CardRuleLayout title="Gruppspelsinställningar">

@@ -37,6 +37,7 @@ const matchSchema = new Schema<IMatch>(
       ref: "League",
     },
     status: { type: String, required: true },
+
     homeTeam: {
       team_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -56,8 +57,8 @@ const matchSchema = new Schema<IMatch>(
       score: { type: Number, required: true },
     },
 
-    date: { type: Date, required: true },
-    location: { type: String, required: true },
+    date: { type: Date, required: false },
+    location: { type: String, required: false },
   },
   { timestamps: true }
 );

@@ -46,7 +46,7 @@ const matchSchema = new Schema<IMatch>(
 const roundSchema = new Schema<IRound>(
   {
     tournament_id: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Tournament",
     },

@@ -1,10 +1,14 @@
 import connectToMongoDB from "@/lib/connectToMongoDB";
+import GroupModel from "@/models/Group";
+import MatchModel from "@/models/Match";
 import RoundModel from "@/models/Round";
 import TeamModel from "@/models/Team";
 import TournamentModel from "@/models/Tournament";
-import UserModel from "@/models/User";
+import { match } from "assert";
+
 import mongoose, { Types } from "mongoose";
 import { NextResponse } from "next/server";
+import { v4 as uuidv4 } from "uuid";
 
 export async function GET(request: Request) {
   try {
@@ -53,6 +57,22 @@ async function saveTeamToDB(arr: string[], ownerId: any) {
   });
 }
 
+async function createPlayoffRoundToRoundCollectionDB(
+  tournament_id: string,
+  playoff_round: number,
+  status: "scheduled" | "ongoing" | "completed"
+) {
+  const playoffSchedule = buildPlayoffSchedule(playoff_round);
+
+  const newRound = new RoundModel({
+    tournament_id: tournament_id,
+    status: status,
+    playoff: playoffSchedule,
+  });
+
+  await newRound.save();
+}
+
 async function addTeamToTeamCollectionDB(
   teams: string[],
   createdByUserId: any,
@@ -72,7 +92,7 @@ async function addTeamToTeamCollectionDB(
   return docs;
 }
 
-async function addTournamentToTournamentCollectionDB(body, userId) {
+async function createTournamentToTournamentCollectionDB(body, userId) {
   const {
     id,
     name,
@@ -111,12 +131,14 @@ async function addTournamentToTournamentCollectionDB(body, userId) {
   return created;
 }
 
-function buildBracketRounds(
-  total_groups: number,
-  teamsPerGroupAdvancing: number
-) {
-  const amountOfTeamsToPlayOff = total_groups * teamsPerGroupAdvancing;
-  const stage = ["final", "semifinal", "quarterfinal", "round 16", "round 32"];
+async function addMatchesToMatchesCollectionDB(array) {
+  const docs = await MatchModel.insertMany(array);
+
+  return docs;
+}
+
+function buildPlayoffSchedule(amountOfTeamsToPlayOff: number) {
+  const stages = ["final", "semifinal", "quarterfinal", "round 16", "round 32"];
   const result = [];
 
   let stagesToFinal = 0;
@@ -143,7 +165,7 @@ function buildBracketRounds(
     // if (matchesInRound < 1) break; // Om inga matcher kan spelas, avsluta
 
     const newObj = {
-      round: stage[i], // ex final, semifinal
+      round: stages[i], // ex final, semifinal
       matches: Array.from({ length: matchesInRound }).map(() => ({
         match_id: null,
         homeTeam: {
@@ -169,9 +191,9 @@ function buildBracketRounds(
   return result;
 }
 
-async function updateNewTournamentCollectionWithTeamsParticipating(
+async function updateTournamentCollectionWithTeamsParticipating(
   tournament_id: any,
-  arr: any
+  arr: any[]
 ) {
   const teams_participating = arr.map((team) => {
     return { team_id: team._id };
@@ -183,16 +205,121 @@ async function updateNewTournamentCollectionWithTeamsParticipating(
   return updatedTournament;
 }
 
+async function updateTournamentCollectionWithGroupIds(
+  tournament_id: any,
+  arr: any[]
+) {
+  const groupIds = arr.map((group) => group._id);
+
+  const updatedTournament = await TournamentModel.findByIdAndUpdate(
+    { _id: tournament_id },
+    { groups: groupIds }
+  );
+  return updatedTournament;
+}
+
+async function createGroupCollectionToDB(
+  groups: any[],
+  tournament_id: string,
+  teamsArr: any[]
+) {
+  const allGroups: TGroup[] = [];
+  for (let i = 0; i < groups.length; i++) {
+    const teams = teamsArr
+      .filter((team) => groups[i].teams.includes(team.name))
+      .map((team) => ({ team_id: team._id, name: team.name }));
+
+    const newGroup: TGroup = {
+      tournament_id: tournament_id,
+      group: groups[i].group,
+      teams: teams,
+      standings: teams.map((team) => {
+        return {
+          team_id: team.team_id,
+          team: team.name,
+          win: 0,
+          draw: 0,
+          loss: 0,
+          goal: 0,
+          goal_difference: 0,
+          matches_played: 0,
+          points: 0,
+        };
+      }),
+    };
+    allGroups.push(newGroup);
+  }
+  const groupsAddedToDB = await GroupModel.insertMany(allGroups);
+  return groupsAddedToDB;
+}
+
+async function updateGroupCollectionWithMatchIds(arr: any[]) {
+  const groupIds = arr.map((group) => group.group_id);
+  const removedDuplicatesOfGroupIds = [...new Set(groupIds)];
+
+  for (const id of removedDuplicatesOfGroupIds) {
+    const matchIds = arr
+      .filter((match) => match.group_id === id)
+      .map((match) => match._id);
+
+    const updatedGroup = await GroupModel.findByIdAndUpdate(
+      { _id: id },
+      { matches: matchIds }
+    );
+  }
+}
+
 function validatePossibleTeamsPerGroupGoingToPlayoff(
   totalTeams: number,
-  totalGroups: number
-) {
-  const possibleTotal = totalTeams / totalGroups;
-  console.log("possibleTotal", possibleTotal);
+  totalGroups: number,
+  totalTeamsPerGroupAdvancing: number
+): {
+  valid: boolean;
+  message?: string;
+  totalTeamsGoingToPlayoff?: number;
+  wildcards?: number;
+  playoff_round?: number;
+} {
+  const possibleTotalTeamsPlayoffRounds = [2, 4, 8, 16, 32];
+  const totalTeamsGoingToPlayoff = totalGroups * totalTeamsPerGroupAdvancing;
+
+  if (totalTeamsGoingToPlayoff > totalTeams) {
+    return {
+      valid: false,
+      message: `The total amount of teams going to playoff ( ${totalTeamsGoingToPlayoff} ), cannot be greater than the total of team participating ( ${totalTeams} ).`,
+    };
+  }
+
+  if (possibleTotalTeamsPlayoffRounds.includes(totalTeamsGoingToPlayoff)) {
+    return {
+      valid: true,
+      totalTeamsGoingToPlayoff,
+      playoff_round: totalTeamsGoingToPlayoff,
+    };
+  } else {
+    const closestValidPlayoffRound = possibleTotalTeamsPlayoffRounds.find(
+      (num) => num > totalTeamsGoingToPlayoff
+    );
+
+    if (!closestValidPlayoffRound) {
+      return { valid: false, message: "No valid playoff was found" };
+    }
+
+    const wildcards = closestValidPlayoffRound - totalTeamsGoingToPlayoff;
+
+    return {
+      valid: true,
+      totalTeamsGoingToPlayoff,
+      wildcards,
+      playoff_round: totalTeamsGoingToPlayoff + wildcards,
+    };
+  }
 }
+
 export async function POST(request: Request) {
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get("userId");
+
   try {
     const body = await request.json();
     const {
@@ -209,6 +336,7 @@ export async function POST(request: Request) {
       updatedAt,
       status,
       points_system,
+      groups,
     } = body;
 
     if (!userId || !mongoose.isValidObjectId(userId)) {
@@ -218,116 +346,91 @@ export async function POST(request: Request) {
       });
     }
 
-    // 1) Add the tournament to database to then retrieve the _id
-    // const newTournament = await addTournamentToTournamentCollectionDB(
-    //   body,
-    //   userId
-    // );
+    if (total_teams < 0 || total_teams !== teams_participating.length) {
+      return NextResponse.json({
+        message:
+          "Invalid total_teams. Must be greater than 0. total_teams must have same value as teams_participating",
+        status: 400,
+      });
+    }
 
-    // // 2) with the _id from tournament we can now create a relationship between tournament in the TournamentModel and the teams in the TeamModel.
-    // const teamsAddedToDb = await addTeamToTeamCollectionDB(
-    //   teams_participating,
-    //   userId,
-    //   newTournament._id
-    // );
-
-    // // 3) Now we also need to update the newTournament with all the teams that participate in specific tournament.
-    // const updatedNewTournamentWithTeams =
-    //   await updateNewTournamentCollectionWithTeamsParticipating(
-    //     newTournament._id,
-    //     teamsAddedToDb
-    //   );
-
-    // 4) check tournament_format.
     if (tournament_format === "group_stage_with_knockout") {
-      if (total_teams < 0 || total_teams !== teams_participating.length) {
-        return NextResponse.json({
-          message:
-            "Invalid total_teams. Must be greater than 0. total_teams must have same value as teams_participating",
-          status: 400,
-        });
-      }
       const {
         points_system: { teamsPerGroupAdvancing },
         total_groups,
       } = body;
 
-      const possiblePlayoffRounds = [2, 4, 8, 16, 32];
-      const rounds = [
-        "Final",
-        "Semifinal",
-        "Quarterfinal",
-        "Round 16",
-        "Round 32",
-      ];
-      const totalTeamsGoingToPlayoff = total_groups * teamsPerGroupAdvancing;
-      const totalPossibleTeamsPerGroupGoingToPlayoff = Math.floor(
-        total_teams / total_groups
-      );
-      console.log("totalTeamsGoingToPlayoff", totalTeamsGoingToPlayoff);
-      console.log(
-        "totalPossibleTeamsPerGroupGoingToPlayoff",
-        totalPossibleTeamsPerGroupGoingToPlayoff
-      );
-
-      validatePossibleTeamsPerGroupGoingToPlayoff(total_teams, total_groups);
-      if (
-        possiblePlayoffRounds.includes(totalTeamsGoingToPlayoff) &&
-        possiblePlayoffRounds.includes(teamsPerGroupAdvancing) &&
-        totalTeamsGoingToPlayoff <= total_teams
-      ) {
+      if (!teamsPerGroupAdvancing || !total_groups) {
         return NextResponse.json({
-          status: 200,
-          message: "success YEHE",
-          totalTeamsGoingToPlayoff: totalTeamsGoingToPlayoff,
+          message:
+            "teamsPerGroupAdvancing & total_groups is required when creating a group stage with knockout",
+          status: 400,
         });
       }
-      return NextResponse.json({
-        message: `Based on the amount of teams and groups, the possible playoff schedule is: ${possiblePlayoffRounds
-          .filter((num) => num <= total_teams)
-          .reduce((output, num) => {
-            if (num === 2) {
-              return `${rounds[0]}`;
-            } else if (num === 4) {
-              return `${rounds[0]} and ${rounds[1]}`;
-            } else if (num === 8) {
-              return `${rounds[0]}, ${rounds[1]} and ${rounds[2]}`;
-            } else if (num === 16) {
-              return `${rounds[0]}, ${rounds[1]}, ${rounds[2]} and ${rounds[3]}`;
-            } else if (num === 32) {
-              return `${rounds[0]}, ${rounds[1]}, ${rounds[2]}, ${rounds[3]} and ${rounds[4]}`;
-            }
-            return output;
-          }, "")}. Which means teamsPerGroupAdvancing can be: ${totalPossibleTeamsPerGroupGoingToPlayoff}`,
-        status: 400,
-      });
 
-      // if (
-      //   !teamsPerGroupAdvancing ||
-      //   !total_groups ||
-      //   totalTeamsGoingToPlayoff > MAXIMUM_TEAMS_TO_PLAYOFF
-      // ) {
-      //   return NextResponse.json({
-      //     message:
-      //       "teamsPerGroupAdvancing & total_groups is required when creating a group stage with knockout",
-      //     status: 400,
-      //   });
-      // }
+      const playoffInformation = validatePossibleTeamsPerGroupGoingToPlayoff(
+        total_teams,
+        total_groups,
+        teamsPerGroupAdvancing
+      );
 
-      // 1) maximum number of teams allowed 64
-      // 2) maximum number of groups allowed 64 / 2 = 32 groups
+      if (!playoffInformation.valid) {
+        return NextResponse.json({
+          message: playoffInformation.message,
+          status: 400,
+        });
+      }
 
+      // 1) connect to the database and start the session
       await connectToMongoDB();
-      const playoff = buildBracketRounds(total_groups, teamsPerGroupAdvancing);
-      // console.log("playoff", playoff);
-      const newRound = new RoundModel({
-        tournament_id: Types.ObjectId.createFromHexString(
-          "66d85a735a777728d90d2e77"
-        ),
-        status,
-        playoff,
-      });
-      await newRound.save();
+
+      // 2) Add the tournament to database to then retrieve the _id
+      const newTournament = await createTournamentToTournamentCollectionDB(
+        body,
+        userId
+      );
+
+      // 3) with the _id from tournament we can now create a relationship between tournament in the TournamentModel and the teams in the TeamModel.
+      const teamsAddedToDb = await addTeamToTeamCollectionDB(
+        teams_participating,
+        userId,
+        newTournament._id
+      );
+
+      // 4) Now we also need to update the newTournament with all the teams that participate in specific tournament.
+      const updatedNewTournamentWithTeams =
+        await updateTournamentCollectionWithTeamsParticipating(
+          newTournament._id,
+          teamsAddedToDb
+        );
+
+      // 5) create rounds and insert them in to ROUNDS COLLECTION
+      const roundsAddedToDb = await createPlayoffRoundToRoundCollectionDB(
+        newTournament._id,
+        playoffInformation.playoff_round!,
+        status
+      );
+
+      // 5) create the groups to groups model
+      const groupsAddedToDB = await createGroupCollectionToDB(
+        groups,
+        newTournament._id,
+        teamsAddedToDb
+      );
+
+      // 6) create the matches generate so all teams play against each other.
+      const matches = generateRobinRound(groupsAddedToDB);
+
+      const matchesAddedToDB = await addMatchesToMatchesCollectionDB(matches);
+
+      // 7) update tournament model with the groups _id ref in the tournaments group array
+      await updateTournamentCollectionWithGroupIds(
+        newTournament._id,
+        groupsAddedToDB
+      );
+
+      // 8) update the groups model with the match _id ref in the groups matches array
+      await updateGroupCollectionWithMatchIds(matchesAddedToDB);
     }
 
     if (tournament_format === "league") {
@@ -400,3 +503,102 @@ export async function POST(request: Request) {
 //     return NextResponse.json({ status: 404, message: error.message });
 //   }
 // }
+
+type TGroup = {
+  _id?: string;
+  tournament_id: string;
+  group: string;
+  teams: { team_id: string; name: string }[];
+  standings: TStanding[];
+};
+
+type TStanding = {
+  team_id: string;
+  team: string;
+  win: number;
+  draw: number;
+  loss: number;
+  goal: number;
+  goal_difference: number;
+  matches_played: number;
+  points: number;
+};
+
+type TMatch = {
+  _id?: string;
+  match_id: string;
+  tournament_id: string;
+  group_id?: string;
+  round_id?: string;
+  league_id?: string;
+  status: "scheduled" | "ongoing" | "completed";
+  homeTeam: { team_id: string; name: string; score: number | null };
+  awayTeam: { team_id: string; name: string; score: number | null };
+  date?: Date;
+  location?: string;
+};
+
+function generateRobinRound(groups: TGroup[]): TMatch[] {
+  const matches: TMatch[] = [];
+
+  for (let i = 0; i < groups.length; i++) {
+    const totalTeamsInGroup = groups[i].teams.length;
+    const currentGroupOfTeams = groups[i].teams;
+
+    // if totalTeamsInGroup i ODD, we must create a 'BYE' match to have EVEN matches
+    if (totalTeamsInGroup % 2 !== 0) {
+      currentGroupOfTeams.push({ name: "bye", team_id: "bye" });
+    }
+
+    // Amount of rounds needed to be played fore all teams to have played against each other.
+    const totalPlayingRounds = currentGroupOfTeams.length - 1;
+
+    for (let round = 0; round < totalPlayingRounds; round++) {
+      // create each match between two teams. Therefore we currentGroupOfTeams.length / 2, so this statement determine the amount of for each round.
+      for (let j = 0; j < currentGroupOfTeams.length / 2; j++) {
+        // start with the FIRST team in the array
+        const teamOne = currentGroupOfTeams[j].name;
+        // against the LAST team in the array
+        const teamTwo =
+          currentGroupOfTeams[currentGroupOfTeams.length - 1 - j].name; // 3,2
+
+        // we don't want to add 'BYE' matches to the matches array. So we only push a match if both team are not a 'bye' team.
+        if (teamOne !== "bye" && teamTwo !== "bye") {
+          const newMatch: TMatch = {
+            match_id: uuidv4(),
+            tournament_id: groups[i].tournament_id,
+            group_id: groups[i]._id,
+            status: "scheduled",
+            homeTeam: {
+              team_id: currentGroupOfTeams[j].team_id,
+              name: teamOne,
+              score: 0,
+            },
+            awayTeam: {
+              team_id:
+                currentGroupOfTeams[currentGroupOfTeams.length - 1 - j].team_id,
+              name: teamTwo,
+              score: 0,
+            },
+          };
+          matches.push(newMatch);
+        }
+      }
+
+      // After completing all iterations of the inner loop (which creates the matchups for the current round),
+      // we need to rotate the teams to prepare for the next round. This ensures that each team will face a
+      // new opponent in the next round, preventing the same matchups from occurring repeatedly.
+      // The rotation works by moving the last team in the array to the position right after the first team.
+      // The first team at index 0 remains fixed throughout all rounds, while all other teams are rotated one position to the right.
+      // This rotation guarantees that teamTwo (the second team in a matchup) changes in the next round.
+      const lastTeam = currentGroupOfTeams.pop()!;
+
+      // Now, we modify the `currentGroupOfTeams` array by inserting `lastTeam` at index 1, right after the first team. We use `splice(1, 0, lastTeam)` to insert without removing any elements from the array. This shifts all other teams one position to the right, which ensures that the matchups change in the next round.
+
+      // The first team (index 0) stays fixed, and the remaining teams rotate positions, ensuring a new opponent for each team in each round.
+      currentGroupOfTeams.splice(1, 0, lastTeam);
+    }
+  }
+
+  return matches;
+}

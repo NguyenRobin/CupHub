@@ -84,6 +84,7 @@ function AddTeam() {
 
     let currentIndex = 0;
     for (let i = 0; i < totalGroups; i++) {
+      // fromCharCode(65) starts at letter 'a'
       const newGroup = { group: String.fromCharCode(65 + i), teams: [] };
 
       allGroups.push(newGroup);
@@ -95,6 +96,7 @@ function AddTeam() {
     }
 
     let usedIndexes: number[] = [];
+
     for (let i = 0; i < leftOverTeams; i++) {
       if (usedIndexes.length === totalGroups) {
         usedIndexes = []; // restore it if all indexes been used once
@@ -206,6 +208,7 @@ function AddTeam() {
     e.preventDefault();
     router.push("/dashboard/create-tournament/group-settings");
 
+    //! TEMPORARY, LATER WE WANT TO SAVE ALL THE DATA TOGETHER FROM CREATING THE TOURNAMENT AND SEND IT TO THE DATABASE
     localStorage.setItem(
       "addTeam",
       JSON.stringify({
@@ -215,7 +218,6 @@ function AddTeam() {
     );
   }
 
-  console.log("selectedGroupValue", selectedGroupValue);
   return (
     <CardRuleLayout title="Antal lag">
       <form onSubmit={handleOnSubmit} action="" className="addTeam-form">

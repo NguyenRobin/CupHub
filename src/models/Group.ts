@@ -2,10 +2,23 @@ import mongoose, { Types, Schema, model } from "mongoose";
 
 interface IGroup {
   tournament_id: Types.ObjectId;
-  name: string;
-  teams: Types.ObjectId[];
-  matches: Types.ObjectId[];
-  standings: Types.ObjectId;
+  group: string;
+  teams?: { team_id: Types.ObjectId; name: string }[];
+  matches?: Types.ObjectId[];
+  standings?: IStanding[];
+}
+
+interface IStanding {
+  team_id: Types.ObjectId;
+  team: string;
+  win: number;
+  draw: number;
+  loss: number;
+  goal: number;
+  goal_difference: number;
+  matches_played: number;
+  points: number;
+  lastUpdated?: Date;
 }
 
 const groupSchema = new Schema<IGroup>(
@@ -15,18 +28,38 @@ const groupSchema = new Schema<IGroup>(
       ref: "Tournament",
       required: true,
     },
-    name: { type: String, required: true },
+    group: { type: String, required: true },
     teams: [
-      { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Team" },
+      {
+        _id: false,
+        team_id: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: "Team",
+        },
+        name: { type: String, required: true },
+      },
     ],
     matches: [
       { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Match" },
     ],
-    standings: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "Standing",
-    },
+    standings: [
+      {
+        team_id: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Team",
+          required: true,
+        },
+        team: { type: String, required: true },
+        win: { type: Number, required: true },
+        draw: { type: Number, required: true },
+        loss: { type: Number, required: true },
+        goal: { type: Number, required: true },
+        goal_difference: { type: Number, required: true },
+        matches_played: { type: Number, required: true },
+        points: { type: Number, required: true },
+      },
+    ],
   },
   { timestamps: true }
 );
