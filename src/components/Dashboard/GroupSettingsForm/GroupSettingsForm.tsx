@@ -1,124 +1,38 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./GroupSettingsForm.scss";
 import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
-
-type Form = {
-  image: string | null;
-  rounds: number;
-  win: number;
-  draw: number;
-  loss: number;
-  teamsPerGroupAdvancing: number;
-};
-
-type KeyValue = "rounds" | "win" | "draw" | "loss" | "teamsPerGroupAdvancing";
+import useFormContext from "@/hooks/useFormContext";
 
 function GroupSettingsForm() {
-  const [groupSettings, setGroupSettings] = useState({
-    teamAmount: null,
-    totalGroups: null,
-  });
-  const [form, setForm] = useState<Form>({
-    image: null,
-    rounds: 1,
-    win: 3,
-    draw: 1,
-    loss: 0,
-    teamsPerGroupAdvancing: 1,
-  });
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storage = localStorage.getItem("addTeam");
-      if (storage) {
-        const products = JSON.parse(storage);
-        setGroupSettings(products);
-      }
-    }
-  }, []);
+  const {
+    win,
+    draw,
+    loss,
+    rounds,
+    teams,
+    total_groups,
+    teamsPerGroupAdvancing,
+    handleIncrement,
+    handleDecrement,
+    setPage,
+  } = useFormContext();
 
   const possiblePlayoffRounds = [2, 4, 8, 16, 32];
-  const totalTeams = groupSettings.teamAmount!;
-  const totalGroups = groupSettings.totalGroups!;
-  const totalTeamsGoingToPlayoff = totalGroups * form.teamsPerGroupAdvancing;
+  const totalTeams = teams.length!;
+  const totalGroups = total_groups!;
+  const totalTeamsGoingToPlayoff = totalGroups * teamsPerGroupAdvancing!;
 
-  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-
-    setForm((prevState) => ({ ...prevState, [name]: value }));
-  }
-
-  const handleIncrement = (key: KeyValue) => {
-    if (form[key] === 9) return;
-    setForm((prevState) => {
-      if (typeof prevState[key] === "number") {
-        return {
-          ...prevState,
-          [key]: Number(prevState[key]) + 1,
-        };
-      }
-      return prevState;
-    });
-  };
-
-  const handleDecrement = (key: KeyValue) => {
-    if (form[key] === 0) return;
-
-    setForm((prevState) => {
-      if (typeof prevState[key] === "number") {
-        return {
-          ...prevState,
-          [key]: prevState[key] - 1,
-        };
-      }
-      return prevState;
-    });
-  };
+  const handleNext = () => setPage((prev) => prev + 1);
 
   function handleOnSubmit(e: React.MouseEvent<HTMLFormElement, MouseEvent>) {
-    e.preventDefault();
-    // if (form.name === "") return;
-
-    setForm({
-      image: null,
-      rounds: 1,
-      win: 3,
-      draw: 1,
-      loss: 0,
-      teamsPerGroupAdvancing: 1,
-    });
-
     if (
       possiblePlayoffRounds.includes(totalTeamsGoingToPlayoff) &&
       totalTeamsGoingToPlayoff <= totalTeams
     ) {
-      localStorage.setItem("groupSettings", JSON.stringify(form));
-    } else {
-      window.alert(
-        `Possible playoff schedule is ${possiblePlayoffRounds}. You have a total of ${totalTeams} teams. Which means please select a playoff round ${possiblePlayoffRounds.filter(
-          (num) => num <= totalTeams
-        )}`
-      );
     }
   }
-
-  const testGroups = [
-    {
-      group: "A",
-      teams: ["team1", "team2", "team3", "team4"],
-    },
-    {
-      group: "B",
-      teams: ["team5", "team6", "team7"],
-    },
-    {
-      group: "C",
-      teams: ["team8", "team9", "team10"],
-    },
-  ];
-
   return (
     <>
       <CardRuleLayout title="Gruppspelsinställningar">
@@ -143,17 +57,17 @@ function GroupSettingsForm() {
               <button
                 type="button"
                 onClick={() => {
-                  if (form.rounds <= 1) return;
+                  if (rounds <= 1) return;
                   handleDecrement("rounds");
                 }}
               >
                 <span>-</span>
               </button>
-              <span>{form.rounds}</span>
+              <span>{rounds}</span>
               <button
                 type="button"
                 onClick={() => {
-                  if (form.rounds >= 1) return;
+                  if (rounds >= 2) return;
                   handleIncrement("rounds");
                 }}
               >
@@ -169,7 +83,7 @@ function GroupSettingsForm() {
                 <span>-</span>
               </button>
 
-              <span>{form.win}</span>
+              <span>{win}</span>
               <button type="button" onClick={() => handleIncrement("win")}>
                 <span>+</span>
               </button>
@@ -183,7 +97,7 @@ function GroupSettingsForm() {
                 <span>-</span>
               </button>
 
-              <span>{form.draw}</span>
+              <span>{draw}</span>
               <button type="button" onClick={() => handleIncrement("draw")}>
                 <span>+</span>
               </button>
@@ -196,14 +110,14 @@ function GroupSettingsForm() {
               <button type="button" onClick={() => handleDecrement("loss")}>
                 <span>-</span>
               </button>
-              <span>{form.loss}</span>
+              <span>{loss}</span>
               <button type="button" onClick={() => handleIncrement("loss")}>
                 <span>+</span>
               </button>
             </section>
           </label>
 
-          <label className="group-settings-form__label" htmlFor="lost">
+          {/* <label className="group-settings-form__label" htmlFor="lost">
             <p>Antal lag per grupp vidare till slutspel</p>
             <section className="">
               <button
@@ -223,14 +137,15 @@ function GroupSettingsForm() {
                 <span>+</span>
               </button>
             </section>
-          </label>
-
-          <input
-            type="submit"
-            value="Nästa"
-            className="group-settings-form__submit-btn"
-          />
+          </label> */}
         </form>
+
+        <button
+          className="group-settings-form__submit-btn"
+          onClick={handleNext}
+        >
+          Nästa
+        </button>
       </CardRuleLayout>
     </>
   );

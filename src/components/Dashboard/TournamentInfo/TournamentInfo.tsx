@@ -1,52 +1,25 @@
 import React, { useState } from "react";
 import "./TournamentInfo.scss";
 import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
-
-type Form = {
-  name: string;
-  description?: string;
-  sport?: string;
-  startDate: string;
-  endDate: string;
-};
+import useFormContext from "@/hooks/useFormContext";
 
 function TournamentInfo() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const [step, setStep] = useState(0);
-  const [form, setForm] = useState<Form>({
-    name: "",
-    description: "",
-    sport: "",
-    startDate: "",
-    endDate: "",
-  });
+  const { description, name, startDate, endDate, setPage, handleOnChange } =
+    useFormContext();
 
-  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-    setForm((prevState) => ({ ...prevState, [name]: value }));
-  }
-
-  const handleOnSubmit = (e: React.MouseEvent<HTMLFormElement, MouseEvent>) => {
-    e.preventDefault();
-
-    router.push("/dashboard/create-tournament/add-team");
-    console.log(form);
-    localStorage.setItem("tournamentInfo", JSON.stringify(form));
-  };
+  const handlePrev = () => setPage((prev) => prev - 1);
+  const handleNext = () => setPage((prev) => prev + 1);
 
   return (
     <CardRuleLayout title="Information">
-      <form onSubmit={handleOnSubmit} className="tournament-info">
+      <form className="tournament-info">
         <label htmlFor="title" className="tournament-info__label">
           <p>Namn på turneringen</p>
           <input
             type="text"
             id="name"
             name="name"
-            value={form.name}
+            value={name}
             onChange={handleOnChange}
           />
         </label>
@@ -57,7 +30,7 @@ function TournamentInfo() {
             type="text"
             id="description"
             name="description"
-            value={form.description}
+            value={description}
             onChange={handleOnChange}
           />
         </label>
@@ -68,7 +41,7 @@ function TournamentInfo() {
             type="date"
             id="startDate"
             name="startDate"
-            value={form.startDate}
+            value={startDate}
             onChange={handleOnChange}
           />
         </label>
@@ -79,17 +52,14 @@ function TournamentInfo() {
             type="date"
             id="endDate"
             name="endDate"
-            value={form.endDate}
+            value={endDate}
             onChange={handleOnChange}
           />
         </label>
-
-        <input
-          type="submit"
-          value="Nästa"
-          className="tournament-info__submit-btn"
-        />
       </form>
+      <button className="tournament-info__submit-btn" onClick={handleNext}>
+        Nästa
+      </button>
     </CardRuleLayout>
   );
 }
