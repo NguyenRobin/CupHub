@@ -2,8 +2,9 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import "./GroupSettingsForm.scss";
-import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
+import CardRuleLayout from "../CardRule/CardRule";
 import useFormContext from "@/hooks/useFormContext";
+import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
 
 function GroupSettingsForm() {
   const {
@@ -24,6 +25,7 @@ function GroupSettingsForm() {
   const totalGroups = total_groups!;
   const totalTeamsGoingToPlayoff = totalGroups * teamsPerGroupAdvancing!;
 
+  const handleBack = () => setPage((prev) => prev - 1);
   const handleNext = () => setPage((prev) => prev + 1);
 
   function handleOnSubmit(e: React.MouseEvent<HTMLFormElement, MouseEvent>) {
@@ -34,24 +36,24 @@ function GroupSettingsForm() {
     }
   }
   return (
-    <>
-      <CardRuleLayout title="Gruppspelsinställningar">
+    <CardRuleLayout title="Gruppspelsinställningar">
+      <div className="group-settings">
         <form
           onSubmit={handleOnSubmit}
           action=""
-          className="group-settings-form"
+          className="group-settings__form"
         >
-          {/* <label className="group-settings-form__label" htmlFor="image">
+          {/* <label className="group-settings__form--label" htmlFor="image">
             <p>Omslag</p>
             <input
               type="file"
               id="image"
               name="filename"
-              className="group-settings-form__label--upload-file"
+              className="group-settings__form--label--upload-file"
             />
           </label> */}
 
-          <label className="group-settings-form__label" htmlFor="rounds">
+          <label className="group-settings__form--label" htmlFor="rounds">
             <p>Antal möten</p>
             <section className="">
               <button
@@ -76,7 +78,7 @@ function GroupSettingsForm() {
             </section>
           </label>
 
-          <label className="group-settings-form__label" htmlFor="win">
+          <label className="group-settings__form--label" htmlFor="win">
             <p>Poäng för vinst</p>
             <section className="">
               <button type="button" onClick={() => handleDecrement("win")}>
@@ -90,7 +92,7 @@ function GroupSettingsForm() {
             </section>
           </label>
 
-          <label className="group-settings-form__label" htmlFor="draw">
+          <label className="group-settings__form--label" htmlFor="draw">
             <p>Poäng för oavgjort</p>
             <section className="">
               <button type="button" onClick={() => handleDecrement("draw")}>
@@ -104,7 +106,7 @@ function GroupSettingsForm() {
             </section>
           </label>
 
-          <label className="group-settings-form__label" htmlFor="lost">
+          <label className="group-settings__form--label" htmlFor="lost">
             <p>Poäng för förlust</p>
             <section className="">
               <button type="button" onClick={() => handleDecrement("loss")}>
@@ -116,38 +118,26 @@ function GroupSettingsForm() {
               </button>
             </section>
           </label>
-
-          {/* <label className="group-settings-form__label" htmlFor="lost">
-            <p>Antal lag per grupp vidare till slutspel</p>
-            <section className="">
-              <button
-                type="button"
-                onClick={() => {
-                  if (form.teamsPerGroupAdvancing <= 1) return;
-                  handleDecrement("teamsPerGroupAdvancing");
-                }}
-              >
-                <span>-</span>
-              </button>
-              <span>{form.teamsPerGroupAdvancing}</span>
-              <button
-                type="button"
-                onClick={() => handleIncrement("teamsPerGroupAdvancing")}
-              >
-                <span>+</span>
-              </button>
-            </section>
-          </label> */}
         </form>
 
-        <button
-          className="group-settings-form__submit-btn"
-          onClick={handleNext}
-        >
-          Nästa
-        </button>
-      </CardRuleLayout>
-    </>
+        <div className="group-settings__buttons">
+          <button
+            className="group-settings__buttons--back btn"
+            onClick={handleBack}
+          >
+            <IoIosArrowRoundBack size={25} />
+            Tillbaka
+          </button>
+          <button
+            className="group-settings__buttons--next btn"
+            onClick={handleNext}
+          >
+            Nästa
+            <IoIosArrowRoundForward size={25} />
+          </button>
+        </div>
+      </div>
+    </CardRuleLayout>
   );
 }
 

@@ -14,6 +14,8 @@
   top: 0;
   z-index: 1000000000;
   background-color: $nav-bg-color;
+  height: 7rem;
+
   &__admin {
     display: flex;
     justify-content: center;

@@ -8,18 +8,6 @@ type Props = {
 };
 
 function Rule({ label, value, handleIncrement, handleDecrement }: Props) {
-  // const [count, setCount] = useState(initialState);
-
-  // const handleDecrement = () => {
-  //   if (count <= 0) return;
-  //   setCount((prev) => prev - 1);
-  // };
-
-  // const handleIncrement = () => {
-  //   if (count >= 32) return;
-  //   setCount((prev) => prev + 1);
-  // };
-
   return (
     <label className="tournament-form__label">
       <p>{label}</p>

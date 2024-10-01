@@ -4,9 +4,34 @@ import Image from "next/image";
 import { MdLocationOn } from "react-icons/md";
 import { SlCalender } from "react-icons/sl";
 
-import Link from "next/link";
+function getMonthName(monthNumber: number): string {
+  const MAX_LENGTH = 3;
+  const months = [
+    "Januari",
+    "Februari",
+    "Mars",
+    "April",
+    "Maj",
+    "Juni",
+    "Juli",
+    "Augusti",
+    "September",
+    "Oktober",
+    "November",
+    "December",
+  ];
+
+  let output = "";
+
+  for (let i = 0; i < MAX_LENGTH; i++) {
+    output += months[monthNumber - 1][i];
+  }
+
+  return output;
+}
 
 function UpcomingEvents({ events }) {
+  console.log(events);
   return (
     <section className="upcomingEvent-container">
       <section className="upcomingEvent-container__title">
@@ -14,13 +39,14 @@ function UpcomingEvents({ events }) {
         <h2>Kommande Evenemang</h2>
       </section>
 
-      {events.length === 0 ? (
+      {events?.tournaments.length === 0 ? (
         <p>Inga kommande evenemang. 😢</p>
       ) : (
-        events.map((el) => (
+        events.tournaments.map((el) => (
           <UpcomingEvent
-            day={el.day}
-            month={el.month}
+            key={el._id}
+            day={el.startDate.split("T")[0].split("-")[2]}
+            month={getMonthName(+el.startDate.split("T")[0].split("-")[1])}
             name={el.name}
             location={el.location}
           />

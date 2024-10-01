@@ -2,11 +2,14 @@
 @import "../styles/typography.scss";
 
 .wrapper {
+  margin-top: 7rem; // bases on the nac height to make it show the full element height
   background-color: red;
-  position: relative;
+  // position: relative;
+  // height: 100dvh;
   height: 100%;
+  overflow-y: auto;
+  padding-bottom: 7rem;
 }
 .main-content {
-  margin-top: 7rem; // bases on the nac height to make it show the full element height
   background-color: $bg-color-secondary;
 }

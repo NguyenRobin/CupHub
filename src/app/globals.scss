@@ -8,12 +8,11 @@
 
 html,
 body {
-  // width: 100vw;
-  // min-height: 100vh;
-  // min-width: 100vw;
-  height: 100vh;
+  // height: 100vh;
+  height: 100dvh;
   width: 100vw;
   background-color: $body-bg-color;
+  overflow: hidden;
 }
 
 html {
@@ -25,11 +24,3 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
-// html,
-// body,
-// .dashboard-container,
-// .main-container {
-//   height: 100%;
-// }
-// //! test for

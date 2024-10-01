@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./PlayoffSettingsForm.scss";
-import CardRuleLayout from "../CardRuleLayout/CardRuleLayout";
+import CardRuleLayout from "../CardRule/CardRule";
 import Rule from "../Rule/Rule";
 // import { KeyValue } from "@/types";
 

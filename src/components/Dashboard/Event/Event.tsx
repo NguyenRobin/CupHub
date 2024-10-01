@@ -12,7 +12,7 @@ function Event() {
         <h2>Skapa och Hantera</h2>
       </section>
 
-      <Link href="/dashboard/create-tournament/info" className="event__type">
+      <Link href="/dashboard/tournaments/new" className="event__type">
         <section className="event__type--information">
           <h3>Gruppspel + Slutspel</h3>
           <p>Varje grupp spelar en turnering där alla möter alla.</p>
@@ -28,7 +28,7 @@ function Event() {
         </section>
       </Link>
 
-      <Link href="/dashboard/create-tournament/cup" className="event__type">
+      <Link href="/dashboard/tournament/new" className="event__type">
         <section className="event__type--information">
           <h3>Serie</h3>
           <p>Lagen möts i en serie där alla spelar mot alla</p>

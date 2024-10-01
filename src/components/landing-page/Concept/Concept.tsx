@@ -20,14 +20,6 @@ function Concept() {
 
           <button>Läs mer</button>
         </section>
-        {/* <h2>Vår idé</h2>
-        <p>
-          En komplett lösning för er förening – samlar alla aktörer inom just er
-          sport för enklare organisation och bättre tillgänglighet!
-        </p> */}
-        {/* <Image src={planning} height={300} width={250} alt="Planning" />
-
-        <button>Läs mer</button> */}
       </section>
     </section>
   );

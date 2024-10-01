@@ -1,15 +1,16 @@
 import React from "react";
 import { GoSun } from "react-icons/go";
 import { IoMoonSharp } from "react-icons/io5";
-import "./SwitchMode.scss";
+import "./SwitchThemeMode.scss";
 
 type Props = {
   isChecked: boolean;
   onChange: () => void;
 };
-function SwitchMode({ isChecked, onChange }: Props) {
+
+function SwitchThemeMode({ isChecked, onChange }: Props) {
   return (
-    <label className="switch">
+    <label className="switch-theme-mode">
       <input type="checkbox" checked={isChecked} onChange={onChange} />
       <span className="slider round">
         <IoMoonSharp className="theme-dark_mode" />
@@ -19,4 +20,4 @@ function SwitchMode({ isChecked, onChange }: Props) {
   );
 }
 
-export default SwitchMode;
+export default SwitchThemeMode;

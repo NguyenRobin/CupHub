@@ -1,5 +1,5 @@
 import React from "react";
-import "./CardRuleLayout.scss";
+import "./CardRule.scss";
 import Image from "next/image";
 
 type Props = {
@@ -7,11 +7,11 @@ type Props = {
   title: string;
 };
 
-function CardRuleLayout({ children, title }: Props) {
+function CardRule({ children, title }: Props) {
   return (
-    <section className="cardRuleLayout">
-      <section className="cardRuleLayout__subContainer">
-        <section className="cardRuleLayout__subContainer--title">
+    <section className="card-rule">
+      <section className="card-rule__info">
+        <section className="card-rule__info--title">
           <Image
             src="/golden-trophy-white-background.png"
             height={60}
@@ -22,10 +22,11 @@ function CardRuleLayout({ children, title }: Props) {
             <h2>{title}</h2>
           </section>
         </section>
-        {children}
       </section>
+
+      <section className="card-rule__children">{children}</section>
     </section>
   );
 }
 
-export default CardRuleLayout;
+export default CardRule;

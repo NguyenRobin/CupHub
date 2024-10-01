@@ -1,4 +1,4 @@
-import BracketGenerator from "@/components/Dashboard/BracketGenerator/BracketGenerator";
+import BracketGenerator from "@/components/dashboard/BracketGenerator/BracketGenerator";
 async function getPlayOffScheduleByTournament(id) {
   try {
     const response = await fetch(`http://localhost:3000/api/playoffs/${id}`);

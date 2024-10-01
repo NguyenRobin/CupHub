@@ -1,6 +1,6 @@
 "use client";
 
-import NewTournament from "@/components/Dashboard/NewTournament/NewTournament";
+import NewTournament from "@/components/dashboard/NewTournament/NewTournament";
 import { FormProvider } from "@/context/FormContext";
 import React from "react";
 

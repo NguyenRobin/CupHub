@@ -47,6 +47,11 @@ type TFormContext = {
   handleOnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSelectAmountOfGroups: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   handleChangeTotalTeams: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleChangeTeamName: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: any
+  ) => void;
+  handleOnSelect: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   handleIncrement: (key: TKey) => void;
   handleDecrement: (key: TKey) => void;
 };
@@ -127,6 +132,8 @@ const defaultState: TFormContext = {
   handleOnChange: () => {},
   handleSelectAmountOfGroups: () => {},
   handleChangeTotalTeams: () => {},
+  handleChangeTeamName: () => {},
+  handleOnSelect: () => {},
   handleIncrement: () => {},
   handleDecrement: () => {},
 };
@@ -208,6 +215,12 @@ export function FormProvider({ children }: TChildrenProps) {
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setData((prevState) => ({ ...prevState, [name]: value }));
+  }
+
+  function handleOnSelect(e: React.ChangeEvent<HTMLSelectElement>) {
+    const { name, value } = e.target;
+
+    setData((prevState) => ({ ...prevState, [name]: +value }));
   }
 
   function handleIncrement(key: TKey) {
@@ -294,6 +307,22 @@ export function FormProvider({ children }: TChildrenProps) {
     });
   }
 
+  function handleChangeTeamName(
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: any
+  ) {
+    const { value } = e.target;
+
+    setData((prev) => {
+      return {
+        ...prev,
+        teams: prev.teams.map((team) =>
+          team.id === id ? { ...team, name: value } : team
+        ),
+      };
+    });
+  }
+
   useEffect(() => {
     if (data.total_groups !== null) {
       const groups = divideTeamsByGroup(
@@ -307,8 +336,6 @@ export function FormProvider({ children }: TChildrenProps) {
     }
   }, [data.teams.length, data.total_groups, data.teams]);
 
-  console.log("FormContext", page);
-
   return (
     <FormContext.Provider
       value={{
@@ -318,6 +345,8 @@ export function FormProvider({ children }: TChildrenProps) {
         handleOnChange,
         handleSelectAmountOfGroups,
         handleChangeTotalTeams,
+        handleChangeTeamName,
+        handleOnSelect,
         handleIncrement,
         handleDecrement,
       }}

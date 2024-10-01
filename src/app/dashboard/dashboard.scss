@@ -2,16 +2,15 @@
 @import "../../styles/variables.scss";
 
 .dashboard {
-  // position: relative;
-  height: 100%; //! TESTING
+  padding-top: 7rem; // bases on the nav height to make it show the full element height
+  // height: 100dvh;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #fff;
+  padding-bottom: 3rem;
 }
 
-.main-container {
+.main-container__dashboard {
   // padding: 1.5rem;
-  margin-top: 7rem; // bases on the nac height to make it show the full element height
-
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
   height: 100%; //! TESTING
 }

@@ -7,8 +7,8 @@ import { CiSearch } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import Image from "next/image";
-import Modal from "@/components/Modal/Modal";
-import NavMenu from "../NavMenu/NavMenu";
+import Modal from "@/components/modal/Modal";
+import NavMenuDashboard from "../NavMenuDashboard/NavMenuDashboard";
 
 function NavDashBoard() {
   const [showNavigation, setShowNavigation] = useState(false);
@@ -62,7 +62,7 @@ function NavDashBoard() {
 
       {showNavigation && (
         <Modal isActive={showNavigation}>
-          <NavMenu closeModal={handleOnClick} />
+          <NavMenuDashboard closeModal={handleOnClick} />
         </Modal>
       )}
     </>

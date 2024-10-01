@@ -2,22 +2,24 @@
 @import "../../../styles/typography.scss";
 @import "../../../styles/dark.scss";
 
-.nav-container {
+.nav-menu {
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
 
-  ul {
+  &__ul {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    .list {
+
+    &--list {
       display: flex;
       align-items: center;
       gap: 1rem;
       border-radius: 1rem;
       padding: 0.5rem;
+
       &-icon {
         font-size: $font-size-xl;
       }
@@ -29,7 +31,7 @@
 }
 
 .dark {
-  .list {
+  .nav-menu__ul--list {
     background-color: $dark-bg-secondary;
     border-radius: 1rem;
     color: $dark-text-primary;

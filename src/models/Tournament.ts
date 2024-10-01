@@ -3,14 +3,12 @@ import mongoose, { Schema, Types, model } from "mongoose";
 interface ITournament {
   name: string;
   description?: string;
-  sport: string;
+  sport?: string;
   location: string;
   startDate: Date;
   endDate: Date;
   total_teams: number;
   total_groups?: number;
-  createdAt: Date;
-  updatedAt: Date;
   status: "scheduled" | "ongoing" | "completed";
   points_system: {
     win: number;
@@ -32,13 +30,11 @@ const tournamentSchema = new Schema<ITournament>(
     name: { type: String, required: true },
     description: { type: String, required: false },
     location: { type: String, required: true },
-    sport: { type: String, enum: ["soccer", "golf"], required: true },
+    sport: { type: String, enum: ["soccer", "golf"], required: false },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     total_teams: { type: Number, required: true },
     total_groups: { type: Number, required: false },
-    createdAt: { type: Date, required: true },
-    updatedAt: { type: Date, required: true },
     status: {
       type: String,
       enum: ["scheduled", "ongoing", "completed"],
