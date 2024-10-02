@@ -1,6 +1,10 @@
 import connectToMongoDB from "@/lib/connectToMongoDB";
-import { compareUserInputPasswordWithHashedPassword } from "@/lib/server/serverHelperFunc";
+import {
+  compareUserInputPasswordWithHashedPassword,
+  createToken,
+} from "@/lib/server/serverHelperFunc";
 import UserModel from "@/models/User";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -48,14 +52,27 @@ export async function POST(request: Request) {
           status: 401,
           message: "You have entered an invalid email or password",
         });
+      } else {
+        const userPayload = {
+          id: user._id,
+          username: user.username,
+        };
+
+        const token = createToken(userPayload);
+        const session = cookies().set("cup_maker_token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "strict",
+          path: "/",
+          maxAge: 60 * 15,
+        });
+
+        return NextResponse.json({
+          status: 200,
+          message: token,
+        });
       }
-
-      return NextResponse.json({
-        status: 200,
-        message: "here is your fucking tokwen",
-      });
     }
-
     if (email && password) {
       await connectToMongoDB();
       const user = await UserModel.findOne({ email });
@@ -75,12 +92,19 @@ export async function POST(request: Request) {
           status: 401,
           message: "You have entered an invalid username or password",
         });
-      }
+      } else {
+        const userPayload = {
+          id: user._id,
+          username: user.username,
+        };
 
-      return NextResponse.json({
-        status: 200,
-        message: "here is your fucking tokwen",
-      });
+        const token = createToken(userPayload);
+
+        return NextResponse.json({
+          status: 200,
+          message: token,
+        });
+      }
     }
   } catch (error: any) {
     return NextResponse.json({ status: 500, message: error.message });

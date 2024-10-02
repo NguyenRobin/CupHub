@@ -34,7 +34,10 @@ export async function POST(request: Request) {
     await connectToMongoDB();
     const newUser = new UserModel(user);
     await newUser.save();
-    return NextResponse.json({ status: 201, message: "success" });
+    return NextResponse.json({
+      status: 201,
+      message: "User successfully created",
+    });
   } catch (error: any) {
     return NextResponse.json({ status: 500, message: error.message });
   }

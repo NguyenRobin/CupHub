@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export async function hashPassword(password: string) {
   const saltRounds = 10;
@@ -16,4 +17,20 @@ export async function compareUserInputPasswordWithHashedPassword(
     hashedPassword
   );
   return isPasswordMatching;
+}
+
+export function createToken(user: any) {
+  const encodedToken = jwt.sign(user, process.env.JWT_SECRET_KEY as string, {
+    expiresIn: "15m",
+  });
+
+  return encodedToken;
+}
+
+export function verifyToken(encodedToken: string) {
+  const decodedToken = jwt.verify(
+    encodedToken,
+    process.env.JWT_SECRET_KEY as string
+  );
+  return decodedToken;
 }
