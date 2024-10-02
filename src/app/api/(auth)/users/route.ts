@@ -1,4 +1,5 @@
 import connectToMongoDB from "@/lib/connectToMongoDB";
+import { hashPassword } from "@/lib/server/serverHelperFunc";
 import UserModel from "@/models/User";
 import mongoose, { Types } from "mongoose";
 import { NextResponse } from "next/server";
@@ -21,8 +22,17 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    const { email, username, password } = body;
+    const hashedPassword = await hashPassword(password);
+
+    const user = {
+      username,
+      email,
+      password: hashedPassword,
+    };
+
     await connectToMongoDB();
-    const newUser = new UserModel(body);
+    const newUser = new UserModel(user);
     await newUser.save();
     return NextResponse.json({ status: 201, message: "success" });
   } catch (error: any) {
