@@ -14,7 +14,7 @@ function NewTournament() {
     <AddTeam key={3} />,
   ];
 
-  return <>{pages[page]}</>;
+  return <div>{pages[page]}</div>;
 }
 
 export default NewTournament;
