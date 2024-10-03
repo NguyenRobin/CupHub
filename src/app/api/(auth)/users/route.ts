@@ -32,17 +32,51 @@ export async function POST(request: Request) {
     };
 
     await connectToMongoDB();
+
+    const existingEmail = await UserModel.findOne({ email });
+    const existingUsername = await UserModel.findOne({ username });
+
+    if (existingUsername && existingEmail) {
+      return NextResponse.json({
+        status: 404,
+        signup_info: "email_and_username_taken",
+        message:
+          "Both the username and email address are already taken. Please choose different options.",
+      });
+    }
+
+    if (existingEmail && !existingUsername) {
+      return NextResponse.json({
+        status: 404,
+        signup_info: "email_taken",
+        message:
+          "Email address is already in use. Please use a different email.",
+      });
+    }
+
+    if (existingUsername && !existingEmail) {
+      return NextResponse.json({
+        status: 404,
+        signup_info: "username_taken",
+        message: "Username is already taken. Please choose another one.",
+      });
+    }
+
     const newUser = new UserModel(user);
+    console.log(newUser);
     await newUser.save();
     return NextResponse.json({
       status: 201,
       message: "User successfully created",
     });
   } catch (error: any) {
-    return NextResponse.json({ status: 500, message: error.message });
+    return NextResponse.json({
+      status: 500,
+      error: error.message,
+      message: "Error creating a user",
+    });
   }
 }
-
 export async function PATCH(request: Request) {
   try {
     const body = await request.json();

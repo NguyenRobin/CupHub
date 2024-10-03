@@ -92,7 +92,10 @@ async function addTeamToTeamCollectionDB(
   return docs;
 }
 
-async function createTournamentToTournamentCollectionDB(body, userId) {
+async function createTournamentToTournamentCollectionDB(
+  body: any,
+  userId: any
+) {
   const {
     id,
     name,

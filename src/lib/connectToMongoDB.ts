@@ -27,6 +27,7 @@ async function connectToMongoDB() {
     const opts = {
       bufferCommands: false,
     };
+    // cached.promise = await mongoose.connect(MONGODB_URI, opts);
     cached.promise = await mongoose.connect(MONGODB_URI, opts);
   }
   try {

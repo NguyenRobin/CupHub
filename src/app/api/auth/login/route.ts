@@ -78,7 +78,7 @@ export async function POST(request: Request) {
       const user = await UserModel.findOne({ email });
 
       if (!user) {
-        return NextResponse.json({ status: 400, message: "User not found" });
+        return NextResponse.json({ status: 404, message: "User not found" });
       }
 
       const isPasswordCorrect =
