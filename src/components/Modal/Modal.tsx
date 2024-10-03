@@ -1,3 +1,5 @@
+"use client";
+
 import "./Modal.scss";
 
 type Props = {

@@ -1,13 +1,12 @@
-import connectToMongoDB from "@/lib/connectToMongoDB";
-import GroupModel from "@/models/Group";
-import MatchModel from "@/models/Match";
-import RoundModel from "@/models/Round";
-import TeamModel from "@/models/Team";
-import TournamentModel from "@/models/Tournament";
-
 import mongoose, { Types } from "mongoose";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
+import TournamentModel from "../../../../models/Tournament";
+import TeamModel from "../../../../models/Team";
+import RoundModel from "../../../../models/Round";
+import connectToMongoDB from "../../../../lib/connectToMongoDB";
+import MatchModel from "../../../../models/Match";
+import GroupModel from "../../../../models/Group";
 
 export async function GET(request: Request) {
   try {
