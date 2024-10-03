@@ -1,12 +1,13 @@
 "use client";
 
 import "./AddTeam.scss";
-import useFormContext from "@/hooks/useFormContext";
+
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
 import { useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
 import CardRule from "../CardRule/CardRule";
 import Group from "../Group/Group";
+import useFormContext from "../../../hooks/useFormContext";
 function AddTeam() {
   const [isLoading, setIsLoading] = useState(false);
   const {

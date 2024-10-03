@@ -7,8 +7,9 @@ import { CiSearch } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import Image from "next/image";
-import Modal from "@/components/modal/Modal";
+
 import NavMenuDashboard from "../NavMenuDashboard/NavMenuDashboard";
+import Modal from "../../modal/Modal";
 
 function NavDashBoard() {
   const [showNavigation, setShowNavigation] = useState(false);

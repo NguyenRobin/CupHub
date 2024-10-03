@@ -475,37 +475,6 @@ export async function POST(request: Request) {
   }
 }
 
-// import connectToMongoDB from "@/lib/connectToMongoDB";
-// import Tournament from "@/models/Tournament";
-
-// import { NextResponse } from "next/server";
-
-// export async function GET() {
-//   try {
-//     await connectToMongoDB();
-//     const tournaments = await Tournament.find();
-
-//     return NextResponse.json({
-//       status: 200,
-//       message: "success",
-//       result: tournaments.length,
-//       tournaments,
-//     });
-//   } catch (error: any) {
-//     NextResponse.json({ error: error.message });
-//   }
-// }
-
-// export async function POST(request: Request) {
-//   console.log(request);
-
-//   try {
-//     return NextResponse.json({ status: 201, message: "success" });
-//   } catch (error: any) {
-//     return NextResponse.json({ status: 404, message: error.message });
-//   }
-// }
-
 type TGroup = {
   _id?: string;
   tournament_id: string;

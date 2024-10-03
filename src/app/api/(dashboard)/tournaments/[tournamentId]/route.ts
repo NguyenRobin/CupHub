@@ -1,8 +1,7 @@
-import connectToMongoDB from "@/lib/connectToMongoDB";
-import TournamentModel from "@/models/Tournament";
-import UserModel from "@/models/User";
-import mongoose, { Types } from "mongoose";
 import { NextResponse } from "next/server";
+import connectToMongoDB from "../../../../../lib/connectToMongoDB";
+import TournamentModel from "../../../../../models/Tournament";
+import UserModel from "../../../../../models/User";
 
 export async function GET(
   request: Request,

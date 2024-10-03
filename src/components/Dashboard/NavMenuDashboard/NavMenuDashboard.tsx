@@ -1,4 +1,3 @@
-import { useTheme } from "@/context/ThemeContext";
 import React, { useEffect, useState } from "react";
 import { RxDashboard } from "react-icons/rx";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -11,7 +10,8 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import Link from "next/link";
 import "./NavMenuDashboard.scss";
-import SwitchThemeMode from "@/components/switch-theme-mode/SwitchThemeMode";
+import SwitchThemeMode from "../../switch-theme-mode/SwitchThemeMode";
+import { useTheme } from "../../../context/ThemeContext";
 
 type Props = {
   closeModal: () => void;

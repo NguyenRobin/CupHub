@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./TournamentInfo.scss";
 import CardRule from "../CardRule/CardRule";
-import useFormContext from "@/hooks/useFormContext";
+import useFormContext from "../../../hooks/useFormContext";
 
 function TournamentInfo() {
   const { description, name, startDate, endDate, setPage, handleOnChange } =
