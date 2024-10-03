@@ -8,7 +8,7 @@ import { useState } from "react";
 import NavMenu from "../NavMenu/NavMenu";
 import { GiSoccerBall } from "react-icons/gi";
 import { CiSearch } from "react-icons/ci";
-import Modal from "@/components/modal/Modal";
+import Modal from "../../modal/Modal";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);

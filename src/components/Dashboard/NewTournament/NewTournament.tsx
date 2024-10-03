@@ -1,9 +1,9 @@
 "use client";
 
-import AddTeam from "@/components/dashboard/AddTeam/AddTeam";
-import GroupSettingsForm from "@/components/dashboard/GroupSettingsForm/GroupSettingsForm";
-import TournamentInfo from "@/components/dashboard/TournamentInfo/TournamentInfo";
-import useFormContext from "@/hooks/useFormContext";
+import useFormContext from "../../../hooks/useFormContext";
+import AddTeam from "../AddTeam/AddTeam";
+import GroupSettingsForm from "../GroupSettingsForm/GroupSettingsForm";
+import TournamentInfo from "../TournamentInfo/TournamentInfo";
 
 function NewTournament() {
   const { page } = useFormContext();
