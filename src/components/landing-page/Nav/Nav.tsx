@@ -4,10 +4,11 @@ import { IoIosMenu } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import "./Nav.scss";
 import { useState } from "react";
-import Modal from "../../modal/Modal";
+
 import NavMenu from "../NavMenu/NavMenu";
 import { GiSoccerBall } from "react-icons/gi";
 import { CiSearch } from "react-icons/ci";
+import Modal from "@/components/modal/Modal";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
