@@ -12,7 +12,7 @@ async function getPlayOffScheduleByTournament() {
   return playoff;
 }
 
-function BracketGenerator({ data }) {
+function BracketGenerator({ data }: any) {
   const [currentIndex, setCurrentIndex] = useState(0); // Börja med Round 32
 
   const handleNext = () => {

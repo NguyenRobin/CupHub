@@ -4,7 +4,6 @@ import MatchModel from "@/models/Match";
 import RoundModel from "@/models/Round";
 import TeamModel from "@/models/Team";
 import TournamentModel from "@/models/Tournament";
-import { match } from "assert";
 
 import mongoose, { Types } from "mongoose";
 import { NextResponse } from "next/server";
