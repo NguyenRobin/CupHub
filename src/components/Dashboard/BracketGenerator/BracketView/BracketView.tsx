@@ -3,7 +3,7 @@ import "./BracketView.scss";
 import BracketViewMobile from "../BracketViewMobile/BracketViewMobile";
 import BracketViewDesktop from "../BracketViewDesktop/BracketViewDesktop";
 
-function BracketView({ data, currentIndex, onBack, onNext }) {
+function BracketView({ data, currentIndex, onBack, onNext }: any) {
   const currentStage = [data.playoff[currentIndex]];
 
   return (

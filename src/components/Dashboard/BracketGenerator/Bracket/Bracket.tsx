@@ -1,7 +1,7 @@
 import React from "react";
 import "./Bracket.scss";
 
-function Bracket({ homeTeam, homeTeamScore, awayTeam, awayTeamScore }) {
+function Bracket({ homeTeam, homeTeamScore, awayTeam, awayTeamScore }: any) {
   return (
     <div className="bracket">
       <div className="bracket__team bracket__team--home">

@@ -1,7 +1,7 @@
 import React from "react";
 import Bracket from "../Bracket/Bracket";
 
-function BracketViewDesktop({ data }) {
+function BracketViewDesktop({ data }: any) {
   return (
     <div className={`match-bracket-stage__elimination desktop`}>
       {data.playoff.map((el) => (

@@ -133,7 +133,7 @@ async function createTournamentToTournamentCollectionDB(
   return created;
 }
 
-async function addMatchesToMatchesCollectionDB(array) {
+async function addMatchesToMatchesCollectionDB(array: any[]) {
   const docs = await MatchModel.insertMany(array);
 
   return docs;
