@@ -1,0 +1,23 @@
+@import "../../../../styles/typography.scss";
+@import "../../../../styles/variables.scss";
+@import "../../../../styles/dark.scss";
+
+.overview {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  &__welcome-text {
+    margin-bottom: 2rem;
+    h1 {
+      font-size: $font-size-4xl;
+      color: $txt-color-secondary;
+    }
+  }
+
+  &__listing {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}

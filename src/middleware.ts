@@ -1,17 +1,23 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { authMiddleware } from "./middlewares/api/authMiddleware";
+
+const TOKEN_NAME = process.env.TOKEN_NAME;
 
 // Trigger in every /api endpoint
 export const config = {
-  matcher: "/api/:path*",
+  matcher: ["/api/tournaments/:path*", "/dashboard/:path*"],
 };
 
-export function middleware(request: Request) {
-  console.log(request);
-  const isAuthenticated = authMiddleware(request);
-  console.log(isAuthenticated.isValid);
-  if (!isAuthenticated.isValid && request.url.includes("/api/users")) {
-    return NextResponse.json({ message: "Unauthorized", status: 401 });
+export async function middleware(request: NextRequest) {
+  if (!request.url.includes("/auth/login")) {
+    const isAuthenticated = authMiddleware(request);
+    return isAuthenticated;
   }
-  return NextResponse.next();
+
+  if (
+    request.url.includes("/auth/login") ||
+    request.url.includes("/api/users")
+  ) {
+    return NextResponse.next();
+  }
 }

@@ -6,7 +6,7 @@ import "./LoginForm.scss";
 import Link from "next/link";
 import { z } from "zod";
 import AuthInput from "../authInput/AuthInput";
-import Nav from "../landing-page/Nav/Nav";
+import Nav from "../landing-page/ui/Nav/Nav";
 
 const SubmitFormSchema = z
   .object({
@@ -34,8 +34,8 @@ type TErrorMessages = {
 
 function LoginForm() {
   const [errorMessages, setErrorMessages] = useState<TErrorMessages>({});
-  const [user, setUser] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState("robinnguyen");
+  const [password, setPassword] = useState("papimami");
   const router = useRouter();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {

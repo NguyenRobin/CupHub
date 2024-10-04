@@ -1,13 +1,19 @@
-function validateToken(token: any) {
-  const validToken = false;
-  if (!validToken || !token) {
-    return false;
-  }
-  return true;
-}
+import { NextRequest, NextResponse } from "next/server";
+import { verifyTokenByJose } from "../../lib/client/clientHelperFunc";
+const TOKEN_NAME = process.env.TOKEN_NAME;
 
-export function authMiddleware(request: Request) {
-  const token = request.headers.get("Authorization")?.split(" "[1]);
-  return { isValid: true };
-  return { isValid: validateToken(token) };
+export function authMiddleware(request: NextRequest) {
+  const token = request.cookies.get(TOKEN_NAME!)?.value;
+
+  if (!token) {
+    return NextResponse.redirect(new URL("/auth/login", request.url));
+  }
+
+  const isTokenValid = verifyTokenByJose(token);
+
+  if (!isTokenValid) {
+    return NextResponse.redirect(new URL("/auth/login", request.url));
+  }
+
+  return NextResponse.next();
 }

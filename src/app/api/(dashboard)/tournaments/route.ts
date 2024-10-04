@@ -33,7 +33,7 @@ export async function GET(request: Request) {
     const tournaments = await TournamentModel.find({
       // user: Types.ObjectId.createFromHexString(userId),
     });
-    console.log(tournaments);
+
     return NextResponse.json({
       status: 200,
       message: "success",

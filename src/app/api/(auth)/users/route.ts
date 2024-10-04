@@ -2,7 +2,11 @@ import mongoose, { Types } from "mongoose";
 import { NextResponse } from "next/server";
 import connectToMongoDB from "../../../../lib/connectToMongoDB";
 import UserModel from "../../../../models/User";
-import { hashPassword } from "../../../../lib/server/serverHelperFunc";
+import {
+  createToken,
+  hashPassword,
+} from "../../../../lib/server/serverHelperFunc";
+import { cookies } from "next/headers";
 
 export async function GET() {
   try {
@@ -65,6 +69,22 @@ export async function POST(request: Request) {
     const newUser = new UserModel(user);
     console.log(newUser);
     await newUser.save();
+
+    const userPayload = {
+      id: newUser._id,
+      username: newUser.username,
+    };
+
+    const token = createToken(userPayload);
+
+    const session = cookies().set(process.env.TOKEN_NAME!, token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      path: "/",
+      maxAge: 60 * 15,
+    });
+
     return NextResponse.json({
       status: 201,
       message: "User successfully created",

@@ -10,6 +10,7 @@ import {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+
     const { username, email, password } = body;
 
     if (!username && !email && !password) {
@@ -59,7 +60,8 @@ export async function POST(request: Request) {
         };
 
         const token = createToken(userPayload);
-        const session = cookies().set("cup_maker_token", token, {
+
+        const session = cookies().set(process.env.TOKEN_NAME!, token, {
           httpOnly: true,
           secure: true,
           sameSite: "strict",

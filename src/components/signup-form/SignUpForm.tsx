@@ -6,7 +6,7 @@ import "./SignUpForm.scss";
 import Link from "next/link";
 import { z } from "zod";
 import AuthInput from "../authInput/AuthInput";
-import Nav from "../landing-page/Nav/Nav";
+import Nav from "../landing-page/ui/Nav/Nav";
 
 const SignUpFormSchema = z
   .object({

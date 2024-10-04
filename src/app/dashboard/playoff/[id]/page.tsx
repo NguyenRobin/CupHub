@@ -1,4 +1,4 @@
-import BracketGenerator from "../../../../components/dashboard/BracketGenerator/BracketGenerator";
+import BracketGenerator from "../../../../components/dashboard-page/ui/BracketGenerator/BracketGenerator";
 
 async function getPlayOffScheduleByTournament(id: string) {
   try {

@@ -1,5 +1,7 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 export async function hashPassword(password: string) {
   const saltRounds = 10;
@@ -28,9 +30,6 @@ export function createToken(user: any) {
 }
 
 export function verifyToken(encodedToken: string) {
-  const decodedToken = jwt.verify(
-    encodedToken,
-    process.env.JWT_SECRET_KEY as string
-  );
+  const decodedToken = jwt.verify(encodedToken, JWT_SECRET_KEY!);
   return decodedToken;
 }
