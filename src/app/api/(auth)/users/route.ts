@@ -1,8 +1,8 @@
-import connectToMongoDB from "@/lib/connectToMongoDB";
-import { hashPassword } from "@/lib/server/serverHelperFunc";
-import UserModel from "@/models/User";
 import mongoose, { Types } from "mongoose";
 import { NextResponse } from "next/server";
+import connectToMongoDB from "../../../../lib/connectToMongoDB";
+import UserModel from "../../../../models/User";
+import { hashPassword } from "../../../../lib/server/serverHelperFunc";
 
 export async function GET() {
   try {

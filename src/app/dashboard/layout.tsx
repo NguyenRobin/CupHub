@@ -1,6 +1,6 @@
-import NavDashBoard from "@/components/dashboard/NavDashboard/NavDashBoard";
 import React from "react";
 import "./dashboard.scss";
+import NavDashBoard from "../../components/dashboard/NavDashboard/NavDashBoard";
 
 type Props = {
   children: React.ReactNode;

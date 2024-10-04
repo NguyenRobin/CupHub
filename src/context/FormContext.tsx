@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { divideTeamsByGroup, validateApprovedGroups } from "@/utils";
+import { divideTeamsByGroup, validateApprovedGroups } from "../utils";
 
 type TKey = "rounds" | "win" | "draw" | "loss" | "teamsPerGroupAdvancing";
 

@@ -1,13 +1,12 @@
-import connectToMongoDB from "@/lib/connectToMongoDB";
-import GroupModel from "@/models/Group";
-import MatchModel from "@/models/Match";
-import RoundModel from "@/models/Round";
-import TeamModel from "@/models/Team";
-import TournamentModel from "@/models/Tournament";
-
 import mongoose, { Types } from "mongoose";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
+import TournamentModel from "../../../../models/Tournament";
+import TeamModel from "../../../../models/Team";
+import RoundModel from "../../../../models/Round";
+import connectToMongoDB from "../../../../lib/connectToMongoDB";
+import MatchModel from "../../../../models/Match";
+import GroupModel from "../../../../models/Group";
 
 export async function GET(request: Request) {
   try {
@@ -474,37 +473,6 @@ export async function POST(request: Request) {
     });
   }
 }
-
-// import connectToMongoDB from "@/lib/connectToMongoDB";
-// import Tournament from "@/models/Tournament";
-
-// import { NextResponse } from "next/server";
-
-// export async function GET() {
-//   try {
-//     await connectToMongoDB();
-//     const tournaments = await Tournament.find();
-
-//     return NextResponse.json({
-//       status: 200,
-//       message: "success",
-//       result: tournaments.length,
-//       tournaments,
-//     });
-//   } catch (error: any) {
-//     NextResponse.json({ error: error.message });
-//   }
-// }
-
-// export async function POST(request: Request) {
-//   console.log(request);
-
-//   try {
-//     return NextResponse.json({ status: 201, message: "success" });
-//   } catch (error: any) {
-//     return NextResponse.json({ status: 404, message: error.message });
-//   }
-// }
 
 type TGroup = {
   _id?: string;

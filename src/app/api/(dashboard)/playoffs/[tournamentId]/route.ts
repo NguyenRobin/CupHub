@@ -1,7 +1,7 @@
-import connectToMongoDB from "@/lib/connectToMongoDB";
-import RoundModel from "@/models/Round";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
+import connectToMongoDB from "../../../../../lib/connectToMongoDB";
+import RoundModel from "../../../../../models/Round";
 
 export async function GET(
   request: Request,

@@ -1,11 +1,11 @@
-import connectToMongoDB from "@/lib/connectToMongoDB";
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
+import connectToMongoDB from "../../../../lib/connectToMongoDB";
+import UserModel from "../../../../models/User";
 import {
   compareUserInputPasswordWithHashedPassword,
   createToken,
-} from "@/lib/server/serverHelperFunc";
-import UserModel from "@/models/User";
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+} from "../../../../lib/server/serverHelperFunc";
 
 export async function POST(request: Request) {
   try {

@@ -3,9 +3,10 @@ import "./NavMenu.scss";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsSend } from "react-icons/bs";
 import { GrGroup } from "react-icons/gr";
-import { useTheme } from "@/context/ThemeContext";
+
 import { useEffect, useState } from "react";
-import SwitchThemeMode from "@/components/switch-theme-mode/SwitchThemeMode";
+import { useTheme } from "../../../context/ThemeContext";
+import SwitchThemeMode from "../../switch-theme-mode/SwitchThemeMode";
 
 function NavMenu() {
   const { theme, toggleTheme } = useTheme();

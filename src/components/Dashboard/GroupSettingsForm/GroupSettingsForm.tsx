@@ -3,8 +3,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./GroupSettingsForm.scss";
 import CardRuleLayout from "../CardRule/CardRule";
-import useFormContext from "@/hooks/useFormContext";
+
 import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
+import useFormContext from "../../../hooks/useFormContext";
 
 function GroupSettingsForm() {
   const {
