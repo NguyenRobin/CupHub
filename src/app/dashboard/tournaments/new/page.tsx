@@ -2,6 +2,7 @@
 
 import React from "react";
 import { FormProvider } from "../../../../context/FormContext";
+
 import NewTournament from "../../../../components/dashboard/ui/NewTournament/NewTournament";
 
 const page = () => {
