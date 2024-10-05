@@ -4,7 +4,8 @@ import "./Overview.scss";
 import UpcomingEvents from "../UpcomingEvents/UpcomingEvents";
 import { useEffect, useState } from "react";
 
-function Overview() {
+function Overview({ token }) {
+  console.log(token);
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
