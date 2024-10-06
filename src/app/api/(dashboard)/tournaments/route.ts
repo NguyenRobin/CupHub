@@ -7,9 +7,12 @@ import RoundModel from "../../../../models/Round";
 import connectToMongoDB from "../../../../lib/connectToMongoDB";
 import MatchModel from "../../../../models/Match";
 import GroupModel from "../../../../models/Group";
-
+import { cookies } from "next/headers";
 export async function GET(request: Request) {
+  console.log("HEJ HEJ HEJ FRÅN BACKEND");
   try {
+    console.log("😍 BACKEND REQUEST ---------->", request);
+    // console.log("GET tournaments bitch", request);
     // const { searchParams } = new URL(request.url);
     // const userId = searchParams.get("userId");
 

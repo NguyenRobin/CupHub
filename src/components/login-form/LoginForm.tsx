@@ -67,7 +67,7 @@ function LoginForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(submitFormBody),
       });
-      console.log("response", response);
+
       if (!response.ok) {
         throw new Error("Something went wrong");
       }
