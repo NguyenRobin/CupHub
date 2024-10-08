@@ -1,14 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
-import { authMiddleware } from "./middlewares/api/authMiddleware";
-
-const TOKEN_NAME = process.env.TOKEN_NAME;
+import {
+  authApiMiddleware,
+  authMiddleware,
+} from "./middlewares/api/authMiddleware";
 
 export async function middleware(request: NextRequest) {
-  console.log("MIDDLEWARE IS RUNING");
-  console.log("request.url   ------------>", request.url);
-  const token = request.cookies.get(TOKEN_NAME)?.value;
-  console.log("middleware token ->", token, TOKEN_NAME);
-
   if (
     request.url.includes("/auth/login") ||
     request.url.includes("/auth/signup")
@@ -16,12 +12,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (request.url.includes("/api")) {
+  if (request.url.includes("/dashboard")) {
     return await authMiddleware(request);
+  }
+
+  if (request.url.includes("/api")) {
+    return await authApiMiddleware(request);
   }
 }
 // Trigger in every /api endpoint
 export const config = {
-  // matcher: ["/dashboard/:path*", "/api/:path*"],
-  matcher: ["/api/:path*"],
+  matcher: ["/dashboard/:path*", "/api/:path*"],
 };

@@ -1,6 +1,7 @@
 import Event from "../Event/Event";
 import "./Overview.scss";
 import UpcomingEvents from "../UpcomingEvents/UpcomingEvents";
+import { Suspense } from "react";
 
 function Overview() {
   return (
@@ -11,7 +12,11 @@ function Overview() {
 
       <section className="overview__listing">
         {/* {isLoading ? <p>loading...</p> : <UpcomingEvents />} */}
-        <UpcomingEvents />
+
+        <Suspense fallback={<p>loading...</p>}>
+          <UpcomingEvents />
+        </Suspense>
+
         <Event />
       </section>
     </section>

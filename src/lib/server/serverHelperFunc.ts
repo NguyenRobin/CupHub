@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
@@ -32,4 +33,9 @@ export function createToken(user: any) {
 export function verifyToken(encodedToken: string) {
   const decodedToken = jwt.verify(encodedToken, JWT_SECRET_KEY!);
   return decodedToken;
+}
+
+export function getCookieValue(request: Request) {
+  const sessionToken = request.headers.get("cookie")?.split("=")[1];
+  return sessionToken;
 }
