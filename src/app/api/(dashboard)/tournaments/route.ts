@@ -8,8 +8,33 @@ import connectToMongoDB from "../../../../lib/connectToMongoDB";
 import MatchModel from "../../../../models/Match";
 import GroupModel from "../../../../models/Group";
 
+import { NextApiRequest } from "next";
+import {
+  getCookieValue,
+  verifyToken,
+} from "../../../../lib/server/serverHelperFunc";
+
 export async function GET(request: Request) {
   try {
+    // const token = getCookieValue(request);
+
+    // if (!token) {
+    //   return NextResponse.json({
+    //     status: 401,
+    //     message: "Authentication failed. Token not provided",
+    //   });
+    // }
+
+    // const userHasPermission = verifyToken(token);
+
+    // if (!userHasPermission) {
+    //   return NextResponse.json({
+    //     status: 401,
+    //     message: "Authentication failed",
+    //   });
+    // }
+
+    // console.log("GET tournaments bitch", request);
     // const { searchParams } = new URL(request.url);
     // const userId = searchParams.get("userId");
 

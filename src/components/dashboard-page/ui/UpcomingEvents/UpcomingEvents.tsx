@@ -1,36 +1,20 @@
-import React from "react";
+"use server";
+
+import React, { Suspense } from "react";
 import "./UpcomingEvents.scss";
 import Image from "next/image";
 import { MdLocationOn } from "react-icons/md";
 import { SlCalender } from "react-icons/sl";
+import { getMonthName } from "../../../../lib/client/clientHelperFunc";
+import { cookies, headers } from "next/headers";
+import { getUpcomingEvents } from "../../../../app/actions";
 
-function getMonthName(monthNumber: number): string {
-  const MAX_LENGTH = 3;
-  const months = [
-    "Januari",
-    "Februari",
-    "Mars",
-    "April",
-    "Maj",
-    "Juni",
-    "Juli",
-    "Augusti",
-    "September",
-    "Oktober",
-    "November",
-    "December",
-  ];
-
-  let output = "";
-
-  for (let i = 0; i < MAX_LENGTH; i++) {
-    output += months[monthNumber - 1][i];
+async function UpcomingEvents() {
+  const events = await getUpcomingEvents();
+  if (!events) {
+    return [];
   }
 
-  return output;
-}
-
-function UpcomingEvents({ events }) {
   return (
     <section className="upcomingEvent-container">
       <section className="upcomingEvent-container__title">

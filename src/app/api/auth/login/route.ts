@@ -64,7 +64,7 @@ export async function POST(request: Request) {
         const session = cookies().set(process.env.TOKEN_NAME!, token, {
           httpOnly: true,
           secure: true,
-          sameSite: "strict",
+          // sameSite: "strict",
           path: "/",
           maxAge: 60 * 15,
         });
