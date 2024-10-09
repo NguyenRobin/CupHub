@@ -1,0 +1,15 @@
+.loading-spinner {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  animation: loading360 0.7s linear infinite;
+}
+
+@keyframes loading360 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

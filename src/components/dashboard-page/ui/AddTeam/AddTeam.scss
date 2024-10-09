@@ -34,6 +34,19 @@
         border: 1px solid $border-color-primary;
         border: 1px solid lightgray;
       }
+      input,
+      select {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgb(213, 213, 213);
+        font-size: $font-size-xl;
+      }
+
+      select:active,
+      select:focus {
+        border: 2px solid $bg-color-primary;
+        outline: none;
+      }
     }
     &--teams {
       display: grid;
@@ -46,6 +59,18 @@
         padding: 0.5rem;
         border: 1px solid $border-color-primary;
         border: 1px solid lightgray;
+      }
+      input {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgb(213, 213, 213);
+        font-size: $font-size-xl;
+      }
+
+      input:active,
+      input:focus {
+        border: 2px solid $bg-color-primary;
+        outline: none;
       }
     }
 

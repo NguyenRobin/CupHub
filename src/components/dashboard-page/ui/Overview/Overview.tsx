@@ -1,23 +1,35 @@
-import Event from "../Event/Event";
-import "./Overview.scss";
+import { cookies } from "next/headers";
+import EventSelection from "../EventSelection/EventSelection";
 import UpcomingEvents from "../UpcomingEvents/UpcomingEvents";
-import { Suspense } from "react";
+import "./Overview.scss";
 
-function Overview() {
+async function getDashboardOverview() {
+  const token = cookies().get(process.env.TOKEN_NAME!);
+
+  const response = await fetch("http://localhost:3000/api/dashboard", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `${process.env.TOKEN_NAME}=${token?.value}`,
+    },
+  });
+
+  const data = await response.json();
+  return data;
+}
+async function Overview() {
+  const overview = await getDashboardOverview();
+  const { tournaments, username } = overview.data;
+
   return (
     <section className="overview">
       <section className="overview__welcome-text">
-        <h1>Välkommen, Robin!</h1>
+        <h1>Välkommen, {username}! 👋</h1>
       </section>
 
       <section className="overview__listing">
-        {/* {isLoading ? <p>loading...</p> : <UpcomingEvents />} */}
-
-        <Suspense fallback={<p>loading...</p>}>
-          <UpcomingEvents />
-        </Suspense>
-
-        <Event />
+        <UpcomingEvents events={tournaments} />
+        <EventSelection />
       </section>
     </section>
   );

@@ -191,7 +191,10 @@ function NavMenuDashboard({ closeModal }: Props) {
           </ul>
         )}
       </section>
-      <SwitchThemeMode isChecked={isChecked} onChange={handleIsChecked} />
+
+      <section style={{ height: "100%" }}>
+        <SwitchThemeMode isChecked={isChecked} onChange={handleIsChecked} />
+      </section>
     </nav>
   );
 }

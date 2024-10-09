@@ -4,6 +4,13 @@ import { NextResponse } from "next/server";
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
+type TJwtPayload = {
+  id: string;
+  username: string;
+  iat: number;
+  exp: number;
+};
+
 export async function hashPassword(password: string) {
   const saltRounds = 10;
   const salt = await bcrypt.genSalt(saltRounds);
@@ -22,7 +29,7 @@ export async function compareUserInputPasswordWithHashedPassword(
   return isPasswordMatching;
 }
 
-export function createToken(user: any) {
+export function createToken(user: { id: string; username: string }) {
   const encodedToken = jwt.sign(user, process.env.JWT_SECRET_KEY as string, {
     expiresIn: "15m",
   });
@@ -32,7 +39,7 @@ export function createToken(user: any) {
 
 export function verifyToken(encodedToken: string) {
   const decodedToken = jwt.verify(encodedToken, JWT_SECRET_KEY!);
-  return decodedToken;
+  return decodedToken as TJwtPayload;
 }
 
 export function getCookieValue(request: Request) {

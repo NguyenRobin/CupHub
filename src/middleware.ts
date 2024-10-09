@@ -5,18 +5,29 @@ import {
 } from "./middlewares/api/authMiddleware";
 
 export async function middleware(request: NextRequest) {
+  console.log("---------------------------------");
+  console.log(request.nextUrl.pathname);
+  console.log("---------------------------------");
+
   if (
-    request.url.includes("/auth/login") ||
-    request.url.includes("/auth/signup")
+    request.nextUrl.pathname.startsWith("/api/auth/login") ||
+    request.nextUrl.pathname.startsWith("/api/auth/signup")
   ) {
     return NextResponse.next();
   }
-
-  if (request.url.includes("/dashboard")) {
+  console.log(
+    'request.nextUrl.pathname.startsWith("/dashboard")',
+    request.nextUrl.pathname.startsWith("/dashboard")
+  );
+  if (request.nextUrl.pathname.startsWith("/dashboard")) {
     return await authMiddleware(request);
   }
 
-  if (request.url.includes("/api")) {
+  console.log(
+    'request.nextUrl.pathname.startsWith("/api")',
+    request.nextUrl.pathname.startsWith("/api")
+  );
+  if (request.nextUrl.pathname.startsWith("/api")) {
     return await authApiMiddleware(request);
   }
 }

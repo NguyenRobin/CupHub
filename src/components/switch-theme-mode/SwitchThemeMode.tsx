@@ -12,10 +12,10 @@ function SwitchThemeMode({ isChecked, onChange }: Props) {
   return (
     <label className="switch-theme-mode">
       <input type="checkbox" checked={isChecked} onChange={onChange} />
-      <span className="slider round">
+      <div className="slider round">
         <IoMoonSharp className="theme-dark_mode" />
         <GoSun className="theme-light_mode" />
-      </span>
+      </div>
     </label>
   );
 }
