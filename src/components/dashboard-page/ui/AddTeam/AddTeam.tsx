@@ -8,8 +8,10 @@ import { AiOutlineLoading } from "react-icons/ai";
 import CardRule from "../CardRule/CardRule";
 import useFormContext from "../../../../hooks/useFormContext";
 import Group from "../Group/Group";
+import { useRouter } from "next/navigation";
 
 function AddTeam() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const {
     name,
@@ -67,22 +69,28 @@ function AddTeam() {
         };
       }),
     };
-    console.log(tournament);
-    const response = await fetch(
-      "http://localhost:3000/api/tournaments?userId=66d564dc6e9fec281eb76625",
-      {
-        method: "POST",
-        body: JSON.stringify(tournament),
-        headers: { "Content-Type": "application/json" },
-      }
-    );
 
+    const response = await fetch("http://localhost:3000/api/tournaments", {
+      method: "POST",
+      body: JSON.stringify(tournament),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) {
+      window.alert("Hoppsan! Ett fel inträffade. ⛔️");
+      setIsLoading(false);
+    }
     const result = await response.json();
 
-    if (result) {
+    if (result.status === 200) {
+      setIsLoading(false);
+      router.push("/dashboard");
+    } else {
+      window.alert("Testa igen");
       setIsLoading(false);
     }
   };
+
   console.log(exampleGroupPreview);
   return (
     <CardRule title="Antal lag">

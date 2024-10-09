@@ -82,7 +82,7 @@ export async function POST(request: Request) {
       secure: true,
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 15,
+      maxAge: 60 * 15, // 15 minutes //! later this should automatically update every time a new request is made is token still valid
     });
 
     return NextResponse.json({

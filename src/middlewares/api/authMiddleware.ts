@@ -31,6 +31,7 @@ export async function authApiMiddleware(request: NextRequest) {
   const token = request.cookies.get("AUTH_SESSION_TOKEN")?.value;
 
   if (!token) {
+    console.log("!token api");
     return NextResponse.json({
       status: 401,
       message: "Authentication failed. Token not provided. MIDDLEWARE",
@@ -39,6 +40,8 @@ export async function authApiMiddleware(request: NextRequest) {
   const isTokenValid = await verifyTokenByJose(token);
 
   if (!isTokenValid) {
+    console.log("!isTokenValid api");
+
     return NextResponse.json({
       status: 401,
       message: "Authentication failed. Token not valid. MIDDLEWARE",

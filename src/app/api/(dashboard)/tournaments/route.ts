@@ -13,6 +13,7 @@ import {
   getCookieValue,
   verifyToken,
 } from "../../../../lib/server/serverHelperFunc";
+import UserModel from "../../../../models/User";
 
 export async function GET(request: Request) {
   try {
@@ -148,7 +149,8 @@ async function createTournamentToTournamentCollectionDB(
     updatedAt,
     status,
     points_system,
-    createdByUserId: Types.ObjectId.createFromHexString(userId),
+    // createdByUserId: Types.ObjectId.createFromHexString(userId),
+    createdByUserId: userId,
   });
 
   await connectToMongoDB();
@@ -343,10 +345,20 @@ function validatePossibleTeamsPerGroupGoingToPlayoff(
 }
 
 export async function POST(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get("userId");
+  const sessionCookieToken = getCookieValue(request) ?? "";
+  const tokenInfo = verifyToken(sessionCookieToken);
+
+  if (!tokenInfo) {
+    return NextResponse.json({
+      message: "tokenInfo from POST creating tournament",
+    });
+  }
 
   try {
+    await connectToMongoDB();
+
+    const user = await UserModel.findById({ _id: tokenInfo.id });
+
     const body = await request.json();
     const {
       id,
@@ -365,7 +377,7 @@ export async function POST(request: Request) {
       groups,
     } = body;
 
-    if (!userId || !mongoose.isValidObjectId(userId)) {
+    if (!tokenInfo || !mongoose.isValidObjectId(tokenInfo.id)) {
       return NextResponse.json({
         message: "Invalid userId for ObjectId",
         status: 400,
@@ -413,13 +425,13 @@ export async function POST(request: Request) {
       // 2) Add the tournament to database to then retrieve the _id
       const newTournament = await createTournamentToTournamentCollectionDB(
         body,
-        userId
+        user._id
       );
 
       // 3) with the _id from tournament we can now create a relationship between tournament in the TournamentModel and the teams in the TeamModel.
       const teamsAddedToDb = await addTeamToTeamCollectionDB(
         teams_participating,
-        userId,
+        user._id,
         newTournament._id
       );
 
@@ -495,6 +507,7 @@ export async function POST(request: Request) {
       status: 500,
       error: error.message,
       message: "Error creating a tournament",
+      errorMsg: error,
     });
   }
 }
