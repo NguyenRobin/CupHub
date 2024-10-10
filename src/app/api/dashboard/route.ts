@@ -16,7 +16,6 @@ export async function GET(request: Request) {
   }
 
   // ändra till promiseAll sen
-
   try {
     await connectToMongoDB();
 

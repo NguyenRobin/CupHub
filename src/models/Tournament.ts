@@ -1,10 +1,12 @@
+import { ObjectId } from "mongodb";
 import mongoose, { Schema, Types, model } from "mongoose";
 
-interface ITournament {
+export type TTournament = {
+  _id: Types.ObjectId;
   name: string;
   description?: string;
   sport?: string;
-  location: string;
+  location?: string;
   startDate: Date;
   endDate: Date;
   total_teams: number;
@@ -17,15 +19,15 @@ interface ITournament {
     teamsPerGroupAdvancing?: number;
     numberOfMeetings?: number;
   };
-  tournament_format: "league" | "knockout" | "group_stage_with_knockout";
+  format: "league" | "knockout" | "group_stage_with_knockout";
   teams_participating?: {
     team_id: Types.ObjectId;
   }[];
-  groups?: Types.ObjectId[];
+  groups: Types.ObjectId[];
   createdByUserId: Types.ObjectId;
-}
+};
 
-const tournamentSchema = new Schema<ITournament>(
+const tournamentSchema = new Schema<TTournament>(
   {
     name: { type: String, required: true },
     description: { type: String, required: false },
@@ -33,21 +35,21 @@ const tournamentSchema = new Schema<ITournament>(
     sport: { type: String, enum: ["soccer", "golf"], required: false },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
-    total_teams: { type: Number, required: true },
-    total_groups: { type: Number, required: false },
+    total_teams: { type: Number, required: true, min: 2, max: 64 },
+    total_groups: { type: Number, required: false, min: 1 },
     status: {
       type: String,
       enum: ["scheduled", "ongoing", "completed"],
       required: true,
     },
     points_system: {
-      win: { type: Number, required: true },
-      draw: { type: Number, required: true },
-      loss: { type: Number, required: true },
-      teamsPerGroupAdvancing: { type: Number, required: false },
-      numberOfMeetings: { type: Number, required: false },
+      win: { type: Number, required: true, min: 0, max: 9 },
+      draw: { type: Number, required: true, min: 0, max: 9 },
+      loss: { type: Number, required: true, min: 0, max: 9 },
+      teamsPerGroupAdvancing: { type: Number, required: true },
+      numberOfMeetings: { type: Number, required: true, min: 1, max: 2 },
     },
-    tournament_format: {
+    format: {
       type: String,
       enum: ["league", "knockout", "group_stage_with_knockout"],
       required: true,
@@ -58,12 +60,12 @@ const tournamentSchema = new Schema<ITournament>(
         team_id: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Team",
-          required: true,
+          required: false,
         },
       },
     ],
     groups: [
-      { type: mongoose.Schema.Types.ObjectId, required: false, ref: "Group" },
+      { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Group" },
     ],
     createdByUserId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -76,6 +78,6 @@ const tournamentSchema = new Schema<ITournament>(
 
 const TournamentModel =
   mongoose.models.Tournament ||
-  model<ITournament>("Tournament", tournamentSchema);
+  model<TTournament>("Tournament", tournamentSchema);
 
 export default TournamentModel;

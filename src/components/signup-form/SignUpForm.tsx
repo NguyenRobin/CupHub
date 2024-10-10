@@ -98,7 +98,7 @@ function SignUpForm() {
     try {
       SignUpFormSchema.parse(submitFormBody);
 
-      const response = await fetch("http://localhost:3000/api/users", {
+      const response = await fetch("http://localhost:3000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(submitFormBody),
@@ -109,6 +109,7 @@ function SignUpForm() {
       }
 
       const data = await response.json();
+      console.log(data);
 
       // user could not be created
       if (data.status !== 201) {

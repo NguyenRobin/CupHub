@@ -28,7 +28,7 @@ function EventSelection() {
         </section>
       </Link>
 
-      <Link href="/dashboard/tournament/new" className="event-selection__type">
+      <Link href="/dashboard/league/new" className="event-selection__type">
         <section className="event-selection__type--information">
           <h3>Serie</h3>
           <p>Lagen möts i en serie där alla spelar mot alla</p>

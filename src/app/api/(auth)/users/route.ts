@@ -37,6 +37,7 @@ export async function POST(request: Request) {
 
     await connectToMongoDB();
 
+    //! change to promiseAll
     const existingEmail = await UserModel.findOne({ email });
     const existingUsername = await UserModel.findOne({ username });
 

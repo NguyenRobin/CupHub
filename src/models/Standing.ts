@@ -1,12 +1,12 @@
 import mongoose, { Schema, model, Types } from "mongoose";
 
 interface IStanding {
-  tournament_id: Types.ObjectId;
+  league_id: Types.ObjectId;
   name: string;
   standings: {
     team_id: Types.ObjectId;
     team: string;
-    win: number;
+    won: number;
     draw: number;
     loss: number;
     goal: number;
@@ -18,9 +18,9 @@ interface IStanding {
 
 const standingSchema = new Schema<IStanding>(
   {
-    tournament_id: {
+    league_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Tournament",
+      ref: "League",
       required: true,
     },
     name: { type: String, required: true },
@@ -28,7 +28,7 @@ const standingSchema = new Schema<IStanding>(
       {
         team_id: { type: mongoose.Types.ObjectId, ref: "Team", required: true },
         team: { type: String, required: true },
-        win: { type: Number, required: true },
+        won: { type: Number, required: true },
         draw: { type: Number, required: true },
         loss: { type: Number, required: true },
         goal: { type: Number, required: true },
