@@ -1,12 +1,13 @@
 import mongoose, { Schema, model, Types } from "mongoose";
 
-interface ITeam {
+type TTeam = {
   name: string;
   createdByUserId?: Types.ObjectId;
   tournaments_teamParticipates_in?: Types.ObjectId[];
-}
+  leagues_teamParticipates_in?: Types.ObjectId[];
+};
 
-const teamSchema = new Schema<ITeam>({
+const teamSchema = new Schema<TTeam>({
   name: { type: String, required: true },
   tournaments_teamParticipates_in: [
     {
@@ -18,6 +19,16 @@ const teamSchema = new Schema<ITeam>({
       },
     },
   ],
+  leagues_teamParticipates_in: [
+    {
+      _id: false,
+      league_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: "League",
+      },
+    },
+  ],
   createdByUserId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -25,6 +36,6 @@ const teamSchema = new Schema<ITeam>({
   },
 });
 
-const TeamModel = mongoose.models.Team || model<ITeam>("Team", teamSchema);
+const TeamModel = mongoose.models.Team || model<TTeam>("Team", teamSchema);
 
 export default TeamModel;
