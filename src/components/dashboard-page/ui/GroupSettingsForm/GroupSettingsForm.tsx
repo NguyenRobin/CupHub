@@ -9,7 +9,7 @@ import useFormContext from "../../../../hooks/useFormContext";
 
 function GroupSettingsForm() {
   const {
-    win,
+    won,
     draw,
     loss,
     rounds,
@@ -79,15 +79,15 @@ function GroupSettingsForm() {
             </section>
           </label>
 
-          <label className="group-settings__form--label" htmlFor="win">
+          <label className="group-settings__form--label" htmlFor="won">
             <p>Poäng för vinst</p>
             <section className="">
-              <button type="button" onClick={() => handleDecrement("win")}>
+              <button type="button" onClick={() => handleDecrement("won")}>
                 <span>-</span>
               </button>
 
-              <span>{win}</span>
-              <button type="button" onClick={() => handleIncrement("win")}>
+              <span>{won}</span>
+              <button type="button" onClick={() => handleIncrement("won")}>
                 <span>+</span>
               </button>
             </section>

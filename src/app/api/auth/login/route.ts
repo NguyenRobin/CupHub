@@ -5,7 +5,7 @@ import UserModel from "../../../../models/User";
 import {
   compareUserInputPasswordWithHashedPassword,
   createToken,
-} from "../../../../lib/server/serverHelperFunc";
+} from "../../../../lib/server";
 
 export async function POST(request: Request) {
   try {

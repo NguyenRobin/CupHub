@@ -2,10 +2,7 @@ import mongoose, { Types } from "mongoose";
 import { NextResponse } from "next/server";
 import connectToMongoDB from "../../../lib/server/connectToMongoDB";
 import UserModel from "../../../models/User";
-import {
-  createToken,
-  hashPassword,
-} from "../../../lib/server/serverHelperFunc";
+import { createToken, hashPassword } from "../../../lib/server";
 import { cookies } from "next/headers";
 
 export async function GET() {

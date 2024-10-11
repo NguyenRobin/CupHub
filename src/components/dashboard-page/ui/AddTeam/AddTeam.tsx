@@ -18,7 +18,7 @@ function AddTeam() {
     description,
     startDate,
     endDate,
-    win,
+    won,
     draw,
     loss,
     teams,
@@ -55,13 +55,13 @@ function AddTeam() {
       status: "scheduled",
       total_groups,
       points_system: {
-        win,
+        won,
         draw,
         loss,
         numberOfMeetings: rounds,
         teamsPerGroupAdvancing,
       },
-      tournament_format: "group_stage_with_knockout",
+      format: "group_stage_with_knockout",
       groups: exampleGroupPreview.map((group) => {
         return {
           group: group.group,
@@ -69,6 +69,8 @@ function AddTeam() {
         };
       }),
     };
+
+    console.log(tournament);
 
     const response = await fetch("http://localhost:3000/api/tournaments", {
       method: "POST",
@@ -81,7 +83,7 @@ function AddTeam() {
       setIsLoading(false);
     }
     const result = await response.json();
-
+    console.log(result);
     if (result.status === 200) {
       setIsLoading(false);
       router.push("/dashboard");

@@ -38,6 +38,7 @@ export async function createTournamentToTournamentCollectionDB(
   });
 
   const created = await newTournament.save(options);
+  console.log("created", created);
   return created;
 }
 
