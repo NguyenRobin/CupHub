@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import { TGroup, TMatch } from "../../types/types";
 import { Types } from "mongoose";

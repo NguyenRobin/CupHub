@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import connectToMongoDB from "../../../../../lib/connectToMongoDB";
-import TournamentModel from "../../../../../models/Tournament";
-import UserModel from "../../../../../models/User";
+import connectToMongoDB from "../../../../lib/server/connectToMongoDB";
+import TournamentModel from "../../../../models/Tournament";
+import UserModel from "../../../../models/User";
 
 export async function GET(
   request: Request,
@@ -37,10 +37,10 @@ export async function GET(
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { tournamentId: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const tournamentId = params.tournamentId;
+    const tournamentId = params.id;
 
     const body = await request.json();
     const { searchParams } = new URL(request.url);

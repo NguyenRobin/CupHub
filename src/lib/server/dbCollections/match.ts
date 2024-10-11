@@ -1,12 +1,21 @@
-import { Types } from "mongoose";
+import { ClientSession, Types } from "mongoose";
 import MatchModel from "../../../models/Match";
 import { TWho } from "../../../types/types";
+
+export async function addMatchesToMatchesCollectionDB(
+  array: any[],
+  session?: ClientSession
+) {
+  const options = session ? { session } : {};
+  const docs = await MatchModel.insertMany(array, options);
+  return docs;
+}
 
 export async function getMatch(_id: string) {
   try {
     const match = await MatchModel.findById({ _id: _id });
     if (!match) {
-      return false;
+      throw new Error("Match not found");
     }
 
     return match;
@@ -17,7 +26,7 @@ export async function getMatch(_id: string) {
 
 export async function updateMatchStatus(
   _id: string,
-  status: { status: string }
+  status: "scheduled" | "ongoing" | "paused" | "completed"
 ) {
   try {
     const updateMatch = await MatchModel.findByIdAndUpdate(
@@ -55,12 +64,33 @@ export async function updateMatchResult(
   }
 }
 
-export async function updateMatchWinner(_id: string, obj: { winner: string }) {
+export async function updateMatchWinner(
+  _id: string,
+  winner: { winner: string }
+) {
   try {
-    const updateMatch = await MatchModel.findByIdAndUpdate({ _id: _id }, obj, {
-      runValidators: true,
-      new: true,
-    });
+    const match = await MatchModel.findById(_id);
+    const { homeTeam, awayTeam } = match;
+    const checkWinner =
+      homeTeam.score === awayTeam.score
+        ? "draw"
+        : homeTeam.score > awayTeam.score
+        ? homeTeam.name
+        : awayTeam.name;
+
+    if (winner !== checkWinner) {
+      // return { status: 400, message: "Invalid winner based on result" };
+      throw new Error("Invalid winner based on result");
+    }
+
+    const updateMatch = await MatchModel.findByIdAndUpdate(
+      { _id: _id },
+      { winner: checkWinner },
+      {
+        runValidators: true,
+        new: true,
+      }
+    );
 
     return updateMatch;
   } catch (error) {

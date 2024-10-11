@@ -5,7 +5,7 @@ import {
 } from "../../../lib/server/serverHelperFunc";
 import UserModel from "../../../models/User";
 import TournamentModel from "../../../models/Tournament";
-import connectToMongoDB from "../../../lib/connectToMongoDB";
+import connectToMongoDB from "../../../lib/server/connectToMongoDB";
 
 export async function GET(request: Request) {
   const sessionToken = getCookieValue(request) ?? "";

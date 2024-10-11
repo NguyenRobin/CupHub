@@ -11,7 +11,7 @@ interface IGroup {
 interface IStanding {
   team_id: Types.ObjectId;
   team: string;
-  win: number;
+  won: number;
   draw: number;
   loss: number;
   goal: number;
@@ -51,7 +51,7 @@ const groupSchema = new Schema<IGroup>(
           required: true,
         },
         team: { type: String, required: true },
-        win: { type: Number, required: true },
+        won: { type: Number, required: true },
         draw: { type: Number, required: true },
         loss: { type: Number, required: true },
         goal: { type: Number, required: true },

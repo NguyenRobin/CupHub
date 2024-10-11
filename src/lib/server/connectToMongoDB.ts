@@ -40,37 +40,3 @@ async function connectToMongoDB() {
 }
 
 export default connectToMongoDB;
-
-// const MONGODB_URI = process.env.MONGODB_URI as string;
-
-// if (!MONGODB_URI) {
-//   throw new Error(
-//     "Please define the MONGODB_URI environment variable inside .env.local"
-//   );
-// }
-
-// async function connectToMongoDB() {
-//   const connectionState = mongoose.connection.readyState;
-//   console.log(connectionState);
-//   if (connectionState === 1) {
-//     // We are already connected
-//     console.log("MongoDB is already connected.");
-//     return;
-//   }
-
-//   if (connectionState === 2) {
-//     // We are NOT connected so we need to connect to mongoDB
-//     console.log("MongoDB is NOT connected.");
-//     return;
-//   }
-//   try {
-//     await mongoose.connect(MONGODB_URI, {
-//       dbName: "tournamentDB",
-//     });
-//   } catch (error: any) {
-//     console.log("Error connecting to mongoDB");
-//     throw new Error("Database connection failed: " + error.message);
-//   }
-// }
-// // connectToMongoDB();
-// export default connectToMongoDB;
