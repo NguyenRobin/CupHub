@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
-import { updateMatchTeamScore } from "../../../../../../lib/server/collections/match";
+import { updateMatchTeamScore } from "../../../../../lib/server/dbCollections/match";
 
 export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
     const body = await request.json();
-    console.log(body);
+
     const { homeTeam, awayTeam } = body;
 
     if (!homeTeam && !awayTeam) {
@@ -21,7 +22,7 @@ export async function PATCH(
     const score = homeTeam ? homeTeam : awayTeam;
 
     const updatedMatchResults = await updateMatchTeamScore(
-      params.id,
+      id,
       teamWhoScored,
       score
     );

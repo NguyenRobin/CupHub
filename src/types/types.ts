@@ -75,7 +75,7 @@ export type TGroup = {
 export type TStanding = {
   team_id: string;
   team: string;
-  win: number;
+  won: number;
   draw: number;
   loss: number;
   goal: number;

@@ -13,7 +13,7 @@ export type TTournament = {
   total_groups?: number;
   status: "scheduled" | "ongoing" | "completed";
   points_system: {
-    win: number;
+    won: number;
     draw: number;
     loss: number;
     teamsPerGroupAdvancing?: number;
@@ -43,7 +43,7 @@ const tournamentSchema = new Schema<TTournament>(
       required: true,
     },
     points_system: {
-      win: { type: Number, required: true, min: 0, max: 9 },
+      won: { type: Number, required: true, min: 0, max: 9 },
       draw: { type: Number, required: true, min: 0, max: 9 },
       loss: { type: Number, required: true, min: 0, max: 9 },
       teamsPerGroupAdvancing: { type: Number, required: true },

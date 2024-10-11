@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import connectToMongoDB from "../../../../lib/connectToMongoDB";
+import connectToMongoDB from "../../../../lib/server/connectToMongoDB";
 import UserModel from "../../../../models/User";
 import {
   compareUserInputPasswordWithHashedPassword,

@@ -1,26 +1,28 @@
 import mongoose, { Types } from "mongoose";
 import { NextResponse } from "next/server";
-import TournamentModel, { TTournament } from "../../../../models/Tournament";
-import connectToMongoDB from "../../../../lib/connectToMongoDB";
+import TournamentModel, { TTournament } from "../../../models/Tournament";
+import connectToMongoDB from "../../../lib/server/connectToMongoDB";
 import {
   generateRobinRound,
   getCookieValue,
   validatePossibleTeamsPerGroupGoingToPlayoff,
   verifyToken,
-} from "../../../../lib/server/serverHelperFunc";
-import UserModel from "../../../../models/User";
+} from "../../../lib/server/serverHelperFunc";
+import UserModel from "../../../models/User";
 
+import { TCreateTournamentBody, TUser } from "../../../types/types";
 import {
-  addMatchesToMatchesCollectionDB,
-  addTeamToTeamCollectionDB,
-  createGroupCollectionToDB,
-  createPlayoffRoundToRoundCollectionDB,
   createTournamentToTournamentCollectionDB,
-  updateGroupCollectionWithMatchIds,
   updateTournamentCollectionWithGroupIds,
   updateTournamentCollectionWithTeamsParticipating,
-} from "../../../../lib/server";
-import { TCreateTournamentBody, TUser } from "../../../../types/types";
+} from "../../../lib/server/dbCollections/tournament";
+import { addTeamToTeamCollectionDB } from "../../../lib/server/dbCollections/team";
+import { createPlayoffRoundToRoundCollectionDB } from "../../../lib/server/dbCollections/round";
+import {
+  createGroupCollectionToDB,
+  updateGroupCollectionWithMatchIds,
+} from "../../../lib/server/dbCollections/group";
+import { addMatchesToMatchesCollectionDB } from "../../../lib/server/dbCollections/match";
 
 export async function GET(request: Request) {
   try {
@@ -137,6 +139,9 @@ export async function POST(request: Request) {
       }
 
       // 1) connect to the database and start the session
+
+      const session = await mongoose.startSession();
+      session.startTransaction();
       await connectToMongoDB();
 
       const user: TUser | null = await UserModel.findById({
@@ -152,14 +157,15 @@ export async function POST(request: Request) {
 
       // 2) Add the tournament to database to then retrieve the _id
       const newTournament: TTournament =
-        await createTournamentToTournamentCollectionDB(body, user._id);
+        await createTournamentToTournamentCollectionDB(body, user._id, session);
 
       // 3) with the _id from tournament we can now create a relationship between tournament in the TournamentModel and the teams in the TeamModel.
       const teamsAddedToDb = await addTeamToTeamCollectionDB(
         teams_participating,
         user._id,
         newTournament._id,
-        format
+        format,
+        session
       );
 
       // 4) Now we also need to update the newTournament with all the teams that participate in specific tournament.
@@ -173,29 +179,37 @@ export async function POST(request: Request) {
       const roundsAddedToDb = await createPlayoffRoundToRoundCollectionDB(
         newTournament._id,
         playoffInformation.playoff_round!,
-        status
+        status,
+        session
       );
 
       // 5) create the groups to groups model
       const groupsAddedToDB = await createGroupCollectionToDB(
         groups,
         newTournament._id,
-        teamsAddedToDb
+        teamsAddedToDb,
+        session
       );
 
       // 6) create the matches generate so all teams play against each other.
       const matches = generateRobinRound(groupsAddedToDB);
 
-      const matchesAddedToDB = await addMatchesToMatchesCollectionDB(matches);
+      const matchesAddedToDB = await addMatchesToMatchesCollectionDB(
+        matches,
+        session
+      );
 
       // 7) update tournament model with the groups _id ref in the tournaments group array
       await updateTournamentCollectionWithGroupIds(
         newTournament._id,
-        groupsAddedToDB
+        groupsAddedToDB,
+        session
       );
-
       // 8) update the groups model with the match _id ref in the groups matches array
-      await updateGroupCollectionWithMatchIds(matchesAddedToDB);
+      await updateGroupCollectionWithMatchIds(matchesAddedToDB, session);
+
+      await session.commitTransaction();
+      session.endSession();
     }
 
     return NextResponse.json({

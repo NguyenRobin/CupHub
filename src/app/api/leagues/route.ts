@@ -4,19 +4,18 @@ import {
   generateRobinRoundTEST,
   getCookieValue,
   verifyToken,
-} from "../../../../lib/server/serverHelperFunc";
-import { TCreateLeague, TUser } from "../../../../types/types";
-import connectToMongoDB from "../../../../lib/connectToMongoDB";
-import UserModel from "../../../../models/User";
-import {
-  addMatchesToMatchesCollectionDB,
-  addTeamToTeamCollectionDB,
-  createLeagueToLeagueCollectionDB,
-  createStandingToStandingsCollectionDB,
-  updateLeagueCollectionWithTeamsParticipating,
-  updateTournamentCollectionWithTeamsParticipating,
-} from "../../../../lib/server";
+} from "../../../lib/server/serverHelperFunc";
+import { TCreateLeague, TUser } from "../../../types/types";
+import connectToMongoDB from "../../../lib/server/connectToMongoDB";
+import UserModel from "../../../models/User";
 import mongoose from "mongoose";
+import {
+  createLeagueToLeagueCollectionDB,
+  updateLeagueCollectionWithTeamsParticipating,
+} from "../../../lib/server/dbCollections/league";
+import { addTeamToTeamCollectionDB } from "../../../lib/server/dbCollections/team";
+import { addMatchesToMatchesCollectionDB } from "../../../lib/server/dbCollections/match";
+import { createStandingToStandingsCollectionDB } from "../../../lib/server/dbCollections/standings";
 
 export async function POST(request: Request) {
   const sessionCookieToken = getCookieValue(request) ?? "";
@@ -96,7 +95,7 @@ export async function POST(request: Request) {
       session
     );
 
-    session.commitTransaction();
+    await session.commitTransaction();
     session.endSession();
 
     return NextResponse.json({

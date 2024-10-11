@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getMatch } from "../../../../../lib/server/collections/match";
+import { getMatch } from "../../../../lib/server/dbCollections/match";
 import { Types } from "mongoose";
 
 export async function GET(
