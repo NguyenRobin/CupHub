@@ -4,7 +4,7 @@ import "./UpcomingEvents.scss";
 import Image from "next/image";
 import { MdLocationOn } from "react-icons/md";
 import { SlCalender } from "react-icons/sl";
-import { getMonthName } from "../../../../lib/client/clientHelperFunc";
+import { getMonthName } from "../../../../lib/client";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import { useRouter } from "next/navigation";
 

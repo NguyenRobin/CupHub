@@ -4,7 +4,7 @@ import {
   generateRobinRoundTEST,
   getCookieValue,
   verifyToken,
-} from "../../../lib/server/serverHelperFunc";
+} from "../../../lib/server";
 import { TCreateLeague, TUser } from "../../../types/types";
 import connectToMongoDB from "../../../lib/server/connectToMongoDB";
 import UserModel from "../../../models/User";

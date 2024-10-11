@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
-import {
-  getCookieValue,
-  verifyToken,
-} from "../../../lib/server/serverHelperFunc";
+import { getCookieValue, verifyToken } from "../../../lib/server";
 import UserModel from "../../../models/User";
 import TournamentModel from "../../../models/Tournament";
 import connectToMongoDB from "../../../lib/server/connectToMongoDB";
@@ -12,10 +9,12 @@ export async function GET(request: Request) {
   const tokenInfo = verifyToken(sessionToken);
 
   if (!tokenInfo) {
-    return NextResponse.json({ message: "dick head" });
+    return NextResponse.json({
+      status: 401,
+      message: "Unauthorized Token not valid",
+    });
   }
 
-  // ändra till promiseAll sen
   try {
     await connectToMongoDB();
 
@@ -23,6 +22,8 @@ export async function GET(request: Request) {
     const userTournaments = await TournamentModel.find({
       createdByUserId: tokenInfo.id,
     });
+
+    console.log(userTournaments);
 
     return NextResponse.json({
       status: 200,
