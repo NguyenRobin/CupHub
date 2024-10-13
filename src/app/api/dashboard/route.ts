@@ -1,18 +1,15 @@
-import { NextResponse } from "next/server";
-import {
-  getCookieValue,
-  verifyToken,
-} from "../../../lib/server/serverHelperFunc";
-import UserModel from "../../../models/User";
-import TournamentModel from "../../../models/Tournament";
-import connectToMongoDB from "../../../lib/server/connectToMongoDB";
+import { NextResponse } from 'next/server';
+import { getCookieValue, verifyToken } from '../../../lib/server';
+import UserModel from '../../../models/User';
+import TournamentModel from '../../../models/Tournament';
+import connectToMongoDB from '../../../lib/server/connectToMongoDB';
 
 export async function GET(request: Request) {
-  const sessionToken = getCookieValue(request) ?? "";
+  const sessionToken = getCookieValue(request) ?? '';
   const tokenInfo = verifyToken(sessionToken);
 
   if (!tokenInfo) {
-    return NextResponse.json({ message: "dick head" });
+    return NextResponse.json({ message: 'dick head' });
   }
 
   // ändra till promiseAll sen
@@ -26,7 +23,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({
       status: 200,
-      message: "success",
+      message: 'success',
       data: {
         username: user.username,
         tournaments: userTournaments,

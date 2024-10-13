@@ -1,12 +1,9 @@
-import mongoose, { Types } from "mongoose";
-import { NextResponse } from "next/server";
-import connectToMongoDB from "../../../lib/server/connectToMongoDB";
-import UserModel from "../../../models/User";
-import {
-  createToken,
-  hashPassword,
-} from "../../../lib/server/serverHelperFunc";
-import { cookies } from "next/headers";
+import mongoose, { Types } from 'mongoose';
+import { NextResponse } from 'next/server';
+import connectToMongoDB from '../../../lib/server/connectToMongoDB';
+import UserModel from '../../../models/User';
+import { createToken, hashPassword } from '../../../lib/server';
+import { cookies } from 'next/headers';
 
 export async function GET() {
   try {
@@ -14,7 +11,7 @@ export async function GET() {
     const users = await UserModel.find();
     return NextResponse.json({
       status: 200,
-      message: "success",
+      message: 'success',
       result: users.length,
       users,
     });
@@ -44,26 +41,26 @@ export async function POST(request: Request) {
     if (existingUsername && existingEmail) {
       return NextResponse.json({
         status: 404,
-        signup_info: "email_and_username_taken",
+        signup_info: 'email_and_username_taken',
         message:
-          "Both the username and email address are already taken. Please choose different options.",
+          'Both the username and email address are already taken. Please choose different options.',
       });
     }
 
     if (existingEmail && !existingUsername) {
       return NextResponse.json({
         status: 404,
-        signup_info: "email_taken",
+        signup_info: 'email_taken',
         message:
-          "Email address is already in use. Please use a different email.",
+          'Email address is already in use. Please use a different email.',
       });
     }
 
     if (existingUsername && !existingEmail) {
       return NextResponse.json({
         status: 404,
-        signup_info: "username_taken",
-        message: "Username is already taken. Please choose another one.",
+        signup_info: 'username_taken',
+        message: 'Username is already taken. Please choose another one.',
       });
     }
 
@@ -81,20 +78,20 @@ export async function POST(request: Request) {
     const session = cookies().set(process.env.TOKEN_NAME!, token, {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
-      path: "/",
+      sameSite: 'strict',
+      path: '/',
       maxAge: 60 * 15, // 15 minutes //! later this should automatically update every time a new request is made is token still valid
     });
 
     return NextResponse.json({
       status: 201,
-      message: "User successfully created",
+      message: 'User successfully created',
     });
   } catch (error: any) {
     return NextResponse.json({
       status: 500,
       error: error.message,
-      message: "Error creating a user",
+      message: 'Error creating a user',
     });
   }
 }
@@ -106,14 +103,14 @@ export async function PATCH(request: Request) {
 
     if (!userId || !newUsername) {
       return NextResponse.json({
-        message: "Invalid request. Missing userId or new username",
+        message: 'Invalid request. Missing userId or new username',
         status: 400,
       });
     }
 
     if (!mongoose.isValidObjectId(userId)) {
       return NextResponse.json({
-        message: "Invalid userId for ObjectId",
+        message: 'Invalid userId for ObjectId',
         status: 400,
       });
     }
@@ -127,13 +124,13 @@ export async function PATCH(request: Request) {
 
     if (!updatedUser) {
       return NextResponse.json({
-        message: "User not found",
+        message: 'User not found',
         status: 400,
       });
     }
     return NextResponse.json({
       status: 200,
-      message: "success",
+      message: 'success',
       user: updatedUser,
     });
   } catch (error: any) {
@@ -145,18 +142,18 @@ export async function DELETE(request: Request) {
   try {
     console.log(request.url);
     const { searchParams } = new URL(request.url); // http://localhost:3000/api/
-    const userId = searchParams.get("userId"); //retrieve the query parameter 1
+    const userId = searchParams.get('userId'); //retrieve the query parameter 1
 
     if (!userId) {
       return NextResponse.json({
-        message: "Invalid request. Missing userId.",
+        message: 'Invalid request. Missing userId.',
         status: 400,
       });
     }
 
     if (!mongoose.isValidObjectId(userId)) {
       return NextResponse.json({
-        message: "Invalid userId for ObjectId",
+        message: 'Invalid userId for ObjectId',
         status: 400,
       });
     }
@@ -169,14 +166,14 @@ export async function DELETE(request: Request) {
 
     if (!deletedUser) {
       return NextResponse.json({
-        message: "User not found",
+        message: 'User not found',
         status: 400,
       });
     }
 
     return NextResponse.json({
       status: 200,
-      message: "success",
+      message: 'success',
       user: deletedUser,
     });
   } catch (error: any) {

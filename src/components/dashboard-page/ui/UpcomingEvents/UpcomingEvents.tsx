@@ -1,12 +1,12 @@
-"use client";
-import React, { useState } from "react";
-import "./UpcomingEvents.scss";
-import Image from "next/image";
-import { MdLocationOn } from "react-icons/md";
-import { SlCalender } from "react-icons/sl";
-import { getMonthName } from "../../../../lib/client/clientHelperFunc";
-import { MdExpandMore, MdExpandLess } from "react-icons/md";
-import { useRouter } from "next/navigation";
+'use client';
+import React, { useState } from 'react';
+import './UpcomingEvents.scss';
+import Image from 'next/image';
+import { MdLocationOn } from 'react-icons/md';
+import { SlCalender } from 'react-icons/sl';
+import { getMonthName } from '../../../../lib/client';
+import { MdExpandMore, MdExpandLess } from 'react-icons/md';
+import { useRouter } from 'next/navigation';
 
 function UpcomingEvents({ events }) {
   return (
@@ -34,8 +34,8 @@ function Events({ events }) {
     <Event
       id={el._id}
       key={el._id}
-      day={el.startDate.split("T")[0].split("-")[2]}
-      month={getMonthName(+el.startDate.split("T")[0].split("-")[1])}
+      day={el.startDate.split('T')[0].split('-')[2]}
+      month={getMonthName(+el.startDate.split('T')[0].split('-')[1])}
       name={el.name}
       location={el.location}
     />
@@ -47,8 +47,8 @@ function Events({ events }) {
       <Event
         id={el._id}
         key={el._id}
-        day={el.startDate.split("T")[0].split("-")[2]}
-        month={getMonthName(+el.startDate.split("T")[0].split("-")[1])}
+        day={el.startDate.split('T')[0].split('-')[2]}
+        month={getMonthName(+el.startDate.split('T')[0].split('-')[1])}
         name={el.name}
         location={el.location}
       />
@@ -58,8 +58,8 @@ function Events({ events }) {
     <Event
       id={el._id}
       key={el._id}
-      day={el.startDate.split("T")[0].split("-")[2]}
-      month={getMonthName(+el.startDate.split("T")[0].split("-")[1])}
+      day={el.startDate.split('T')[0].split('-')[2]}
+      month={getMonthName(+el.startDate.split('T')[0].split('-')[1])}
       name={el.name}
       location={el.location}
     />
@@ -79,7 +79,7 @@ function Events({ events }) {
           className="events__show"
           onClick={() => setIsShowingAll((prev) => !prev)}
         >
-          {`${!isShowingAll ? "Visa mer" : "Visa mindre"}`}
+          {`${!isShowingAll ? 'Visa mer' : 'Visa mindre'}`}
           <span>{!isShowingAll ? <MdExpandMore /> : <MdExpandLess />}</span>
         </p>
       )}

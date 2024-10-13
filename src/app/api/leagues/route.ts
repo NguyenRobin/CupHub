@@ -1,31 +1,31 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 import {
   generateRobinRound,
   generateRobinRoundTEST,
   getCookieValue,
   verifyToken,
-} from "../../../lib/server/serverHelperFunc";
-import { TCreateLeague, TUser } from "../../../types/types";
-import connectToMongoDB from "../../../lib/server/connectToMongoDB";
-import UserModel from "../../../models/User";
-import mongoose from "mongoose";
+} from '../../../lib/server';
+import { TCreateLeague, TUser } from '../../../types/types';
+import connectToMongoDB from '../../../lib/server/connectToMongoDB';
+import UserModel from '../../../models/User';
+import mongoose from 'mongoose';
 import {
   createLeagueToLeagueCollectionDB,
   updateLeagueCollectionWithTeamsParticipating,
-} from "../../../lib/server/dbCollections/league";
-import { addTeamToTeamCollectionDB } from "../../../lib/server/dbCollections/team";
-import { addMatchesToMatchesCollectionDB } from "../../../lib/server/dbCollections/match";
-import { createStandingToStandingsCollectionDB } from "../../../lib/server/dbCollections/standings";
+} from '../../../lib/server/dbCollections/league';
+import { addTeamToTeamCollectionDB } from '../../../lib/server/dbCollections/team';
+import { addMatchesToMatchesCollectionDB } from '../../../lib/server/dbCollections/match';
+import { createStandingToStandingsCollectionDB } from '../../../lib/server/dbCollections/standings';
 
 export async function POST(request: Request) {
-  const sessionCookieToken = getCookieValue(request) ?? "";
+  const sessionCookieToken = getCookieValue(request) ?? '';
   const tokenInfo = verifyToken(sessionCookieToken);
 
   if (!tokenInfo) {
     return NextResponse.json({
       status: 401,
       message:
-        "Authentication failed. Token not valid to create a new tournament",
+        'Authentication failed. Token not valid to create a new tournament',
     });
   }
 
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     if (!user) {
       return NextResponse.json({
         status: 404,
-        message: "User not found",
+        message: 'User not found',
       });
     }
 
@@ -100,13 +100,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       status: 200,
-      message: "League successfully created",
+      message: 'League successfully created',
     });
   } catch (error: any) {
     return NextResponse.json({
       status: 500,
       error: error.message,
-      message: "Error creating new league",
+      message: 'Error creating new league',
     });
   }
 }

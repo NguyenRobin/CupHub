@@ -1,28 +1,28 @@
-import mongoose, { Types } from "mongoose";
-import { NextResponse } from "next/server";
-import TournamentModel, { TTournament } from "../../../models/Tournament";
-import connectToMongoDB from "../../../lib/server/connectToMongoDB";
+import mongoose, { Types } from 'mongoose';
+import { NextResponse } from 'next/server';
+import TournamentModel, { TTournament } from '../../../models/Tournament';
+import connectToMongoDB from '../../../lib/server/connectToMongoDB';
 import {
   generateRobinRound,
   getCookieValue,
   validatePossibleTeamsPerGroupGoingToPlayoff,
   verifyToken,
-} from "../../../lib/server/serverHelperFunc";
-import UserModel from "../../../models/User";
+} from '../../../lib/server';
+import UserModel from '../../../models/User';
 
-import { TCreateTournamentBody, TUser } from "../../../types/types";
+import { TCreateTournamentBody, TUser } from '../../../types/types';
 import {
   createTournamentToTournamentCollectionDB,
   updateTournamentCollectionWithGroupIds,
   updateTournamentCollectionWithTeamsParticipating,
-} from "../../../lib/server/dbCollections/tournament";
-import { addTeamToTeamCollectionDB } from "../../../lib/server/dbCollections/team";
-import { createPlayoffRoundToRoundCollectionDB } from "../../../lib/server/dbCollections/round";
+} from '../../../lib/server/dbCollections/tournament';
+import { addTeamToTeamCollectionDB } from '../../../lib/server/dbCollections/team';
+import { createPlayoffRoundToRoundCollectionDB } from '../../../lib/server/dbCollections/round';
 import {
   createGroupCollectionToDB,
   updateGroupCollectionWithMatchIds,
-} from "../../../lib/server/dbCollections/group";
-import { addMatchesToMatchesCollectionDB } from "../../../lib/server/dbCollections/match";
+} from '../../../lib/server/dbCollections/group';
+import { addMatchesToMatchesCollectionDB } from '../../../lib/server/dbCollections/match';
 
 export async function GET(request: Request) {
   try {
@@ -71,7 +71,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({
       status: 200,
-      message: "success",
+      message: 'success',
       result: tournaments.length,
       tournaments,
     });
@@ -81,14 +81,14 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const sessionCookieToken = getCookieValue(request) ?? "";
+  const sessionCookieToken = getCookieValue(request) ?? '';
   const tokenInfo = verifyToken(sessionCookieToken);
 
   if (!tokenInfo) {
     return NextResponse.json({
       status: 401,
       message:
-        "Authentication failed. Token not valid to create a new tournament",
+        'Authentication failed. Token not valid to create a new tournament',
     });
   }
 
@@ -98,7 +98,7 @@ export async function POST(request: Request) {
 
     if (!tokenInfo || !mongoose.isValidObjectId(tokenInfo.id)) {
       return NextResponse.json({
-        message: "Invalid userId for ObjectId",
+        message: 'Invalid userId for ObjectId',
         status: 400,
       });
     }
@@ -106,12 +106,12 @@ export async function POST(request: Request) {
     if (total_teams < 0 || total_teams !== teams_participating?.length) {
       return NextResponse.json({
         message:
-          "Invalid total_teams. Must be greater than 0. total_teams must have same value as teams_participating",
+          'Invalid total_teams. Must be greater than 0. total_teams must have same value as teams_participating',
         status: 400,
       });
     }
 
-    if (format === "group_stage_with_knockout") {
+    if (format === 'group_stage_with_knockout') {
       const {
         points_system: { teamsPerGroupAdvancing },
         total_groups,
@@ -120,7 +120,7 @@ export async function POST(request: Request) {
       if (!teamsPerGroupAdvancing || !total_groups) {
         return NextResponse.json({
           message:
-            "teamsPerGroupAdvancing & total_groups is required when creating a group stage with knockout",
+            'teamsPerGroupAdvancing & total_groups is required when creating a group stage with knockout',
           status: 400,
         });
       }
@@ -151,7 +151,7 @@ export async function POST(request: Request) {
       if (!user) {
         return NextResponse.json({
           status: 404,
-          message: "User not found",
+          message: 'User not found',
         });
       }
 
@@ -214,13 +214,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       status: 200,
-      message: "Tournament successfully created",
+      message: 'Tournament successfully created',
     });
   } catch (error: any) {
     return NextResponse.json({
       status: 500,
       error: error.message,
-      message: "Error creating a tournament",
+      message: 'Error creating a tournament',
       errorMsg: error,
     });
   }

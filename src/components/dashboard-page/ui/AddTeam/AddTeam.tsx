@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import "./AddTeam.scss";
+import './AddTeam.scss';
 
-import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
-import { useState } from "react";
-import { AiOutlineLoading } from "react-icons/ai";
-import CardRule from "../CardRule/CardRule";
-import useFormContext from "../../../../hooks/useFormContext";
-import Group from "../Group/Group";
-import { useRouter } from "next/navigation";
+import { IoIosArrowRoundBack, IoIosArrowRoundForward } from 'react-icons/io';
+import { useState } from 'react';
+import { AiOutlineLoading } from 'react-icons/ai';
+import CardRule from '../CardRule/CardRule';
+import useFormContext from '../../../../hooks/useFormContext';
+import Group from '../Group/Group';
+import { useRouter } from 'next/navigation';
 
 function AddTeam() {
   const router = useRouter();
@@ -33,7 +33,6 @@ function AddTeam() {
     handleOnSelect,
     setPage,
   } = useFormContext();
-
   const validAmountOfTeamsPerGroupToPlayOff =
     teams.length % total_groups! === 0
       ? teams.length / total_groups!
@@ -47,12 +46,12 @@ function AddTeam() {
     const tournament = {
       name,
       description,
-      location: "stockholm, Sweden",
+      location: 'stockholm, Sweden',
       startDate,
       endDate,
       teams_participating: teams.map((team) => team.name),
       total_teams: teams.length,
-      status: "scheduled",
+      status: 'scheduled',
       total_groups,
       points_system: {
         win,
@@ -61,7 +60,7 @@ function AddTeam() {
         numberOfMeetings: rounds,
         teamsPerGroupAdvancing,
       },
-      tournament_format: "group_stage_with_knockout",
+      tournament_format: 'group_stage_with_knockout',
       groups: exampleGroupPreview.map((group) => {
         return {
           group: group.group,
@@ -70,28 +69,27 @@ function AddTeam() {
       }),
     };
 
-    const response = await fetch("http://localhost:3000/api/tournaments", {
-      method: "POST",
+    const response = await fetch('http://localhost:3000/api/tournaments', {
+      method: 'POST',
       body: JSON.stringify(tournament),
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' },
     });
 
     if (!response.ok) {
-      window.alert("Hoppsan! Ett fel inträffade. ⛔️");
+      window.alert('Hoppsan! Ett fel inträffade. ⛔️');
       setIsLoading(false);
     }
     const result = await response.json();
 
     if (result.status === 200) {
       setIsLoading(false);
-      router.push("/dashboard");
+      router.push('/dashboard');
     } else {
-      window.alert("Testa igen");
+      window.alert('Testa igen');
       setIsLoading(false);
     }
   };
 
-  console.log(exampleGroupPreview);
   return (
     <CardRule title="Antal lag">
       <div className="add-team">
@@ -100,10 +98,10 @@ function AddTeam() {
             htmlFor="teams"
             className="add-team__form--label"
             style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
             }}
           >
             <p>Ange antalet lag</p>
@@ -172,9 +170,9 @@ function AddTeam() {
 
           <section
             style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "1.5rem",
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1.5rem',
             }}
           >
             <h3> Exempel på grupper:</h3>
@@ -200,7 +198,7 @@ function AddTeam() {
             {isLoading ? (
               <AiOutlineLoading className="loading" size={20} />
             ) : (
-              "Skapa"
+              'Skapa'
             )}
           </button>
         </div>
