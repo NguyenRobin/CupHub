@@ -7,18 +7,18 @@ export async function authMiddleware(request: NextRequest) {
   const token = request.cookies.get(TOKEN_NAME!)?.value;
   try {
     if (!token) {
-      return NextResponse.redirect(new URL('/auth/login', request.url));
+      return NextResponse.redirect(new URL('/login', request.url));
     }
 
     const isTokenValid = await verifyTokenByJose(token);
 
     if (!isTokenValid) {
-      return NextResponse.redirect(new URL('/auth/login', request.url));
+      return NextResponse.redirect(new URL('/login', request.url));
     }
 
     return NextResponse.next();
   } catch (error) {
-    return NextResponse.redirect(new URL('/auth/login', request.url));
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 }
 

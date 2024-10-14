@@ -7,7 +7,7 @@ import {
 } from "react";
 import { divideTeamsByGroup, validateApprovedGroups } from "../utils";
 
-type TKey = "rounds" | "win" | "draw" | "loss" | "teamsPerGroupAdvancing";
+type TKey = "rounds" | "won" | "draw" | "loss" | "teamsPerGroupAdvancing";
 
 type Team = {
   id: number;
@@ -34,7 +34,7 @@ type TFormContext = {
   endDate?: string;
   image?: string;
   rounds: number;
-  win: number;
+  won: number;
   draw: number;
   loss: number;
   total_groups?: number;
@@ -68,7 +68,7 @@ const defaultState: TFormContext = {
   endDate: "",
   image: "",
   rounds: 1,
-  win: 3,
+  won: 3,
   draw: 1,
   loss: 0,
   total_groups: 1,
@@ -151,7 +151,7 @@ export function FormProvider({ children }: TChildrenProps) {
     endDate: "",
     image: "",
     rounds: 1,
-    win: 3,
+    won: 3,
     draw: 1,
     loss: 0,
     total_groups: 1,
