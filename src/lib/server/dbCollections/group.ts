@@ -1,20 +1,22 @@
-import { ClientSession, Types } from "mongoose";
-import { TGroup } from "../../../types/types";
-import GroupModel from "../../../models/Group";
+import { ClientSession, Types } from 'mongoose';
+import { TGroup, TTeam } from '../../../types/types';
+import GroupModel from '../../../models/Group';
 
 export async function createGroupCollectionToDB(
-  groups: any[],
+  groups: { group: string; teams: string[] }[],
   tournament_id: Types.ObjectId,
-  teamsArr: any[],
+  teamsArr: TTeam[],
   session?: ClientSession
 ) {
   const options = session ? { session } : {};
   const allGroups: TGroup[] = [];
+  console.log('groups', groups);
   for (let i = 0; i < groups.length; i++) {
     const teams = teamsArr
       .filter((team) => groups[i].teams.includes(team.name))
       .map((team) => ({ team_id: team._id, name: team.name }));
 
+    console.log('teams', teams);
     const newGroup: TGroup = {
       tournament_id: tournament_id,
       group: groups[i].group,
@@ -26,7 +28,8 @@ export async function createGroupCollectionToDB(
           won: 0,
           draw: 0,
           loss: 0,
-          goal: 0,
+          goals_scored: 0,
+          goals_conceded: 0,
           goal_difference: 0,
           matches_played: 0,
           points: 0,

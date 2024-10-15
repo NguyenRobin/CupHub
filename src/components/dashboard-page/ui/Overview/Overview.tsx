@@ -1,18 +1,21 @@
-import { cookies } from "next/headers";
-import EventSelection from "../EventSelection/EventSelection";
-import UpcomingEvents from "../UpcomingEvents/UpcomingEvents";
-import "./Overview.scss";
+import { cookies } from 'next/headers';
+import EventSelection from '../EventSelection/EventSelection';
+import UpcomingEvents from '../UpcomingEvents/UpcomingEvents';
+import './Overview.scss';
 
 async function getDashboardOverview() {
   const token = cookies().get(process.env.TOKEN_NAME!);
 
-  const response = await fetch("http://localhost:3000/api/dashboard", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Cookie: `${process.env.TOKEN_NAME}=${token?.value}`,
-    },
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Cookie: `${process.env.TOKEN_NAME}=${token?.value}`,
+      },
+    }
+  );
 
   const data = await response.json();
   return data;

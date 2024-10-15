@@ -1,22 +1,20 @@
-import React from "react";
-import Bracket from "../Bracket/Bracket";
-
-type Data = {};
+import React from 'react';
+import Bracket from '../Bracket/Bracket';
 
 function BracketViewMobile({ data }) {
-  console.log(data, "viewMobile");
+  console.log(data, 'viewMobile');
   return (
     <div className={`match-bracket-stage__elimination mobile`}>
-      {data.map((el) => (
+      {/* {data.map((el) => (
         <div
           key={el.round}
           className={`match-bracket-stage__elimination--${el.round
             .toLowerCase()
-            .split(" ")
-            .join("")}`}
+            .split(' ')
+            .join('')}`}
         >
           {el.matches?.map((match, i) => (
-            <div className={"card"} key={`${i}`}>
+            <div className={'card'} key={`${i}`}>
               <Bracket
                 homeTeam={match.homeTeam.name}
                 homeTeamScore={match.homeTeam.score}
@@ -26,7 +24,26 @@ function BracketViewMobile({ data }) {
             </div>
           ))}
         </div>
-      ))}
+      ))} */}
+
+      <div
+        key={data.round}
+        className={`match-bracket-stage__elimination--${data.round
+          .toLowerCase()
+          .split(' ')
+          .join('')}`}
+      >
+        {data.matches?.map((match, i) => (
+          <div className={'card'} key={`${i}`}>
+            <Bracket
+              homeTeam={match.homeTeam.name}
+              homeTeamScore={match.homeTeam.score}
+              awayTeam={match.awayTeam.name}
+              awayTeamScore={match.awayTeam.score}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ export function generateRandomIndexByArraySize(size: number) {
 export function divideTeamsByGroup(
   totalTeams: number,
   totalGroups: number,
-  teams: any[]
+  standings: any[]
 ) {
   const totalTeamPerGroup = Math.floor(totalTeams / totalGroups);
   const leftOverTeams = totalTeams % totalGroups; // if totalTeamPerGroup is not even. we need to add it to some of the groups
@@ -15,12 +15,12 @@ export function divideTeamsByGroup(
   let currentIndex = 0;
   for (let i = 0; i < totalGroups; i++) {
     // fromCharCode(65) starts at letter 'a'
-    const newGroup = { group: String.fromCharCode(65 + i), teams: [] };
+    const newGroup = { group: String.fromCharCode(65 + i), standings: [] };
 
     allGroups.push(newGroup);
 
     for (let j = 0; j < totalTeamPerGroup; j++) {
-      allGroups[i].teams.push(teams[currentIndex]);
+      allGroups[i].standings.push(standings[currentIndex]);
       currentIndex++;
     }
   }
@@ -39,7 +39,7 @@ export function divideTeamsByGroup(
     usedIndexes.push(index);
 
     const randomGroup = allGroups[index];
-    randomGroup.teams.push(teams[currentIndex]);
+    randomGroup.standings.push(standings[currentIndex]);
     currentIndex++;
   }
 

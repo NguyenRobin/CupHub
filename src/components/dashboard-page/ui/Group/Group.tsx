@@ -1,77 +1,81 @@
-import React from "react";
-import "./Group.scss";
+import React from 'react';
+import './Group.scss';
 
 function Group({ data }: any) {
+  console.log('data', data);
   return (
     <section className="groups">
       {data?.map((group, index) => {
         return (
           <section key={group.group} className="group">
-            <section className="group-header">
-              <section className="group-header__sort">
-                <span>#</span>
+            <section className="group__information">
+              <section className="group__information__sort">
+                <p>#</p>
+              </section>
+              <section className="group__information__group">
+                <p>Grupp {group.group}</p>
               </section>
 
-              <section className="group-header__titles">
-                <section className="group-header__titles__title">
-                  <p>Grupp {group.group}</p>
-                </section>
+              <section className="group__information__games">
+                <p>S</p>
+              </section>
 
-                <section className="group-header__titles__title">
-                  <p>S</p>
-                </section>
+              <section className="group__information__wins">
+                <p>V</p>
+              </section>
 
-                <section className="group-header__titles__title">
-                  <p>V</p>
-                </section>
+              <section className="group__information__ties">
+                <p>O</p>
+              </section>
 
-                <section className="group-header__titles__title">
-                  <p>O</p>
-                </section>
+              <section className="group__information__losses">
+                <p>F</p>
+              </section>
 
-                <section className="group-header__titles__title">
-                  <p>F</p>
-                </section>
+              <section className="group__information__goals-scored">
+                <p>GM</p>
+              </section>
 
-                <section className="group-header__titles__title">
-                  <p>M</p>
-                </section>
+              <section className="group__information__goals-conceded">
+                <p>IM</p>
+              </section>
 
-                <section className="group-header__titles__title">
-                  <p>MS</p>
-                </section>
-                <section className="group-header__titles__title">
-                  <p>P</p>
-                </section>
+              <section className="group__information__goals-difference">
+                <p>MS</p>
+              </section>
+              <section className="group__information__points">
+                <p>P</p>
               </section>
             </section>
 
-            {group?.teams
+            {group?.standings
               ?.sort((teamA, teamB) => teamB.points - teamA.points)
               .map((team, index) => {
                 return (
-                  <section key={team.id} className="group-teams">
-                    <section
-                      className={`group-teams__place ${
-                        index + 1 === 1 || index + 1 === 2
-                          ? "group-leaders"
-                          : ""
+                  <section key={team.team_id} className="group__team">
+                    <p
+                      className={`group__team__place ${
+                        index + 1 === 1 || index + 1 === 2 ? 'leaders' : ''
                       }
-                      ${group.teams.length === index + 1 ? "losers" : ""}`}
+                      ${group.standings.length === index + 1 ? 'losers' : ''}`}
                     >
-                      <span>{index + 1}.</span>
-                    </section>
-
-                    <ul>
-                      <li>{team.name}</li>
-                      <li>{team.played}</li>
-                      <li>{team.won}</li>
-                      <li>{team.drawn}</li>
-                      <li>{team.lost}</li>
-                      <li>{team.goals_for + ":" + team.goals_against}</li>
-                      <li>{team.goals_for - team.goals_against}</li>
-                      <li>{team.points}</li>
-                    </ul>
+                      {index + 1}.
+                    </p>
+                    <p className="group__team__name">{team.team}</p>
+                    <p className="group__team__games">{team.matches_played}</p>
+                    <p className="group__team__wins">{team.won}</p>
+                    <p className="group__team__ties">{team.draw}</p>
+                    <p className="group__team__losses">{team.loss}</p>
+                    <p className="group__team__goals-scored">
+                      {team.goals_scored}
+                    </p>
+                    <p className="group__team__goals-conceded">
+                      {team.goals_conceded}
+                    </p>
+                    <p className="group__team__goals-difference">
+                      {team.goal_difference}
+                    </p>
+                    <p className="group__team__points">{team.points}</p>
                   </section>
                 );
               })}

@@ -1,6 +1,6 @@
-@import "../../../../styles/typography.scss";
-@import "../../../../styles/variables.scss";
-@import "../../../../styles/dark.scss";
+@import '../../../../styles/typography.scss';
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/dark.scss';
 
 .groups {
   display: grid;
@@ -8,97 +8,82 @@
 
   .group {
     border: 0.5px solid gray;
+    box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.08);
 
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 0 2.6px,
-      rgba(0, 0, 0, 0.15) 0 1.95px 2.6px, rgba(0, 0, 0, 0.15) -1.95px 0 2.6px;
-
-    &-header {
-      display: flex;
-      gap: 1rem;
+    &__information {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 0.5rem;
       padding: 1rem;
-      justify-content: center;
-      align-items: center;
       background-color: $bg-color-primary;
       color: $color-primary;
+
       &__sort {
+        height: 2.5rem;
+        width: 2.5rem;
+      }
+      &__sort,
+      &__group,
+      &__games,
+      &__wins,
+      &__ties,
+      &__losses,
+      &__goals-scored,
+      &__goals-conceded,
+      &__goals-difference,
+      &__points {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 3rem;
-        height: 3rem;
-      }
-      &__titles {
-        display: grid;
-        grid-template-columns: repeat(9, 1fr); /* Matchar antalet kolumner */
-        width: 100%;
-        padding: 1rem;
 
-        &__title {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          p {
-            white-space: nowrap;
-          }
+        p {
+          font-size: 0.7rem;
         }
       }
     }
-    &-teams {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
+
+    &__team {
       padding: 1rem;
-      // background-color: #f1f3f5;
-      border-bottom: 1px solid $border-color-primary;
-      &__place {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 0.5rem;
+      padding: 1rem;
+
+      &__place,
+      &__name,
+      &__games,
+      &__wins,
+      &__ties,
+      &__losses,
+      &__goals-scored,
+      &__goals-conceded,
+      &__goals-difference,
+      &__points {
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 0.5px solid black;
-        border-radius: 0.5rem;
-        width: 3rem;
-        height: 3rem;
-
-        span {
-          font-size: $font-size-sm;
-          font-weight: 500;
-        }
-        &:last-child {
-          border-bottom: 5px solid $border-color-primary;
-        }
+        font-size: 0.7rem;
       }
 
-      ul {
-        display: grid;
-        grid-template-columns: repeat(9, 1fr); /* Matchar antalet kolumner */
-        width: 100%;
-        list-style: none;
-        gap: 1rem;
-        padding: 1rem;
+      &__place {
+        height: 2.5rem;
+        width: 2.5rem;
+        border-radius: 0.5rem;
+      }
 
-        li {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          white-space: nowrap;
-        }
+      &__place.leaders {
+        background-color: rgb(0, 70, 130);
+        color: $color-primary;
+        border: none;
+      }
+      &__place.losers {
+        background-color: red;
+        color: $color-primary;
+        border: none;
+      }
+      &__points {
+        border: none;
       }
     }
   }
-}
-
-.group-teams:last-child {
-  border: none;
-}
-.group-teams__place.group-leaders {
-  background-color: rgb(0, 70, 130);
-  color: $color-primary;
-  border: none;
-}
-
-.group-teams__place.losers {
-  background-color: red;
-  color: $color-primary;
-  border: none;
 }

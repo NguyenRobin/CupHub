@@ -1,0 +1,139 @@
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/typography.scss';
+
+.tournament-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__overview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+
+    &__details {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+      div {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        font-size: $font-size-lg;
+
+        svg {
+          color: #00c281;
+          font-size: $font-size-2xl;
+        }
+        p {
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  &__information {
+    padding: 1.5rem;
+    ul {
+      display: flex;
+      justify-content: space-between;
+      list-style: none;
+      li {
+        font-size: $font-size-md;
+        cursor: pointer;
+      }
+      li.active {
+        font-weight: 500;
+      }
+
+      .active {
+        text-decoration: underline;
+        text-underline-offset: 8px;
+        text-decoration-color: $border-color-success;
+        text-decoration-thickness: 3px;
+      }
+    }
+  }
+}
+
+.tournament-overview-details {
+  display: grid;
+  grid-template-columns: 1;
+  gap: 2rem;
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    svg {
+      font-size: $font-size-lg;
+    }
+    p {
+      font-size: $font-size-sm;
+    }
+  }
+
+  &__teams-participating {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    grid-column: 1/-1;
+
+    &__title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: $font-size-md;
+
+      svg {
+        font-size: $font-size-lg;
+      }
+    }
+    &__teams {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      width: 100%;
+
+      p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: $font-size-sm;
+      }
+    }
+  }
+}
+
+.matches-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  &__match {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid $border-color-primary;
+    &__info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      &--name {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+    &__score {
+      display: flex;
+      flex-direction: column;
+      font-weight: bold;
+    }
+  }
+}

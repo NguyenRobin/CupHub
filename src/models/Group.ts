@@ -1,4 +1,4 @@
-import mongoose, { Types, Schema, model } from "mongoose";
+import mongoose, { Types, Schema, model } from 'mongoose';
 
 interface IGroup {
   tournament_id: Types.ObjectId;
@@ -14,18 +14,18 @@ interface IStanding {
   won: number;
   draw: number;
   loss: number;
-  goal: number;
+  goals_scored: number;
+  goals_conceded: number;
   goal_difference: number;
   matches_played: number;
   points: number;
-  lastUpdated?: Date;
 }
 
 const groupSchema = new Schema<IGroup>(
   {
     tournament_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Tournament",
+      ref: 'Tournament',
       required: true,
     },
     group: { type: String, required: true },
@@ -35,26 +35,27 @@ const groupSchema = new Schema<IGroup>(
         team_id: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
-          ref: "Team",
+          ref: 'Team',
         },
         name: { type: String, required: true },
       },
     ],
     matches: [
-      { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Match" },
+      { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Match' },
     ],
     standings: [
       {
         team_id: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "Team",
+          ref: 'Team',
           required: true,
         },
         team: { type: String, required: true },
         won: { type: Number, required: true },
         draw: { type: Number, required: true },
         loss: { type: Number, required: true },
-        goal: { type: Number, required: true },
+        goals_scored: { type: Number, required: true },
+        goals_conceded: { type: Number, required: true },
         goal_difference: { type: Number, required: true },
         matches_played: { type: Number, required: true },
         points: { type: Number, required: true },
@@ -64,6 +65,6 @@ const groupSchema = new Schema<IGroup>(
   { timestamps: true }
 );
 
-const GroupModel = mongoose.models.Group || model<IGroup>("Group", groupSchema);
+const GroupModel = mongoose.models.Group || model<IGroup>('Group', groupSchema);
 
 export default GroupModel;

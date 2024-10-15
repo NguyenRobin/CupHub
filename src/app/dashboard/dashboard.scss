@@ -1,18 +1,17 @@
-@import "../../styles//typography.scss";
-@import "../../styles/variables.scss";
+@import '../../styles//typography.scss';
+@import '../../styles/variables.scss';
 
 .dashboard {
-  padding-top: 7rem; // bases on the nav height to make it show the full element height
-  // height: 100dvh;
-  height: 100%;
+  // margin-top: 7rem; // bases on the nav height to make it show the full element height
+  height: 100dvh;
   overflow-y: auto;
 
   background-color: #fdfdfd;
-
-  padding-bottom: 3rem;
 }
 
 .main-container__dashboard {
-  // padding: 1.5rem;
+  padding: 1.5rem;
   height: 100%; //! TESTING
+  margin-top: 7rem; // bases on the nav height to make it show the full element height
+  margin-bottom: 7rem; // bases on the nav height to make it show the full element height
 }

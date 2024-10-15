@@ -1,17 +1,17 @@
-import { Types } from "mongoose";
+import { Types } from 'mongoose';
 
 export type KeyValue =
-  | "rounds"
-  | "win"
-  | "draw"
-  | "loss"
-  | "teamsPerGroupAdvancing"
-  | "final"
-  | "semifinal"
-  | "quarterfinal"
-  | "roundOf16"
-  | "roundOf32"
-  | "roundOf62";
+  | 'rounds'
+  | 'win'
+  | 'draw'
+  | 'loss'
+  | 'teamsPerGroupAdvancing'
+  | 'final'
+  | 'semifinal'
+  | 'quarterfinal'
+  | 'roundOf16'
+  | 'roundOf32'
+  | 'roundOf62';
 
 export type TCreateTournamentBody = {
   name: string;
@@ -22,7 +22,7 @@ export type TCreateTournamentBody = {
   endDate: Date;
   total_teams: number;
   total_groups?: number;
-  status: "scheduled" | "ongoing" | "completed";
+  status: 'scheduled' | 'ongoing' | 'completed';
   points_system: {
     win: number;
     draw: number;
@@ -30,9 +30,9 @@ export type TCreateTournamentBody = {
     teamsPerGroupAdvancing?: number;
     numberOfMeetings?: number;
   };
-  format: "league" | "knockout" | "group_stage_with_knockout";
+  format: 'league' | 'knockout' | 'group_stage_with_knockout';
   teams_participating?: string[];
-  groups: string[];
+  groups: { group: string; teams: string[] }[];
 };
 
 export type TCreateLeague = {
@@ -68,17 +68,18 @@ export type TGroup = {
   _id?: Types.ObjectId;
   tournament_id: Types.ObjectId;
   group: string;
-  teams: { team_id: string; name: string }[];
+  teams: { team_id: Types.ObjectId; name: string }[];
   standings: TStanding[];
 };
 
 export type TStanding = {
-  team_id: string;
+  team_id: Types.ObjectId;;
   team: string;
   won: number;
   draw: number;
   loss: number;
-  goal: number;
+  goals_scored: number;
+  goals_conceded: number;
   goal_difference: number;
   matches_played: number;
   points: number;
@@ -91,7 +92,7 @@ export type TMatch = {
   group_id?: Types.ObjectId;
   round_id?: string;
   league_id?: Types.ObjectId;
-  status: "scheduled" | "ongoing" | "completed";
+  status: 'scheduled' | 'ongoing' | 'completed';
   homeTeam?: { team_id: string; name: string; score: number | null };
   awayTeam?: { team_id: string; name: string; score: number | null };
   result?: string;
@@ -108,4 +109,4 @@ export type TTeam = {
   leagues_teamParticipates_in?: Types.ObjectId[];
 };
 
-export type TWho = "homeTeam" | "awayTeam";
+export type TWho = 'homeTeam' | 'awayTeam';
