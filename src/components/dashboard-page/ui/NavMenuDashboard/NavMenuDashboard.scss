@@ -1,11 +1,13 @@
-@import "../../../../styles/typography.scss";
-@import "../../../../styles/variables.scss";
-@import "../../../../styles/dark.scss";
+@import '../../../../styles/typography.scss';
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/dark.scss';
 .nav-menu-dashboard {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   list-style-type: none;
+  margin-top: 7rem;
+
   &__category {
     display: flex;
     flex-direction: column;

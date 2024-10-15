@@ -62,11 +62,14 @@ function LoginForm() {
     try {
       SubmitFormSchema.parse(submitFormBody); // z validation if any error occurred we skip the rest of the code and goe to catch bloc
 
-      const response = await fetch('http://localhost:3000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(submitFormBody),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(submitFormBody),
+        }
+      );
 
       if (!response.ok) {
         throw new Error('Something went wrong');
@@ -74,15 +77,14 @@ function LoginForm() {
 
       const data = await response.json();
 
-      console.log(data);
-      if (data.status !== 200) {
+      if (data.status === 200) {
+        router.push('/dashboard');
+      } else {
         setErrorMessages({
           username: data.message,
           email: data.message,
         });
         setPassword('');
-      } else {
-        router.push('/dashboard');
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -106,7 +108,7 @@ function LoginForm() {
             <p>
               Har du inget konto?{' '}
               <Link
-                href="/auth/signup"
+                href="/signup"
                 style={{
                   textDecoration: 'underline',
                   color: 'green',

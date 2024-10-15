@@ -178,7 +178,8 @@ export async function POST(request: Request) {
     const updatedNewTournamentWithTeams =
       await updateTournamentCollectionWithTeamsParticipating(
         newTournament._id,
-        teamsAddedToDb
+        teamsAddedToDb,
+        session
       );
 
     // 5) create rounds and insert them in to ROUNDS COLLECTION

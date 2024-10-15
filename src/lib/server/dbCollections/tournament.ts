@@ -1,5 +1,5 @@
-import { ClientSession } from "mongoose";
-import TournamentModel from "../../../models/Tournament";
+import { ClientSession } from 'mongoose';
+import TournamentModel from '../../../models/Tournament';
 
 export async function createTournamentToTournamentCollectionDB(
   body: any,
@@ -20,10 +20,12 @@ export async function createTournamentToTournamentCollectionDB(
     updatedAt,
     status,
     points_system,
+    description,
   } = body;
 
   const newTournament = new TournamentModel({
     name,
+    description,
     sport,
     location,
     startDate,
@@ -38,7 +40,6 @@ export async function createTournamentToTournamentCollectionDB(
   });
 
   const created = await newTournament.save(options);
-  console.log("created", created);
   return created;
 }
 

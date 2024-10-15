@@ -1,4 +1,4 @@
-import * as jose from "jose";
+import * as jose from 'jose';
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
@@ -11,10 +11,10 @@ export async function verifyTokenByJose(encodedToken: string) {
       new TextEncoder().encode(JWT_SECRET_KEY!)
     );
 
-    console.log("payload", payload);
+    console.log('payload', payload);
     return payload;
   } catch (error) {
-    console.log("jose");
+    console.log('jose');
     console.log(error);
   }
 }
@@ -22,25 +22,30 @@ export async function verifyTokenByJose(encodedToken: string) {
 export function getMonthName(monthNumber: number): string {
   const MAX_LENGTH = 3;
   const months = [
-    "Januari",
-    "Februari",
-    "Mars",
-    "April",
-    "Maj",
-    "Juni",
-    "Juli",
-    "Augusti",
-    "September",
-    "Oktober",
-    "November",
-    "December",
+    'Januari',
+    'Februari',
+    'Mars',
+    'April',
+    'Maj',
+    'Juni',
+    'Juli',
+    'Augusti',
+    'September',
+    'Oktober',
+    'November',
+    'December',
   ];
 
-  let output = "";
+  let output = '';
 
   for (let i = 0; i < MAX_LENGTH; i++) {
     output += months[monthNumber - 1][i];
   }
 
   return output;
+}
+
+export function formatDate(date: string) {
+  const formattedDate = date.split('T')[0];
+  return formattedDate;
 }

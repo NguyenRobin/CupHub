@@ -6,6 +6,7 @@ import {
   compareUserInputPasswordWithHashedPassword,
   createToken,
 } from '../../../../lib/server';
+import { env } from 'process';
 
 export async function POST(request: Request) {
   try {
@@ -62,9 +63,9 @@ export async function POST(request: Request) {
         const token = createToken(userPayload);
 
         const session = cookies().set(process.env.TOKEN_NAME!, token, {
-          httpOnly: true,
-          secure: true,
-          // sameSite: "strict",
+          httpOnly: false,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
           path: '/',
           maxAge: 60 * 15,
         });

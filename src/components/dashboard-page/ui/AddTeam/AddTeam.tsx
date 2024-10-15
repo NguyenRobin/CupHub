@@ -33,6 +33,7 @@ function AddTeam() {
     handleOnSelect,
     setPage,
   } = useFormContext();
+
   const validAmountOfTeamsPerGroupToPlayOff =
     teams.length % total_groups! === 0
       ? teams.length / total_groups!
@@ -46,10 +47,10 @@ function AddTeam() {
     const tournament = {
       name,
       description,
-      location: 'stockholm, Sweden',
+      location: 'Uppsala, Sweden',
       startDate,
       endDate,
-      teams_participating: teams.map((team) => team.name),
+      teams_participating: teams.map((team) => team.team),
       total_teams: teams.length,
       status: 'scheduled',
       total_groups,
@@ -64,18 +65,20 @@ function AddTeam() {
       groups: exampleGroupPreview.map((group) => {
         return {
           group: group.group,
-          teams: group.teams.map((team) => team.name),
+          teams: group.standings.map((team) => team.team),
         };
       }),
     };
+    console.log('tournament', tournament);
 
-    console.log(tournament);
-
-    const response = await fetch('http://localhost:3000/api/tournaments', {
-      method: 'POST',
-      body: JSON.stringify(tournament),
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/tournament`,
+      {
+        method: 'POST',
+        body: JSON.stringify(tournament),
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
 
     if (!response.ok) {
       window.alert('Hoppsan! Ett fel inträffade. ⛔️');
@@ -123,12 +126,12 @@ function AddTeam() {
             {teams?.map((team) => {
               return (
                 <input
-                  key={team?.id}
+                  key={team?.team_id}
                   type="text"
-                  name={team.name}
-                  id={String(team.id)}
-                  defaultValue={team?.name}
-                  onChange={(e) => handleChangeTeamName(e, team.id)}
+                  name={team.team}
+                  id={String(team.team_id)}
+                  defaultValue={team?.team}
+                  onChange={(e) => handleChangeTeamName(e, team.team_id)}
                 />
               );
             })}
