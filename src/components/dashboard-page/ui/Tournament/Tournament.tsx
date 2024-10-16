@@ -16,6 +16,7 @@ import { GiChampions } from 'react-icons/gi';
 
 import Group from '../Group/Group';
 import BracketGenerator from '../BracketGenerator/BracketGenerator';
+import Link from 'next/link';
 
 const lists = ['Översikt', 'Matcher', 'Grupper', 'Slutspel'];
 function Tournament({ data }: any) {
@@ -170,9 +171,15 @@ function Matches({ matches }) {
   return (
     <div className="matches-container">
       {matches.map((match) => (
-        <div key={match.match_id} className="matches-container__match">
+        <Link
+          href={`/dashboard/match/${match._id}`}
+          key={match.match_id}
+          className="matches-container__match"
+        >
           <div className="matches-container__match__info">
-            <p>{match.status === 'scheduled' ? '' : 'live'}</p>
+            <p className="matches-container__match__info--status">
+              {match.status === 'ongoing' ? 'Live' : ''}
+            </p>
             <div className="matches-container__match__info--name">
               <span>{match.homeTeam.name}</span>
               <span>{match.awayTeam.name}</span>
@@ -187,14 +194,13 @@ function Matches({ matches }) {
               {match.status === 'scheduled' ? '-' : match.awayTeam.score}
             </span>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
 }
 
 function Groups({ groups }) {
-  console.log(groups);
   return (
     <div>
       <Group data={groups} />

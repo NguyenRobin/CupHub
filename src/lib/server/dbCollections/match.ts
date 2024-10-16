@@ -1,6 +1,6 @@
-import { ClientSession, Types } from "mongoose";
-import MatchModel from "../../../models/Match";
-import { TWho } from "../../../types/types";
+import { ClientSession, Types } from 'mongoose';
+import MatchModel from '../../../models/Match';
+import { TWho } from '../../../types/types';
 
 export async function addMatchesToMatchesCollectionDB(
   array: any[],
@@ -15,7 +15,7 @@ export async function getMatch(_id: string) {
   try {
     const match = await MatchModel.findById({ _id: _id });
     if (!match) {
-      throw new Error("Match not found");
+      throw new Error('Match not found');
     }
 
     return match;
@@ -26,7 +26,7 @@ export async function getMatch(_id: string) {
 
 export async function updateMatchStatus(
   _id: string,
-  status: "scheduled" | "ongoing" | "paused" | "completed"
+  status: 'scheduled' | 'ongoing' | 'paused' | 'completed'
 ) {
   try {
     const updateMatch = await MatchModel.findByIdAndUpdate(
@@ -73,14 +73,14 @@ export async function updateMatchWinner(
     const { homeTeam, awayTeam } = match;
     const checkWinner =
       homeTeam.score === awayTeam.score
-        ? "draw"
+        ? 'draw'
         : homeTeam.score > awayTeam.score
         ? homeTeam.name
         : awayTeam.name;
 
     if (winner !== checkWinner) {
       // return { status: 400, message: "Invalid winner based on result" };
-      throw new Error("Invalid winner based on result");
+      throw new Error('Invalid winner based on result');
     }
 
     const updateMatch = await MatchModel.findByIdAndUpdate(
@@ -101,21 +101,49 @@ export async function updateMatchWinner(
 export async function updateMatchTeamScore(
   _id: string,
   who: TWho,
-  score: number
+  score: number,
+  operator: '+' | '-'
 ) {
-  const teamScoring = who === "homeTeam" ? "homeTeam.score" : "awayTeam.score";
+  // let teamScoring = who === 'homeTeam' ? 'homeTeam.score' : 'awayTeam.score';
+  let teamScoring = who === 'homeTeam' ? 'homeTeam' : 'awayTeam';
 
   try {
-    const updateMatch = await MatchModel.findByIdAndUpdate(
-      { _id: _id },
-      { [teamScoring]: score },
-      {
-        runValidators: true,
-        new: true,
-      }
-    );
+    // const updateMatch = await MatchModel.findByIdAndUpdate(
+    //   { _id: _id },
+    //   { [teamScoring]: score },
+    //   {
+    //     runValidators: true,
+    //     new: true,
+    //   }
+    // );
 
-    return updateMatch;
+    // return updateMatch;
+
+    const match = await MatchModel.findById({ _id: _id });
+
+    if (!match) {
+      throw new Error('Match not found');
+    }
+
+    switch (operator) {
+      case '+':
+        match[teamScoring] = {
+          ...match[teamScoring],
+          score: match[teamScoring].score + score,
+        };
+        break;
+      case '-':
+        match[teamScoring] = {
+          ...match[teamScoring],
+          score: match[teamScoring].score - score,
+        };
+        break;
+      default:
+        break;
+    }
+    await match.save();
+
+    return match;
   } catch (error) {
     throw error;
   }

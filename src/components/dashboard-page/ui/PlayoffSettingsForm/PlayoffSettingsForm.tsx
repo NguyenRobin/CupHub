@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import "./PlayoffSettingsForm.scss";
-import CardRuleLayout from "../CardRule/CardRule";
-import Rule from "../Rule/Rule";
+import React, { useState } from 'react';
+import './PlayoffSettingsForm.scss';
+import CardRuleLayout from '../CardRule/CardRule';
+import Rule from '../Rule/Rule';
 
 type Form = {
-  elimination: "single" | "double";
+  elimination: 'single' | 'double';
   final: number;
   semifinal: number;
   quarterfinal: number;
@@ -14,16 +14,16 @@ type Form = {
 };
 
 export type KeyValue =
-  | "final"
-  | "semifinal"
-  | "quarterfinal"
-  | "roundOf16"
-  | "roundOf32"
-  | "roundOf64";
+  | 'final'
+  | 'semifinal'
+  | 'quarterfinal'
+  | 'roundOf16'
+  | 'roundOf32'
+  | 'roundOf64';
 
 function PlayoffSettingsForm() {
   const [form, setForm] = useState<Form>({
-    elimination: "single",
+    elimination: 'single',
     final: 1,
     semifinal: 2,
     quarterfinal: 4,
@@ -36,7 +36,7 @@ function PlayoffSettingsForm() {
     if (form[key] === 9) return;
 
     setForm((prev) => {
-      if (typeof prev[key] === "number") {
+      if (typeof prev[key] === 'number') {
         return {
           ...prev,
           [key]: Number(prev[key]) + 1,
@@ -50,7 +50,7 @@ function PlayoffSettingsForm() {
     if (form[key] === 0) return;
 
     setForm((prev) => {
-      if (typeof prev[key] === "number") {
+      if (typeof prev[key] === 'number') {
         return {
           ...prev,
           [key]: prev[key] - 1,
@@ -66,7 +66,7 @@ function PlayoffSettingsForm() {
     console.log(form);
 
     setForm({
-      elimination: "single",
+      elimination: 'single',
       final: 1,
       semifinal: 2,
       quarterfinal: 4,
@@ -74,8 +74,6 @@ function PlayoffSettingsForm() {
       roundOf32: 16,
       roundOf64: 32,
     });
-
-    // console.log(form);
   }
 
   return (
@@ -85,38 +83,38 @@ function PlayoffSettingsForm() {
         <Rule
           label="Final"
           value={form.final}
-          handleIncrement={() => handleIncrement("final")}
-          handleDecrement={() => handleDecrement("final")}
+          handleIncrement={() => handleIncrement('final')}
+          handleDecrement={() => handleDecrement('final')}
         />
         <Rule
           label="Semifinal"
           value={form.semifinal}
-          handleIncrement={() => handleIncrement("semifinal")}
-          handleDecrement={() => handleDecrement("semifinal")}
+          handleIncrement={() => handleIncrement('semifinal')}
+          handleDecrement={() => handleDecrement('semifinal')}
         />
         <Rule
           label="Kvartsfinal"
           value={form.quarterfinal}
-          handleIncrement={() => handleIncrement("quarterfinal")}
-          handleDecrement={() => handleDecrement("quarterfinal")}
+          handleIncrement={() => handleIncrement('quarterfinal')}
+          handleDecrement={() => handleDecrement('quarterfinal')}
         />
         <Rule
           label="Åttondelsfinal"
           value={form.roundOf16}
-          handleIncrement={() => handleIncrement("roundOf16")}
-          handleDecrement={() => handleDecrement("roundOf16")}
+          handleIncrement={() => handleIncrement('roundOf16')}
+          handleDecrement={() => handleDecrement('roundOf16')}
         />
         <Rule
           label="Sextonsdelsfinal"
           value={form.roundOf32}
-          handleIncrement={() => handleIncrement("roundOf32")}
-          handleDecrement={() => handleDecrement("roundOf32")}
+          handleIncrement={() => handleIncrement('roundOf32')}
+          handleDecrement={() => handleDecrement('roundOf32')}
         />
         <Rule
           label="64-delsfinal"
           value={form.roundOf64}
-          handleIncrement={() => handleIncrement("roundOf64")}
-          handleDecrement={() => handleDecrement("roundOf64")}
+          handleIncrement={() => handleIncrement('roundOf64')}
+          handleDecrement={() => handleDecrement('roundOf64')}
         />
 
         <input

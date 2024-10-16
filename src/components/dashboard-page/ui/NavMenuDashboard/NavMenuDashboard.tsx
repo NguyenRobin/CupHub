@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { RxDashboard } from "react-icons/rx";
-import { IoSettingsOutline } from "react-icons/io5";
-import { IoIosHelpCircleOutline } from "react-icons/io";
-import { SlEvent } from "react-icons/sl";
-import { RiSecurePaymentLine } from "react-icons/ri";
-import { GrChatOption } from "react-icons/gr";
-import { RiTeamLine } from "react-icons/ri";
-import { MdKeyboardArrowRight } from "react-icons/md";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import Link from "next/link";
-import "./NavMenuDashboard.scss";
-import { useTheme } from "../../../../context/ThemeContext";
-import SwitchThemeMode from "../../../switch-theme-mode/SwitchThemeMode";
+import React, { useEffect, useState } from 'react';
+import { RxDashboard } from 'react-icons/rx';
+import { IoSettingsOutline } from 'react-icons/io5';
+import { IoIosHelpCircleOutline } from 'react-icons/io';
+import { SlEvent } from 'react-icons/sl';
+import { RiSecurePaymentLine } from 'react-icons/ri';
+import { GrChatOption } from 'react-icons/gr';
+import { RiTeamLine } from 'react-icons/ri';
+import { MdKeyboardArrowRight } from 'react-icons/md';
+import { MdKeyboardArrowDown } from 'react-icons/md';
+import Link from 'next/link';
+import './NavMenuDashboard.scss';
+import { useTheme } from '../../../../context/ThemeContext';
+import SwitchThemeMode from '../../../switch-theme-mode/SwitchThemeMode';
 
 type Props = {
   closeModal: () => void;
@@ -28,7 +28,7 @@ function NavMenuDashboard({ closeModal }: Props) {
   }
 
   useEffect(() => {
-    if (theme === "dark") {
+    if (theme === 'dark') {
       setIsChecked(true);
     }
   }, [theme]);
@@ -43,12 +43,12 @@ function NavMenuDashboard({ closeModal }: Props) {
         href="/dashboard"
         onClick={closeModal}
         className={`nav-menu-dashboard__category ${
-          showMenu === "dashboard" ? "active" : ""
+          showMenu === 'dashboard' ? 'active' : ''
         }`}
       >
         <section
-          onClick={() => handleOnClick("dashboard")}
-          style={{ alignSelf: "start" }}
+          onClick={() => handleOnClick('dashboard')}
+          style={{ alignSelf: 'start' }}
         >
           <RxDashboard />
           <p>Dashboard</p>
@@ -68,39 +68,47 @@ function NavMenuDashboard({ closeModal }: Props) {
       </Link>
 
       <section className="nav-menu-dashboard__category">
-        <section onClick={() => handleOnClick("event")}>
+        <section onClick={() => handleOnClick('event')}>
           <SlEvent />
           <p>Evenemang</p>
 
-          {showMenu !== "event" ? (
+          {showMenu !== 'event' ? (
             <MdKeyboardArrowRight className="arrow" />
           ) : (
             <MdKeyboardArrowDown className="arrow" />
           )}
         </section>
 
-        {showMenu === "event" && (
+        {showMenu === 'event' && (
           <ul className="nav-menu-dashboard__subcategory">
-            <li>Skapa Evenemang</li>
-            <li>Hantera Evenemang</li>
-            <li>Kalender</li>
+            <Link href="/dashboard/events" onClick={closeModal}>
+              <li>Evenemang</li>
+            </Link>
+
+            <Link href="/dashboard/events" onClick={closeModal}>
+              <li>Skapa Evenemang</li>
+            </Link>
+
+            <Link href="/dashboard/events" onClick={closeModal}>
+              <li>Hantera Evenemang</li>
+            </Link>
           </ul>
         )}
       </section>
 
       <section className="nav-menu-dashboard__category">
-        <section onClick={() => handleOnClick("team")}>
+        <section onClick={() => handleOnClick('team')}>
           <RiTeamLine />
           <p>Lag och Medlemmar</p>
 
-          {showMenu !== "team" ? (
+          {showMenu !== 'team' ? (
             <MdKeyboardArrowRight className="arrow" />
           ) : (
             <MdKeyboardArrowDown className="arrow" />
           )}
         </section>
 
-        {showMenu === "team" && (
+        {showMenu === 'team' && (
           <ul className="nav-menu-dashboard__subcategory">
             <li>Skapa Lag</li>
             <li>Hantera Lag</li>
@@ -110,18 +118,18 @@ function NavMenuDashboard({ closeModal }: Props) {
       </section>
 
       <section className="nav-menu-dashboard__category">
-        <section onClick={() => handleOnClick("communication")}>
+        <section onClick={() => handleOnClick('communication')}>
           <GrChatOption />
           <p>Kommunikation</p>
 
-          {showMenu !== "communication" ? (
+          {showMenu !== 'communication' ? (
             <MdKeyboardArrowRight className="arrow" />
           ) : (
             <MdKeyboardArrowDown className="arrow" />
           )}
         </section>
 
-        {showMenu === "communication" && (
+        {showMenu === 'communication' && (
           <ul className="nav-menu-dashboard__subcategory">
             <li>Meddelanden</li>
             <li>Notiser</li>
@@ -131,18 +139,18 @@ function NavMenuDashboard({ closeModal }: Props) {
       </section>
 
       <section className="nav-menu-dashboard__category">
-        <section onClick={() => handleOnClick("payment")}>
+        <section onClick={() => handleOnClick('payment')}>
           <RiSecurePaymentLine />
           <p>Betalning</p>
 
-          {showMenu !== "payment" ? (
+          {showMenu !== 'payment' ? (
             <MdKeyboardArrowRight className="arrow" />
           ) : (
             <MdKeyboardArrowDown className="arrow" />
           )}
         </section>
 
-        {showMenu === "payment" && (
+        {showMenu === 'payment' && (
           <ul className="nav-menu-dashboard__subcategory">
             <li>Fakturor och Betalningar</li>
             <li>Prenumerationer</li>
@@ -151,18 +159,18 @@ function NavMenuDashboard({ closeModal }: Props) {
       </section>
 
       <section className="nav-menu-dashboard__category">
-        <section onClick={() => handleOnClick("settings")}>
+        <section onClick={() => handleOnClick('settings')}>
           <IoSettingsOutline />
           <p>Inställningar</p>
 
-          {showMenu !== "settings" ? (
+          {showMenu !== 'settings' ? (
             <MdKeyboardArrowRight className="arrow" />
           ) : (
             <MdKeyboardArrowDown className="arrow" />
           )}
         </section>
 
-        {showMenu === "settings" && (
+        {showMenu === 'settings' && (
           <ul className="nav-menu-dashboard__subcategory">
             <li>Profilinställningar</li>
             <li>Systeminställningar</li>
@@ -172,18 +180,18 @@ function NavMenuDashboard({ closeModal }: Props) {
       </section>
 
       <section className="nav-menu-dashboard__category">
-        <section onClick={() => handleOnClick("help")}>
+        <section onClick={() => handleOnClick('help')}>
           <IoIosHelpCircleOutline />
           <p>Support och Hjälp</p>
 
-          {showMenu !== "help" ? (
+          {showMenu !== 'help' ? (
             <MdKeyboardArrowRight className="arrow" />
           ) : (
             <MdKeyboardArrowDown className="arrow" />
           )}
         </section>
 
-        {showMenu === "help" && (
+        {showMenu === 'help' && (
           <ul className="nav-menu-dashboard__subcategory">
             <li>Hjälpcenter</li>
             <li>Kontakt Support</li>
@@ -192,7 +200,7 @@ function NavMenuDashboard({ closeModal }: Props) {
         )}
       </section>
 
-      <section style={{ height: "100%" }}>
+      <section style={{ height: '100%' }}>
         <SwitchThemeMode isChecked={isChecked} onChange={handleIsChecked} />
       </section>
     </nav>

@@ -64,7 +64,6 @@ function Events({ events }) {
       location={el.location}
     />
   ));
-  console.log(isShowingAll);
 
   return (
     <section className="events">

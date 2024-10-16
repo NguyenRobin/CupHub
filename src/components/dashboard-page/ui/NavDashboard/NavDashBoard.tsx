@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import "./NavDashboard.scss";
-import { IoIosMenu, IoIosSearch } from "react-icons/io";
-import { CiSearch } from "react-icons/ci";
-import { RxCross2 } from "react-icons/rx";
-import { IoIosNotificationsOutline } from "react-icons/io";
-import Image from "next/image";
+import React, { useState } from 'react';
+import './NavDashboard.scss';
+import { IoIosMenu, IoIosSearch } from 'react-icons/io';
+import { CiSearch } from 'react-icons/ci';
+import { RxCross2 } from 'react-icons/rx';
+import { IoIosNotificationsOutline } from 'react-icons/io';
+import Image from 'next/image';
 
-import NavMenuDashboard from "../NavMenuDashboard/NavMenuDashboard";
-import Modal from "../../../modal/Modal";
+import NavMenuDashboard from '../NavMenuDashboard/NavMenuDashboard';
+import Modal from '../../../modal/Modal';
 
 function NavDashBoard() {
   const [showNavigation, setShowNavigation] = useState(false);
@@ -38,6 +38,7 @@ function NavDashBoard() {
 
           <section>
             <CiSearch />
+            {/* <input type="search" name="" id="" /> */}
           </section>
         </section>
 

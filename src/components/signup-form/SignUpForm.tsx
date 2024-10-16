@@ -112,7 +112,6 @@ function SignUpForm() {
       }
 
       const data = await response.json();
-      console.log(data);
 
       // user could not be created
       if (data.status !== 201) {
@@ -139,8 +138,6 @@ function SignUpForm() {
       } else {
         router.push('/dashboard');
       }
-
-      console.log('data response', data);
     } catch (error) {
       if (error instanceof z.ZodError) {
         const errorObj: TErrorMessages = {};
@@ -152,7 +149,7 @@ function SignUpForm() {
       }
     }
   }
-  console.log(errorMessages);
+
   return (
     <>
       <Nav />

@@ -1,8 +1,8 @@
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { v4 as uuidv4 } from "uuid";
-import { TGroup, TMatch } from "../../types/types";
-import { Types } from "mongoose";
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
+import { TGroup, TMatch } from '../../types/types';
+import { Types } from 'mongoose';
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
@@ -33,7 +33,8 @@ export async function compareUserInputPasswordWithHashedPassword(
 
 export function createToken(user: { id: string; username: string }) {
   const encodedToken = jwt.sign(user, process.env.JWT_SECRET_KEY as string, {
-    expiresIn: "15m",
+    // expiresIn: "15m",
+    expiresIn: '24h',
   });
 
   return encodedToken;
@@ -45,7 +46,7 @@ export function verifyToken(encodedToken: string) {
 }
 
 export function getCookieValue(request: Request) {
-  const sessionToken = request.headers.get("cookie")?.split("=")[1];
+  const sessionToken = request.headers.get('cookie')?.split('=')[1];
   return sessionToken;
 }
 
@@ -82,7 +83,7 @@ export function validatePossibleTeamsPerGroupGoingToPlayoff(
     );
 
     if (!closestValidPlayoffRound) {
-      return { valid: false, message: "No valid playoff was found" };
+      return { valid: false, message: 'No valid playoff was found' };
     }
 
     const wildcards = closestValidPlayoffRound - totalTeamsGoingToPlayoff;
@@ -97,7 +98,7 @@ export function validatePossibleTeamsPerGroupGoingToPlayoff(
 }
 
 export function buildPlayoffSchedule(amountOfTeamsToPlayOff: number) {
-  const stages = ["final", "semifinal", "quarterfinal", "round 16", "round 32"];
+  const stages = ['final', 'semifinal', 'quarterfinal', 'round 16', 'round 32'];
   const result = [];
 
   let stagesToFinal = 0;
@@ -157,7 +158,7 @@ export function generateRobinRound(groups: TGroup[]): TMatch[] {
 
     // if totalTeamsInGroup i ODD, we must create a 'BYE' match to have EVEN matches
     if (totalTeamsInGroup % 2 !== 0) {
-      currentGroupOfTeams.push({ name: "bye", team_id: "bye" });
+      currentGroupOfTeams.push({ name: 'bye', team_id: 'bye' });
     }
 
     // Amount of rounds needed to be played fore all teams to have played against each other.
@@ -173,12 +174,12 @@ export function generateRobinRound(groups: TGroup[]): TMatch[] {
           currentGroupOfTeams[currentGroupOfTeams.length - 1 - j].name; // 3,2
 
         // we don't want to add 'BYE' matches to the matches array. So we only push a match if both team are not a 'bye' team.
-        if (teamOne !== "bye" && teamTwo !== "bye") {
+        if (teamOne !== 'bye' && teamTwo !== 'bye') {
           const newMatch: TMatch = {
             match_id: uuidv4(),
             tournament_id: groups[i].tournament_id,
             group_id: groups[i]._id,
-            status: "scheduled",
+            status: 'scheduled',
             homeTeam: {
               team_id: currentGroupOfTeams[j].team_id,
               name: teamOne,
@@ -190,8 +191,8 @@ export function generateRobinRound(groups: TGroup[]): TMatch[] {
               name: teamTwo,
               score: 0,
             },
-            result: "",
-            winner: "",
+            result: '',
+            winner: '',
           };
           matches.push(newMatch);
         }
@@ -225,7 +226,7 @@ export function generateRobinRoundTEST(
   const totalTeamsInLeague = league.length;
 
   if (totalTeamsInLeague % 2 !== 0) {
-    league.push({ name: "bye", team_id: "bye" });
+    league.push({ name: 'bye', team_id: 'bye' });
   }
 
   const numberOfRoundsToCompleteLeague = league.length - 1;
@@ -236,15 +237,15 @@ export function generateRobinRoundTEST(
 
       const teamTwo = league[league.length - 1 - i].name;
 
-      if (teamOne !== "bye" && teamTwo !== "bye") {
+      if (teamOne !== 'bye' && teamTwo !== 'bye') {
         for (let match = 0; match < numberOfMeetings; match++) {
-          const home = match === 0 ? "homeTeam" : "awayTeam";
-          const away = match === 0 ? "awayTeam" : "homeTeam";
+          const home = match === 0 ? 'homeTeam' : 'awayTeam';
+          const away = match === 0 ? 'awayTeam' : 'homeTeam';
 
           const newMatch: TMatch = {
             match_id: uuidv4(),
             league_id: _id,
-            status: "scheduled",
+            status: 'scheduled',
             [home]: {
               team_id: league[i]._id,
               name: teamOne,
@@ -255,8 +256,8 @@ export function generateRobinRoundTEST(
               name: teamTwo,
               score: 0,
             },
-            result: "",
-            winner: "",
+            result: '',
+            winner: '',
           };
           matches.push(newMatch);
         }
