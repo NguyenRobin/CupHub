@@ -61,13 +61,14 @@ export async function POST(request: Request) {
         };
 
         const token = createToken(userPayload);
-
+        const oneDay = 24 * 60 * 60 * 1000;
         const session = cookies().set(process.env.TOKEN_NAME!, token, {
           httpOnly: false,
           secure: process.env.NODE_ENV === 'production',
           sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
           path: '/',
-          maxAge: 60 * 15,
+          maxAge: oneDay,
+          // maxAge: 60 * 15,
         });
 
         return NextResponse.json({

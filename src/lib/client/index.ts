@@ -11,11 +11,9 @@ export async function verifyTokenByJose(encodedToken: string) {
       new TextEncoder().encode(JWT_SECRET_KEY!)
     );
 
-    console.log('payload', payload);
     return payload;
   } catch (error) {
-    console.log('jose');
-    console.log(error);
+    console.log('jose', error);
   }
 }
 

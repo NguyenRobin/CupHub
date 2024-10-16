@@ -1,6 +1,6 @@
-@import "../../../../styles/typography.scss";
-@import "../../../../styles/variables.scss";
-@import "../../../../styles/dark.scss";
+@import '../../../../styles/typography.scss';
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/dark.scss';
 
 .upcoming-events {
   color: $txt-color-secondary;
@@ -18,6 +18,8 @@
     align-items: center;
     gap: 1rem;
     color: black;
+    padding: 1rem;
+
     svg {
       font-size: $font-size-lg;
     }

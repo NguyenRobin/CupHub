@@ -10,13 +10,12 @@ export async function createGroupCollectionToDB(
 ) {
   const options = session ? { session } : {};
   const allGroups: TGroup[] = [];
-  console.log('groups', groups);
+
   for (let i = 0; i < groups.length; i++) {
     const teams = teamsArr
       .filter((team) => groups[i].teams.includes(team.name))
       .map((team) => ({ team_id: team._id, name: team.name }));
 
-    console.log('teams', teams);
     const newGroup: TGroup = {
       tournament_id: tournament_id,
       group: groups[i].group,

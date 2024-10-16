@@ -15,10 +15,9 @@ async function getPlayOffScheduleByTournament(id: string) {
     );
 
     if (!response.ok) {
-      console.log('response.ok is', response.ok);
     }
     const data = await response.json();
-    console.log(data);
+
     return data;
   } catch (error: any) {
     console.log(error.message);

@@ -2,6 +2,8 @@ import { cookies } from 'next/headers';
 import EventSelection from '../EventSelection/EventSelection';
 import UpcomingEvents from '../UpcomingEvents/UpcomingEvents';
 import './Overview.scss';
+import LiveMatches from '../LiveMatches/LiveMatches';
+import UpcomingMatches from '../UpcomingMatches/UpcomingMatches';
 
 async function getDashboardOverview() {
   const token = cookies().get(process.env.TOKEN_NAME!);
@@ -17,12 +19,17 @@ async function getDashboardOverview() {
     }
   );
 
+  if (!response.ok) {
+    throw new Error('Dashboard could not be fetched');
+  }
+
   const data = await response.json();
+  
   return data;
 }
 async function Overview() {
   const overview = await getDashboardOverview();
-  const { tournaments, username } = overview.data;
+  const { tournaments, username } = overview?.data;
 
   return (
     <section className="overview">
@@ -33,6 +40,8 @@ async function Overview() {
       <section className="overview__listing">
         <UpcomingEvents events={tournaments} />
         <EventSelection />
+        <LiveMatches />
+        <UpcomingMatches />
       </section>
     </section>
   );

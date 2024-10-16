@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { updateMatchTeamScore } from "../../../../../lib/server/dbCollections/match";
+import { NextResponse } from 'next/server';
+import { updateMatchTeamScore } from '../../../../../lib/server/dbCollections/match';
 
 export async function PATCH(
   request: Request,
@@ -9,22 +9,23 @@ export async function PATCH(
   try {
     const body = await request.json();
 
-    const { homeTeam, awayTeam } = body;
+    const { homeTeam, awayTeam, operator } = body;
 
-    if (!homeTeam && !awayTeam) {
+    if ((!homeTeam || !awayTeam) && !operator) {
       return NextResponse.json({
         status: 400,
-        message: 'body must include "homeTeam" OR "awayTeam"',
+        message: 'body must include "homeTeam" OR "awayTeam" AND a "operator"',
       });
     }
 
-    const teamWhoScored = homeTeam ? "homeTeam" : "awayTeam";
+    const teamWhoScored = homeTeam ? 'homeTeam' : 'awayTeam';
     const score = homeTeam ? homeTeam : awayTeam;
 
     const updatedMatchResults = await updateMatchTeamScore(
       id,
       teamWhoScored,
-      score
+      score,
+      operator
     );
 
     return NextResponse.json({
@@ -35,7 +36,7 @@ export async function PATCH(
     return NextResponse.json({
       status: 500,
       error: error.message,
-      message: "Error updating a match",
+      message: 'Error updating a match',
       errorMsg: error,
     });
   }

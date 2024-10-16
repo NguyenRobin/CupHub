@@ -2,7 +2,6 @@ import React from 'react';
 import './Group.scss';
 
 function Group({ data }: any) {
-  console.log('data', data);
   return (
     <section className="groups">
       {data?.map((group, index) => {

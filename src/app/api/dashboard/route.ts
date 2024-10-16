@@ -23,8 +23,6 @@ export async function GET(request: Request) {
       createdByUserId: tokenInfo.id,
     });
 
-    console.log(userTournaments);
-
     return NextResponse.json({
       status: 200,
       message: 'success',

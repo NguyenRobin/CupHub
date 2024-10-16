@@ -1,8 +1,9 @@
-@import "../../../../styles/variables.scss";
-@import "../../../../styles/typography.scss";
-@import "../../../../styles/dark.scss";
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/typography.scss';
+@import '../../../../styles/dark.scss';
 
 .nav-menu {
+  margin-top: 7rem;
   height: 100%;
   width: 100%;
   display: flex;
