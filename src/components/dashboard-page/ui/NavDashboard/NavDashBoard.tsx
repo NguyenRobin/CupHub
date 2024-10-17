@@ -7,7 +7,7 @@ import { CiSearch } from 'react-icons/ci';
 import { RxCross2 } from 'react-icons/rx';
 import { IoIosNotificationsOutline } from 'react-icons/io';
 import Image from 'next/image';
-
+import { CgProfile } from 'react-icons/cg';
 import NavMenuDashboard from '../NavMenuDashboard/NavMenuDashboard';
 import Modal from '../../../modal/Modal';
 
@@ -26,7 +26,7 @@ function NavDashBoard() {
             <Image
               height={44}
               width={44}
-              src="/IFK_Uppsala_logo.svg.png"
+              src="/default-profile.jpg"
               alt="user profile image"
             />
           </section>

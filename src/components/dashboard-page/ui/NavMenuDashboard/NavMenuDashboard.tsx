@@ -53,7 +53,7 @@ function NavMenuDashboard({ closeModal }: Props) {
           <RxDashboard />
           <p>Dashboard</p>
 
-          {/* {showMenu !== "dashboard" ? (
+          {/* {showMenu !== 'dashboard' ? (
             <MdKeyboardArrowRight className="arrow" />
           ) : (
             <MdKeyboardArrowDown className="arrow" />
