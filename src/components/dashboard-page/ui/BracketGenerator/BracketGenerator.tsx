@@ -13,6 +13,7 @@ import BracketView from './BracketView/BracketView';
 // }
 
 function BracketGenerator({ playoff }: any) {
+  console.log(playoff);
   const [currentIndex, setCurrentIndex] = useState(0); // Börja med Round 32
 
   const handleNext = () => {

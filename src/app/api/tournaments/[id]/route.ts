@@ -22,7 +22,8 @@ export async function GET(
     }
     await connectToMongoDB();
 
-    const tournament = await TournamentModel.findById(id).lean();
+    // const tournament = await TournamentModel.findById(id).lean();
+    const tournament = await TournamentModel.findById(id);
 
     if (!tournament) {
       return NextResponse.json({
@@ -35,16 +36,16 @@ export async function GET(
     // const groups = await GroupModel.find({ tournament_id: id });
     // const playoff = await RoundModel.find({ tournament_id: id });
 
-    const [matches, groups, playoff] = await Promise.all([
-      MatchModel.find({ tournament_id: id }),
-      GroupModel.find({ tournament_id: id }),
-      RoundModel.find({ tournament_id: id }),
-    ]);
+    // const [matches, groups, playoff] = await Promise.all([
+    //   MatchModel.find({ tournament_id: id }),
+    //   GroupModel.find({ tournament_id: id }),
+    //   RoundModel.find({ tournament_id: id }),
+    // ]);
 
     return NextResponse.json({
       message: 'Success',
       status: 200,
-      tournament: { ...tournament, matches, groups, playoff },
+      tournament,
     });
   } catch (error: any) {
     return NextResponse.json({

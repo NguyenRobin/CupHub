@@ -1,6 +1,6 @@
-@import "../../../../styles/typography.scss";
-@import "../../../../styles/variables.scss";
-@import "../../../../styles/dark.scss";
+@import '../../../../styles/typography.scss';
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/dark.scss';
 
 .nav-dashboard-container {
   display: flex;
@@ -38,7 +38,7 @@
       img {
         border: 1px solid $border-color-primary;
 
-        padding: 0.5rem;
+        padding: 0rem;
         border-radius: 1rem;
         object-fit: contain;
         // transform: scale(2.5);

@@ -91,7 +91,7 @@ function Event({ day, month, name, location, id }) {
   return (
     <section
       className="event"
-      onClick={() => router.push(`/dashboard/tournaments/${id}`)}
+      onClick={() => router.push(`/dashboard/tournaments/${id}/overview`)}
     >
       <section className="event__image">
         <section className="event__image-date">
