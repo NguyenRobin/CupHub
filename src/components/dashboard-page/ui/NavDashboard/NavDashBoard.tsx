@@ -28,6 +28,7 @@ function NavDashBoard() {
               width={44}
               src="/default-profile.jpg"
               alt="user profile image"
+              priority
             />
           </section>
 

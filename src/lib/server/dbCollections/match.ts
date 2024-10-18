@@ -29,6 +29,28 @@ export async function updateMatchStatus(
   status: 'scheduled' | 'ongoing' | 'paused' | 'completed'
 ) {
   try {
+    if (status === 'completed') {
+      const match = await MatchModel.findById({ _id: _id });
+      const { homeTeam, awayTeam } = match;
+
+      let winner = '';
+      const result = `${homeTeam.score}-${awayTeam.score}`;
+
+      if (homeTeam.score === awayTeam.score) {
+        winner = 'tie';
+      } else if (homeTeam.score > awayTeam.score) {
+        winner = homeTeam.name;
+      } else if (awayTeam.score > homeTeam.score) {
+        winner = awayTeam.name;
+      }
+
+      match.winner = winner;
+      match.result = result;
+
+      const updatedMatch = await match.save();
+      return updatedMatch;
+    }
+
     const updateMatch = await MatchModel.findByIdAndUpdate(
       { _id: _id },
       { status: status },
