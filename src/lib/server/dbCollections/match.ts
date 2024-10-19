@@ -28,6 +28,7 @@ export async function updateMatchStatus(
   _id: string,
   status: 'scheduled' | 'ongoing' | 'paused' | 'completed'
 ) {
+  console.log(status);
   try {
     if (status === 'completed') {
       const match = await MatchModel.findById({ _id: _id });
@@ -46,6 +47,7 @@ export async function updateMatchStatus(
 
       match.winner = winner;
       match.result = result;
+      match.status = status;
 
       const updatedMatch = await match.save();
       return updatedMatch;

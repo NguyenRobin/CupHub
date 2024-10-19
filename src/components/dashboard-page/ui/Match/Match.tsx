@@ -6,6 +6,7 @@ import './Match.scss';
 import { useRouter, usePathname } from 'next/navigation';
 
 async function updateStatus(id: string, status: string) {
+  console.log(status);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/matches/${id}/status`,
     {
