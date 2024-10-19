@@ -72,7 +72,7 @@ function AddTeam() {
     console.log('tournament', tournament);
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/tournament`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/tournaments`,
       {
         method: 'POST',
         body: JSON.stringify(tournament),
