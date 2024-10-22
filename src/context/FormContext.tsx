@@ -4,26 +4,27 @@ import {
   SetStateAction,
   useEffect,
   useState,
-} from "react";
-import { divideTeamsByGroup, validateApprovedGroups } from "../utils";
+} from 'react';
+import { divideTeamsByGroup, validateApprovedGroups } from '../utils';
 
-type TKey = "rounds" | "win" | "draw" | "loss" | "teamsPerGroupAdvancing";
+type TKey = 'rounds' | 'won' | 'draw' | 'loss' | 'teamsPerGroupAdvancing';
 
 type Team = {
-  id: number;
-  name: string;
-  played: number;
+  team_id: number | string;
+  team: string;
   won: number;
-  drawn: number;
-  lost: number;
-  goals_for: number;
-  goals_against: number;
+  draw: number;
+  loss: number;
+  goals_scored: number;
+  goals_conceded: number;
+  goal_difference: number;
+  matches_played: number;
   points: number;
 };
 
 type TGroupPreview = {
   group: string;
-  teams: Team[];
+  standings: Team[];
 };
 
 type TFormContext = {
@@ -34,7 +35,7 @@ type TFormContext = {
   endDate?: string;
   image?: string;
   rounds: number;
-  win: number;
+  won: number;
   draw: number;
   loss: number;
   total_groups?: number;
@@ -61,14 +62,14 @@ type TChildrenProps = {
 };
 
 const defaultState: TFormContext = {
-  name: "",
-  description: "",
-  sport: "",
-  startDate: "",
-  endDate: "",
-  image: "",
+  name: '',
+  description: '',
+  sport: '',
+  startDate: '',
+  endDate: '',
+  image: '',
   rounds: 1,
-  win: 3,
+  won: 3,
   draw: 1,
   loss: 0,
   total_groups: 1,
@@ -76,52 +77,56 @@ const defaultState: TFormContext = {
   validTotalGroupsBasedOnTotalTeams: 1,
   teams: [
     {
-      id: 1,
-      name: "Lag 1",
-      played: 0,
+      team_id: 1,
+      team: 'Lag 1',
       won: 0,
-      drawn: 0,
-      lost: 0,
-      goals_for: 0,
-      goals_against: 0,
+      draw: 0,
+      loss: 0,
+      goals_scored: 0,
+      goals_conceded: 0,
+      goal_difference: 0,
+      matches_played: 0,
       points: 0,
     },
     {
-      id: 2,
-      name: "Lag 2",
-      played: 0,
+      team_id: 2,
+      team: 'Lag 2',
       won: 0,
-      drawn: 0,
-      lost: 0,
-      goals_for: 0,
-      goals_against: 0,
+      draw: 0,
+      loss: 0,
+      goals_scored: 0,
+      goals_conceded: 0,
+      goal_difference: 0,
+      matches_played: 0,
       points: 0,
     },
   ],
   exampleGroupPreview: [
     {
-      group: "A",
-      teams: [
+      group: 'A',
+      standings: [
         {
-          id: 1,
-          name: "Lag 1",
-          played: 0,
+          team_id: 1,
+          team: 'Lag 1',
           won: 0,
-          drawn: 0,
-          lost: 0,
-          goals_for: 0,
-          goals_against: 0,
+          draw: 0,
+          loss: 0,
+          goals_scored: 0,
+          goals_conceded: 0,
+          goal_difference: 0,
+          matches_played: 0,
           points: 0,
         },
         {
-          id: 2,
-          name: "Lag 2",
-          played: 0,
+          team_id: 2,
+          team: 'Lag 2',
           won: 0,
-          drawn: 0,
-          lost: 0,
-          goals_for: 0,
-          goals_against: 0,
+          draw: 0,
+          loss: 0,
+          goals_scored: 0,
+          goals_conceded: 0,
+          goal_difference: 0,
+          matches_played: 0,
           points: 0,
         },
       ],
@@ -144,14 +149,14 @@ export function FormProvider({ children }: TChildrenProps) {
   const [page, setPage] = useState(0);
 
   const [data, setData] = useState({
-    name: "",
-    description: "",
-    sport: "",
-    startDate: "",
-    endDate: "",
-    image: "",
+    name: '',
+    description: '',
+    sport: '',
+    startDate: '',
+    endDate: '',
+    image: '',
     rounds: 1,
-    win: 3,
+    won: 3,
     draw: 1,
     loss: 0,
     total_groups: 1,
@@ -159,52 +164,56 @@ export function FormProvider({ children }: TChildrenProps) {
     validTotalGroupsBasedOnTotalTeams: 1,
     teams: [
       {
-        id: 1,
-        name: "Lag 1",
-        played: 0,
+        team_id: 1,
+        team: 'Lag 1',
         won: 0,
-        drawn: 0,
-        lost: 0,
-        goals_for: 0,
-        goals_against: 0,
+        draw: 0,
+        loss: 0,
+        goals_scored: 0,
+        goals_conceded: 0,
+        goal_difference: 0,
+        matches_played: 0,
         points: 0,
       },
       {
-        id: 2,
-        name: "Lag 2",
-        played: 0,
+        team_id: 2,
+        team: 'Lag 2',
         won: 0,
-        drawn: 0,
-        lost: 0,
-        goals_for: 0,
-        goals_against: 0,
+        draw: 0,
+        loss: 0,
+        goals_scored: 0,
+        goals_conceded: 0,
+        goal_difference: 0,
+        matches_played: 0,
         points: 0,
       },
     ],
     exampleGroupPreview: [
       {
-        group: "A",
-        teams: [
+        group: 'A',
+        standings: [
           {
-            id: 1,
-            name: "Lag 1",
-            played: 0,
+            team_id: 1,
+            team: 'Lag 1',
             won: 0,
-            drawn: 0,
-            lost: 0,
-            goals_for: 0,
-            goals_against: 0,
+            draw: 0,
+            loss: 0,
+            goals_scored: 0,
+            goals_conceded: 0,
+            goal_difference: 0,
+            matches_played: 0,
             points: 0,
           },
           {
-            id: 2,
-            name: "Lag 2",
-            played: 0,
+            team_id: 2,
+            team: 'Lag 2',
             won: 0,
-            drawn: 0,
-            lost: 0,
-            goals_for: 0,
-            goals_against: 0,
+            draw: 0,
+            loss: 0,
+            goals_scored: 0,
+            goals_conceded: 0,
+            goal_difference: 0,
+            matches_played: 0,
             points: 0,
           },
         ],
@@ -266,14 +275,15 @@ export function FormProvider({ children }: TChildrenProps) {
         const id = data.teams.length + (team + 1);
 
         const newTeam = {
-          id: id,
-          name: `Lag ${id}`,
-          played: 0,
+          team_id: id,
+          team: `Lag ${id}`,
           won: 0,
-          drawn: 0,
-          lost: 0,
-          goals_for: 0,
-          goals_against: 0,
+          draw: 0,
+          loss: 0,
+          goals_scored: 0,
+          goals_conceded: 0,
+          goal_difference: 0,
+          matches_played: 0,
           points: 0,
         };
 
@@ -317,7 +327,7 @@ export function FormProvider({ children }: TChildrenProps) {
       return {
         ...prev,
         teams: prev.teams.map((team) =>
-          team.id === id ? { ...team, name: value } : team
+          team.team_id === id ? { ...team, name: value } : team
         ),
       };
     });

@@ -1,28 +1,28 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import "./LoginForm.scss";
-import Link from "next/link";
-import { z } from "zod";
-import AuthInput from "../authInput/AuthInput";
-import Nav from "../landing-page/Nav/Nav";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import './LoginForm.scss';
+import Link from 'next/link';
+import { z } from 'zod';
+import AuthInput from '../authInput/AuthInput';
+import Nav from '../landing-page/ui/Nav/Nav';
 
 const SubmitFormSchema = z
   .object({
-    email: z.string().email({ message: "Ogiltig e-postadress" }).optional(),
+    email: z.string().email({ message: 'Ogiltig e-postadress' }).optional(),
     username: z
       .string()
       .trim()
-      .min(5, "Användarnamn måste vara minst 5 tecken långt")
+      .min(5, 'Användarnamn måste vara minst 5 tecken långt')
       .optional(),
     password: z
       .string()
-      .min(6, { message: "Lösenordet måste vara minst 6 tecken långt" }),
+      .min(6, { message: 'Lösenordet måste vara minst 6 tecken långt' }),
   })
   .refine((data) => data.username || data.email, {
-    message: "Användarnamn eller e-post måste anges",
-    path: ["username", "email"],
+    message: 'Användarnamn eller e-post måste anges',
+    path: ['username', 'email'],
   });
 
 type TSubmitFormBody = z.infer<typeof SubmitFormSchema>;
@@ -34,12 +34,12 @@ type TErrorMessages = {
 
 function LoginForm() {
   const [errorMessages, setErrorMessages] = useState<TErrorMessages>({});
-  const [user, setUser] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState('robinnguyen');
+  const [password, setPassword] = useState('papimami');
   const router = useRouter();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.type === "text") {
+    if (e.target.type === 'text') {
       setUser(e.target.value);
     } else {
       setPassword(e.target.value);
@@ -53,7 +53,7 @@ function LoginForm() {
       password: password,
     };
 
-    if (typeof user === "string" && user.includes("@")) {
+    if (typeof user === 'string' && user.includes('@')) {
       submitFormBody.email = user;
     } else {
       submitFormBody.username = user;
@@ -62,26 +62,29 @@ function LoginForm() {
     try {
       SubmitFormSchema.parse(submitFormBody); // z validation if any error occurred we skip the rest of the code and goe to catch bloc
 
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(submitFormBody),
-      });
-      console.log("response", response);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(submitFormBody),
+        }
+      );
+
       if (!response.ok) {
-        throw new Error("Something went wrong");
+        throw new Error('Something went wrong');
       }
 
       const data = await response.json();
 
-      if (data.status !== 200) {
+      if (data.status === 200) {
+        router.push('/dashboard');
+      } else {
         setErrorMessages({
           username: data.message,
           email: data.message,
         });
-        setPassword("");
-      } else {
-        router.push("/dashboard");
+        setPassword('');
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -103,13 +106,13 @@ function LoginForm() {
           <div className="login__heading">
             <h2>Logga in</h2>
             <p>
-              Har du inget konto?{" "}
+              Har du inget konto?{' '}
               <Link
-                href="/auth/signup"
+                href="/signup"
                 style={{
-                  textDecoration: "underline",
-                  color: "green",
-                  fontWeight: "bold",
+                  textDecoration: 'underline',
+                  color: 'green',
+                  fontWeight: 'bold',
                 }}
               >
                 Skapa konto
@@ -124,7 +127,7 @@ function LoginForm() {
               type="text"
               name="text"
               placeholder="användarnamn"
-              errorMessage={errorMessages.email || errorMessages.username || ""}
+              errorMessage={errorMessages.email || errorMessages.username || ''}
               onChange={handleOnChange}
               value={user}
             />
@@ -135,7 +138,7 @@ function LoginForm() {
               type="password"
               name="password"
               placeholder="******"
-              errorMessage={errorMessages.password || ""}
+              errorMessage={errorMessages.password || ''}
               onChange={handleOnChange}
               value={password}
             />

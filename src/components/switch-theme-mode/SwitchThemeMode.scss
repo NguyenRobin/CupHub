@@ -2,7 +2,6 @@
 
 /* The switch - the box around the slider */
 .switch-theme-mode {
-  margin-top: 5rem;
   position: relative;
   display: inline-block;
   width: 7rem;
@@ -26,10 +25,12 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-  border: 1px solid black;
+  // border: 1px solid #6a6a6a;
+  display: flex;
+  align-items: center;
+  background-color: green;
 }
 
 .slider:before {
@@ -37,13 +38,14 @@
   content: "";
   height: 26px;
   width: 26px;
-  left: 5px;
-  bottom: 4px;
-  background-color: white;
+  left: 4px;
+  // bottom: 4px;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-  background-color: #000;
+  border: 1px solid #059b72;
+  background-color: #f2fcf8;
 }
+
 input:not(:checked) + .slider {
   background-color: white;
   .theme-dark_mode {
@@ -63,18 +65,20 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(30px);
-  background-color: #fff;
+  -webkit-transform: translateX(3.1rem);
+  -ms-transform: translateX(3.1rem);
+  transform: translateX(3.1rem);
 }
 
 /* Rounded sliders */
 .slider.round {
-  border-radius: 34px;
-  background-color: #000;
   display: flex;
+  // justify-content: space-between; /* Placerar ikonerna jämnt */
   align-items: center;
+  background-color: #000;
+  border-radius: 34px;
+  border: 1px solid #dedede;
+  // padding: 0 1rem; /* Justerar avståndet från kanten */
 }
 
 .slider.round:before {
@@ -83,17 +87,18 @@ input:checked + .slider:before {
 
 .theme {
   margin-top: auto;
-  padding: 1rem;
+  // padding: 1rem;
   background-color: #000;
   border-radius: 3rem;
   width: 30%;
+
   &-light {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    border-radius: 50%;
-    padding: 0.7rem;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    // background-color: #fff;
+    // border-radius: 50%;
+    // padding: 0.7rem;
     width: 50%;
 
     &_icon {
@@ -106,14 +111,14 @@ input:checked + .slider:before {
 .theme-light_mode {
   position: absolute;
   font-size: 2rem;
-  right: 12%;
+  right: 10%;
   color: #000;
 }
 
 .theme-dark_mode {
   position: absolute;
   font-size: 2rem;
-  left: 12%;
-  right: 12%;
+  left: 10%;
+  // right: 12%;
   color: #fff;
 }

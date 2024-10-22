@@ -1,4 +1,4 @@
-@import "../../src/styles/variables.scss";
+@import '../../src/styles/variables.scss';
 
 * {
   box-sizing: border-box;
@@ -11,9 +11,10 @@ body {
   // height: 100vh;
   height: 100dvh;
   width: 100vw;
-  background-color: $body-bg-color;
-  background-color: black;
-  overflow: hidden;
+  background-color: #fdfdfd;
+  // background-color: black;
+  // overflow: hidden;
+  overflow-y: scroll;
 }
 
 html {

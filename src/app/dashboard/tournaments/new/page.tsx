@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import NewTournament from "../../../../components/dashboard/NewTournament/NewTournament";
 import { FormProvider } from "../../../../context/FormContext";
+import NewTournament from "../../../../components/dashboard-page/ui/NewTournament/NewTournament";
 
 const page = () => {
   return (

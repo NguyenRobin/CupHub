@@ -1,17 +1,29 @@
-import { NextResponse } from "next/server";
-import { authMiddleware } from "./middlewares/api/authMiddleware";
+import { NextResponse, NextRequest } from 'next/server';
+import {
+  authApiMiddleware,
+  authMiddleware,
+} from './middlewares/api/authMiddleware';
+
+export async function middleware(request: NextRequest) {
+  console.log(request.nextUrl.pathname);
+
+  if (
+    request.nextUrl.pathname.startsWith('/api/auth/login') ||
+    request.nextUrl.pathname.startsWith('/api/auth/signup')
+  ) {
+    return NextResponse.next();
+  }
+
+  if (request.nextUrl.pathname.startsWith('/dashboard')) {
+    return await authMiddleware(request);
+  }
+
+  if (request.nextUrl.pathname.startsWith('/api')) {
+    return await authApiMiddleware(request);
+  }
+}
 
 // Trigger in every /api endpoint
 export const config = {
-  matcher: "/api/:path*",
+  matcher: ['/dashboard/:path*', '/api/:path*'],
 };
-
-export function middleware(request: Request) {
-  console.log(request);
-  const isAuthenticated = authMiddleware(request);
-  console.log(isAuthenticated.isValid);
-  if (!isAuthenticated.isValid && request.url.includes("/api/users")) {
-    return NextResponse.json({ message: "Unauthorized", status: 401 });
-  }
-  return NextResponse.next();
-}

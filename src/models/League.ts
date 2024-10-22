@@ -1,30 +1,80 @@
+import { ObjectId } from "mongodb";
 import mongoose, { Schema, Types, model } from "mongoose";
 
 interface ILeague {
-  tournament_id: Types.ObjectId;
-  name?: string;
-  teams: Types.ObjectId[];
-  matches: Types.ObjectId[];
-  standings?: Types.ObjectId;
+  _id: Types.ObjectId;
+  name: string;
+  description?: string;
+  sport?: string;
+  location?: string;
+  startDate?: Date;
+  endDate?: Date;
+  total_teams: number;
+  status: "scheduled" | "ongoing" | "completed";
+  points_system: {
+    win: number;
+    draw: number;
+    loss: number;
+    numberOfMeetings?: number;
+  };
+  format: "league" | "knockout" | "group_stage_with_knockout";
+  teams_participating?: {
+    team_id: Types.ObjectId;
+  }[];
+  standings?: Types.ObjectId[];
+  createdByUserId: Types.ObjectId;
 }
 
 const leagueSchema = new Schema<ILeague>(
   {
-    tournament_id: {
-      type: mongoose.Schema.Types.ObjectId,
+    name: { type: String, required: true },
+    description: { type: String, required: false },
+    sport: { type: String, required: false },
+    location: { type: String, required: false },
+    startDate: { type: Date, required: false },
+    endDate: { type: Date, required: false },
+    total_teams: { type: Number, required: true },
+    status: {
+      type: String,
+      enum: ["scheduled", "ongoing", "completed"],
       required: true,
-      ref: "Tournament",
     },
-    name: { type: String },
-    teams: [
-      { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Team" },
+    points_system: {
+      win: { type: Number, required: true },
+      draw: { type: Number, required: true },
+      loss: { type: Number, required: true },
+      numberOfMeetings: { type: Number, required: true, min: 1, max: 2 },
+    },
+    format: {
+      type: String,
+      enum: ["league", "knockout", "group_stage_with_knockout"],
+      required: true,
+    },
+    teams_participating: [
+      {
+        _id: false,
+
+        team_id: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Team",
+          required: true,
+        },
+      },
     ],
-    standings: {
+    standings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: "Standing",
+      },
+    ],
+    createdByUserId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "Standing",
+      ref: "User",
     },
   },
+
   { timestamps: true }
 );
 

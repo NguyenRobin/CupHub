@@ -1,9 +1,28 @@
-import React from "react";
-import "./dashboard.scss";
-import Overview from "../../components/dashboard/Overview/Overview";
+import React, { Suspense } from 'react';
+import './dashboard.scss';
+import Overview from '../../components/dashboard-page/ui/Overview/Overview';
+import LoadingSpinner from '../../components/loading-spinner/LoadingSpinner';
 
 function DashboardHomePage() {
-  return <Overview />;
+  return (
+    <Suspense
+      fallback={
+        <div
+          style={{
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <LoadingSpinner size={40} />
+        </div>
+      }
+    >
+      <Overview />
+      {/* <LoadingSpinner size={40} /> */}
+    </Suspense>
+  );
 }
 
 export default DashboardHomePage;
