@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { divideTeamsByGroup, validateApprovedGroups } from '../utils';
+import { divideTeamsByGroup, validateApprovedGroups } from '../lib/client';
 
 type TKey = 'rounds' | 'won' | 'draw' | 'loss' | 'teamsPerGroupAdvancing';
 
@@ -298,6 +298,7 @@ export function FormProvider({ children }: TChildrenProps) {
     }
 
     const validAmountOfGroups = validateApprovedGroups(totalTeams);
+
     const groups = divideTeamsByGroup(
       data.teams.length,
       data.total_groups,

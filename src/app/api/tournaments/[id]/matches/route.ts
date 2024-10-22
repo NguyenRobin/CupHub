@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import connectToMongoDB from '../../../../../lib/server/connectToMongoDB';
-import MatchModel from '../../../../../models/Match';
+import connectToMongoDB from '../../../../../mongooose/connectToMongoDB';
+import MatchModel from '../../../../../features/matches/models/Match';
 import mongoose from 'mongoose';
-import TournamentModel from '../../../../../models/Tournament';
+import TournamentModel from '../../../../../features/tournaments/models/Tournament';
 
 export async function GET(
   request: Request,

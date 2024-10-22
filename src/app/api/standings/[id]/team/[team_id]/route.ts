@@ -1,15 +1,15 @@
-import { NextResponse } from "next/server";
-import mongoose from "mongoose";
-import { updateLeagueStanding } from "../../../../../../lib/server/dbCollections/standings";
+import { NextResponse } from 'next/server';
+import mongoose from 'mongoose';
+import { updateLeagueStanding } from '../../../../../../features/standings/server/db/standings';
 
 const validProperties = [
-  "won",
-  "draw",
-  "loss",
-  "goal",
-  "goal_difference",
-  "matches_played",
-  "points",
+  'won',
+  'draw',
+  'loss',
+  'goal',
+  'goal_difference',
+  'matches_played',
+  'points',
 ];
 
 export async function PATCH(
@@ -21,7 +21,7 @@ export async function PATCH(
   if (!mongoose.isValidObjectId(id) || !mongoose.isValidObjectId(team_id)) {
     return NextResponse.json({
       status: 404,
-      message: "id or team_id is not a valid objectId",
+      message: 'id or team_id is not a valid objectId',
     });
   }
 

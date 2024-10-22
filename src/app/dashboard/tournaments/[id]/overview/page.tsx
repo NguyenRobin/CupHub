@@ -1,7 +1,7 @@
 import React from 'react';
-import Tournament from '../../../../../components/dashboard-page/ui/Tournament/Tournament';
+import Tournament from '../../../../../features/tournaments/components/ui/Tournament/Tournament';
 import { cookies } from 'next/headers';
-import TournamentOverviewDetails from '../../../../../components/dashboard-page/ui/TournamentOverviewDetails/TournamentOverviewDetails';
+import TournamentOverviewDetails from '../../../../../features/tournaments/components/ui/TournamentOverviewDetails/TournamentOverviewDetails';
 import { getTournamentById } from '../../../../actions';
 
 async function page({ params }: { params: { id: string } }) {

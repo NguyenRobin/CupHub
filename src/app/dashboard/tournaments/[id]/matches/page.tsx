@@ -1,7 +1,7 @@
 import React from 'react';
-import Tournament from '../../../../../components/dashboard-page/ui/Tournament/Tournament';
+import Tournament from '../../../../../features/tournaments/components/ui/Tournament/Tournament';
 import { cookies } from 'next/headers';
-import ListTournamentMatches from '../../../../../components/dashboard-page/ui/ListTournamentMatches/ListTournamentMatches';
+import ListTournamentMatches from '../../../../../features/matches/components/ui/ListTournamentMatches/ListTournamentMatches';
 import {
   getTournamentById,
   getTournamentMatchesById,

@@ -1,0 +1,55 @@
+@import '../../../../../styles/variables.scss';
+@import '../../../../../styles/typography.scss';
+
+.tournament-overview-details {
+  display: grid;
+  grid-template-columns: 1;
+  gap: 2rem;
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    svg {
+      font-size: $font-size-lg;
+    }
+    p {
+      font-size: $font-size-sm;
+    }
+  }
+
+  &__teams-participating {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    grid-column: 1/-1;
+
+    &__title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: $font-size-md;
+
+      svg {
+        font-size: $font-size-lg;
+      }
+    }
+    &__teams {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      width: 100%;
+
+      p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: $font-size-sm;
+      }
+    }
+  }
+}

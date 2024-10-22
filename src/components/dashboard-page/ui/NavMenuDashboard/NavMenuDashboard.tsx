@@ -11,7 +11,7 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 import Link from 'next/link';
 import './NavMenuDashboard.scss';
 import { useTheme } from '../../../../context/ThemeContext';
-import SwitchThemeMode from '../../../switch-theme-mode/SwitchThemeMode';
+import SwitchThemeMode from '../../../ui/switch-theme-mode/SwitchThemeMode';
 
 type Props = {
   closeModal: () => void;

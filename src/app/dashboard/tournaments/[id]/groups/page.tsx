@@ -1,10 +1,10 @@
 import React from 'react';
-import Tournament from '../../../../../components/dashboard-page/ui/Tournament/Tournament';
+import Tournament from '../../../../../features/tournaments/components/ui/Tournament/Tournament';
 import {
   getTournamentById,
   getTournamentGroupsById,
 } from '../../../../actions';
-import Group from '../../../../../components/dashboard-page/ui/Group/Group';
+import ListAllGroups from '../../../../../features/groups/components/ui/ListAllGroups/ListAllGroups';
 
 async function page({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -13,7 +13,7 @@ async function page({ params }: { params: { id: string } }) {
 
   return (
     <Tournament data={tournament}>
-      <Group data={groups.groups} />
+      <ListAllGroups data={groups.groups} />
     </Tournament>
   );
 }

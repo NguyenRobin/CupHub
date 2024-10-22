@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import BracketGenerator from '../../../../components/dashboard-page/ui/BracketGenerator/BracketGenerator';
+import BracketGenerator from '../../../../features/rounds/components/ui/PlayoffView/PlayoffView';
 
 async function getPlayOffScheduleByTournament(id: string) {
   const token = cookies().get(process.env.TOKEN_NAME!);

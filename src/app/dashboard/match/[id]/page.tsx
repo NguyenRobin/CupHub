@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import Match from '../../../../components/dashboard-page/ui/Match/Match';
 import { cookies } from 'next/headers';
 import { getMatchById } from '../../../actions';
-import LoadingSpinner from '../../../../components/loading-spinner/LoadingSpinner';
+import LoadingSpinner from '../../../../components/ui/loading-spinner/LoadingSpinner';
 
 async function MatchPage({ params }: { params: { id: string } }) {
   const { id } = params;

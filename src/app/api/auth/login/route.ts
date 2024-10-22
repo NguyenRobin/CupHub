@@ -1,12 +1,11 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import connectToMongoDB from '../../../../lib/server/connectToMongoDB';
-import UserModel from '../../../../models/User';
+import connectToMongoDB from '../../../../mongooose/connectToMongoDB';
+import UserModel from '../../../../features/users/models/User';
 import {
   compareUserInputPasswordWithHashedPassword,
   createToken,
 } from '../../../../lib/server';
-import { env } from 'process';
 
 export async function POST(request: Request) {
   try {

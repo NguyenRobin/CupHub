@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { updateMatchStatus } from '../../../../../lib/server/dbCollections/match';
-import MatchModel from '../../../../../models/Match';
-import GroupModel from '../../../../../models/Group';
-import TournamentModel from '../../../../../models/Tournament';
+import { updateMatchStatus } from '../../../../../features/matches/server/db/match';
+import MatchModel from '../../../../../features/matches/models/Match';
+import GroupModel from '../../../../../features/groups/models/Group';
+import TournamentModel from '../../../../../features/tournaments/models/Tournament';
 import { TGroup, TStanding, TTeam } from '../../../../../types/types';
 
 export async function PATCH(
