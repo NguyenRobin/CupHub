@@ -1,20 +1,20 @@
-import React from 'react';
-import Tournament from '../../../../../components/dashboard-page/ui/Tournament/Tournament';
-import {
-  getTournamentById,
-  getTournamentGroupsById,
-} from '../../../../actions';
-import Group from '../../../../../components/dashboard-page/ui/Group/Group';
+import React, { Suspense } from 'react';
+import Tournament from '../../../../../features/tournaments/components/ui/Tournament/Tournament';
 
-async function page({ params }: { params: { id: string } }) {
+import ListAllGroups from '../../../../../features/groups/components/ui/ListAllGroups/ListAllGroups';
+import { Types } from 'mongoose';
+
+import LoadingSpinner from '../../../../../components/ui/loading-spinner/LoadingSpinner';
+
+async function page({ params }: { params: { id: Types.ObjectId } }) {
   const { id } = params;
-  const tournament = await getTournamentById(id);
-  const groups = await getTournamentGroupsById(id);
 
   return (
-    <Tournament data={tournament}>
-      <Group data={groups.groups} />
-    </Tournament>
+    <Suspense fallback={<LoadingSpinner size={40} />}>
+      <Tournament tournamentId={id}>
+        <ListAllGroups tournamentId={id} />
+      </Tournament>
+    </Suspense>
   );
 }
 

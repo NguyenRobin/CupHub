@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
-import connectToMongoDB from '../../../../lib/server/connectToMongoDB';
-import TournamentModel from '../../../../models/Tournament';
-import UserModel from '../../../../models/User';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
+import TournamentModel from '../../../../features/tournaments/models/Tournament';
+import UserModel from '../../../../features/users/models/User';
 import mongoose from 'mongoose';
-import MatchModel from '../../../../models/Match';
-import GroupModel from '../../../../models/Group';
-import RoundModel from '../../../../models/Round';
+import MatchModel from '../../../../features/matches/models/Match';
+import GroupModel from '../../../../features/groups/models/Group';
+import RoundModel from '../../../../features/rounds/models/Round';
 import { exec } from 'child_process';
 
 export async function GET(

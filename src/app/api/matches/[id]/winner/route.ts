@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 import {
   updateMatchTeamScore,
   updateMatchWinner,
-} from "../../../../../lib/server/dbCollections/match";
+} from '../../../../../features/matches/server/db/match';
 
 export async function PATCH(
   request: Request,
@@ -31,7 +31,7 @@ export async function PATCH(
     return NextResponse.json({
       status: 500,
       error: error.message,
-      message: "Error updating a match",
+      message: 'Error updating a match',
     });
   }
 }

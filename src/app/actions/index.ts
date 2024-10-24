@@ -1,5 +1,4 @@
 import { cookies, headers } from 'next/headers';
-import { env } from 'process';
 
 export async function getUpcomingEvents() {
   // const delay = (ms) => new Promise((res) => setTimeout(res, ms));

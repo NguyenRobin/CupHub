@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React from "react";
-import { FormProvider } from "../../../../context/FormContext";
-import NewTournament from "../../../../components/dashboard-page/ui/NewTournament/NewTournament";
+import React from 'react';
+import { FormProvider } from '../../../../context/FormContext';
+import NewTournamentForm from '../../../../features/tournaments/components/forms/NewTournamentForm/NewTournamentForm';
 
 const page = () => {
   return (
     <FormProvider>
-      <NewTournament />
+      <NewTournamentForm />
     </FormProvider>
   );
 };

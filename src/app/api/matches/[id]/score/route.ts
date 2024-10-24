@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { updateMatchTeamScore } from '../../../../../lib/server/dbCollections/match';
+import { updateMatchTeamScore } from '../../../../../features/matches/server/db/match';
 
 export async function PATCH(
   request: Request,

@@ -1,21 +1,21 @@
-import React from 'react';
-import Tournament from '../../../../../components/dashboard-page/ui/Tournament/Tournament';
+import React, { Suspense } from 'react';
+import { Types } from 'mongoose';
+import Tournament from '../../../../../features/tournaments/components/ui/Tournament/Tournament';
+import PlayoffView from '../../../../../features/rounds/components/ui/PlayoffView/PlayoffView';
+import LoadingSpinner from '../../../../../components/ui/loading-spinner/LoadingSpinner';
+import { getTournamentPlayoffById } from '../../../../../features/rounds/server/actions/rounds';
+import { parse } from 'path';
+import { stringify } from 'querystring';
 
-import {
-  getTournamentById,
-  getTournamentPlayoffById,
-} from '../../../../actions';
-import BracketGenerator from '../../../../../components/dashboard-page/ui/BracketGenerator/BracketGenerator';
-
-async function page({ params }: { params: { id: string } }) {
+async function page({ params }: { params: { id: Types.ObjectId } }) {
   const { id } = params;
-  const tournament = await getTournamentById(id);
-  const playoff = await getTournamentPlayoffById(id);
 
   return (
-    <Tournament data={tournament}>
-      <BracketGenerator playoff={playoff.playoff} />
-    </Tournament>
+    <Suspense fallback={<LoadingSpinner size={40} />}>
+      <Tournament tournamentId={id}>
+        <PlayoffView tournamentId={id} />
+      </Tournament>
+    </Suspense>
   );
 }
 

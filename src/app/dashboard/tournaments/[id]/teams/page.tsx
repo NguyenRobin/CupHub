@@ -1,5 +1,5 @@
 import React from 'react';
-import Tournament from '../../../../../components/dashboard-page/ui/Tournament/Tournament';
+import Tournament from '../../../../../features/tournaments/components/ui/Tournament/Tournament';
 
 import {
   getTournamentById,

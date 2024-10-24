@@ -3,11 +3,12 @@ import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { TGroup, TMatch } from '../../types/types';
 import { Types } from 'mongoose';
+import { cookies } from 'next/headers';
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 type TJwtPayload = {
-  id: string;
+  id: Types.ObjectId;
   username: string;
   iat: number;
   exp: number;
@@ -31,7 +32,7 @@ export async function compareUserInputPasswordWithHashedPassword(
   return isPasswordMatching;
 }
 
-export function createToken(user: { id: string; username: string }) {
+export function createToken(user: { id: Types.ObjectId; username: string }) {
   const encodedToken = jwt.sign(user, process.env.JWT_SECRET_KEY as string, {
     // expiresIn: "15m",
     expiresIn: '24h',
@@ -50,30 +51,26 @@ export function getCookieValue(request: Request) {
   return sessionToken;
 }
 
-export function validatePossibleTeamsPerGroupGoingToPlayoff(
-  totalTeams: number,
-  totalGroups: number,
-  totalTeamsPerGroupAdvancing: number
-): {
-  valid: boolean;
-  message?: string;
-  totalTeamsGoingToPlayoff?: number;
-  wildcards?: number;
-  playoff_round?: number;
-} {
-  const possibleTotalTeamsPlayoffRounds = [2, 4, 8, 16, 32];
-  const totalTeamsGoingToPlayoff = totalGroups * totalTeamsPerGroupAdvancing;
+export function getCookieFromServerComponent() {
+  const cookieStore = cookies();
+  const token = cookieStore.get(process.env.TOKEN_NAME as string)?.value;
 
-  if (totalTeamsGoingToPlayoff > totalTeams) {
-    return {
-      valid: false,
-      message: `The total amount of teams going to playoff ( ${totalTeamsGoingToPlayoff} ), cannot be greater than the total of team participating ( ${totalTeams} ).`,
-    };
-  }
+  return token;
+}
+
+type TValidRounds = {
+  totalTeamsGoingToPlayoff: number;
+  wildcards?: number;
+  playoff_round: number;
+};
+
+export function validatePossibleTeamsPerGroupGoingToPlayoff(
+  totalTeamsGoingToPlayoff: number
+): TValidRounds {
+  const possibleTotalTeamsPlayoffRounds = [2, 4, 8, 16, 32];
 
   if (possibleTotalTeamsPlayoffRounds.includes(totalTeamsGoingToPlayoff)) {
     return {
-      valid: true,
       totalTeamsGoingToPlayoff,
       playoff_round: totalTeamsGoingToPlayoff,
     };
@@ -83,13 +80,12 @@ export function validatePossibleTeamsPerGroupGoingToPlayoff(
     );
 
     if (!closestValidPlayoffRound) {
-      return { valid: false, message: 'No valid playoff was found' };
+      throw new Error('No valid playoff round could be made');
     }
 
     const wildcards = closestValidPlayoffRound - totalTeamsGoingToPlayoff;
 
     return {
-      valid: true,
       totalTeamsGoingToPlayoff,
       wildcards,
       playoff_round: totalTeamsGoingToPlayoff + wildcards,
@@ -118,7 +114,6 @@ export function buildPlayoffSchedule(amountOfTeamsToPlayOff: number) {
 
   let currentRound = amountOfTeamsToPlayOff;
 
-  // Iterera genom stegen och skapa matcher
   for (let i = stagesToFinal; i >= 0; i--) {
     const matchesInRound = currentRound / 2;
 
@@ -270,4 +265,8 @@ export function generateRobinRoundTEST(
   }
 
   return matches;
+}
+
+export function dateFormatter(date: Date) {
+  return date.toISOString().split('T')[0];
 }

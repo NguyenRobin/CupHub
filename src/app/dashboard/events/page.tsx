@@ -1,5 +1,5 @@
 import React from 'react';
-import EventWrapper from '../../../components/event-wrapper/EventWrapper';
+import EventWrapper from '../../../components/ui/event-wrapper/EventWrapper';
 
 function EventsPage() {
   return (

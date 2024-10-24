@@ -1,0 +1,206 @@
+@import '../../../../../styles/variables.scss';
+@import '../../../../../styles/typography.scss';
+
+.tournament-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100%;
+  &__overview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+
+    &__details {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+
+      div {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: $font-size-md;
+        color: black;
+        font-weight: 700;
+
+        svg {
+          color: #006774;
+          font-size: $font-size-2xl;
+        }
+        p {
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  &__information {
+    padding: 1.5rem;
+    ul {
+      display: flex;
+      justify-content: space-between;
+      list-style: none;
+      li {
+        font-size: $font-size-md;
+        cursor: pointer;
+      }
+      li.active {
+        font-weight: 500;
+      }
+
+      .active {
+        text-decoration: underline;
+        text-underline-offset: 8px;
+        text-decoration-color: $border-color-success;
+        text-decoration-thickness: 3px;
+      }
+    }
+  }
+
+  &__children {
+    padding: 1.5rem;
+  }
+}
+
+// .tournament-overview-details {
+//   display: grid;
+//   grid-template-columns: 1;
+//   gap: 2rem;
+//   &__label {
+//     display: flex;
+//     align-items: center;
+//     gap: 1rem;
+
+//     svg {
+//       font-size: $font-size-lg;
+//     }
+//     p {
+//       font-size: $font-size-sm;
+//     }
+//   }
+
+//   &__teams-participating {
+//     margin-top: 2.5rem;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     gap: 2.5rem;
+//     grid-column: 1/-1;
+
+//     &__title {
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+//       gap: 0.5rem;
+//       font-size: $font-size-md;
+
+//       svg {
+//         font-size: $font-size-lg;
+//       }
+//     }
+//     &__teams {
+//       display: grid;
+//       grid-template-columns: repeat(3, 1fr);
+//       gap: 1rem;
+//       width: 100%;
+
+//       p {
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         font-size: $font-size-sm;
+//       }
+//     }
+//   }
+// }
+
+// .matches-container {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1.5rem;
+//   &__match {
+//     display: flex;
+//     justify-content: space-between;
+//     padding-bottom: 1rem;
+//     border-bottom: 0.5px solid $border-color-primary;
+//     &__info {
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+//       gap: 0.7rem;
+
+//       &--ongoing {
+//         color: red;
+//       }
+
+//       &--name {
+//         display: flex;
+//         flex-direction: column;
+//       }
+//     }
+//     &__score {
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+//       flex-direction: column;
+//       font-weight: bold;
+//     }
+//   }
+// }
+
+// .pulse {
+//   position: relative;
+//   width: 0.7rem;
+//   height: 0.7rem;
+
+//   &:before {
+//     content: '';
+//     position: absolute;
+//     width: 250%;
+//     height: 250%;
+//     top: 50%;
+//     left: 50%;
+//     border-radius: 50%;
+//     transform: translate(-50%, -50%);
+//     background-color: red;
+//     animation: pulse 1.25s infinite;
+//   }
+
+//   &:after {
+//     content: '';
+//     position: absolute;
+//     width: 100%;
+//     height: 100%;
+//     background-color: red;
+//     border-radius: 50%;
+
+//     animation: circle 1.25s -0.4s infinite;
+//   }
+// }
+
+// @keyframes pulse {
+//   0% {
+//     transform: translate(-50%, -50%) scale(0.33);
+//   }
+//   80%,
+//   100% {
+//     // transform: translate(-50%, -50%);
+//     opacity: 0;
+//   }
+// }
+
+// @keyframes circle {
+//   0% {
+//     transform: scale(0.8);
+//   }
+//   50% {
+//     transform: scale(1);
+//   }
+//   100% {
+//     transform: scale(0.8);
+//   }
+// }

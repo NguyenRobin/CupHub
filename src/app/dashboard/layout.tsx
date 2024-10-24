@@ -1,6 +1,6 @@
-import React from "react";
-import "./dashboard.scss";
-import NavDashBoard from "../../components/dashboard-page/ui/NavDashboard/NavDashBoard";
+import React from 'react';
+import './dashboard.scss';
+import NavBarDashboard from '../../components/dashboard-page/ui/NavBarDashboard/NavBarDashboard';
 
 type Props = {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ type Props = {
 function layout({ children }: Props) {
   return (
     <section className="dashboard">
-      <NavDashBoard />
+      <NavBarDashboard />
       <main className="main-container__dashboard">{children}</main>
     </section>
   );

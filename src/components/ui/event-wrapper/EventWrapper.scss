@@ -1,0 +1,61 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/typography.scss';
+
+.event-wrapper {
+  color: $txt-color-secondary;
+  gap: 1.5rem;
+  background-color: #dee2e6;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: #fff;
+  box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  &__icon {
+    display: flex;
+    justify-content: flex-end;
+    background-image: url('../../../../public/5570109.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 15rem;
+    padding: 1rem;
+    position: relative;
+    &-overlay {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    span {
+      background-color: #fff;
+      height: 3rem;
+      width: 3rem;
+      border-radius: 50%;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        font-size: $font-size-xl;
+        color: $bg-color-primary;
+        // color: #fff;
+      }
+    }
+  }
+
+  &__register {
+    button {
+      width: 100%;
+      padding: 1rem 2rem;
+      background-color: #07383e;
+      color: #ffffff;
+      font-weight: bold;
+      border-radius: 5rem;
+      border: none;
+    }
+  }
+}

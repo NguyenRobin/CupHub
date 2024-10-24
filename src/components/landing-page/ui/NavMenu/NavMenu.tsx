@@ -1,12 +1,12 @@
-import Link from "next/link";
-import "./NavMenu.scss";
-import { AiOutlineHome } from "react-icons/ai";
-import { BsSend } from "react-icons/bs";
-import { GrGroup } from "react-icons/gr";
+import Link from 'next/link';
+import './NavMenu.scss';
+import { AiOutlineHome } from 'react-icons/ai';
+import { BsSend } from 'react-icons/bs';
+import { GrGroup } from 'react-icons/gr';
 
-import { useEffect, useState } from "react";
-import SwitchThemeMode from "../../../switch-theme-mode/SwitchThemeMode";
-import { useTheme } from "../../../../context/ThemeContext";
+import { useEffect, useState } from 'react';
+import SwitchThemeMode from '../../../ui/switch-theme-mode/SwitchThemeMode';
+import { useTheme } from '../../../../context/ThemeContext';
 
 function NavMenu() {
   const { theme, toggleTheme } = useTheme();
@@ -18,7 +18,7 @@ function NavMenu() {
   }
 
   useEffect(() => {
-    if (theme === "dark") {
+    if (theme === 'dark') {
       setIsChecked(true);
     }
   }, [theme]);

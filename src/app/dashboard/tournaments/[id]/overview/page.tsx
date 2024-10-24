@@ -1,36 +1,21 @@
-import React from 'react';
-import Tournament from '../../../../../components/dashboard-page/ui/Tournament/Tournament';
-import { cookies } from 'next/headers';
-import TournamentOverviewDetails from '../../../../../components/dashboard-page/ui/TournamentOverviewDetails/TournamentOverviewDetails';
-import { getTournamentById } from '../../../../actions';
+import React, { Suspense } from 'react';
+import Tournament from '../../../../../features/tournaments/components/ui/Tournament/Tournament';
+import TournamentOverviewDetails from '../../../../../features/tournaments/components/ui/TournamentOverviewDetails/TournamentOverviewDetails';
 
-async function page({ params }: { params: { id: string } }) {
+import LoadingSpinner from '../../../../../components/ui/loading-spinner/LoadingSpinner';
+
+import { Types } from 'mongoose';
+import { getTournamentById } from '../../../../../features/tournaments/server/actions/tournament';
+
+async function page({ params }: { params: { id: Types.ObjectId } }) {
   const { id } = params;
-  const tournament = await getTournamentById(id);
-  const {
-    name,
-    description,
-    location,
-    status,
-    startDate,
-    endDate,
-    total_teams,
-    format,
-  } = tournament?.tournament;
 
   return (
-    <Tournament data={tournament}>
-      <TournamentOverviewDetails
-        name={name}
-        description={description}
-        location={location}
-        status={status}
-        startDate={startDate}
-        endDate={endDate}
-        total_teams={total_teams}
-        format={format}
-      />
-    </Tournament>
+    <Suspense fallback={<LoadingSpinner size={40} />}>
+      <Tournament tournamentId={id}>
+        <TournamentOverviewDetails tournamentId={id} />
+      </Tournament>
+    </Suspense>
   );
 }
 
