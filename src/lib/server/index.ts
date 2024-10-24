@@ -2,8 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { TGroup, TMatch } from '../../types/types';
-import { get, Types } from 'mongoose';
-import { NextResponse } from 'next/server';
+import { Types } from 'mongoose';
 import { cookies } from 'next/headers';
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
@@ -266,4 +265,8 @@ export function generateRobinRoundTEST(
   }
 
   return matches;
+}
+
+export function dateFormatter(date: Date) {
+  return date.toISOString().split('T')[0];
 }

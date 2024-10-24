@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import connectToMongoDB from '../../../../mongooose/connectToMongoDB';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
 import TournamentModel from '../../../../features/tournaments/models/Tournament';
 import UserModel from '../../../../features/users/models/User';
 import mongoose from 'mongoose';

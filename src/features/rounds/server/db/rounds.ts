@@ -20,3 +20,8 @@ export async function createPlayoffRoundDB(
 
   return await newRound.save(options);
 }
+
+export async function getTournamentPlayoffDB(id: Types.ObjectId) {
+  const playoff = await RoundModel.findOne({ tournament_id: id }).lean();
+  return playoff;
+}

@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import connectToMongoDB from '../../../../mongooose/connectToMongoDB';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
 import UserModel from '../../../../features/users/models/User';
 import {
   compareUserInputPasswordWithHashedPassword,

@@ -1,54 +1,42 @@
-'use client';
-import React, { useState } from 'react';
 import './PlayoffView.scss';
+import React from 'react';
 import PlayoffViewMobile from './PlayoffViewMobile/PlayoffViewMobile';
 import PlayoffViewDesktop from './PlayoffViewDesktop/PlayoffViewDesktop';
+import { getTournamentPlayoffById } from '../../../server/actions/rounds';
+import { Types } from 'mongoose';
 
-function PlayoffView({ playoff }: any) {
-  const [currentIndex, setCurrentIndex] = useState(0); // Börja med Round 32
-  const currentStage = playoff[currentIndex];
+type Props = {
+  tournamentId: Types.ObjectId;
+};
 
-  const handleNext = () => {
-    if (currentIndex < playoff.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
-  const handleBack = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
+type TPlayoff = {
+  playoff: {
+    round: string;
+    matches: {
+      match_id: string | null;
+      homeTeam: { name: string; score: null | number; team_id: string };
+      awayTeam: { name: string; score: null | number; team_id: string };
+      location: string | null;
+    }[];
+  }[];
+};
+
+async function PlayoffView({ tournamentId }: Props) {
+  const response = await getTournamentPlayoffById(tournamentId);
+
+  if (response.status !== 200) {
+    return <p>{response.message}</p>;
+  }
+
+  const { playoff }: TPlayoff = response?.playoff;
 
   return (
-    <div className="match-bracket-stage">
-      <div className="match-bracket-stage__title">
-        <button
-          style={{
-            visibility: `${!currentIndex ? 'hidden' : 'visible'}`,
-          }}
-          onClick={handleBack}
-        >
-          Back
-        </button>
-        <h2>{currentStage.round}</h2>
-
-        <button
-          style={{
-            visibility: `${
-              currentStage.round === 'Final' ? 'hidden' : 'visible'
-            }`,
-          }}
-          onClick={handleNext}
-        >
-          Next
-        </button>
-      </div>
-
+    <div className="playoff-view-container">
       {/* CSS max-width: 480p */}
-      <PlayoffViewMobile data={currentStage} />
+      <PlayoffViewMobile playoff={playoff} />
 
       {/* CSS min-width: 481px */}
-      <PlayoffViewDesktop data={playoff} />
+      <PlayoffViewDesktop playoff={playoff} />
     </div>
   );
 }

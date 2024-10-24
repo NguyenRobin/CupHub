@@ -1,5 +1,5 @@
-@import '../../styles/variables.scss';
-@import '../../styles/typography.scss';
+@import '../../../styles/variables.scss';
+@import '../../../styles/typography.scss';
 
 .event-wrapper {
   color: $txt-color-secondary;
@@ -15,7 +15,7 @@
   &__icon {
     display: flex;
     justify-content: flex-end;
-    background-image: url('../../../public/5570109.jpg');
+    background-image: url('../../../../public/5570109.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

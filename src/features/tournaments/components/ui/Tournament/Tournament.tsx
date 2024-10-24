@@ -1,37 +1,31 @@
-'use client';
 import Image from 'next/image';
 import React from 'react';
 import './Tournament.scss';
 import { SlEvent } from 'react-icons/sl';
 import { MdLocationOn } from 'react-icons/md';
-import { formatDate } from '../../../../../lib/client';
 import CardWrapper from '../../../../../components/ui/card-wrapper/CardWrapper';
 import { TbTournament } from 'react-icons/tb';
 import Link from 'next/link';
 import { IoIosArrowRoundBack } from 'react-icons/io';
-import { usePathname } from 'next/navigation';
+import ActiveTournamentDetailView from '../ActiveTournamentDetailView/ActiveTournamentDetailView';
+import { dateFormatter } from '../../../../../lib/server';
+import { getTournamentById } from '../../../server/actions/tournament';
 
-const lists = [
-  { title: 'Översikt', url: '/dashboard/tournaments', endUrl: 'overview' },
-  { title: 'Matcher', url: '/dashboard/tournaments', endUrl: 'matches' },
-  { title: 'Grupper', url: '/dashboard/tournaments', endUrl: 'groups' },
-  { title: 'Slutspel', url: '/dashboard/tournaments', endUrl: 'playoffs' },
-  { title: 'Lag', url: '/dashboard/tournaments', endUrl: 'teams' },
-];
-function Tournament({ data, children }: any) {
-  const { name, location, startDate, _id } = data?.tournament;
+async function Tournament({ tournamentId, children }: any) {
+  const response = await getTournamentById(tournamentId);
 
-  const pathname = usePathname();
+  if (response.status !== 200) {
+    return <p>{response.message}</p>;
+  }
 
-  const currentView = lists.find((list) =>
-    pathname.includes(list.endUrl)
-  )?.endUrl;
+  const { name, location, startDate, _id } = response?.tournament;
 
   return (
     <CardWrapper>
       <Link href={'/dashboard'}>
         <IoIosArrowRoundBack size={25} />
       </Link>
+
       <div className="tournament-container">
         <div className="tournament-container__overview">
           <Image
@@ -49,7 +43,7 @@ function Tournament({ data, children }: any) {
 
             <div>
               <SlEvent />
-              <p>{formatDate(startDate)}</p>
+              <p>{dateFormatter(startDate)}</p>
             </div>
 
             <div>
@@ -59,20 +53,8 @@ function Tournament({ data, children }: any) {
           </div>
         </div>
         <div className="tournament-container__information">
-          <ul>
-            {lists.map((list) => (
-              <li
-                key={list.title}
-                className={`${list.endUrl === currentView ? 'active' : ''}`}
-              >
-                <Link href={`${list.url}/${_id}/${list.endUrl}`}>
-                  {list.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <ActiveTournamentDetailView tournamentId={_id.toString()} />
         </div>
-
         <div className="tournament-container__children">{children}</div>
       </div>
     </CardWrapper>

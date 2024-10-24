@@ -1,0 +1,62 @@
+.playoff-view-desktop {
+  display: flex;
+  gap: 1.5rem;
+
+  &__elimination {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+
+    &--title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      letter-spacing: 0.2rem;
+      text-transform: capitalize;
+    }
+  }
+}
+.bracket-wrapper-desktop {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.bracket-wrapper-desktop:nth-child(even)::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 1rem;
+  right: -8px;
+  transform: translate(0%, 50%);
+  border: 1px solid green;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border-left: none;
+}
+
+.bracket-wrapper-desktop:nth-child(odd)::after {
+  content: '';
+  position: absolute;
+  width: 0.8rem;
+  height: 100%;
+  padding-bottom: 1rem;
+  border: 1px solid green;
+  border-left: none;
+  border-bottom: none;
+  border-right: none;
+  right: -1.5rem;
+}
+
+.playoff-view-desktop__elimination.final .bracket-wrapper-desktop::after {
+  content: none;
+}
+@media screen and (max-width: 481px) {
+  .playoff-view-desktop {
+    display: none;
+  }
+}

@@ -1,6 +1,6 @@
 import mongoose, { Types } from 'mongoose';
 import { NextResponse } from 'next/server';
-import connectToMongoDB from '../../../../mongooose/connectToMongoDB';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
 import UserModel from '../../../../features/users/models/User';
 import { createToken, hashPassword } from '../../../../lib/server';
 import { cookies } from 'next/headers';

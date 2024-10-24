@@ -2,20 +2,29 @@ import { FaHourglassEnd, FaHourglassStart } from 'react-icons/fa6';
 import { GrStatusInfo } from 'react-icons/gr';
 import { MdLocationOn } from 'react-icons/md';
 import { TbFileDescription, TbTournament } from 'react-icons/tb';
-import { formatDate } from '../../../../../lib/client';
 import { RiTeamLine } from 'react-icons/ri';
 import './TournamentOverviewDetails.scss';
+import { dateFormatter } from '../../../../../lib/server';
+import { getTournamentById } from '../../../server/actions/tournament';
 
-function TournamentOverviewDetails({
-  name,
-  description,
-  location,
-  status,
-  startDate,
-  endDate,
-  total_teams,
-  format,
-}: any) {
+async function TournamentOverviewDetails({ tournamentId }: any) {
+  const response = await getTournamentById(tournamentId);
+
+  if (response.status !== 200) {
+    return <p>{response.message}</p>;
+  }
+
+  const {
+    name,
+    description,
+    location,
+    status,
+    startDate,
+    endDate,
+    total_teams,
+    format,
+  } = response.tournament;
+
   return (
     <div className="tournament-overview-details">
       <div className="tournament-overview-details__label">
@@ -36,11 +45,11 @@ function TournamentOverviewDetails({
       </div>
       <div className="tournament-overview-details__label">
         <FaHourglassStart />
-        <p>Startar: {formatDate(startDate)}</p>
+        <p>Startar: {dateFormatter(startDate)}</p>
       </div>
       <div className="tournament-overview-details__label">
         <FaHourglassEnd />
-        <p>Slutar: {formatDate(endDate)}</p>
+        <p>Slutar: {dateFormatter(endDate)}</p>
       </div>
       <div className="tournament-overview-details__label">
         <RiTeamLine />

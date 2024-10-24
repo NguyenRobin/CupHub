@@ -1,13 +1,11 @@
-import { NextResponse } from 'next/server';
-import { getUserByID } from '../../../users/server/db/users';
 import {
   createTournamentDB,
+  getTournamentDB,
   updateTournamentWithGroupIdsDB,
   updateTournamentWithTeamsParticipatingDB,
 } from '../db/tournament';
-import connectToMongoDB from '../../../../mongooose/connectToMongoDB';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
 
-import { createTeamsDB } from '../../../teams/server/db/team';
 import {
   generateRobinRound,
   getCookieFromServerComponent,
@@ -18,10 +16,10 @@ import { createPlayoffRoundDB } from '../../../rounds/server/db/rounds';
 import {
   createGroupDB,
   updateGroupWithMatchIdsDB,
-} from '../../../groups/server/db/group';
+} from '../../../groups/server/db/groups';
 import { createMatchesDB } from '../../../matches/server/db/match';
-import mongoose, { get, Types } from 'mongoose';
-import { TBodyTournament, TNewTournament } from '../../../../types/types';
+import mongoose, { Types } from 'mongoose';
+import { TBodyTournament } from '../../../../types/types';
 import { createTournamentTeams } from '../../../teams/server/actions/teams';
 
 export async function createNewTournament(body: TBodyTournament) {
@@ -154,4 +152,18 @@ export async function createNewTournament(body: TBodyTournament) {
 
   await session.commitTransaction();
   session.endSession();
+}
+
+export async function getTournamentById(id: Types.ObjectId) {
+  if (!mongoose.isValidObjectId(id)) {
+    return { status: 400, message: 'Invalid ID format. Must be a ObjectId' };
+  }
+
+  const tournament = await getTournamentDB(id);
+
+  if (!tournament) {
+    return { status: 400, message: 'Tournament not found' };
+  }
+
+  return { status: 200, tournament };
 }

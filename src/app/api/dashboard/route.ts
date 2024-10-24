@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getCookieValue, verifyToken } from '../../../lib/server';
 import UserModel from '../../../features/users/models/User';
 import TournamentModel from '../../../features/tournaments/models/Tournament';
-import connectToMongoDB from '../../../mongooose/connectToMongoDB';
+import connectToMongoDB from '../../../mongoose/connectToMongoDB';
 
 export async function GET(request: Request) {
   const sessionToken = getCookieValue(request) ?? '';

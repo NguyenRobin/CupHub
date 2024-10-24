@@ -1,10 +1,19 @@
 import Link from 'next/link';
 import './ListTournamentMatches.scss';
+import { getAllTournamentMatchesByID } from '../../../server/actions/match';
 
-function ListTournamentMatches({ matches }: any) {
+async function ListTournamentMatches({ tournamentId }: any) {
+  const response = await getAllTournamentMatchesByID(tournamentId);
+
+  if (response.status !== 200) {
+    return <p>{response.message}</p>;
+  }
+
+  const { matches } = response;
+
   return (
     <div className="matches-container">
-      {matches.map((match) => (
+      {matches?.map((match) => (
         <Link
           href={`/dashboard/match/${match._id}`}
           key={match.match_id}

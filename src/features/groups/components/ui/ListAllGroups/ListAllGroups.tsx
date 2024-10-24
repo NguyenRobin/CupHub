@@ -1,10 +1,20 @@
 import React from 'react';
 import './ListAllGroups.scss';
+import { getAllTournamentMatchesByID } from '../../../../matches/server/actions/match';
+import { getAllTournamentGroupsById } from '../../../server/actions/groups';
 
-function Group({ data }: any) {
+async function Group({ tournamentId }: any) {
+  const response = await getAllTournamentGroupsById(tournamentId);
+
+  if (response.status !== 200) {
+    return <p>{response.message}</p>;
+  }
+
+  const { groups } = response;
+
   return (
     <section className="groups">
-      {data?.map((group, index) => {
+      {groups?.map((group) => {
         return (
           <section key={group.group} className="group">
             <section className="group__information">

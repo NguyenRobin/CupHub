@@ -1,21 +1,18 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Tournament from '../../../../../features/tournaments/components/ui/Tournament/Tournament';
-import { cookies } from 'next/headers';
 import ListTournamentMatches from '../../../../../features/matches/components/ui/ListTournamentMatches/ListTournamentMatches';
-import {
-  getTournamentById,
-  getTournamentMatchesById,
-} from '../../../../actions';
+import { Types } from 'mongoose';
+import LoadingSpinner from '../../../../../components/ui/loading-spinner/LoadingSpinner';
 
-async function page({ params }: { params: { id: string } }) {
+async function page({ params }: { params: { id: Types.ObjectId } }) {
   const { id } = params;
-  const tournament = await getTournamentById(id);
-  const matches = await getTournamentMatchesById(id);
 
   return (
-    <Tournament data={tournament}>
-      <ListTournamentMatches matches={matches.matches} />
-    </Tournament>
+    <Suspense fallback={<LoadingSpinner size={40} />}>
+      <Tournament tournamentId={id}>
+        <ListTournamentMatches tournamentId={id} />
+      </Tournament>
+    </Suspense>
   );
 }
 

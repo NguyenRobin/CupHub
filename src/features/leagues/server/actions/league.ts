@@ -4,7 +4,7 @@ import {
   verifyToken,
 } from '../../../../lib/server';
 import { TBodyLeague } from '../../../../types/types';
-import connectToMongoDB from '../../../../mongooose/connectToMongoDB';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
 import {
   createLeagueDB,
   updateLeagueWithTeamsParticipatingDB,

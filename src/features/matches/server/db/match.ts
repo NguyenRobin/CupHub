@@ -2,6 +2,11 @@ import { ClientSession, Types } from 'mongoose';
 import MatchModel from '../../models/Match';
 import { TWho } from '../../../../types/types';
 
+export async function getMatchesDB(id: Types.ObjectId) {
+  const matches = await MatchModel.find({ tournament_id: id });
+  return matches;
+}
+
 export async function createMatchesDB(array: any[], session?: ClientSession) {
   const options = session ? { session } : {};
   const docs = await MatchModel.insertMany(array, options);
