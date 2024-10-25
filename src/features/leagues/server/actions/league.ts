@@ -18,20 +18,20 @@ export async function createNewLeague(body: TBodyLeague) {
   const token = getCookieFromServerComponent();
 
   if (!token) {
-    throw { status: 404, message: 'Cookie not provided' };
+    return { status: 404, message: 'Cookie not provided' };
   }
 
   const verifiedTokenCookie = verifyToken(token);
 
   if (!verifiedTokenCookie) {
-    throw {
+    return {
       status: 401,
       message: 'Authentication failed. Token not valid to create a new league',
     };
   }
 
   if (!mongoose.isValidObjectId(verifiedTokenCookie.id)) {
-    throw {
+    return {
       status: 404,
       message: 'ID is not a ObjectId. Error creating new league',
     };
@@ -83,4 +83,6 @@ export async function createNewLeague(body: TBodyLeague) {
 
   await session.commitTransaction();
   session.endSession();
+
+  return { status: 200, message: 'League successfully created' };
 }

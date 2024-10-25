@@ -6,6 +6,7 @@
   flex-direction: column;
   gap: 2rem;
   height: 100%;
+
   &__overview {
     display: flex;
     justify-content: space-between;
@@ -33,29 +34,6 @@
         p {
           font-weight: 400;
         }
-      }
-    }
-  }
-
-  &__information {
-    padding: 1.5rem;
-    ul {
-      display: flex;
-      justify-content: space-between;
-      list-style: none;
-      li {
-        font-size: $font-size-md;
-        cursor: pointer;
-      }
-      li.active {
-        font-weight: 500;
-      }
-
-      .active {
-        text-decoration: underline;
-        text-underline-offset: 8px;
-        text-decoration-color: $border-color-success;
-        text-decoration-thickness: 3px;
       }
     }
   }

@@ -26,13 +26,13 @@ export async function createNewTournament(body: TBodyTournament) {
   const token = getCookieFromServerComponent();
 
   if (!token) {
-    throw { status: 404, message: 'Cookie not provided' };
+    return { status: 404, message: 'Cookie not provided' };
   }
 
   const verifiedTokenCookie = verifyToken(token);
 
   if (!verifiedTokenCookie) {
-    throw {
+    return {
       status: 401,
       message:
         'Authentication failed. Token not valid to create a new tournament',
@@ -40,7 +40,7 @@ export async function createNewTournament(body: TBodyTournament) {
   }
 
   if (!mongoose.isValidObjectId(verifiedTokenCookie.id)) {
-    throw {
+    return {
       status: 404,
       message: 'ID is not a ObjectId. Error creating new tournament',
     };
@@ -57,14 +57,14 @@ export async function createNewTournament(body: TBodyTournament) {
   } = body;
 
   if (total_teams !== teams_participating?.length) {
-    throw {
+    return {
       status: 400,
       message: 'Invalid total_teams AND teams_participating must be equal',
     };
   }
 
   if (!teamsPerGroupAdvancing || !total_groups) {
-    throw {
+    return {
       status: 400,
       message:
         'teamsPerGroupAdvancing & total_groups is required when creating a group stage with playoff',
@@ -72,7 +72,7 @@ export async function createNewTournament(body: TBodyTournament) {
   }
 
   if (!total_groups || !teamsPerGroupAdvancing) {
-    throw {
+    return {
       status: 400,
       message: 'total_groups AND teamsPerGroupAdvancing must be included.',
     };
@@ -80,7 +80,7 @@ export async function createNewTournament(body: TBodyTournament) {
   const totalTeamsGoingToPlayoff = total_groups * teamsPerGroupAdvancing;
 
   if (totalTeamsGoingToPlayoff > total_teams) {
-    throw {
+    return {
       status: 404,
       message: `Total teams going to playoff: ${totalTeamsGoingToPlayoff}. Cannot be greater than total teams participating: ${total_teams}. `,
     };
@@ -152,6 +152,8 @@ export async function createNewTournament(body: TBodyTournament) {
 
   await session.commitTransaction();
   session.endSession();
+
+  return { status: 201, message: 'yehe tournament created' };
 }
 
 export async function getTournamentById(id: Types.ObjectId) {

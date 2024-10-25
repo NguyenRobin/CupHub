@@ -1,5 +1,5 @@
 'use client';
-
+import './ActiveTournamentDetailView.scss';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import React from 'react';
@@ -26,7 +26,7 @@ function ActiveTournamentDetailView({
 
   console.log(currentView);
   return (
-    <div className="tournament-container__information">
+    <div className="active-tournament-detail-view">
       <ul>
         {lists.map((list) => (
           <li

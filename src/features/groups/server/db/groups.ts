@@ -63,9 +63,8 @@ export async function updateGroupWithMatchIdsDB(
 }
 
 export async function getTournamentGroupsDB(id: Types.ObjectId) {
-  const allTournamentGroups = await GroupModel.find({
+  const tournamentGroups = await GroupModel.find({
     tournament_id: id,
   });
-
-  return allTournamentGroups;
+  return tournamentGroups;
 }

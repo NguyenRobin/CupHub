@@ -1,13 +1,12 @@
-import { strict } from "assert";
-import mongoose, { Schema, Types, model } from "mongoose";
+import mongoose, { Schema, Types, model } from 'mongoose';
 
-type TMatch = {
+type IMatch = {
   match_id: string;
   tournament_id?: Types.ObjectId;
   group_id?: Types.ObjectId;
   round_id?: Types.ObjectId;
   league_id?: Types.ObjectId;
-  status: "scheduled" | "ongoing" | "completed";
+  status: 'scheduled' | 'ongoing' | 'completed';
   homeTeam: { team_id: Types.ObjectId; name: string; score: number };
   awayTeam: { team_id: Types.ObjectId; name: string; score: number };
   result?: string;
@@ -16,40 +15,40 @@ type TMatch = {
   location?: string;
 };
 
-const matchSchema = new Schema<TMatch>(
+const matchSchema = new Schema<IMatch>(
   {
     match_id: { type: String, required: true },
     tournament_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: false,
-      ref: "Tournament",
+      ref: 'Tournament',
     },
     group_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: false,
-      ref: "Group",
+      ref: 'Group',
     },
     round_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: false,
-      ref: "Round",
+      ref: 'Round',
     },
     league_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: false,
-      ref: "League",
+      ref: 'League',
     },
     status: {
       type: String,
       required: true,
-      enum: ["scheduled", "ongoing", "paused", "completed"],
+      enum: ['scheduled', 'ongoing', 'paused', 'completed'],
     },
 
     homeTeam: {
       team_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: "Team",
+        ref: 'Team',
       },
       name: { type: String, required: true },
       score: { type: Number, required: true },
@@ -58,7 +57,7 @@ const matchSchema = new Schema<TMatch>(
       team_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: "Team",
+        ref: 'Team',
       },
       name: { type: String, required: true },
       score: { type: Number, required: true },
@@ -71,6 +70,6 @@ const matchSchema = new Schema<TMatch>(
   { timestamps: true }
 );
 
-const MatchModel = mongoose.models.Match || model<TMatch>("Match", matchSchema);
+const MatchModel = mongoose.models.Match || model<IMatch>('Match', matchSchema);
 
 export default MatchModel;

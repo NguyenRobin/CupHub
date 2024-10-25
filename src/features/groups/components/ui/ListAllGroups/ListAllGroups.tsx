@@ -1,10 +1,9 @@
 import React from 'react';
 import './ListAllGroups.scss';
-import { getAllTournamentMatchesByID } from '../../../../matches/server/actions/match';
-import { getAllTournamentGroupsById } from '../../../server/actions/groups';
+import { getTournamentGroupsById } from '../../../server/actions/groups';
 
 async function Group({ tournamentId }: any) {
-  const response = await getAllTournamentGroupsById(tournamentId);
+  const response = await getTournamentGroupsById(tournamentId);
 
   if (response.status !== 200) {
     return <p>{response.message}</p>;

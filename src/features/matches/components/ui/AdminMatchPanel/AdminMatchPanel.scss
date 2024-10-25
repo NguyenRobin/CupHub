@@ -1,0 +1,46 @@
+.match-actions {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+
+  &__home,
+  &__match,
+  &__away {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  &__home {
+    button {
+      background-color: #07383e;
+    }
+  }
+  &__match {
+    &--start {
+      background-color: #388e3c;
+    }
+    &--end {
+      background-color: #d32f2f;
+    }
+  }
+  &__away {
+    button {
+      background-color: #07383e;
+    }
+  }
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  // background-color: #07383e;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 5rem;
+  border: none;
+  width: 7rem;
+  height: 7rem;
+  border-radius: 1rem;
+  letter-spacing: 0.5px;
+}

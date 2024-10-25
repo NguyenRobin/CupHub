@@ -1,14 +1,15 @@
 import { NextResponse } from 'next/server';
-import { getMatch } from '../../../../features/matches/server/db/match';
+import { getMatchDB } from '../../../../features/matches/server/db/match';
 import { Types } from 'mongoose';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: Types.ObjectId } }
 ) {
+  const { id } = params;
   try {
     console.log(params.id);
-    const match = await getMatch(params.id);
+    const match = await getMatchDB(id);
 
     if (!match) {
       return NextResponse.json({

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { updateMatchResult } from '../../../../../features/matches/server/db/match';
+import { updateMatchResultDB } from '../../../../../features/matches/server/db/match';
 
 export async function PATCH(
   request: Request,
@@ -16,7 +16,7 @@ export async function PATCH(
       });
     }
 
-    const updatedMatchResults = await updateMatchResult(params.id, result);
+    const updatedMatchResults = await updateMatchResultDB(params.id, result);
 
     return NextResponse.json({
       status: 200,
