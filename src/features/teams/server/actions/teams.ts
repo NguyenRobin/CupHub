@@ -1,6 +1,7 @@
 import { ClientSession, Types } from 'mongoose';
 import { createTeamsDB } from '../db/team';
 import { TCreateTeam } from '../../../../types/types';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
 
 export async function createTournamentTeams(
   teams: string[] = [],
@@ -29,6 +30,7 @@ export async function createTournamentTeams(
     teamsArr.push(newTeam);
   }
 
+  await connectToMongoDB();
   const teamAddedToDb = await createTeamsDB(teamsArr, session);
   return teamAddedToDb;
 }

@@ -52,9 +52,9 @@ async function Tournament({ tournamentId, children }: any) {
             </div>
           </div>
         </div>
-        <div className="tournament-container__information">
-          <ActiveTournamentDetailView tournamentId={_id.toString()} />
-        </div>
+
+        <ActiveTournamentDetailView tournamentId={_id.toString()} />
+
         <div className="tournament-container__children">{children}</div>
       </div>
     </CardWrapper>

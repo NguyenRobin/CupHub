@@ -1,6 +1,7 @@
 import { Types } from 'mongoose';
 import mongoose from 'mongoose';
 import { getLeagueStandingDB } from '../../../../features/standings/server/db/standings';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
 
 export async function getLeagueStandingById(league_id: Types.ObjectId) {
   if (!mongoose.isValidObjectId(league_id)) {
@@ -9,6 +10,8 @@ export async function getLeagueStandingById(league_id: Types.ObjectId) {
       message: 'id is not a valid objectId',
     };
   }
+
+  await connectToMongoDB();
 
   const leagueStanding = await getLeagueStandingDB(league_id);
 

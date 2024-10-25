@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import './ListTournamentMatches.scss';
-import { getAllTournamentMatchesByID } from '../../../server/actions/match';
+import { getTournamentMatchesByID } from '../../../server/actions/match';
+import Pulse from '../../../../../components/ui/pulse/Pulse';
 
 async function ListTournamentMatches({ tournamentId }: any) {
-  const response = await getAllTournamentMatchesByID(tournamentId);
+  const response = await getTournamentMatchesByID(tournamentId);
 
   if (response.status !== 200) {
     return <p>{response.message}</p>;
@@ -20,7 +21,7 @@ async function ListTournamentMatches({ tournamentId }: any) {
           className="matches-container__match"
         >
           <div className="matches-container__match__info">
-            {match.status === 'ongoing' && <span className="pulse"></span>}
+            {match.status === 'ongoing' && <Pulse />}
 
             <p className={`matches-container__match__info--${match.status}`}>
               {match.status === 'ongoing' && 'Live'}

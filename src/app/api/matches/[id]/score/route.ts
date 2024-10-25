@@ -1,14 +1,15 @@
 import { NextResponse } from 'next/server';
-import { updateMatchTeamScore } from '../../../../../features/matches/server/db/match';
+import { updateMatchTeamScore } from '../../../../../features/matches/server/actions/match';
+import { Types } from 'mongoose';
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: Types.ObjectId } }
 ) {
   const { id } = params;
   try {
     const body = await request.json();
-
+    console.log('body', body);
     const { homeTeam, awayTeam, operator } = body;
 
     if ((!homeTeam || !awayTeam) && !operator) {
@@ -19,19 +20,16 @@ export async function PATCH(
     }
 
     const teamWhoScored = homeTeam ? 'homeTeam' : 'awayTeam';
-    const score = homeTeam ? homeTeam : awayTeam;
+    const point = homeTeam ? homeTeam : awayTeam;
 
-    const updatedMatchResults = await updateMatchTeamScore(
+    const response = await updateMatchTeamScore(
       id,
       teamWhoScored,
-      score,
+      point,
       operator
     );
 
-    return NextResponse.json({
-      status: 200,
-      updatedMatchResults,
-    });
+    return NextResponse.json(response);
   } catch (error: any) {
     return NextResponse.json({
       status: 500,

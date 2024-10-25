@@ -28,12 +28,9 @@ export async function POST(request: Request) {
   try {
     const body: TBodyTournament = await request.json();
 
-    const newTournament = await createNewTournament(body);
-
-    return NextResponse.json({
-      status: 201,
-      message: 'Tournament successfully created',
-    });
+    const response = await createNewTournament(body);
+    console.log('response', response);
+    return NextResponse.json(response);
   } catch (error: any) {
     return NextResponse.json({
       status: error.status || 500,

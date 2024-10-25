@@ -12,3 +12,7 @@ export async function createTeamsDB(
 
   return teamsAddedToDB;
 }
+
+export async function getTeamsDB(id: Types.ObjectId) {
+  const teams = await TeamModel.find({ tournament_id: id });
+}

@@ -1,6 +1,10 @@
 import { ClientSession, Types } from 'mongoose';
-import MatchModel from '../../models/Match';
+
 import { TWho } from '../../../../types/types';
+import { revalidatePath } from 'next/cache';
+import MatchModel from '../../models/Match';
+import { match } from 'assert';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
 
 export async function getMatchesDB(id: Types.ObjectId) {
   const matches = await MatchModel.find({ tournament_id: id });
@@ -19,12 +23,15 @@ export async function getMatchDB(_id: Types.ObjectId) {
 }
 
 export async function updateMatchStatusDB(
-  _id: string,
+  _id: Types.ObjectId,
   status: 'scheduled' | 'ongoing' | 'paused' | 'completed'
 ) {
   try {
+    await connectToMongoDB();
+
     if (status === 'completed') {
-      const match = await MatchModel.findById({ _id: _id });
+      const match = await getMatchDB(_id);
+
       const { homeTeam, awayTeam } = match;
 
       let winner = '';
@@ -43,7 +50,9 @@ export async function updateMatchStatusDB(
       match.status = status;
 
       const updatedMatch = await match.save();
-      return updatedMatch;
+      await saveMatchDB(updatedMatch);
+
+      return { status: 200, message: 'Match status successfully updated' };
     }
 
     const updateMatch = await MatchModel.findByIdAndUpdate(
@@ -54,7 +63,6 @@ export async function updateMatchStatusDB(
         new: true,
       }
     );
-
     return updateMatch;
   } catch (error) {
     throw error;
@@ -74,7 +82,7 @@ export async function updateMatchResultDB(
         new: true,
       }
     );
-
+    revalidatePath(`/dashboard/match/${_id}`);
     return updateMatch;
   } catch (error) {
     throw error;
@@ -108,48 +116,28 @@ export async function updateMatchWinnerDB(
         new: true,
       }
     );
-
+    revalidatePath(`/dashboard/match/${_id}`);
     return updateMatch;
   } catch (error) {
     throw error;
   }
 }
 
-export async function updateMatchTeamScoreDB(
-  _id: string,
-  who: TWho,
-  score: number,
-  operator: '+' | '-'
+export async function saveMatchDB(match: any) {
+  await match.save();
+}
+
+export async function getMatchAndUpdateDB(
+  _id: Types.ObjectId,
+  status: 'scheduled' | 'ongoing' | 'paused'
 ) {
-  let teamScoring = who === 'homeTeam' ? 'homeTeam' : 'awayTeam';
-
-  try {
-    const match = await MatchModel.findById({ _id: _id });
-
-    if (!match) {
-      throw new Error('Match not found');
+  const updateMatch = await MatchModel.findByIdAndUpdate(
+    { _id: _id },
+    { status: status },
+    {
+      runValidators: true,
+      new: true,
     }
-
-    switch (operator) {
-      case '+':
-        match[teamScoring] = {
-          ...match[teamScoring],
-          score: match[teamScoring].score + score,
-        };
-        break;
-      case '-':
-        match[teamScoring] = {
-          ...match[teamScoring],
-          score: match[teamScoring].score - score,
-        };
-        break;
-      default:
-        break;
-    }
-    await match.save();
-
-    return match;
-  } catch (error) {
-    throw error;
-  }
+  );
+  return updateMatch;
 }

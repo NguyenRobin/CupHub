@@ -1,8 +1,5 @@
 import { NextResponse } from 'next/server';
-import {
-  updateMatchTeamScore,
-  updateMatchWinner,
-} from '../../../../../features/matches/server/db/match';
+import { updateMatchWinnerDB } from '../../../../../features/matches/server/db/match';
 
 export async function PATCH(
   request: Request,
@@ -21,7 +18,7 @@ export async function PATCH(
       });
     }
 
-    const updatedWinner = await updateMatchWinner(id, winner);
+    const updatedWinner = await updateMatchWinnerDB(id, winner);
 
     return NextResponse.json({
       status: 200,
