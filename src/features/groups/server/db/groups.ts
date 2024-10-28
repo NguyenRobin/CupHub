@@ -68,3 +68,14 @@ export async function getTournamentGroupsDB(id: Types.ObjectId) {
   });
   return tournamentGroups;
 }
+
+export async function getTournamentGroupDB(id: Types.ObjectId) {
+  const tournamentGroup: TGroup | null = await GroupModel.findById({
+    _id: id,
+  });
+  return tournamentGroup;
+}
+
+export async function saveTournamentGroupDB(group: any) {
+  await group.save();
+}

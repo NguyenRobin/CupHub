@@ -6,15 +6,13 @@ import {
   saveMatchDB,
 } from '../db/match';
 import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
+import { TMatch, TTeamStanding } from '../../../../types/types';
 import {
-  TGroup,
-  TMatch,
-  TTeamStanding,
-  TTournament,
-} from '../../../../types/types';
-import { NextResponse } from 'next/server';
-import TournamentModel from '../../../tournaments/models/Tournament';
-import GroupModel from '../../../groups/models/Group';
+  getTournamentGroupDB,
+  saveTournamentGroupDB,
+} from '../../../groups/server/db/groups';
+import { getTournamentDB } from '../../../tournaments/server/db/tournament';
+import { sortStandingPointsByDescendingOrder } from '../../../../lib/server';
 
 export async function getTournamentMatchesByID(id: Types.ObjectId) {
   if (!mongoose.isValidObjectId(id)) {
@@ -96,7 +94,7 @@ export async function updateMatchStatus(
   await connectToMongoDB();
 
   if (status === 'ongoing') {
-    const match = getMatchAndUpdateDB(_id, status);
+    const match = await getMatchAndUpdateDB(_id, status);
 
     if (!match) {
       return {
@@ -112,6 +110,7 @@ export async function updateMatchStatus(
     };
   }
 
+  // update group standings
   if (status === 'completed') {
     const match: TMatch = await getMatchDB(_id);
 
@@ -119,7 +118,14 @@ export async function updateMatchStatus(
       return { status: 404, message: 'Match NOT found' };
     }
 
-    const { homeTeam, awayTeam } = match;
+    if (match.status === 'completed') {
+      return {
+        status: 404,
+        message: `Match has already been updated before. Please do not update same match`,
+      };
+    }
+
+    const { homeTeam, awayTeam, tournament_id, group_id } = match;
     const homeTeamScore = homeTeam?.score || 0;
     const awayTeamScore = awayTeam?.score || 0;
 
@@ -140,30 +146,16 @@ export async function updateMatchStatus(
 
     await saveMatchDB(match);
 
-    // return {
-    //   status: 200,
-    //   message: `Match status: "${status}" successfully updated`,
-    //   match,
-    // };
-
-    // !TESING !!!!!!!!!!!!!!!!!!!!!!!!
-    // 2) need the some of the tournament info later
-    const { tournament_id, group_id } = match;
-
-    const tournament: TTournament | null = await TournamentModel.findById({
-      _id: tournament_id,
-    });
+    const tournament = await getTournamentDB(tournament_id!);
 
     if (!tournament) {
-      return false;
+      return { status: 404, message: 'Tournament NOT found' };
     }
 
-    const currentGroup = await GroupModel.findById({
-      _id: group_id,
-    });
+    const currentGroup = await getTournamentGroupDB(group_id!);
 
     if (!currentGroup) {
-      return false;
+      return { status: 404, message: 'Group NOT found' };
     }
 
     const { standings } = currentGroup;
@@ -179,13 +171,13 @@ export async function updateMatchStatus(
     const theLosingTeam =
       winner === 'tie' ? 'tie' : winner === homeTeam.name ? awayTeam : homeTeam;
 
-    const nonUpdatedStandings = standings.filter(
+    const teamStandingToNotBeUpdated = standings.filter(
       (team: TTeamStanding) =>
         team.team_id.toString() !== homeTeam.team_id.toString() &&
         team.team_id.toString() !== awayTeam.team_id.toString()
     );
 
-    const teamsPlayingAgainEachOtherStandings = standings
+    const teamsPlayingAgainEachOtherUpdatedStanding = standings
       .filter(
         (team: TTeamStanding) =>
           team.team_id.toString() === homeTeam.team_id.toString() ||
@@ -260,12 +252,39 @@ export async function updateMatchStatus(
         }
       });
 
-    currentGroup.standings = [
-      ...nonUpdatedStandings,
-      ...teamsPlayingAgainEachOtherStandings,
-    ];
+    const newStanding = sortStandingPointsByDescendingOrder([
+      ...teamStandingToNotBeUpdated,
+      ...(teamsPlayingAgainEachOtherUpdatedStanding as TTeamStanding[]),
+    ]);
 
-    const isSaved = await currentGroup.save();
+    currentGroup.standings = newStanding;
+
+    // const updatedGroupStandings = await saveTournamentGroupDB(currentGroup);
+
+    // check teams going to playoff
+    // 1) check if all matches has been played
+    // 2) check the tournament rules with "antal retur möten"
+    const totalTeamsInGroup = currentGroup.standings.length;
+    const rematches = points_system.numberOfMeetings;
+
+    const totalMatchesInOneRound =
+      totalTeamsInGroup * (currentGroup.standings.length - 1);
+
+    const totalMatchesToKnowWhichTeamsAdvancingToPlayoff =
+      totalMatchesInOneRound * rematches;
+
+    const currentTotalPlayedMatchesInGroup = currentGroup.standings.reduce(
+      (acc, curr) => acc + curr.matches_played,
+      0
+    );
+
+    if (
+      totalMatchesToKnowWhichTeamsAdvancingToPlayoff ===
+      currentTotalPlayedMatchesInGroup
+    ) {
+      //then we know all matches has been played and which teams should go to playoff
+      for (let i = 0; i < points_system.teamsPerGroupAdvancing!; i++) {}
+    }
     return {
       status: 200,
       message: 'Completed match has updated new group data',

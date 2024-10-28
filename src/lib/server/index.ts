@@ -1,9 +1,10 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
-import { TGroup, TMatch } from '../../types/types';
+import { TGroup, TMatch, TTeamStanding } from '../../types/types';
 import { Types } from 'mongoose';
 import { cookies } from 'next/headers';
+import { saveTournamentGroupDB } from '../../features/groups/server/db/groups';
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
@@ -269,4 +270,19 @@ export function generateRobinRoundTEST(
 
 export function dateFormatter(date: Date) {
   return date.toISOString().split('T')[0];
+}
+
+export function sortStandingPointsByDescendingOrder(teams: TTeamStanding[]) {
+  return teams.sort((a, b) => {
+    if (a.points !== b.points) {
+      return b.points - a.points;
+    }
+    if (a.goal_difference !== b.goal_difference) {
+      return b.goal_difference - a.goal_difference;
+    }
+    if (a.goals_scored !== b.goals_scored) {
+      return b.goals_scored - a.goals_scored;
+    }
+    return 0; // everything is same
+  });
 }

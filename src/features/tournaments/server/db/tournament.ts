@@ -1,6 +1,10 @@
 import { ClientSession, Types } from 'mongoose';
 import TournamentModel from '../../models/Tournament';
-import { TBodyTournament, TNewTournament } from '../../../../types/types';
+import {
+  TBodyTournament,
+  TNewTournament,
+  TTournament,
+} from '../../../../types/types';
 import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
 
 export async function createTournamentDB(
@@ -74,7 +78,8 @@ export async function updateTournamentWithGroupIdsDB(
 }
 
 export async function getTournamentDB(id: Types.ObjectId) {
-  await connectToMongoDB();
-  const tournament = await TournamentModel.findById({ _id: id });
+  const tournament: TTournament | null = await TournamentModel.findById({
+    _id: id,
+  });
   return tournament;
 }
