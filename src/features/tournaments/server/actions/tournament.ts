@@ -7,6 +7,7 @@ import {
 import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
 
 import {
+  buildPlayoffMatches,
   generateRobinRound,
   getCookieFromServerComponent,
   validatePossibleTeamsPerGroupGoingToPlayoff,
@@ -120,13 +121,20 @@ export async function createNewTournament(body: TBodyTournament) {
       session
     );
 
-  // 5) create rounds and insert them in to ROUNDS COLLECTION
-  const roundsAddedToDb = await createPlayoffRoundDB(
-    newTournament._id,
+  //!TEST
+
+  const test = buildPlayoffMatches(
     playoffInformation.playoff_round,
-    status,
-    session
+    newTournament._id
   );
+
+  // 5) create rounds and insert them in to ROUNDS COLLECTION
+  // const roundsAddedToDb = await createPlayoffRoundDB(
+  //   newTournament._id,
+  //   playoffInformation.playoff_round,
+  //   status,
+  //   session
+  // );
 
   // 5) create the groups to groups model
   const groupsAddedToDB = await createGroupDB(
@@ -139,7 +147,12 @@ export async function createNewTournament(body: TBodyTournament) {
   // 6) create the matches generate so all teams play against each other.
   const matches = generateRobinRound(groupsAddedToDB);
 
-  const matchesAddedToDB = await createMatchesDB(matches, session);
+  const matchesAddedToDB = await createMatchesDB(
+    [...matches, ...test],
+    session
+  );
+  // console.log(matchesAddedToDB);
+  const groupMatches = matchesAddedToDB.filter((match) => !match.isPlayoff);
 
   // 7) update tournament model with the groups _id ref in the tournaments group array
   await updateTournamentWithGroupIdsDB(
@@ -148,7 +161,7 @@ export async function createNewTournament(body: TBodyTournament) {
     session
   );
   // 8) update the groups model with the match _id ref in the groups matches array
-  await updateGroupWithMatchIdsDB(matchesAddedToDB, session);
+  await updateGroupWithMatchIdsDB(groupMatches, session);
 
   await session.commitTransaction();
   session.endSession();

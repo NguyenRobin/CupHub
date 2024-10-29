@@ -1,6 +1,7 @@
+'use client';
 import React, { useState } from 'react';
 import './TournamentInfoForm.scss';
-import CardRule from '../../../../../components/dashboard-page/ui/FormSettingsWrapper/FormSettingsWrapper';
+import FormSettingsWrapper from '../../../../../components/dashboard-page/ui/FormSettingsWrapper/FormSettingsWrapper';
 import useFormContext from '../../../../../hooks/useFormContext';
 
 function TournamentInfoForm() {
@@ -11,7 +12,7 @@ function TournamentInfoForm() {
   const handleNext = () => setPage((prev) => prev + 1);
 
   return (
-    <CardRule title="Information">
+    <FormSettingsWrapper title="Information">
       <div className="tournament-info">
         <form className="tournament-info__form">
           <label htmlFor="title" className="tournament-info__form--label">
@@ -65,7 +66,7 @@ function TournamentInfoForm() {
         </button>
         {/* </div> */}
       </div>
-    </CardRule>
+    </FormSettingsWrapper>
   );
 }
 

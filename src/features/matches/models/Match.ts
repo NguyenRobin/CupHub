@@ -6,6 +6,15 @@ type IMatch = {
   group_id?: Types.ObjectId;
   round_id?: Types.ObjectId;
   league_id?: Types.ObjectId;
+  isPlayoff: boolean;
+  index?: number;
+  round_type?:
+    | 'round-64'
+    | 'round-32'
+    | 'round-16'
+    | 'quarterfinal'
+    | 'semifinal'
+    | 'final';
   status: 'scheduled' | 'ongoing' | 'completed';
   homeTeam: { team_id: Types.ObjectId; name: string; score: number };
   awayTeam: { team_id: Types.ObjectId; name: string; score: number };
@@ -38,6 +47,20 @@ const matchSchema = new Schema<IMatch>(
       required: false,
       ref: 'League',
     },
+    isPlayoff: { type: Boolean, required: false },
+    index: { type: Number, required: false },
+    round_type: {
+      type: String,
+      required: false,
+      enum: [
+        'round-64',
+        'round-32',
+        'round-16',
+        'quarterfinal',
+        'semifinal',
+        'final',
+      ],
+    },
     status: {
       type: String,
       required: true,
@@ -47,19 +70,19 @@ const matchSchema = new Schema<IMatch>(
     homeTeam: {
       team_id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        required: false,
         ref: 'Team',
       },
-      name: { type: String, required: true },
+      name: { type: String, required: false },
       score: { type: Number, required: true },
     },
     awayTeam: {
       team_id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        required: false,
         ref: 'Team',
       },
-      name: { type: String, required: true },
+      name: { type: String, required: false },
       score: { type: Number, required: true },
     },
     result: { type: String, required: false },

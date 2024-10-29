@@ -38,6 +38,7 @@ export async function createGroupDB(
     allGroups.push(newGroup);
   }
   const groupsAddedToDB = await GroupModel.insertMany(allGroups, options);
+  console.log('groupsAddedToDB', groupsAddedToDB);
   return groupsAddedToDB;
 }
 

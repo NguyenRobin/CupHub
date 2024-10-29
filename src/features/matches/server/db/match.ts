@@ -49,8 +49,8 @@ export async function updateMatchStatusDB(
       match.result = result;
       match.status = status;
 
-      const updatedMatch = await match.save();
-      await saveMatchDB(updatedMatch);
+      // const updatedMatch = await match.save();
+      await saveMatchDB(match);
 
       return { status: 200, message: 'Match status successfully updated' };
     }
@@ -140,4 +140,27 @@ export async function getMatchAndUpdateDB(
     }
   );
   return updateMatch;
+}
+
+export async function getPlayoffMatchesDB(_id: Types.ObjectId) {
+  const matches = await MatchModel.find({
+    tournament_id: _id,
+    isPlayoff: true,
+  });
+
+  return matches;
+}
+
+export async function updatePlayoffMatchDB(_id: Types.ObjectId, update: any) {
+  const match = await MatchModel.findByIdAndUpdate(
+    {
+      _id: _id,
+    },
+    update,
+    {
+      new: true,
+    }
+  );
+
+  return match;
 }

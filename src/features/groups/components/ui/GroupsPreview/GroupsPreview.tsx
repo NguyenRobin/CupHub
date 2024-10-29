@@ -1,16 +1,7 @@
 import React from 'react';
-import './ListAllGroups.scss';
-import { getTournamentGroupsById } from '../../../server/actions/groups';
-
-async function ListAllGroups({ tournamentId }: any) {
-  const response = await getTournamentGroupsById(tournamentId);
-
-  if (response.status !== 200) {
-    return <p>{response.message}</p>;
-  }
-
-  const { groups } = response;
-
+import '../ListAllGroups/ListAllGroups.scss';
+function GroupsPreview({ groups }: any) {
+  console.log(groups);
   return (
     <section className="groups">
       {groups?.map((group) => {
@@ -93,4 +84,5 @@ async function ListAllGroups({ tournamentId }: any) {
     </section>
   );
 }
-export default ListAllGroups;
+
+export default GroupsPreview;

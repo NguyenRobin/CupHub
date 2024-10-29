@@ -3,10 +3,12 @@ import {
   getMatchAndUpdateDB,
   getMatchDB,
   getMatchesDB,
+  getPlayoffMatchesDB,
   saveMatchDB,
+  updatePlayoffMatchDB,
 } from '../db/match';
 import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
-import { TMatch, TTeamStanding } from '../../../../types/types';
+import { TMatch, TPlayoff, TTeamStanding } from '../../../../types/types';
 import {
   getTournamentGroupDB,
   saveTournamentGroupDB,
@@ -27,7 +29,9 @@ export async function getTournamentMatchesByID(id: Types.ObjectId) {
     return { status: 400, message: 'Matches for the tournament was not found' };
   }
 
-  return { status: 200, matches };
+  const removePlayoffMatches = matches.filter((match) => !match.isPlayoff);
+
+  return { status: 200, matches: removePlayoffMatches };
 }
 
 export async function getMatchByID(id: Types.ObjectId) {
@@ -173,15 +177,15 @@ export async function updateMatchStatus(
 
     const teamStandingToNotBeUpdated = standings.filter(
       (team: TTeamStanding) =>
-        team.team_id.toString() !== homeTeam.team_id.toString() &&
-        team.team_id.toString() !== awayTeam.team_id.toString()
+        team.team_id.toString() !== homeTeam.team_id?.toString() &&
+        team.team_id.toString() !== awayTeam.team_id?.toString()
     );
 
     const teamsPlayingAgainEachOtherUpdatedStanding = standings
       .filter(
         (team: TTeamStanding) =>
-          team.team_id.toString() === homeTeam.team_id.toString() ||
-          team.team_id.toString() === awayTeam.team_id.toString()
+          team.team_id.toString() === homeTeam.team_id?.toString() ||
+          team.team_id.toString() === awayTeam.team_id?.toString()
       )
       .map((team: TTeamStanding) => {
         if (winner === 'tie') {
@@ -259,7 +263,7 @@ export async function updateMatchStatus(
 
     currentGroup.standings = newStanding;
 
-    // const updatedGroupStandings = await saveTournamentGroupDB(currentGroup);
+    const updatedGroupStandings = await saveTournamentGroupDB(currentGroup);
 
     // check teams going to playoff
     // 1) check if all matches has been played
@@ -270,7 +274,7 @@ export async function updateMatchStatus(
     const totalMatchesInOneRound =
       totalTeamsInGroup * (currentGroup.standings.length - 1);
 
-    const totalMatchesToKnowWhichTeamsAdvancingToPlayoff =
+    const totalMatchesInGroupToKnowTeamsAdvancingToPlayoff =
       totalMatchesInOneRound * rematches;
 
     const currentTotalPlayedMatchesInGroup = currentGroup.standings.reduce(
@@ -279,17 +283,154 @@ export async function updateMatchStatus(
     );
 
     if (
-      totalMatchesToKnowWhichTeamsAdvancingToPlayoff ===
+      totalMatchesInGroupToKnowTeamsAdvancingToPlayoff !==
       currentTotalPlayedMatchesInGroup
     ) {
-      //then we know all matches has been played and which teams should go to playoff
-      for (let i = 0; i < points_system.teamsPerGroupAdvancing!; i++) {}
+      return {
+        status: 200,
+        message: 'Completed match has updated new group data',
+        match: match,
+        group: currentGroup,
+      };
     }
+
+    // 1) check all the groups in tournament and send the ones to playoff by re rules from the tournament
+    // 2) check the group winner and update the playff match with the correkt index
+
+    // At this point we are done with the groups. so we need the first round in the playoff. Then we need to update the teams advancing.
+    const { playoff } = await getTournamentPlayoffByID(tournament_id!);
+
+    if (!playoff?.length) {
+      return { status: 404, message: 'Playoff matches to not found' };
+    }
+
+    // we want need to check if no playoff has been updated before. meaning, no homeTeam och awayTeam info has been updated by any group.
+    const hasNotUpdatedBefore = playoff[0].matches.every(
+      (match) => !match.homeTeam.team_id && !match.awayTeam.team_id
+    );
+
+    for (let i = 0; i < points_system.teamsPerGroupAdvancing!; i++) {
+      const currentTeamToPlayoff = currentGroup.standings[i];
+
+      if (i === 0) {
+        const firstEmptyHomeSlot = playoff[0].matches.find(
+          (match) => !match.homeTeam.team_id
+        );
+
+        if (!firstEmptyHomeSlot) {
+          return {
+            status: 404,
+            message: 'No available home slot found for group winner',
+          };
+        }
+
+        firstEmptyHomeSlot.homeTeam = {
+          ...firstEmptyHomeSlot.homeTeam,
+          team_id: currentTeamToPlayoff.team_id,
+          name: currentTeamToPlayoff.team,
+        };
+
+        await updatePlayoffMatchDB(firstEmptyHomeSlot._id!, {
+          homeTeam: firstEmptyHomeSlot.homeTeam,
+        });
+      } else if (hasNotUpdatedBefore === true) {
+        console.log('hasNotUpdatedBefore === true');
+        const firstEmptyAwaySlot = playoff[0].matches.find(
+          (match) => !match.awayTeam.team_id && match.index !== 0
+        );
+
+        if (!firstEmptyAwaySlot) {
+          return {
+            status: 404,
+            message: 'No available away slot found for group runner-up',
+          };
+        }
+
+        firstEmptyAwaySlot.awayTeam = {
+          ...firstEmptyAwaySlot.awayTeam,
+          team_id: currentTeamToPlayoff.team_id,
+          name: currentTeamToPlayoff.team,
+        };
+
+        await updatePlayoffMatchDB(firstEmptyAwaySlot._id!, {
+          awayTeam: firstEmptyAwaySlot.awayTeam,
+        });
+      } else if (hasNotUpdatedBefore === false) {
+        const remaining = playoff[0].matches.filter(
+          (match) => !match.homeTeam.team_id || !match.awayTeam.team_id
+        );
+
+        if (!remaining) {
+          return {
+            status: 404,
+            message: 'No available away slot found for group runner-up',
+          };
+        }
+
+        if (currentTeamToPlayoff) {
+          const firstEmptySlot = remaining.find(
+            (match) => !match.homeTeam.team_id || !match.awayTeam.team_id
+          );
+
+          if (!firstEmptySlot) {
+            return {
+              status: 404,
+              message: 'No available away slot found for firstEmptySlot',
+            };
+          }
+
+          const key = !firstEmptySlot.homeTeam.team_id
+            ? 'homeTeam'
+            : 'awayTeam';
+
+          firstEmptySlot[key] = {
+            ...firstEmptySlot[key],
+            team_id: currentTeamToPlayoff.team_id,
+            name: currentTeamToPlayoff.team,
+          };
+
+          await updatePlayoffMatchDB(firstEmptySlot._id!, {
+            [key]: firstEmptySlot[key],
+          });
+        }
+      }
+    }
+
     return {
       status: 200,
-      message: 'Completed match has updated new group data',
-      match: match,
-      group: currentGroup,
+      message: 'FUCKOFF match has updated new group data',
+      match: playoff,
     };
   }
+}
+
+export async function getTournamentPlayoffByID(id: Types.ObjectId) {
+  if (!mongoose.isValidObjectId(id)) {
+    return { status: 400, message: 'Invalid ID format. Must be a ObjectId' };
+  }
+
+  await connectToMongoDB();
+
+  const matches = await getPlayoffMatchesDB(id);
+
+  if (!matches) {
+    return { status: 400, message: 'Matches for the tournament was not found' };
+  }
+
+  const playoffRounds = [...new Set(matches.map((match) => match.round_type))];
+
+  const playoff: TPlayoff[] = [];
+
+  for (let i = 0; i < playoffRounds.length; i++) {
+    const obj: TPlayoff = {
+      round: playoffRounds[i],
+      matches: matches
+        .filter((match) => match.round_type === playoffRounds[i])
+        .sort((a, b) => a.index - b.index),
+    };
+
+    playoff.push(obj);
+  }
+
+  return { status: 200, playoff };
 }

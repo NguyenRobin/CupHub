@@ -3,6 +3,7 @@ import { getTournamentPlayoffDB } from '../db/rounds';
 import { parse } from 'path';
 import { stringify } from 'querystring';
 import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
+import { getPlayoffMatchesDB } from '../../../matches/server/db/match';
 
 export async function getTournamentPlayoffById(id: Types.ObjectId) {
   if (!mongoose.isValidObjectId(id)) {
@@ -10,11 +11,11 @@ export async function getTournamentPlayoffById(id: Types.ObjectId) {
   }
   await connectToMongoDB();
 
-  const playoff = await getTournamentPlayoffDB(id);
+  const matches = await getPlayoffMatchesDB(id);
 
-  if (!playoff) {
+  if (!matches) {
     return { status: 400, message: 'Playoff/Round not found' };
   }
 
-  return { status: 200, playoff: JSON.parse(JSON.stringify(playoff)) };
+  return { status: 200, playoff: JSON.parse(JSON.stringify(matches)) };
 }
