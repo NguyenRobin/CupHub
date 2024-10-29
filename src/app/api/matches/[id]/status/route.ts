@@ -1,15 +1,4 @@
 import { NextResponse } from 'next/server';
-import { updateMatchStatusDB } from '../../../../../features/matches/server/db/match';
-import MatchModel from '../../../../../features/matches/models/Match';
-import GroupModel from '../../../../../features/groups/models/Group';
-import TournamentModel from '../../../../../features/tournaments/models/Tournament';
-import {
-  TGroup,
-  TStanding,
-  TTeam,
-  TTeamStanding,
-  TTournament,
-} from '../../../../../types/types';
 import { Types } from 'mongoose';
 import { updateMatchStatus } from '../../../../../features/matches/server/actions/match';
 

@@ -1,9 +1,10 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
-import { TGroup, TMatch } from '../../types/types';
+import { TRounds, TGroup, TMatch, TTeamStanding } from '../../types/types';
 import { Types } from 'mongoose';
 import { cookies } from 'next/headers';
+import { saveTournamentGroupDB } from '../../features/groups/server/db/groups';
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
@@ -93,8 +94,68 @@ export function validatePossibleTeamsPerGroupGoingToPlayoff(
   }
 }
 
-export function buildPlayoffSchedule(amountOfTeamsToPlayOff: number) {
-  const stages = ['final', 'semifinal', 'quarterfinal', 'round 16', 'round 32'];
+// export function buildPlayoffSchedule(amountOfTeamsToPlayOff: number) {
+//   const stages = ['final', 'semifinal', 'quarterfinal', 'round 16', 'round 32'];
+//   const result = [];
+
+//   let stagesToFinal = 0;
+
+//   // Bestäm antal steg till final beroende på antalet lag som går vidare
+//   if (amountOfTeamsToPlayOff === 32) {
+//     stagesToFinal = 4; // round 32
+//   } else if (amountOfTeamsToPlayOff === 16) {
+//     stagesToFinal = 3; // round 16
+//   } else if (amountOfTeamsToPlayOff === 8) {
+//     stagesToFinal = 2; // quarterfinal
+//   } else if (amountOfTeamsToPlayOff === 4) {
+//     stagesToFinal = 1; // semifinal
+//   } else if (amountOfTeamsToPlayOff === 2) {
+//     stagesToFinal = 0; // final
+//   }
+
+//   let currentRound = amountOfTeamsToPlayOff;
+
+//   for (let i = stagesToFinal; i >= 0; i--) {
+//     const matchesInRound = currentRound / 2;
+
+//     const newObj = {
+//       round: stages[i], // ex final, semifinal
+//       matches: Array.from({ length: matchesInRound }).map(() => ({
+//         match_id: null,
+//         homeTeam: {
+//           team_id: null,
+//           name: null,
+//           score: null,
+//         },
+//         awayTeam: {
+//           team_id: null,
+//           name: null,
+//           score: null,
+//         },
+//         location: null,
+//         date: null,
+//       })),
+//     };
+
+//     result.push(newObj);
+
+//     currentRound = matchesInRound;
+//   }
+
+//   return result;
+// }
+
+export function buildPlayoffMatches(
+  amountOfTeamsToPlayOff: number,
+  tournament_id: Types.ObjectId
+) {
+  const stages: TRounds[] = [
+    'final',
+    'semifinal',
+    'quarterfinal',
+    'round-16',
+    'round-32',
+  ];
   const result = [];
 
   let stagesToFinal = 0;
@@ -117,26 +178,28 @@ export function buildPlayoffSchedule(amountOfTeamsToPlayOff: number) {
   for (let i = stagesToFinal; i >= 0; i--) {
     const matchesInRound = currentRound / 2;
 
-    const newObj = {
-      round: stages[i], // ex final, semifinal
-      matches: Array.from({ length: matchesInRound }).map(() => ({
-        match_id: null,
+    for (let j = 0; j < matchesInRound; j++) {
+      const newMatch: TMatch = {
+        match_id: uuidv4(),
+        tournament_id: tournament_id,
+        isPlayoff: true,
+        index: j,
+        round_type: stages[i],
+        status: 'scheduled',
         homeTeam: {
-          team_id: null,
-          name: null,
-          score: null,
+          name: '',
+          score: 0,
         },
         awayTeam: {
-          team_id: null,
-          name: null,
-          score: null,
+          name: '',
+          score: 0,
         },
-        location: null,
-        date: null,
-      })),
-    };
+        result: '',
+        winner: '',
+      };
 
-    result.push(newObj);
+      result.push(newMatch);
+    }
 
     currentRound = matchesInRound;
   }
@@ -269,4 +332,19 @@ export function generateRobinRoundTEST(
 
 export function dateFormatter(date: Date) {
   return date.toISOString().split('T')[0];
+}
+
+export function sortStandingPointsByDescendingOrder(teams: TTeamStanding[]) {
+  return teams.sort((a, b) => {
+    if (a.points !== b.points) {
+      return b.points - a.points;
+    }
+    if (a.goal_difference !== b.goal_difference) {
+      return b.goal_difference - a.goal_difference;
+    }
+    if (a.goals_scored !== b.goals_scored) {
+      return b.goals_scored - a.goals_scored;
+    }
+    return 0; // everything is same
+  });
 }

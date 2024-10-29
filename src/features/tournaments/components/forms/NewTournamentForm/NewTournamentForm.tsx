@@ -1,8 +1,7 @@
-'use client';
-
+// 'use client';
 import useFormContext from '../../../../../hooks/useFormContext';
-import AddTeamForm from '../../../../teams/components/forms/AddTeamForm/AddTeamForm';
 import GroupSettingsForm from '../../../../groups/components/forms/GroupSettingsForm/GroupSettingsForm';
+import AddTeamForm from '../../../../teams/components/forms/AddTeamForm/AddTeamForm';
 import TournamentInfoForm from '../TournamentInfoForm/TournamentInfoForm';
 
 function NewTournamentForm() {

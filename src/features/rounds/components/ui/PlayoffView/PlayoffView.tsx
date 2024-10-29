@@ -4,31 +4,21 @@ import PlayoffViewMobile from './PlayoffViewMobile/PlayoffViewMobile';
 import PlayoffViewDesktop from './PlayoffViewDesktop/PlayoffViewDesktop';
 import { getTournamentPlayoffById } from '../../../server/actions/rounds';
 import { Types } from 'mongoose';
+import { getTournamentPlayoffByID } from '../../../../matches/server/actions/match';
+import { TPlayoff } from '../../../../../types/types';
 
 type Props = {
   tournamentId: Types.ObjectId;
 };
 
-type TPlayoff = {
-  playoff: {
-    round: string;
-    matches: {
-      match_id: string | null;
-      homeTeam: { name: string; score: null | number; team_id: string };
-      awayTeam: { name: string; score: null | number; team_id: string };
-      location: string | null;
-    }[];
-  }[];
-};
-
 async function PlayoffView({ tournamentId }: Props) {
-  const response = await getTournamentPlayoffById(tournamentId);
+  const response = await getTournamentPlayoffByID(tournamentId);
 
   if (response.status !== 200) {
     return <p>{response.message}</p>;
   }
 
-  const { playoff }: TPlayoff = response?.playoff;
+  const playoff: TPlayoff[] = JSON.parse(JSON.stringify(response.playoff));
 
   return (
     <div className="playoff-view-container">

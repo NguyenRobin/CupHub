@@ -5,10 +5,12 @@ import './AddTeamForm.scss';
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from 'react-icons/io';
 import { useState } from 'react';
 import { AiOutlineLoading } from 'react-icons/ai';
-import CardRule from '../../../../../components/dashboard-page/ui/FormSettingsWrapper/FormSettingsWrapper';
+
 import useFormContext from '../../../../../hooks/useFormContext';
-import Group from '../../../../groups/components/ui/ListAllGroups/ListAllGroups';
+
 import { useRouter } from 'next/navigation';
+import FormSettingsWrapper from '../../../../../components/dashboard-page/ui/FormSettingsWrapper/FormSettingsWrapper';
+import Groups from '../../../../groups/components/ui/GroupsPreview/GroupsPreview';
 
 function AddTeamForm() {
   const router = useRouter();
@@ -96,7 +98,7 @@ function AddTeamForm() {
   };
 
   return (
-    <CardRule title="Antal lag">
+    <FormSettingsWrapper title="Antal lag">
       <div className="add-team">
         <form action="" className="add-team__form">
           <label
@@ -181,7 +183,7 @@ function AddTeamForm() {
             }}
           >
             <h3> Exempel på grupper:</h3>
-            <Group data={exampleGroupPreview} />
+            <Groups groups={exampleGroupPreview} />
           </section>
         </form>
 
@@ -208,7 +210,7 @@ function AddTeamForm() {
           </button>
         </div>
       </div>
-    </CardRule>
+    </FormSettingsWrapper>
   );
 }
 

@@ -38,6 +38,7 @@ export async function createGroupDB(
     allGroups.push(newGroup);
   }
   const groupsAddedToDB = await GroupModel.insertMany(allGroups, options);
+  console.log('groupsAddedToDB', groupsAddedToDB);
   return groupsAddedToDB;
 }
 
@@ -67,4 +68,15 @@ export async function getTournamentGroupsDB(id: Types.ObjectId) {
     tournament_id: id,
   });
   return tournamentGroups;
+}
+
+export async function getTournamentGroupDB(id: Types.ObjectId) {
+  const tournamentGroup: TGroup | null = await GroupModel.findById({
+    _id: id,
+  });
+  return tournamentGroup;
+}
+
+export async function saveTournamentGroupDB(group: any) {
+  await group.save();
 }

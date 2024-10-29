@@ -3,17 +3,10 @@
 import React, { useState } from 'react';
 import Bracket from '../PlayoffBracket/PlayoffBracket';
 import './PlayoffViewMobile.scss';
+import { TPlayoff } from '../../../../../../types/types';
 
 type Props = {
-  playoff: {
-    round: string;
-    matches: {
-      match_id: string | null;
-      homeTeam: { name: string; score: null | number; team_id: string };
-      awayTeam: { name: string; score: null | number; team_id: string };
-      location: string | null;
-    }[];
-  }[];
+  playoff: TPlayoff[];
 };
 
 function PlayoffViewMobile({ playoff }: Props) {
@@ -73,6 +66,7 @@ function PlayoffViewMobile({ playoff }: Props) {
             key={`${i}`}
           >
             <Bracket
+              status={match.status}
               homeTeam={match.homeTeam.name}
               homeTeamScore={match.homeTeam.score}
               awayTeam={match.awayTeam.name}

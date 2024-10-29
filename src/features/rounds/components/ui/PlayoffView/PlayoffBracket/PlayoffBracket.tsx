@@ -2,6 +2,7 @@ import React from 'react';
 import './PlayoffBracket.scss';
 
 function PlayoffBracket({
+  status,
   homeTeam,
   homeTeamScore,
   awayTeam,
@@ -14,7 +15,19 @@ function PlayoffBracket({
           <span className="bracket__team-image"></span>
           <span className="bracket__team-name">{homeTeam}</span>
         </div>
-        <span className="bracket__team-score">{homeTeamScore}</span>
+        {/* <span className="bracket__team-score">{homeTeamScore}</span> */}
+        {status === 'scheduled' && <p className="bracket__team-score">-</p>}
+
+        {status === 'ongoing' && (
+          <p className="bracket__team-score">
+            {homeTeamScore} - {awayTeamScore}
+          </p>
+        )}
+        {status === 'completed' && (
+          <p className="bracket__team-score">
+            {homeTeamScore} - {awayTeamScore}
+          </p>
+        )}
       </div>
 
       <div className="bracket__team bracket__team--away">
@@ -22,7 +35,18 @@ function PlayoffBracket({
           <span className="bracket__team-image"></span>
           <span className="bracket__team-name">{awayTeam}</span>
         </div>
-        <span className="bracket__team-score">{awayTeamScore}</span>
+        {status === 'scheduled' && <p className="bracket__team-score">-</p>}
+
+        {status === 'ongoing' && (
+          <p className="bracket__team-score">
+            {homeTeam.score} - {awayTeam.score}
+          </p>
+        )}
+        {status === 'completed' && (
+          <p className="bracket__team-score">
+            {homeTeam.score} - {awayTeam.score}
+          </p>
+        )}
       </div>
     </div>
   );

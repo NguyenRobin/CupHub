@@ -183,10 +183,21 @@ export type TMatch = {
   tournament_id?: Types.ObjectId;
   group_id?: Types.ObjectId;
   round_id?: string;
+  isPlayoff?: boolean;
+  index?: number;
+  round_type?: TRounds;
   league_id?: Types.ObjectId;
   status: 'scheduled' | 'ongoing' | 'completed';
-  homeTeam: { team_id: string; name: string; score: number };
-  awayTeam: { team_id: string; name: string; score: number };
+  homeTeam: {
+    team_id?: Types.ObjectId;
+    name: string;
+    score: number;
+  };
+  awayTeam: {
+    team_id?: Types.ObjectId;
+    name: string;
+    score: number;
+  };
   result?: string;
   winner?: string;
   date?: Date;
@@ -194,6 +205,14 @@ export type TMatch = {
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+export type TRounds =
+  | 'round-64'
+  | 'round-32'
+  | 'round-16'
+  | 'quarterfinal'
+  | 'semifinal'
+  | 'final';
 
 export type TTeam = {
   _id: Types.ObjectId;
@@ -211,3 +230,8 @@ export type TCreateTeam = {
 };
 
 export type TWho = 'homeTeam' | 'awayTeam';
+
+export type TPlayoff = {
+  round: string;
+  matches: TMatch[];
+};

@@ -1,20 +1,13 @@
 import React from 'react';
 import Bracket from '../PlayoffBracket/PlayoffBracket';
 import './PlayoffViewDesktop.scss';
+import { TPlayoff } from '../../../../../../types/types';
 
-type TPlayoff = {
-  playoff: {
-    round: string;
-    matches: {
-      match_id: string | null;
-      homeTeam: { name: string; score: null | number; team_id: string };
-      awayTeam: { name: string; score: null | number; team_id: string };
-      location: string | null;
-    }[];
-  }[];
+type Props = {
+  playoff: TPlayoff[];
 };
 
-function PlayoffViewDesktop({ playoff }: TPlayoff) {
+function PlayoffViewDesktop({ playoff }: Props) {
   return (
     <div className={`playoff-view-desktop`}>
       {playoff.map((el) => (
