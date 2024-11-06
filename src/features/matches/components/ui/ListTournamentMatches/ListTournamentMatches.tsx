@@ -2,16 +2,9 @@ import Link from 'next/link';
 import './ListTournamentMatches.scss';
 import { getTournamentMatchesByID } from '../../../server/actions/match';
 import Pulse from '../../../../../components/ui/pulse/Pulse';
+import { TMatch } from '../../../../../types/types';
 
-async function ListTournamentMatches({ tournamentId }: any) {
-  const response = await getTournamentMatchesByID(tournamentId);
-
-  if (response.status !== 200) {
-    return <p>{response.message}</p>;
-  }
-
-  const { matches } = response;
-
+async function ListTournamentMatches({ matches }: { matches: TMatch[] }) {
   return (
     <div className="matches-container">
       {matches?.map((match) => (
@@ -35,10 +28,10 @@ async function ListTournamentMatches({ tournamentId }: any) {
           </div>
 
           <div className="matches-container__match__score">
-            <span>
+            <span className={`${match.status === 'ongoing' && 'ongoing'}`}>
               {match.status === 'scheduled' ? '-' : match.homeTeam.score}
             </span>
-            <span>
+            <span className={`${match.status === 'ongoing' && 'ongoing'}`}>
               {match.status === 'scheduled' ? '-' : match.awayTeam.score}
             </span>
           </div>

@@ -1,6 +1,6 @@
 import { ClientSession, Types } from 'mongoose';
 
-import { TWho } from '../../../../types/types';
+import { TMatch, TStatus, TWho } from '../../../../types/types';
 import { revalidatePath } from 'next/cache';
 import MatchModel from '../../models/Match';
 import { match } from 'assert';
@@ -18,7 +18,7 @@ export async function createMatchesDB(array: any[], session?: ClientSession) {
 }
 
 export async function getMatchDB(_id: Types.ObjectId) {
-  const match = await MatchModel.findById({ _id: _id });
+  const match: TMatch | null = await MatchModel.findById({ _id: _id });
   return match;
 }
 
@@ -163,4 +163,14 @@ export async function updatePlayoffMatchDB(_id: Types.ObjectId, update: any) {
   );
 
   return match;
+}
+
+export async function getMatchesByStatusDB(status: TStatus, amount?: number) {
+  let query = MatchModel.find().where({ status: status });
+
+  if (amount) {
+    query = query.limit(amount);
+  }
+  const matches = await query;
+  return matches;
 }

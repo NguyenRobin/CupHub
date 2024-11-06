@@ -8,7 +8,9 @@ function Match({ match }: any) {
   if (!match) {
     return <p>Not Found</p>;
   }
-  const { homeTeam, awayTeam, status, _id } = JSON.parse(JSON.stringify(match));
+  const { homeTeam, awayTeam, status, _id, round_type } = JSON.parse(
+    JSON.stringify(match)
+  );
 
   return (
     <CardWrapper>
@@ -25,6 +27,7 @@ function Match({ match }: any) {
             <p></p>
           </div>
           <div className="match__score--result">
+            {match.isPlayoff && <p>{round_type.toUpperCase()}</p>}
             {status === 'scheduled' && <p>-</p>}
             {status === 'ongoing' && (
               <p>
@@ -39,7 +42,6 @@ function Match({ match }: any) {
           </div>
           <div className="match__score--status">
             <p>{status === 'scheduled' && 'kommande'}</p>
-
             {status === 'ongoing' && (
               <div>
                 <Pulse />

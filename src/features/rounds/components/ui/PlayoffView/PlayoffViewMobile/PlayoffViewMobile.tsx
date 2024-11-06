@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import Bracket from '../PlayoffBracket/PlayoffBracket';
+import PlayoffBracket from '../PlayoffBracket/PlayoffBracket';
 import './PlayoffViewMobile.scss';
 import { TPlayoff } from '../../../../../../types/types';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   playoff: TPlayoff[];
@@ -12,7 +13,7 @@ type Props = {
 function PlayoffViewMobile({ playoff }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0); // Börja med Round 32
   const currentStage = playoff[currentIndex];
-
+  const router = useRouter();
   const handleNext = () => {
     if (currentIndex < playoff.length - 1) {
       setCurrentIndex(currentIndex + 1);
@@ -22,6 +23,10 @@ function PlayoffViewMobile({ playoff }: Props) {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
     }
+  };
+
+  const handleClick = (id) => {
+    router.push(`/dashboard/match/${id}`);
   };
 
   return (
@@ -65,7 +70,8 @@ function PlayoffViewMobile({ playoff }: Props) {
             }`}
             key={`${i}`}
           >
-            <Bracket
+            <PlayoffBracket
+              onClick={() => handleClick(match._id)}
               status={match.status}
               homeTeam={match.homeTeam.name}
               homeTeamScore={match.homeTeam.score}

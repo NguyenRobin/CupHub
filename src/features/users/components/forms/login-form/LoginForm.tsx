@@ -76,6 +76,7 @@ function LoginForm() {
       }
 
       const data = await response.json();
+      console.log('data login', data);
 
       if (data.status === 200) {
         router.push('/dashboard');

@@ -9,7 +9,7 @@ export async function PATCH(
   const { id } = params;
   try {
     const body = await request.json();
-    console.log('body', body);
+
     const { homeTeam, awayTeam, operator } = body;
 
     if ((!homeTeam || !awayTeam) && !operator) {

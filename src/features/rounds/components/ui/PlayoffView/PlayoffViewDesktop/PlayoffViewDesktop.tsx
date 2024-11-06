@@ -1,33 +1,46 @@
+'use client';
 import React from 'react';
-import Bracket from '../PlayoffBracket/PlayoffBracket';
+import PlayoffBracket from '../PlayoffBracket/PlayoffBracket';
 import './PlayoffViewDesktop.scss';
 import { TPlayoff } from '../../../../../../types/types';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   playoff: TPlayoff[];
 };
 
 function PlayoffViewDesktop({ playoff }: Props) {
+  const router = useRouter();
+
+  const handleClick = (id) => {
+    router.push(`/dashboard/match/${id}`);
+  };
+
   return (
     <div className={`playoff-view-desktop`}>
-      {playoff.map((el) => (
+      {playoff.map((matches) => (
         <div
-          key={el.round}
-          className={`playoff-view-desktop__elimination ${el.round
+          key={matches.round}
+          className={`playoff-view-desktop__elimination playoff-view-desktop__elimination--${matches.round
             .toLowerCase()
             .split(' ')
             .join('')}`}
         >
-          <div className="playoff-view-desktop__elimination--title">
-            <h2>{el.round.toUpperCase()}</h2>
+          <div className="playoff-view-desktop__elimination-title">
+            <h2>{matches.round.toUpperCase()}</h2>
           </div>
-          {el.matches.map((el, i) => (
-            <div className={'bracket-wrapper-desktop'} key={`${i}`}>
-              <Bracket
-                homeTeam={el.homeTeam.name}
-                homeTeamScore={el.homeTeam.score}
-                awayTeam={el.awayTeam.name}
-                awayTeamScore={el.awayTeam.score}
+          {matches.matches.map((match, i) => (
+            <div
+              className={`bracket-wrapper-desktop bracket-wrapper-desktop--${matches.round}`}
+              key={`${i}`}
+            >
+              <PlayoffBracket
+                onClick={() => handleClick(match._id)}
+                homeTeam={match.homeTeam.name}
+                homeTeamScore={match.homeTeam.score}
+                awayTeam={match.awayTeam.name}
+                awayTeamScore={match.awayTeam.score}
+                status={match.status}
               />
             </div>
           ))}

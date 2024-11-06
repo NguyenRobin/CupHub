@@ -1,5 +1,6 @@
 import React from 'react';
 import './PlayoffBracket.scss';
+import Pulse from '../../../../../../components/ui/pulse/Pulse';
 
 function PlayoffBracket({
   status,
@@ -7,46 +8,72 @@ function PlayoffBracket({
   homeTeamScore,
   awayTeam,
   awayTeamScore,
+  onClick,
 }: any) {
+  const homeTeamWinner =
+    status === 'completed' && homeTeamScore > awayTeamScore
+      ? 'playoff-bracket__team-info--winner'
+      : '';
+
+  const awayTeamWinner =
+    status === 'completed' && awayTeamScore > homeTeamScore
+      ? 'playoff-bracket__team-info--winner'
+      : '';
+
   return (
-    <div className="bracket">
-      <div className="bracket__team bracket__team--home">
-        <div className="bracket__team-info">
-          <span className="bracket__team-image"></span>
-          <span className="bracket__team-name">{homeTeam}</span>
+    <div className="playoff-bracket" onClick={onClick}>
+      <div>{status === 'ongoing' && <Pulse />}</div>
+
+      <div className="playoff-bracket__teams">
+        <div className="playoff-bracket__team">
+          <div className="playoff-bracket__team-info">
+            <p className={homeTeamWinner}>{homeTeam}</p>
+          </div>
+
+          <div className="playoff-bracket__team-result">
+            {status === 'scheduled' && (
+              <p className="playoff-bracket__team-result--scheduled">-</p>
+            )}
+
+            {status === 'ongoing' && (
+              <p className="playoff-bracket__team-result--ongoing">
+                {homeTeamScore}
+              </p>
+            )}
+            {status === 'completed' && (
+              <p
+                className={`playoff-bracket__team-result--completed ${homeTeamWinner}`}
+              >
+                {homeTeamScore}
+              </p>
+            )}
+          </div>
         </div>
-        {/* <span className="bracket__team-score">{homeTeamScore}</span> */}
-        {status === 'scheduled' && <p className="bracket__team-score">-</p>}
 
-        {status === 'ongoing' && (
-          <p className="bracket__team-score">
-            {homeTeamScore} - {awayTeamScore}
-          </p>
-        )}
-        {status === 'completed' && (
-          <p className="bracket__team-score">
-            {homeTeamScore} - {awayTeamScore}
-          </p>
-        )}
-      </div>
+        <div className="playoff-bracket__team">
+          <div className="playoff-bracket__team-info">
+            <p className={awayTeamWinner}>{awayTeam}</p>
+          </div>
 
-      <div className="bracket__team bracket__team--away">
-        <div className="bracket__team-info">
-          <span className="bracket__team-image"></span>
-          <span className="bracket__team-name">{awayTeam}</span>
+          <div className="playoff-bracket__team-result">
+            {status === 'scheduled' && (
+              <p className="playoff-bracket__team-result--scheduled">-</p>
+            )}
+
+            {status === 'ongoing' && (
+              <p className="playoff-bracket__team-result--ongoing">
+                {awayTeamScore}
+              </p>
+            )}
+            {status === 'completed' && (
+              <p
+                className={`playoff-bracket__team-result--completed ${awayTeamWinner}`}
+              >
+                {awayTeamScore}
+              </p>
+            )}
+          </div>
         </div>
-        {status === 'scheduled' && <p className="bracket__team-score">-</p>}
-
-        {status === 'ongoing' && (
-          <p className="bracket__team-score">
-            {homeTeam.score} - {awayTeam.score}
-          </p>
-        )}
-        {status === 'completed' && (
-          <p className="bracket__team-score">
-            {homeTeam.score} - {awayTeam.score}
-          </p>
-        )}
       </div>
     </div>
   );

@@ -2,8 +2,22 @@ import React from 'react';
 import CardWrapper from '../../../../ui/card-wrapper/CardWrapper';
 import { RiLiveLine } from 'react-icons/ri';
 import './LiveMatches.scss';
+import { getMatchesByStatus } from '../../../../../features/matches/server/actions/match';
+import ListTournamentMatches from '../../../../../features/matches/components/ui/ListTournamentMatches/ListTournamentMatches';
 
-function LiveMatches() {
+async function LiveMatches() {
+  const response = await getMatchesByStatus('ongoing', 3);
+
+  if (response.status !== 200) {
+    return <p>{response.message}</p>;
+  }
+
+  const { matches } = response;
+
+  if (!matches) {
+    return [];
+  }
+
   return (
     <CardWrapper>
       <section className="live-matches__title">
@@ -12,10 +26,16 @@ function LiveMatches() {
       </section>
 
       <section className="live-matches__ongoing">
-        <p>Inga pågående live matcher.</p>
+        {!matches.length ? (
+          <p>Inga pågående live matcher.</p>
+        ) : (
+          <ListTournamentMatches matches={matches} />
+        )}
       </section>
 
-      <section className=""></section>
+      <section className="">
+        {/* <ListTournamentMatches matches={matches} /> */}
+      </section>
     </CardWrapper>
   );
 }
