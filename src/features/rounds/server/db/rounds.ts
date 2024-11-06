@@ -1,8 +1,5 @@
 import { ClientSession, Types } from 'mongoose';
-import {
-  buildPlayoffMatches,
-  buildPlayoffSchedule,
-} from '../../../../lib/server';
+import { buildPlayoffMatches } from '../../../../lib/server';
 import RoundModel from '../../models/Round';
 import MatchModel from '../../../matches/models/Match';
 

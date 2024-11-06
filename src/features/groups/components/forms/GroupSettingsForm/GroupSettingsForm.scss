@@ -73,6 +73,22 @@
     justify-content: space-between;
     gap: 2rem;
 
+    &--back,
+    &--next {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 5rem;
+      border: 0.5px solid lightgray;
+      padding: 1rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: $font-size-xl;
+      //   border: 2px solid black;
+    }
+
     &--back {
       width: 40%;
       color: black;
@@ -86,25 +102,3 @@
     }
   }
 }
-
-.btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 5rem;
-  border: 0.5px solid lightgray;
-  padding: 1rem;
-  border-radius: 2rem;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: $font-size-xl;
-  border: 2px solid black;
-}
-
-// .tournament-form > label:nth-child(1) input {
-//   // background-color: green;
-//   padding: 0.5rem;
-//   width: 100%;
-//   border: none;
-// }

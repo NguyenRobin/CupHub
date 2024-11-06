@@ -87,10 +87,10 @@ function AddTeamForm() {
       setIsLoading(false);
     }
     const result = await response.json();
-    console.log(result);
-    if (result.status === 200) {
+    console.log('result', result);
+    if (result.status === 201) {
       setIsLoading(false);
-      router.push('/dashboard');
+      router.push(`/dashboard/tournaments/${result.tournament._id}/overview`);
     } else {
       window.alert('Testa igen');
       setIsLoading(false);
@@ -189,7 +189,7 @@ function AddTeamForm() {
 
         <div className="add-team__buttons">
           <button
-            className="add-team__buttons--back btn"
+            className="add-team__buttons--back"
             disabled={isLoading}
             onClick={handlePrev}
           >
@@ -198,7 +198,7 @@ function AddTeamForm() {
           </button>
 
           <button
-            className="add-team__buttons--next btn"
+            className="add-team__buttons--next"
             disabled={isLoading}
             onClick={onSubmit}
           >

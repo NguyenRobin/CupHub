@@ -166,13 +166,18 @@ export async function createNewTournament(body: TBodyTournament) {
   await session.commitTransaction();
   session.endSession();
 
-  return { status: 201, message: 'yehe tournament created' };
+  return {
+    status: 201,
+    message: 'yehe tournament created',
+    tournament: newTournament,
+  };
 }
 
 export async function getTournamentById(id: Types.ObjectId) {
   if (!mongoose.isValidObjectId(id)) {
     return { status: 400, message: 'Invalid ID format. Must be a ObjectId' };
   }
+  await connectToMongoDB();
 
   const tournament = await getTournamentDB(id);
 

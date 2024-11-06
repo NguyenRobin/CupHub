@@ -235,3 +235,5 @@ export type TPlayoff = {
   round: string;
   matches: TMatch[];
 };
+
+export type TStatus = 'scheduled' | 'ongoing' | 'completed';

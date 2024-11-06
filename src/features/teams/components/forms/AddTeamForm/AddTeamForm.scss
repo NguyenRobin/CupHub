@@ -77,9 +77,6 @@
     &--group {
       display: flex;
       flex-direction: column;
-      // justify-content: space-between;
-      // align-items: center;
-      // justify-content: center;
       gap: 1rem;
 
       p {
@@ -102,6 +99,22 @@
   &__buttons {
     display: flex;
     gap: 1rem;
+    &--back,
+    &--next {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 5rem;
+      border: 0.5px solid lightgray;
+      padding: 1rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: $font-size-xl;
+      //   border: 2px solid black;
+    }
+
     &--back {
       width: 35%;
       color: black;

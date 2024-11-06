@@ -113,14 +113,14 @@ function GroupSettingsForm() {
 
         <div className="group-settings__buttons">
           <button
-            className="group-settings__buttons--back btn"
+            className="group-settings__buttons--back"
             onClick={handleBack}
           >
             <IoIosArrowRoundBack size={25} />
             Tillbaka
           </button>
           <button
-            className="group-settings__buttons--next btn"
+            className="group-settings__buttons--next"
             onClick={handleNext}
           >
             Nästa

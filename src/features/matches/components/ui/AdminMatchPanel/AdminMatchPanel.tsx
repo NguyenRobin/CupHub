@@ -1,4 +1,5 @@
 'use client';
+
 import { useRouter } from 'next/navigation';
 import './AdminMatchPanel.scss';
 
@@ -63,7 +64,6 @@ function AdminMatchPanel({ homeTeamName, awayTeamName, matchId }: Props) {
 
   const updateAwayTeamScore = async (operator: '+' | '-') => {
     const update = await updateScore(matchId, 'awayTeam', 1, operator);
-    console.log('update', update);
     if (update) {
       router.refresh();
     }
@@ -82,12 +82,12 @@ function AdminMatchPanel({ homeTeamName, awayTeamName, matchId }: Props) {
   return (
     <div className="match-actions">
       <div className="match-actions__home">
-        <button className="btn" onClick={() => updateHomeTeamScore('+')}>
+        <button onClick={() => updateHomeTeamScore('+')}>
           <p>{homeTeamName}</p>
           <br />
           <span>+1 mål</span>
         </button>
-        <button className="btn" onClick={() => updateHomeTeamScore('-')}>
+        <button onClick={() => updateHomeTeamScore('-')}>
           <p>{homeTeamName}</p>
           <br />
           <span>-1 mål</span>
@@ -96,7 +96,7 @@ function AdminMatchPanel({ homeTeamName, awayTeamName, matchId }: Props) {
 
       <div className="match-actions__match">
         <button
-          className="match-actions__match--start btn"
+          className="match-actions__match--start"
           onClick={() => {
             updateMatchStatus(matchId, 'ongoing');
           }}
@@ -105,7 +105,7 @@ function AdminMatchPanel({ homeTeamName, awayTeamName, matchId }: Props) {
         </button>
 
         <button
-          className="match-actions__match--end btn"
+          className="match-actions__match--end"
           onClick={() => {
             updateMatchStatus(matchId, 'completed');
           }}

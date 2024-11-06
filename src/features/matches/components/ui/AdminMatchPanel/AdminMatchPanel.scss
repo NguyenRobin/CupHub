@@ -5,6 +5,20 @@
   align-items: center;
   gap: 1rem;
 
+  &__home button,
+  &__match button,
+  &__away button {
+    padding: 0.5rem 1rem;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 5rem;
+    border: none;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 1rem;
+    letter-spacing: 0.5px;
+  }
+
   &__home,
   &__match,
   &__away {
@@ -32,15 +46,15 @@
   }
 }
 
-.btn {
-  padding: 0.5rem 1rem;
-  // background-color: #07383e;
-  color: #ffffff;
-  font-weight: bold;
-  border-radius: 5rem;
-  border: none;
-  width: 7rem;
-  height: 7rem;
-  border-radius: 1rem;
-  letter-spacing: 0.5px;
-}
+// .btn {
+//   padding: 0.5rem 1rem;
+//   // background-color: #07383e;
+//   color: #ffffff;
+//   font-weight: bold;
+//   border-radius: 5rem;
+//   border: none;
+//   width: 7rem;
+//   height: 7rem;
+//   border-radius: 1rem;
+//   letter-spacing: 0.5px;
+// }
