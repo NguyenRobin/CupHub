@@ -1,0 +1,70 @@
+@import '../../../../../styles/variables.scss';
+@import '../../../../../styles/typography.scss';
+
+.delete-tournament {
+  background-color: transparent;
+  border: none;
+  &__icon {
+  }
+}
+
+.delete-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999999999999999;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+
+  &__confirmation {
+    background-color: $bg-color-secondary;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 4rem 2rem;
+    border-radius: 1rem;
+  }
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: 400;
+    text-align: center;
+
+    strong {
+      letter-spacing: 0.1rem;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  &__button {
+    border: none;
+    background-color: transparent;
+    border-radius: 1rem;
+    min-height: 4rem;
+    min-width: 10rem;
+
+    &--cancel {
+      border: 1px solid grey;
+    }
+
+    &--delete {
+      background-color: #dd2c00;
+      color: #fff;
+
+      &.loading {
+        opacity: 0.5;
+      }
+    }
+  }
+}

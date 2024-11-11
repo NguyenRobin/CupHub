@@ -1,5 +1,6 @@
 import {
   createTournamentDB,
+  deleteTournamentDB,
   getTournamentDB,
   updateTournamentWithGroupIdsDB,
   updateTournamentWithTeamsParticipatingDB,
@@ -186,4 +187,15 @@ export async function getTournamentById(id: Types.ObjectId) {
   }
 
   return { status: 200, tournament };
+}
+
+export async function deleteTournamentById(id: Types.ObjectId) {
+  if (!mongoose.isValidObjectId(id)) {
+    return { status: 400, message: 'Invalid ID format. Must be a ObjectId' };
+  }
+  
+  await connectToMongoDB();
+  const tournament = await deleteTournamentDB(id);
+
+  return { status: 200, message: 'Tournament successfully deleted' };
 }

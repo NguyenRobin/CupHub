@@ -1,6 +1,12 @@
 @import '../../../../../styles/variables.scss';
 @import '../../../../../styles/typography.scss';
 
+.actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .tournament-container {
   display: flex;
   flex-direction: column;

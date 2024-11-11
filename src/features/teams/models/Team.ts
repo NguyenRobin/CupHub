@@ -1,10 +1,10 @@
-import mongoose, { Schema, model, Types } from "mongoose";
+import mongoose, { Schema, model, Types } from 'mongoose';
 
 type TTeam = {
   name: string;
   createdByUserId?: Types.ObjectId;
-  tournaments_teamParticipates_in?: Types.ObjectId[];
-  leagues_teamParticipates_in?: Types.ObjectId[];
+  tournaments_teamParticipates_in?: { tournament_id: Types.ObjectId }[];
+  leagues_teamParticipates_in?: { league_id: Types.ObjectId }[];
 };
 
 const teamSchema = new Schema<TTeam>({
@@ -15,7 +15,7 @@ const teamSchema = new Schema<TTeam>({
       tournament_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: false,
-        ref: "Tournament",
+        ref: 'Tournament',
       },
     },
   ],
@@ -25,17 +25,17 @@ const teamSchema = new Schema<TTeam>({
       league_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: false,
-        ref: "League",
+        ref: 'League',
       },
     },
   ],
   createdByUserId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "User",
+    ref: 'User',
   },
 });
 
-const TeamModel = mongoose.models.Team || model<TTeam>("Team", teamSchema);
+const TeamModel = mongoose.models.Team || model<TTeam>('Team', teamSchema);
 
 export default TeamModel;

@@ -218,8 +218,8 @@ export type TTeam = {
   _id: Types.ObjectId;
   name: string;
   createdByUserId: Types.ObjectId;
-  tournaments_teamParticipates_in?: Types.ObjectId[];
-  leagues_teamParticipates_in?: Types.ObjectId[];
+  tournaments_teamParticipates_in?: { tournament_id: Types.ObjectId }[];
+  leagues_teamParticipates_in?: { league_id: Types.ObjectId }[];
 };
 
 export type TCreateTeam = {

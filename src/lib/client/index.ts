@@ -13,7 +13,7 @@ export async function verifyTokenByJose(encodedToken: string) {
 
     return payload;
   } catch (error) {
-    console.log('jose', error);
+    console.log('JOSE ->', error);
   }
 }
 
