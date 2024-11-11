@@ -11,6 +11,7 @@ async function getDashboardOverview() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard`,
     {
+      cache: 'no-store',
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -24,7 +25,6 @@ async function getDashboardOverview() {
   }
 
   const data = await response.json();
-
   return data;
 }
 async function Overview() {
@@ -34,6 +34,7 @@ async function Overview() {
   return (
     <section className="overview">
       <section className="overview__welcome-text">
+        <h1>{Date.now()}</h1>
         <h1>Välkommen, {username}! 👋</h1>
       </section>
 

@@ -10,6 +10,7 @@ import { IoIosArrowRoundBack } from 'react-icons/io';
 import ActiveTournamentDetailView from '../ActiveTournamentDetailView/ActiveTournamentDetailView';
 import { dateFormatter } from '../../../../../lib/server';
 import { getTournamentById } from '../../../server/actions/tournament';
+import DeleteTournamentBtn from '../DeleteTournamentBtn/DeleteTournamentBtn';
 
 async function Tournament({ tournamentId, children }: any) {
   const response = await getTournamentById(tournamentId);
@@ -22,9 +23,12 @@ async function Tournament({ tournamentId, children }: any) {
 
   return (
     <CardWrapper>
-      <Link href={'/dashboard'}>
-        <IoIosArrowRoundBack size={25} />
-      </Link>
+      <div className="actions">
+        <Link href={'/dashboard'}>
+          <IoIosArrowRoundBack size={25} />
+        </Link>
+        <DeleteTournamentBtn name={name} id={_id.toString()} />
+      </div>
 
       <div className="tournament-container">
         <div className="tournament-container__overview">

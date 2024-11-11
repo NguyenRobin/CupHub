@@ -46,7 +46,9 @@ function LoginForm() {
     }
   };
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
     event.preventDefault();
 
     const submitFormBody: TSubmitFormBody = {
@@ -121,7 +123,7 @@ function LoginForm() {
             </p>
           </div>
 
-          <form className="login__form" onSubmit={handleSubmit}>
+          <form className="login__form">
             <AuthInput
               htmlFor="text"
               labelText="E-post/Användarnamn"
@@ -144,7 +146,7 @@ function LoginForm() {
               value={password}
             />
 
-            <button type="submit" className="login__button">
+            <button onClick={handleSubmit} className="login__button">
               Logga in
             </button>
           </form>

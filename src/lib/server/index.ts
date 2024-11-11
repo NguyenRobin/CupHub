@@ -35,8 +35,8 @@ export async function compareUserInputPasswordWithHashedPassword(
 
 export function createToken(user: { id: Types.ObjectId; username: string }) {
   const encodedToken = jwt.sign(user, process.env.JWT_SECRET_KEY as string, {
-    // expiresIn: "15m",
-    expiresIn: '24h',
+    expiresIn: '15m',
+    // expiresIn: '24h',
   });
 
   return encodedToken;
