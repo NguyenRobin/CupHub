@@ -1,6 +1,6 @@
-@import "../../../../styles/variables.scss";
-@import "../../../../styles/typography.scss";
-@import "../../../../styles/dark.scss";
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/typography.scss';
+@import '../../../../styles/dark.scss';
 
 .idea-container {
   width: 100%;
@@ -47,6 +47,9 @@
     background-color: $dark-bg-primary;
 
     .idea-text {
+      h2 {
+        color: #fff;
+      }
       p {
         color: $dark-text-primary;
       }
@@ -55,8 +58,13 @@
       background-color: $dark-bg-secondary;
       border: 1px solid $dark-border-primary;
       width: 100%;
+
       p {
         color: $dark-text-primary;
+      }
+
+      button {
+        border: 1px solid #fff;
       }
     }
   }
