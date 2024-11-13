@@ -1,19 +1,17 @@
-@import "../../../../styles/variables.scss";
-@import "../../../../styles/typography.scss";
-@import "../../../../styles/dark.scss";
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/typography.scss';
+@import '../../../../styles/dark.scss';
 
 .pricing-container {
   background-color: $bg-color-primary;
   padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
 
-  &_pricing-title {
+  &__title {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
+    margin-bottom: 3rem;
 
     h2 {
       color: $color-primary;
@@ -28,10 +26,58 @@
       font-weight: 200;
     }
   }
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
 }
 
 .dark {
   .pricing-container {
     background-color: $dark-bg-primary;
+  }
+}
+
+@media (min-width: 640px) {
+  .pricing-container {
+    // padding-left: 10rem;
+    // padding-right: 10rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .pricing-container {
+    &__cards {
+      flex-direction: row;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .pricing-container {
+    // padding: 4rem 5rem;
+
+    &__cards {
+      flex-direction: row;
+    }
+  }
+}
+
+@media (min-width: 1280px) {
+  .pricing-container {
+    padding: 4rem 15rem;
+  }
+}
+
+@media (min-width: 1536px) and (max-width: 1920px) {
+  .pricing-container {
+    padding: 4rem 25rem;
+  }
+}
+
+@media (min-width: 1921px) {
+  .pricing-container {
+    padding: 4rem 50rem;
   }
 }

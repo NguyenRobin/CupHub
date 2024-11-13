@@ -1,44 +1,97 @@
-@import "../../../../../styles/variables.scss";
-@import "../../../../../styles/typography.scss";
+@import '../../../../../styles/variables.scss';
+@import '../../../../../styles/typography.scss';
 
 .price-card {
   box-shadow: rgba(0, 0, 0, 0.6) 1.95px 1.95px 2.6px;
   border-radius: 1rem;
+  flex: 1;
 
-  section {
+  &__package {
     background-color: $bg-color-secondary;
     border-radius: 1rem;
     display: flex;
+    gap: 2rem;
     flex-direction: column;
     align-items: center;
     padding: 2.5rem;
-    section {
-      display: flex;
+    height: 100%;
+  }
 
+  &__price {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    h4 {
+      font-size: $font-size-2xl;
+      color: #818181;
+    }
+    h2 {
+      font-size: $font-size-4xl;
+    }
+  }
+
+  &__children {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  &__btn {
+    background-color: $btn-color-primary;
+    color: $color-primary;
+    padding: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    width: 50%;
+  }
+}
+@media (min-width: 768px) {
+  .price-card {
+    &__package {
+      padding: 2rem 1rem;
+    }
+    &__price {
       h4 {
-        font-size: $font-size-2xl;
+        font-size: $font-size-lg;
         color: #818181;
       }
       h2 {
-        font-size: $font-size-4xl;
+        font-size: $font-size-xl;
       }
     }
-
-    ul {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      list-style: none;
-      margin-bottom: 2rem;
+    &__children {
     }
-    button {
-      background-color: $btn-color-primary;
-      color: $color-primary;
-      padding: 1rem;
-      border: none;
-      cursor: pointer;
-      border-radius: 0.5rem;
-      width: 50%;
+
+    &__btn {
+      margin-top: auto;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .price-card {
+    &__package {
+      padding: 4rem 2rem;
+    }
+    &__price {
+      h4 {
+        font-size: $font-size-xl;
+        color: #818181;
+      }
+      h2 {
+        font-size: $font-size-2xl;
+      }
+    }
+    &__children {
+      gap: 1rem;
+    }
+
+    &__btn {
+      margin-top: auto;
     }
   }
 }
