@@ -1,5 +1,5 @@
-@import "../styles/variables.scss";
-@import "../styles/typography.scss";
+@import '../styles/variables.scss';
+@import '../styles/typography.scss';
 
 .wrapper {
   margin-top: 7rem; // bases on the nac height to make it show the full element height
@@ -7,9 +7,53 @@
   // position: relative;
   // height: 100dvh;
   height: 100%;
-  overflow-y: auto;
+  // overflow-y: auto;
   padding-bottom: 7rem;
 }
 .main-content {
   background-color: $bg-color-secondary;
+}
+
+@media (min-width: 1024px) {
+  .main-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    // padding: 0 15rem;
+  }
+  .hero-banner {
+    grid-column: 1/3;
+    grid-row: 1;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .idea-container {
+    grid-column: 1/3;
+    grid-row: 2;
+  }
+
+  .features-container {
+    grid-column: 1/3;
+    grid-row: 3;
+  }
+  .feature-container {
+    grid-column: 1/3;
+    grid-row: 4;
+  }
+
+  .pricing-container {
+    grid-column: 1/3;
+    grid-row: 5;
+  }
+
+  .testimonials {
+    grid-column: 1/3;
+    grid-row: 6;
+  }
+
+  .footer-container {
+    grid-column: 1/3;
+    grid-row: 7;
+  }
 }

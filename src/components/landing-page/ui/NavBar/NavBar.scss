@@ -1,6 +1,6 @@
-@import "../../../../styles/variables.scss";
-@import "../../../../styles/typography.scss";
-@import "../../../../styles/dark.scss";
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/typography.scss';
+@import '../../../../styles/dark.scss';
 
 .nav {
   display: flex;
@@ -17,19 +17,25 @@
   z-index: 99999999;
   // z-index: 999;
 
-  &-logo {
+  &__logo {
     font-size: $font-size-md;
     cursor: pointer;
-    // margin: 0;
   }
 
-  &-icons {
+  &__icons {
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    // gap: 2rem;
+  }
+
+  &__icon {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 2rem;
-
-    &__hamburger {
+    &--hamburger,
+    &--cross {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -37,11 +43,35 @@
       cursor: pointer;
       padding: 0.5rem;
       border-radius: 1rem;
-
-      &-icon {
-        cursor: pointer;
-      }
     }
+  }
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+  display: none;
+  // width: 80%;
+  &__list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: $font-size-md;
+  }
+  &__btn {
+    display: flex;
+    gap: 1rem;
+    font-size: $font-size-md;
+    background-color: $bg-color-primary;
+    border: 1px solid $border-color-primary;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  &__btn:hover {
+    opacity: 0.9;
   }
 }
 
@@ -51,5 +81,17 @@
   }
   .nav-icons {
     color: $dark-icon-primary;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nav {
+    padding: 2.5rem;
+  }
+  .nav__icons {
+    display: none;
+  }
+  .navbar {
+    display: flex;
   }
 }

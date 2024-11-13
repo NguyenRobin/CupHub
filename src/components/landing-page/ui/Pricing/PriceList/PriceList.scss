@@ -1,6 +1,6 @@
-@import "../../../../../styles/variables.scss";
-@import "../../../../../styles/typography.scss";
-@import "../../../../../styles/dark.scss";
+@import '../../../../../styles/variables.scss';
+@import '../../../../../styles/typography.scss';
+@import '../../../../../styles/dark.scss';
 
 li {
   display: flex;
@@ -11,5 +11,15 @@ li {
   .check-icon {
     font-size: $font-size-lg;
     color: #008000;
+  }
+}
+
+@media (min-width: 768px) {
+  li {
+    font-size: $font-size-xs;
+
+    .check-icon {
+      font-size: $font-size-md;
+    }
   }
 }

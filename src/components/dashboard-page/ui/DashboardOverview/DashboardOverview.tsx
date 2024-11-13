@@ -34,7 +34,6 @@ async function Overview() {
   return (
     <section className="overview">
       <section className="overview__welcome-text">
-        <h1>{Date.now()}</h1>
         <h1>Välkommen, {username}! 👋</h1>
       </section>
 
