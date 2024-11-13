@@ -34,10 +34,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    // gap: 0.8rem;
     border: 1px solid $border-color-secondary;
     border-radius: 1rem;
-    // width: 100%;
     flex-wrap: wrap;
 
     li {
@@ -140,8 +138,9 @@
 .dark {
   .features-container {
     background-color: $dark-bg-primary;
+    &__items {
+      background-color: $dark-bg-secondary;
 
-    section {
       h2 {
         // color: $txt-color-primary;
       }

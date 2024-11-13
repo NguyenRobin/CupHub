@@ -1,5 +1,5 @@
-"use client";
-import { createContext, useContext, useState } from "react";
+'use client';
+import { createContext, useContext, useState } from 'react';
 
 type ContextType = {
   theme: string;
@@ -11,16 +11,17 @@ type Props = {
 };
 
 export const ThemeContext = createContext<ContextType>({
-  theme: "",
+  theme: '',
   toggleTheme: () => {},
 });
 
 export function ThemeProvider({ children }: Props) {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState('light');
 
   function toggleTheme() {
-    setTheme((theme) => (theme === "light" ? "dark" : "light"));
-    document.documentElement.classList.toggle("dark");
+    setTheme((theme) => (theme === 'light' ? 'dark' : 'light'));
+    console.log(document.documentElement.classList);
+    document.documentElement.classList.toggle('dark');
   }
 
   return (

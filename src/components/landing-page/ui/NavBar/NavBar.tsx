@@ -11,7 +11,6 @@ import Link from 'next/link';
 import { AiOutlineHome } from 'react-icons/ai';
 import { GrGroup } from 'react-icons/gr';
 import { BsSend } from 'react-icons/bs';
-import SwitchThemeMode from '../../../ui/switch-theme-mode/SwitchThemeMode';
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);

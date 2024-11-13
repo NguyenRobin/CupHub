@@ -33,7 +33,6 @@
   &__stars {
     display: flex;
     justify-content: center;
-    
   }
 
   &__slide {
@@ -52,6 +51,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 2rem;
     position: absolute;
     right: 100%;
     animation: 20s slide infinite linear;
@@ -87,5 +87,27 @@
   }
   to {
     right: calc(15rem * -1);
+  }
+}
+
+.dark {
+  .testimonials {
+    background-color: $dark-bg-primary;
+
+    &__title {
+      h2 {
+        color: $color-primary;
+      }
+      p {
+        color: $color-primary;
+      }
+    }
+
+    &__slide {
+      background-color: $dark-bg-secondary;
+    }
+    &__item {
+      color: #fff;
+    }
   }
 }
