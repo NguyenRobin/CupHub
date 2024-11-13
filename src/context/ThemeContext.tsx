@@ -30,6 +30,7 @@ export function ThemeProvider({ children }: Props) {
 
   function toggleTheme() {
     setTheme((theme) => (theme === 'light' ? 'dark' : 'light'));
+
     const isDarkModeActive = document.documentElement.classList.toggle('dark');
     localStorage.setItem('darkMode', isDarkModeActive ? 'enabled' : 'disabled');
   }
