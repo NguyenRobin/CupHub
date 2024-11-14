@@ -109,17 +109,7 @@ function LoginForm() {
           <div className="login__heading">
             <h2>Logga in</h2>
             <p>
-              Har du inget konto?{' '}
-              <Link
-                href="/signup"
-                style={{
-                  textDecoration: 'underline',
-                  color: 'green',
-                  fontWeight: 'bold',
-                }}
-              >
-                Skapa konto
-              </Link>
+              Har du inget konto? <Link href="/signup">Skapa konto</Link>
             </p>
           </div>
 

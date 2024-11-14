@@ -8,12 +8,12 @@
   align-items: center;
   width: 100%;
   padding: 1.5rem;
-  border-bottom: 1px solid $border-color-primary;
+  border-bottom: 1px solid var(--color-border-secondary);
   // position: sticky;
   position: fixed;
   top: 0;
   z-index: 1000000000;
-  background-color: $nav-bg-color;
+  background-color: var(--color-bg-primary);
   height: 7rem;
 
   &__admin {
@@ -23,33 +23,48 @@
     gap: 1rem;
     font-size: $font-size-6xl;
     cursor: pointer;
+  }
 
-    section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  &__profile-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    img {
+      border: 1px solid var(--color-border-secondary);
       border-radius: 1rem;
-      img {
-        border: 1px solid $border-color-primary;
-
-        padding: 0rem;
-        border-radius: 1rem;
-        object-fit: contain;
-        // transform: scale(2.5);
-      }
-    }
-    svg {
-      padding: 0.5rem;
-      border: 1px solid $border-color-primary;
-      border-radius: 1rem;
+      object-fit: contain;
     }
   }
+
+  &__notification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    &--amount {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: $font-size-sm;
+      min-width: 2.2rem;
+      min-height: 2.2rem;
+      border-radius: 50%;
+      background-color: #f03e3e;
+      transform: translate(50%, -50%);
+      color: #fff;
+    }
+  }
+  &__search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   &__icons {
     display: flex;
     align-items: center;
@@ -57,34 +72,18 @@
     gap: 2rem;
     cursor: pointer;
   }
-}
 
-.notification {
-  position: relative;
-
-  span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: $font-size-sm;
-    min-width: 2.2rem;
-    min-height: 2.2rem;
-    border-radius: 50%;
-    background-color: #f03e3e;
-    transform: translate(50%, -50%);
-    color: #fff;
-  }
-}
-
-.dark {
-  .nav-dashboard-container {
-    background-color: $dark-bg-primary;
-
-    svg {
-      color: $dark-border-primary;
+  &__hamburger {
+    &--icon {
+      color: var(--color-icon-tertiary);
     }
   }
+}
+
+.search-icon,
+.notification-icon {
+  padding: 0.5rem;
+  border: 1px solid var(--color-border-secondary);
+  border-radius: 1rem;
+  color: var(--color-icon-tertiary);
 }

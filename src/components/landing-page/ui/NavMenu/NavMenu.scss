@@ -20,6 +20,10 @@
       gap: 1rem;
       border-radius: 1rem;
       padding: 0.5rem;
+      border-radius: 1rem;
+      background-color: var(--color-card-primary);
+      color: var(--color-text-paragraph-primary);
+
       &-icon {
         font-size: $font-size-xl;
       }
@@ -27,13 +31,5 @@
         font-size: $font-size-lg;
       }
     }
-  }
-}
-
-.dark {
-  .nav-menu__ul--list {
-    background-color: $dark-bg-secondary;
-    border-radius: 1rem;
-    color: $dark-text-primary;
   }
 }

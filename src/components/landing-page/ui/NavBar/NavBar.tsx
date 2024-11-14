@@ -23,13 +23,7 @@ function NavBar() {
     <>
       <nav className="nav">
         <section className="nav__logo">
-          {/* <Link href="/" onClick={() => setIsOpen(false)}> */}
-          <GiSoccerBall
-            onClick={() => setIsOpen(false)}
-            color="green"
-            size={45}
-          />
-          {/* </Link> */}
+          <GiSoccerBall onClick={() => setIsOpen(false)} size={45} />
         </section>
 
         <section className="nav__icons">

@@ -22,23 +22,26 @@ function NavBarDashboard() {
     <>
       <nav className="nav-dashboard-container">
         <section className="nav-dashboard-container__admin">
-          <section>
+          <section className="nav-dashboard-container__profile-image">
             <Image
               height={44}
               width={44}
               src="/default-profile.jpg"
               alt="user profile image"
               priority
+              className="image-icon"
             />
           </section>
 
-          <section className="notification">
-            <span>1</span>
-            <IoIosNotificationsOutline />
+          <section className="nav-dashboard-container__notification">
+            <span className="nav-dashboard-container__notification--amount">
+              1
+            </span>
+            <IoIosNotificationsOutline className="notification-icon" />
           </section>
 
-          <section>
-            <CiSearch />
+          <section className="nav-dashboard-container__search">
+            <CiSearch className="search-icon" />
             {/* <input type="search" name="" id="" /> */}
           </section>
         </section>
@@ -51,12 +54,12 @@ function NavBarDashboard() {
             {!showNavigation ? (
               <IoIosMenu
                 size={30}
-                className="nav-dashboard-container__hamburger-icon"
+                className="nav-dashboard-container__hamburger--icon"
               />
             ) : (
               <RxCross2
                 size={30}
-                className="nav-dashboard-container__hamburger-icon"
+                className="nav-dashboard-container__hamburger--icon"
               />
             )}
           </section>
