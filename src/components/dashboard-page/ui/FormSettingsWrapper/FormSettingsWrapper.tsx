@@ -9,9 +9,9 @@ type Props = {
 
 function FormSettingsWrapper({ children, title }: Props) {
   return (
-    <section className="card-rule">
-      <section className="card-rule__info">
-        <section className="card-rule__info--title">
+    <section className="form-wrapper">
+      <section className="form-wrapper__info">
+        <section className="form-wrapper__title">
           <Image
             src="/golden-trophy-white-background.png"
             height={60}
@@ -24,7 +24,7 @@ function FormSettingsWrapper({ children, title }: Props) {
         </section>
       </section>
 
-      <section className="card-rule__children">{children}</section>
+      <section className="form-wrapper__children">{children}</section>
     </section>
   );
 }

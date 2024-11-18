@@ -11,6 +11,7 @@ import ActiveTournamentDetailView from '../ActiveTournamentDetailView/ActiveTour
 import { dateFormatter } from '../../../../../lib/server';
 import { getTournamentById } from '../../../server/actions/tournament';
 import DeleteTournamentBtn from '../DeleteTournamentBtn/DeleteTournamentBtn';
+import { GiSoccerField } from 'react-icons/gi';
 
 async function Tournament({ tournamentId, children }: any) {
   const response = await getTournamentById(tournamentId);
@@ -32,12 +33,13 @@ async function Tournament({ tournamentId, children }: any) {
 
       <div className="tournament-container">
         <div className="tournament-container__overview">
-          <Image
+          {/* <Image
             src="/IFK_Uppsala_logo.svg.png"
             height={60}
             width={60}
             alt="IFk"
-          />
+          /> */}
+          <GiSoccerField size={80} color="#006774" />
 
           <div className="tournament-container__overview__details">
             <div>

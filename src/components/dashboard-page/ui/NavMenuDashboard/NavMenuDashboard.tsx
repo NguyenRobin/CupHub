@@ -100,8 +100,9 @@ function NavMenuDashboard({ closeModal }: Props) {
   }, [theme]);
 
   function handleOnClick(title: string) {
-    if (title === 'Dashboard') {
+    if (title === 'Dashboard' && closeModal) {
       router.push('/dashboard');
+      closeModal();
     }
 
     setShowMenu((prev) => (prev === title ? null : title));

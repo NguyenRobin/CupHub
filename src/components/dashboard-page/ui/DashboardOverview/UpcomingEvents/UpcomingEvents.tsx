@@ -99,12 +99,12 @@ function Event({ day, month, name, location, id }) {
           <p className="event__image-date--day">{day}</p>
           <p className="event__image-date--month">{month}</p>
         </section>
-        <Image
+        {/* <Image
           src="/IFK_Uppsala_logo.svg.png"
           height={60}
           width={60}
           alt="IFk"
-        />
+        /> */}
       </section>
 
       <section className="event__details">

@@ -55,6 +55,10 @@
   }
 }
 
+.nav-menu-dashboard__category.active {
+  background-color: #98e5dd;
+}
+
 @media (min-width: 1280px) {
   .nav-menu-dashboard {
     &__category {
@@ -63,8 +67,4 @@
       // color: $dark-text-primary;
     }
   }
-}
-
-.active {
-  background-color: #98e5dd;
 }

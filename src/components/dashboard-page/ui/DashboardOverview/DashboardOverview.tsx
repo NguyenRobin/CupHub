@@ -55,33 +55,6 @@ async function Overview() {
         <CardWrapper>
           <h1>Nyheter och meddelanden</h1>
         </CardWrapper>
-        <CardWrapper>
-          <h1>Nyheter och meddelanden</h1>
-        </CardWrapper>
-        <CardWrapper>
-          <h1>Nyheter och meddelanden</h1>
-        </CardWrapper>
-        <CardWrapper>
-          <h1>Nyheter och meddelanden</h1>
-        </CardWrapper>
-        <CardWrapper>
-          <h1>Nyheter och meddelanden</h1>
-        </CardWrapper>
-        <CardWrapper>
-          <h1>Nyheter och meddelanden</h1>
-        </CardWrapper>
-        <CardWrapper>
-          <h1>Nyheter och meddelanden</h1>
-        </CardWrapper>
-        <CardWrapper>
-          <h1>Nyheter och meddelanden</h1>
-        </CardWrapper>
-        <CardWrapper>
-          <h1>Nyheter och meddelanden</h1>
-        </CardWrapper>
-        <CardWrapper>
-          <h1>Nyheter och meddelanden</h1>
-        </CardWrapper>
       </section>
     </section>
   );

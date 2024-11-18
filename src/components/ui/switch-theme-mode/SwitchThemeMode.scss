@@ -30,6 +30,7 @@
 
   display: flex;
   align-items: center;
+  background-color: #fff;
 }
 
 .slider:before {
@@ -41,11 +42,11 @@
   -webkit-transition: 0.4s;
   transition: 0.4s;
   border: 1px solid var(--color-border-theme);
-  background-color: #fff;
 }
 
 input:not(:checked) + .slider {
-  background-color: white;
+  background-color: #fff;
+
   .theme-dark_mode {
     color: #fff;
   }
@@ -101,8 +102,8 @@ input:checked + .slider:before {
 .theme-light_mode {
   position: absolute;
   font-size: 2rem;
-  right: 10%;
-  color: #000;
+  right: 12%;
+  color: #fdb813;
 }
 
 .theme-dark_mode {
