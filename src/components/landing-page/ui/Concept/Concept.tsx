@@ -19,7 +19,9 @@ function Concept() {
         <Image src={planning} height={300} width={250} alt="Planning" />
       </section>
 
-      <Link href="#">Läs mer</Link>
+      <Link className="concept__link" href="#">
+        Läs mer
+      </Link>
     </section>
   );
 }

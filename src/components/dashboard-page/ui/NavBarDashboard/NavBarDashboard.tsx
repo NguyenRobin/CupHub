@@ -13,6 +13,12 @@ import Modal from '../../../ui/modal/Modal';
 
 function NavBarDashboard() {
   const [showNavigation, setShowNavigation] = useState(false);
+  const [queryInput, setQueryInput] = useState('');
+
+  function handleOnChangeQueryInput(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value;
+    setQueryInput(value);
+  }
 
   function handleOnClick() {
     setShowNavigation((prev) => !prev);
@@ -42,8 +48,21 @@ function NavBarDashboard() {
 
           <section className="nav-dashboard-container__search">
             <CiSearch className="search-icon" />
-            {/* <input type="search" name="" id="" /> */}
           </section>
+
+          <div className="nav-dashboard-container__search-bar">
+            <input
+              value={queryInput}
+              placeholder="search..."
+              onChange={handleOnChangeQueryInput}
+              type="text"
+              className="nav-dashboard-container__search-input"
+            />
+            <CiSearch
+              size={30}
+              className="nav-dashboard-container__search-bar-icon"
+            />
+          </div>
         </section>
 
         <section className="nav-dashboard-container__icons">

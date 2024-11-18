@@ -1,12 +1,13 @@
-import React from "react";
-import "./EventSelection.scss";
-import Image from "next/image";
-import { IoCreateOutline } from "react-icons/io5";
-import Link from "next/link";
+import React from 'react';
+import './EventSelection.scss';
+import Image from 'next/image';
+import { IoCreateOutline } from 'react-icons/io5';
+import Link from 'next/link';
+import CardWrapper from '../../../../ui/card-wrapper/CardWrapper';
 
 function EventSelection() {
   return (
-    <section className="event-selection">
+    <CardWrapper>
       <section className="event-selection__title">
         <IoCreateOutline />
         <h2>Skapa och Hantera</h2>
@@ -64,7 +65,7 @@ function EventSelection() {
           />
         </section>
       </Link>
-    </section>
+    </CardWrapper>
   );
 }
 

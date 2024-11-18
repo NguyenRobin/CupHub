@@ -27,10 +27,9 @@
   bottom: 0;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-  // border: 1px solid #6a6a6a;
+
   display: flex;
   align-items: center;
-  background-color: green;
 }
 
 .slider:before {
@@ -39,17 +38,16 @@
   height: 26px;
   width: 26px;
   left: 4px;
-  // bottom: 4px;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-  border: 1px solid #059b72;
-  background-color: #f2fcf8;
+  border: 1px solid var(--color-border-theme);
+  background-color: #fff;
 }
 
 input:not(:checked) + .slider {
   background-color: white;
   .theme-dark_mode {
-    color: #000;
+    color: #fff;
   }
 }
 
@@ -61,24 +59,23 @@ input:checked + .slider {
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px black;
+  // box-shadow: 0 0 1px black;
 }
 
 input:checked + .slider:before {
   -webkit-transform: translateX(3.1rem);
   -ms-transform: translateX(3.1rem);
   transform: translateX(3.1rem);
+  background-color: #fff;
 }
 
 /* Rounded sliders */
 .slider.round {
   display: flex;
-  // justify-content: space-between; /* Placerar ikonerna jämnt */
   align-items: center;
   background-color: #000;
   border-radius: 34px;
-  border: 1px solid #dedede;
-  // padding: 0 1rem; /* Justerar avståndet från kanten */
+  border: 1px solid var(--color-border-theme);
 }
 
 .slider.round:before {
@@ -87,18 +84,11 @@ input:checked + .slider:before {
 
 .theme {
   margin-top: auto;
-  // padding: 1rem;
   background-color: #000;
   border-radius: 3rem;
   width: 30%;
 
   &-light {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // background-color: #fff;
-    // border-radius: 50%;
-    // padding: 0.7rem;
     width: 50%;
 
     &_icon {
@@ -119,6 +109,5 @@ input:checked + .slider:before {
   position: absolute;
   font-size: 2rem;
   left: 10%;
-  // right: 12%;
   color: #fff;
 }

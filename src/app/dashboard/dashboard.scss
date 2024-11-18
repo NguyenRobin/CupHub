@@ -2,17 +2,47 @@
 @import '../../styles/variables.scss';
 
 .dashboard {
-  // margin-top: 7rem; // bases on the nav height to make it show the full element height
-  // height: 100dvh;
-  // overflow-y: auto;
-
-  // background-color: #fdfdfd;
-  padding-top: 7rem;
+  margin-top: 7rem;
   // height: 100%;
+  // background-color: var(--color-bg-main);
+
+  &__navbar {
+  }
+
+  &__side-menu {
+    display: none;
+  }
+
+  &__main-children {
+    padding: 1.5rem;
+    height: 100%;
+  }
 }
 
-.main-container__dashboard {
-  padding: 1.5rem;
-  height: 100%; //! TESTING
-  // margin-bottom: 7rem; // bases on the nav height to make it show the full element height
+@media (min-width: 1280px) {
+  .dashboard {
+    display: grid;
+    grid-template-columns: 25rem 1fr 1fr;
+    grid-template-rows: min-content;
+    height: 100vh;
+    margin-top: 0;
+    &__navbar {
+      grid-column: 1/4;
+      border-bottom: 1px solid var(--color-border-dashboard);
+    }
+    &__side-menu {
+      display: block;
+      grid-column: 1/2;
+      grid-row: 2;
+      padding: 1.5rem;
+      background-color: var(--color-bg-primary);
+    }
+
+    &__main-children {
+      overflow: scroll;
+      grid-column: 2/4;
+      border-left: 1px solid var(--color-border-dashboard);
+      padding: 3rem;
+    }
+  }
 }

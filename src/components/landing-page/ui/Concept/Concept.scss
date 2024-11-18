@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 3rem;
   background-color: var(--color-bg-primary);
   &__title {
@@ -41,7 +42,7 @@
     padding: 1rem;
     width: 100%;
   }
-  a {
+  &__link {
     cursor: pointer;
     border-radius: 5rem;
     padding: 1.5rem;
@@ -53,21 +54,21 @@
 }
 
 @media (min-width: 1280px) {
-  .idea-container {
+  .concept {
     padding-left: 15rem;
     padding-right: 15rem;
   }
 }
 
 @media (min-width: 1536px) and (max-width: 1920px) {
-  .idea-container {
+  .conceptr {
     padding-left: 25rem;
     padding-right: 25rem;
   }
 }
 
 @media (min-width: 1921px) {
-  .idea-container {
+  .concept {
     padding: 4rem 50rem;
   }
 }

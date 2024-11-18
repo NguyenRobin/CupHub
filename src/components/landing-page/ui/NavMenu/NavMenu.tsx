@@ -54,8 +54,9 @@ function NavMenu() {
           </Link>
         </li>
       </ul>
-
-      <SwitchThemeMode isChecked={isChecked} onChange={handleIsChecked} />
+      <section className="nav-menu__theme-settings">
+        <SwitchThemeMode isChecked={isChecked} onChange={handleIsChecked} />
+      </section>
     </nav>
   );
 }

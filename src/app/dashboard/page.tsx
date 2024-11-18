@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react';
-import './dashboard.scss';
 import DashboardOverview from '../../components/dashboard-page/ui/DashboardOverview/DashboardOverview';
 import LoadingSpinner from '../../components/ui/loading-spinner/LoadingSpinner';
 

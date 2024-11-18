@@ -8,6 +8,7 @@
   height: 100%;
   z-index: 2;
   background-color: var(--color-bg-primary);
+  padding-bottom: 7rem; //! beacuse of the navBar height
 }
 
 .modal.display {
