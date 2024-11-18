@@ -2,70 +2,73 @@
 @import '../../../../styles/typography.scss';
 @import '../../../../styles/dark.scss';
 
-.idea-container {
+.concept {
   width: 100%;
   padding: 2.5rem;
-
-  section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  background-color: var(--color-bg-primary);
+  &__title {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+
+    h2 {
+      color: var(--color-text-heading-primary);
+      font-size: $font-size-3xl;
+      text-align: center;
+      font-weight: 400;
+      margin-bottom: 2rem;
+    }
+    p {
+      text-align: center;
+      font-size: $font-size-sm;
+      font-weight: 200;
+      color: var(--color-text-paragraph-primary);
+    }
+  }
+
+  &__cta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-card-primary);
     border-radius: 1rem;
+    padding: 1rem;
+    width: 100%;
+  }
+  &__link {
+    cursor: pointer;
+    border-radius: 5rem;
+    padding: 1.5rem;
+    background-color: var(--color-btn-primary);
+    color: var(--color-text-secondary);
+    border: none;
+  }
+  // }
+}
 
-    .idea-text {
-      h2 {
-        color: $txt-color-primary;
-        font-size: $font-size-3xl;
-        text-align: center;
-        font-weight: 400;
-      }
-      p {
-        text-align: center;
-        font-size: $font-size-sm;
-        font-weight: 200;
-      }
-    }
-    .idea-cta {
-      padding-bottom: 1.5rem;
-
-      button {
-        cursor: pointer;
-        border-radius: 5rem;
-        padding: 1.5rem;
-        background-color: $bg-color-primary;
-        color: $color-primary;
-        border: none;
-      }
-    }
+@media (min-width: 1280px) {
+  .concept {
+    padding-left: 15rem;
+    padding-right: 15rem;
   }
 }
 
-.dark {
-  .idea-container {
-    background-color: $dark-bg-primary;
+@media (min-width: 1536px) and (max-width: 1920px) {
+  .conceptr {
+    padding-left: 25rem;
+    padding-right: 25rem;
+  }
+}
 
-    .idea-text {
-      h2 {
-        color: #fff;
-      }
-      p {
-        color: $dark-text-primary;
-      }
-    }
-    .idea-cta {
-      background-color: $dark-bg-secondary;
-      border: 1px solid $dark-border-primary;
-      width: 100%;
-
-      p {
-        color: $dark-text-primary;
-      }
-
-      button {
-        border: 1px solid #fff;
-      }
-    }
+@media (min-width: 1921px) {
+  .concept {
+    padding: 4rem 50rem;
   }
 }

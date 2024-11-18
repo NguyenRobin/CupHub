@@ -3,7 +3,7 @@
 @import '../../../../styles/dark.scss';
 
 .testimonials {
-  background-color: $bg-color-secondary;
+  background-color: var(--color-bg-primary);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -18,12 +18,13 @@
     padding: 2.5rem;
 
     h2 {
-      color: $txt-color-primary;
+      color: var(--color-text-heading-primary);
       font-size: $font-size-3xl;
       text-align: center;
       font-weight: 400;
     }
     p {
+      color: var(--color-text-paragraph-primary);
       text-align: center;
       font-size: $font-size-sm;
       font-weight: 200;
@@ -42,7 +43,7 @@
     display: flex;
     align-items: center;
     height: 20rem;
-
+    background-color: var(--color-card-primary);
     // justify-content: space-between;
   }
 
@@ -87,27 +88,5 @@
   }
   to {
     right: calc(15rem * -1);
-  }
-}
-
-.dark {
-  .testimonials {
-    background-color: $dark-bg-primary;
-
-    &__title {
-      h2 {
-        color: $color-primary;
-      }
-      p {
-        color: $color-primary;
-      }
-    }
-
-    &__slide {
-      background-color: $dark-bg-secondary;
-    }
-    &__item {
-      color: #fff;
-    }
   }
 }

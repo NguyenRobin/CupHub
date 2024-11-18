@@ -4,10 +4,11 @@
 .price-card {
   box-shadow: rgba(0, 0, 0, 0.6) 1.95px 1.95px 2.6px;
   border-radius: 1rem;
+
+  background-color: #fff;
   flex: 1;
 
   &__package {
-    background-color: $bg-color-secondary;
     border-radius: 1rem;
     display: flex;
     gap: 2rem;
@@ -25,7 +26,7 @@
 
     h4 {
       font-size: $font-size-2xl;
-      color: #818181;
+      color: var(--color-text-heading-tertiary);
     }
     h2 {
       font-size: $font-size-4xl;
@@ -40,8 +41,8 @@
   }
 
   &__btn {
-    background-color: $btn-color-primary;
-    color: $color-primary;
+    background-color: var(--color-btn-primary);
+    color: var(--color-text-secondary);
     padding: 1rem;
     border: none;
     cursor: pointer;

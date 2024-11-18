@@ -4,6 +4,7 @@ import './DashboardOverview.scss';
 import UpcomingEvents from './UpcomingEvents/UpcomingEvents';
 import LiveMatches from './LiveMatches/LiveMatches';
 import UpcomingMatches from './UpcomingMatches/UpcomingMatches';
+import CardWrapper from '../../../ui/card-wrapper/CardWrapper';
 
 async function getDashboardOverview() {
   const token = cookies().get(process.env.TOKEN_NAME!);
@@ -37,11 +38,50 @@ async function Overview() {
         <h1>Välkommen, {username}! 👋</h1>
       </section>
 
-      <section className="overview__listing">
+      <section className="overview__widgets">
         <UpcomingEvents events={tournaments} />
         <EventSelection />
         <LiveMatches />
         <UpcomingMatches />
+        <CardWrapper>
+          <h1>Betalningar</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Rekommenderade turneringar</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Turneringens tabellställning</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Nyheter och meddelanden</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Nyheter och meddelanden</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Nyheter och meddelanden</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Nyheter och meddelanden</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Nyheter och meddelanden</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Nyheter och meddelanden</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Nyheter och meddelanden</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Nyheter och meddelanden</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Nyheter och meddelanden</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Nyheter och meddelanden</h1>
+        </CardWrapper>
       </section>
     </section>
   );

@@ -1,47 +1,47 @@
-@import "../../../../styles/variables.scss";
-@import "../../../../styles/typography.scss";
-@import "../../../../styles/dark.scss";
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/typography.scss';
+@import '../../../../styles/dark.scss';
 
 .hero-banner {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../../../../../public/team-celebrating-win-silver-cup.jpg");
+    url('../../../../../public/team-celebrating-win-silver-cup.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   padding: 8rem;
   width: 100%;
+
   &__info {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    color: $color-primary;
+    color: var(--color-text-secondary);
 
     h1 {
       font-size: $font-size-3xl;
       text-align: center;
     }
-
-    &-buttons {
-      display: flex;
-      gap: 1rem;
-      font-size: $font-size-sm;
-      &-buy {
-        background-color: $bg-color-primary;
-        border: 1px solid $border-color-secondary;
-        color: $color-primary;
-      }
-      &-demo {
-        background-color: $btn-color-secondary;
-        border: 1px solid $border-color-primary;
-        color: $txt-color-primary;
-      }
-      a {
-        cursor: pointer;
-        border-radius: 5rem;
-        padding: 1.5rem;
-      }
+  }
+  &__links {
+    display: flex;
+    gap: 1rem;
+    font-size: $font-size-sm;
+    &--buy {
+      background-color: var(--color-btn-primary);
+      border: 1px solid var(--color-border-tertiary);
+      color: var(--color-text-secondary);
+    }
+    &--demo {
+      background-color: var(--color-btn-secondary);
+      border: 1px solid var(--color-border-primary);
+      color: var(--color-text-success);
+    }
+    a {
+      cursor: pointer;
+      border-radius: 5rem;
+      padding: 1.5rem;
     }
   }
 }

@@ -7,17 +7,18 @@ import { SlCalender } from 'react-icons/sl';
 import { getMonthName } from '../../../../../lib/client';
 import { MdExpandMore, MdExpandLess } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
+import CardWrapper from '../../../../ui/card-wrapper/CardWrapper';
 
 function UpcomingEvents({ events }) {
   return (
-    <section className="upcoming-events">
+    <CardWrapper>
       <section className="upcoming-events__title">
         <SlCalender />
         <h2>Kommande Evenemang</h2>
       </section>
 
       <Events events={events} />
-    </section>
+    </CardWrapper>
   );
 }
 

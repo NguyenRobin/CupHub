@@ -119,7 +119,7 @@ function Features() {
           >
             <i className="icon">{feature.icon}</i>
 
-            <section>
+            <section className="feature-container__title">
               <h2>{feature.title}</h2>
               <p>{feature.content}</p>
               {scrollToElement === feature.id && (

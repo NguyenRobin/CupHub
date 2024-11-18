@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { z } from 'zod';
 import NavBar from '../../../../../components/landing-page/ui/NavBar/NavBar';
 import AuthInput from '../../../../../components/ui/authInput/AuthInput';
+import LoadingSpinner from '../../../../../components/ui/loading-spinner/LoadingSpinner';
 
 const SubmitFormSchema = z
   .object({
@@ -34,6 +35,7 @@ type TErrorMessages = {
 
 function LoginForm() {
   const [errorMessages, setErrorMessages] = useState<TErrorMessages>({});
+  const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState('robinnguyen');
   const [password, setPassword] = useState('papimami');
   const router = useRouter();
@@ -50,10 +52,12 @@ function LoginForm() {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
     event.preventDefault();
+    setIsLoading(true);
 
     const submitFormBody: TSubmitFormBody = {
       password: password,
     };
+    console.log(submitFormBody);
 
     if (typeof user === 'string' && user.includes('@')) {
       submitFormBody.email = user;
@@ -82,12 +86,14 @@ function LoginForm() {
 
       if (data.status === 200) {
         router.push('/dashboard');
+        setIsLoading(false);
       } else {
         setErrorMessages({
           username: data.message,
           email: data.message,
         });
         setPassword('');
+        setIsLoading(false);
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -97,6 +103,7 @@ function LoginForm() {
         });
 
         setErrorMessages(errorObj);
+        setIsLoading(false);
       }
     }
   }
@@ -109,17 +116,7 @@ function LoginForm() {
           <div className="login__heading">
             <h2>Logga in</h2>
             <p>
-              Har du inget konto?{' '}
-              <Link
-                href="/signup"
-                style={{
-                  textDecoration: 'underline',
-                  color: 'green',
-                  fontWeight: 'bold',
-                }}
-              >
-                Skapa konto
-              </Link>
+              Har du inget konto? <Link href="/signup">Skapa konto</Link>
             </p>
           </div>
 
@@ -146,8 +143,12 @@ function LoginForm() {
               value={password}
             />
 
-            <button onClick={handleSubmit} className="login__button">
-              Logga in
+            <button
+              onClick={handleSubmit}
+              disabled={isLoading}
+              className="login__button"
+            >
+              {isLoading ? <LoadingSpinner /> : 'Logga in'}
             </button>
           </form>
         </div>
