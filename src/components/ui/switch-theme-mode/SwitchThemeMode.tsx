@@ -1,5 +1,4 @@
 import React from 'react';
-import { GoSun } from 'react-icons/go';
 import { IoMoonSharp } from 'react-icons/io5';
 import './SwitchThemeMode.scss';
 import { IoSunny } from 'react-icons/io5';

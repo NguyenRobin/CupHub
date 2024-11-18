@@ -8,7 +8,11 @@ import { useEffect, useState } from 'react';
 import SwitchThemeMode from '../../../ui/switch-theme-mode/SwitchThemeMode';
 import { useTheme } from '../../../../context/ThemeContext';
 
-function NavMenu() {
+type Props = {
+  closeModal?: () => void;
+};
+
+function NavMenu({ closeModal }: Props) {
   const { theme, toggleTheme } = useTheme();
   const [isChecked, setIsChecked] = useState(false);
 
@@ -24,7 +28,7 @@ function NavMenu() {
   }, [theme]);
 
   return (
-    <nav className="nav-menu">
+    <nav className="nav-menu" onClick={closeModal}>
       <ul className="nav-menu__ul">
         <li className="nav-menu__ul--list">
           <AiOutlineHome className="nav-menu__ul--list-icon" />
@@ -35,7 +39,7 @@ function NavMenu() {
 
         <li className="nav-menu__ul--list">
           <GrGroup className="nav-menu__ul--list-icon" />
-          <Link className="nav-menu__ul--list-link" href="/turneringar">
+          <Link className="nav-menu__ul--list-link" href="/sport-events">
             Turneringar
           </Link>
         </li>

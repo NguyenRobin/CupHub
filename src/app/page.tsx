@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <div className="wrapper">
       <Nav />
-      <main className="main-content">
+      <main className="main-content__children">
         <HeroBanner />
         <Concept />
         <Features />

@@ -5,7 +5,7 @@ import './Testimonials.scss';
 import { FaStar } from 'react-icons/fa';
 function Testimonials() {
   return (
-    <section className="testimonials">
+    <section className="testimonials" id="testimonials">
       <section className="testimonials__title">
         <h2>Vad våra nöjda kunder säger om Cup Maker</h2>
         <p>

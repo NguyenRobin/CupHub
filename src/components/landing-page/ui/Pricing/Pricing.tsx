@@ -5,7 +5,7 @@ import './Pricing.scss';
 
 function Pricing() {
   return (
-    <section className="pricing-container">
+    <section className="pricing-container" id="payments">
       <section className="pricing-container__title">
         <h2>Välj den perfekta planen för er organisation</h2>
         <p>

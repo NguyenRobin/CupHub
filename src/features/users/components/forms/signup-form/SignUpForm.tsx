@@ -151,79 +151,77 @@ function SignUpForm() {
   }
 
   return (
-    <>
+    <div className="signup">
       <NavBar />
-      <div className="signup">
-        <div className="signup__container">
-          <div className="signup__heading">
-            <h2>Skapa konto</h2>
-            <p>
-              Har du redan ett konto?{' '}
-              <Link
-                href="/login"
-                style={{
-                  textDecoration: 'underline',
-                  color: 'green',
-                  fontWeight: 'bold',
-                }}
-              >
-                Logga in
-              </Link>
-            </p>
-          </div>
-
-          <form className="signup__form" onSubmit={handleSubmit}>
-            <AuthInput
-              htmlFor="email"
-              labelText="E-post"
-              type="email"
-              name="email"
-              placeholder="exempel@exempel.com"
-              value={form.email}
-              onChange={handleOnChange}
-              errorMessage={errorMessages.email || ''}
-            />
-
-            <AuthInput
-              htmlFor="text"
-              labelText="Användarnamn"
-              type="text"
-              name="username"
-              placeholder="användarnamn"
-              value={form.username}
-              onChange={handleOnChange}
-              errorMessage={errorMessages.username || ''}
-            />
-
-            <AuthInput
-              htmlFor="password"
-              labelText="Lösenord"
-              type="password"
-              name="password"
-              placeholder="******"
-              value={form.password}
-              onChange={handleOnChange}
-              errorMessage={errorMessages.password || ''}
-            />
-
-            <AuthInput
-              htmlFor="password"
-              labelText="Bekräfta lösenord"
-              type="password"
-              name="confirmPassword"
-              placeholder="******"
-              value={form.confirmPassword}
-              onChange={handleOnChange}
-              errorMessage={errorMessages.confirmPassword || ''}
-            />
-
-            <button type="submit" className="signup__button">
-              Skapa konto
-            </button>
-          </form>
+      <div className="signup__container">
+        <div className="signup__heading">
+          <h2>Skapa konto</h2>
+          <p>
+            Har du redan ett konto?{' '}
+            <Link
+              href="/login"
+              style={{
+                textDecoration: 'underline',
+                color: 'green',
+                fontWeight: 'bold',
+              }}
+            >
+              Logga in
+            </Link>
+          </p>
         </div>
+
+        <form className="signup__form" onSubmit={handleSubmit}>
+          <AuthInput
+            htmlFor="email"
+            labelText="E-post"
+            type="email"
+            name="email"
+            placeholder="exempel@exempel.com"
+            value={form.email}
+            onChange={handleOnChange}
+            errorMessage={errorMessages.email || ''}
+          />
+
+          <AuthInput
+            htmlFor="text"
+            labelText="Användarnamn"
+            type="text"
+            name="username"
+            placeholder="användarnamn"
+            value={form.username}
+            onChange={handleOnChange}
+            errorMessage={errorMessages.username || ''}
+          />
+
+          <AuthInput
+            htmlFor="password"
+            labelText="Lösenord"
+            type="password"
+            name="password"
+            placeholder="******"
+            value={form.password}
+            onChange={handleOnChange}
+            errorMessage={errorMessages.password || ''}
+          />
+
+          <AuthInput
+            htmlFor="password"
+            labelText="Bekräfta lösenord"
+            type="password"
+            name="confirmPassword"
+            placeholder="******"
+            value={form.confirmPassword}
+            onChange={handleOnChange}
+            errorMessage={errorMessages.confirmPassword || ''}
+          />
+
+          <button type="submit" className="signup__button">
+            Skapa konto
+          </button>
+        </form>
       </div>
-    </>
+    </div>
   );
 }
 

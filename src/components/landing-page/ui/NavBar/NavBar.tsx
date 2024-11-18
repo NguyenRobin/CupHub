@@ -19,6 +19,7 @@ function NavBar() {
     setIsOpen((prev) => !prev);
   }
 
+  console.log(isOpen);
   return (
     <>
       <nav className="nav">
@@ -41,22 +42,22 @@ function NavBar() {
         </section>
 
         <ul className="navbar">
-          <li className="navbar__list">
+          <li className="navbar__list" onClick={() => setIsOpen(false)}>
             <AiOutlineHome />
             <Link href="/">Hem</Link>
           </li>
 
-          <li className="navbar__list">
+          <li className="navbar__list" onClick={() => setIsOpen(false)}>
             <GrGroup />
-            <Link href="/turneringar">Turneringar</Link>
+            <Link href="/sport-events">Turneringar</Link>
           </li>
 
-          <li className="navbar__list">
+          <li className="navbar__list" onClick={() => setIsOpen(false)}>
             <GrGroup />
             <Link href="/about">Om oss</Link>
           </li>
 
-          <li className="navbar__list">
+          <li className="navbar__list" onClick={() => setIsOpen(false)}>
             <BsSend />
             <Link href="/contact-us">Kontakt</Link>
           </li>
@@ -66,9 +67,10 @@ function NavBar() {
           </Link>
         </ul>
       </nav>
+
       {isOpen && (
         <Modal isActive={isOpen}>
-          <NavMenu />
+          <NavMenu closeModal={handleOnClick} />
         </Modal>
       )}
     </>

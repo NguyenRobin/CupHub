@@ -1,6 +1,5 @@
-"use client";
-
-import "./Modal.scss";
+import { createPortal } from 'react-dom';
+import './Modal.scss';
 
 type Props = {
   children: React.ReactNode;
@@ -8,10 +7,11 @@ type Props = {
 };
 
 function Modal({ children, isActive }: Props) {
-  return (
-    <div className={`modal ${isActive ? "display" : ""}`}>
-      <div className="modal-content">{children}</div>
-    </div>
+  return createPortal(
+    <div className={`modal ${isActive ? 'display' : ''}`}>
+      <div className="modal__content">{children}</div>
+    </div>,
+    document.body
   );
 }
 

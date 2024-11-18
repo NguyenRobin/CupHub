@@ -6,15 +6,14 @@ const TOKEN_NAME = process.env.TOKEN_NAME;
 
 export async function authMiddleware(request: NextRequest) {
   const token = request.cookies.get(TOKEN_NAME!)?.value;
-  console.log(token);
+  console.log('authMiddleware', token);
+  if (!token) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
   try {
-    if (!token) {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
-    console.log('token before signing a new token', token);
-
     const isTokenValid = await verifyTokenByJose(token);
-
+    console.log('isTokenValid verifyTokenByJose  ->', isTokenValid);
     if (!isTokenValid) {
       // console.log('!isTokenValid', isTokenValid);
       return NextResponse.redirect(new URL('/login', request.url));

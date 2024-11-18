@@ -57,7 +57,6 @@ function LoginForm() {
     const submitFormBody: TSubmitFormBody = {
       password: password,
     };
-    console.log(submitFormBody);
 
     if (typeof user === 'string' && user.includes('@')) {
       submitFormBody.email = user;
@@ -109,51 +108,49 @@ function LoginForm() {
   }
 
   return (
-    <>
+    <div className="login">
       <NavBar />
-      <div className="login">
-        <div className="login__container">
-          <div className="login__heading">
-            <h2>Logga in</h2>
-            <p>
-              Har du inget konto? <Link href="/signup">Skapa konto</Link>
-            </p>
-          </div>
-
-          <form className="login__form">
-            <AuthInput
-              htmlFor="text"
-              labelText="E-post/Användarnamn"
-              type="text"
-              name="text"
-              placeholder="användarnamn"
-              errorMessage={errorMessages.email || errorMessages.username || ''}
-              onChange={handleOnChange}
-              value={user}
-            />
-
-            <AuthInput
-              htmlFor="password"
-              labelText="Lösenord"
-              type="password"
-              name="password"
-              placeholder="******"
-              errorMessage={errorMessages.password || ''}
-              onChange={handleOnChange}
-              value={password}
-            />
-
-            <button
-              onClick={handleSubmit}
-              disabled={isLoading}
-              className="login__button"
-            >
-              {isLoading ? <LoadingSpinner /> : 'Logga in'}
-            </button>
-          </form>
+      <div className="login__container">
+        <div className="login__heading">
+          <h2>Logga in</h2>
+          <p>
+            Har du inget konto? <Link href="/signup">Skapa konto</Link>
+          </p>
         </div>
+
+        <form className="login__form">
+          <AuthInput
+            htmlFor="text"
+            labelText="E-post/Användarnamn"
+            type="text"
+            name="text"
+            placeholder="användarnamn"
+            errorMessage={errorMessages.email || errorMessages.username || ''}
+            onChange={handleOnChange}
+            value={user}
+          />
+
+          <AuthInput
+            htmlFor="password"
+            labelText="Lösenord"
+            type="password"
+            name="password"
+            placeholder="******"
+            errorMessage={errorMessages.password || ''}
+            onChange={handleOnChange}
+            value={password}
+          />
+
+          <button
+            onClick={handleSubmit}
+            disabled={isLoading}
+            className="login__button"
+          >
+            {isLoading ? <LoadingSpinner /> : 'Logga in'}
+          </button>
+        </form>
       </div>
-    </>
+    </div>
   );
 }
 

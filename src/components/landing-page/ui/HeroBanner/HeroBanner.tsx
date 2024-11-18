@@ -9,7 +9,7 @@ function HeroBanner() {
         <h1>Skapa och hantera era turneringar enkelt!</h1>
 
         <section className="hero-banner__links">
-          <Link href="/" className="hero-banner__links--buy">
+          <Link href="#payments" className="hero-banner__links--buy">
             Köp nu
           </Link>
           <Link href="/dashboard" className="hero-banner__links--demo">

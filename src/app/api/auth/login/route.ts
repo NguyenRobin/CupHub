@@ -36,6 +36,7 @@ export async function POST(request: Request) {
 
     if (username && password) {
       await connectToMongoDB();
+
       const user = await UserModel.findOne({ username });
 
       if (!user) {
