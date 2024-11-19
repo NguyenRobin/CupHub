@@ -52,6 +52,7 @@ function LoginForm() {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
     event.preventDefault();
+
     setIsLoading(true);
 
     const submitFormBody: TSubmitFormBody = {
@@ -81,12 +82,8 @@ function LoginForm() {
       }
 
       const data = await response.json();
-      console.log('data login', data);
 
-      if (data.status === 200) {
-        router.push('/dashboard');
-        setIsLoading(false);
-      } else {
+      if (data.status !== 200) {
         setErrorMessages({
           username: data.message,
           email: data.message,
@@ -94,6 +91,13 @@ function LoginForm() {
         setPassword('');
         setIsLoading(false);
       }
+
+      router.push('/dashboard');
+
+      //! REMOVE LATER MAYBE? BUT THIS CURRENT MAKES IT GO TO DASHBOARD MORE USE FRIENDLY
+      const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+      await delay(3000);
+      setIsLoading(false);
     } catch (error) {
       if (error instanceof z.ZodError) {
         const errorObj: TErrorMessages = {};
@@ -110,46 +114,53 @@ function LoginForm() {
   return (
     <div className="login">
       <NavBar />
-      <div className="login__container">
-        <div className="login__heading">
-          <h2>Logga in</h2>
-          <p>
-            Har du inget konto? <Link href="/signup">Skapa konto</Link>
-          </p>
+      {isLoading ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
+          <LoadingSpinner size={50} />
+          <p>Loggar in...</p>
         </div>
+      ) : (
+        <div className="login__container">
+          <div className="login__heading">
+            <h2>Logga in</h2>
+            <p>
+              Har du inget konto? <Link href="/signup">Skapa konto</Link>
+            </p>
+          </div>
 
-        <form className="login__form">
-          <AuthInput
-            htmlFor="text"
-            labelText="E-post/Användarnamn"
-            type="text"
-            name="text"
-            placeholder="användarnamn"
-            errorMessage={errorMessages.email || errorMessages.username || ''}
-            onChange={handleOnChange}
-            value={user}
-          />
+          <form className="login__form">
+            <AuthInput
+              htmlFor="text"
+              labelText="E-post/Användarnamn"
+              type="text"
+              name="text"
+              placeholder="användarnamn"
+              errorMessage={errorMessages.email || errorMessages.username || ''}
+              onChange={handleOnChange}
+              value={user}
+            />
 
-          <AuthInput
-            htmlFor="password"
-            labelText="Lösenord"
-            type="password"
-            name="password"
-            placeholder="******"
-            errorMessage={errorMessages.password || ''}
-            onChange={handleOnChange}
-            value={password}
-          />
+            <AuthInput
+              htmlFor="password"
+              labelText="Lösenord"
+              type="password"
+              name="password"
+              placeholder="******"
+              errorMessage={errorMessages.password || ''}
+              onChange={handleOnChange}
+              value={password}
+            />
 
-          <button
-            onClick={handleSubmit}
-            disabled={isLoading}
-            className="login__button"
-          >
-            {isLoading ? <LoadingSpinner /> : 'Logga in'}
-          </button>
-        </form>
-      </div>
+            <button
+              onClick={handleSubmit}
+              disabled={isLoading}
+              className="login__button"
+            >
+              {isLoading ? <LoadingSpinner /> : 'Logga in'}
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

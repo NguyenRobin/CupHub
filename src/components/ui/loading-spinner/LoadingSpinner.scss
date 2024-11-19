@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   animation: loading360 0.7s linear infinite;
+  color: var(--color-icon-tertiary);
 }
 
 @keyframes loading360 {

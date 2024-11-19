@@ -6,16 +6,20 @@
   border-radius: 1rem;
 
   background-color: #fff;
-  flex: 1;
 
+  min-height: 41rem;
+  display: flex;
+  justify-content: center;
+  flex: 1;
   &__package {
     border-radius: 1rem;
     display: flex;
     gap: 2rem;
     flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
     padding: 2.5rem;
-    height: 100%;
+    width: 100%;
   }
 
   &__price {
@@ -71,6 +75,7 @@
 
     &__btn {
       margin-top: auto;
+      text-wrap: nowrap;
     }
   }
 }

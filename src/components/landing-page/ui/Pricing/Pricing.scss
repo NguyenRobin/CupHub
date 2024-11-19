@@ -36,8 +36,11 @@
 
 @media (min-width: 640px) {
   .pricing-container {
-    // padding-left: 10rem;
-    // padding-right: 10rem;
+    // padding: 2.5rem 15rem;
+    &__cards {
+      padding-left: 15rem;
+      padding-right: 15rem;
+    }
   }
 }
 
@@ -45,13 +48,15 @@
   .pricing-container {
     &__cards {
       flex-direction: row;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 }
 
 @media (min-width: 1024px) {
   .pricing-container {
-    // padding: 4rem 5rem;
+    padding: 2.5rem 15rem;
 
     &__cards {
       flex-direction: row;
@@ -61,18 +66,18 @@
 
 @media (min-width: 1280px) {
   .pricing-container {
-    padding: 4rem 15rem;
+    padding: 4rem 25rem;
   }
 }
 
 @media (min-width: 1536px) and (max-width: 1920px) {
   .pricing-container {
-    padding: 4rem 25rem;
+    padding: 4rem 40rem;
   }
 }
 
 @media (min-width: 1921px) {
   .pricing-container {
-    padding: 4rem 50rem;
+    padding: 4rem 80rem;
   }
 }

@@ -58,7 +58,7 @@ function Pricing() {
           <PriceList text="Riskfri: 15 dagars återbetalningsperiod" />
         </PriceCard>
 
-        <PriceCard title="Specifik funktion" price="250 kr/Funktion">
+        {/* <PriceCard title="Specifik funktion" price="250 kr/Funktion">
           <PriceList
             text="Köp specifika
                   premiumfunktioner en gång"
@@ -75,7 +75,7 @@ function Pricing() {
             text="Riskfri: 15 dagars
                   återbetalningsperiod"
           />
-        </PriceCard>
+        </PriceCard> */}
       </section>
     </section>
   );
