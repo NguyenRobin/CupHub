@@ -1,7 +1,7 @@
 @import '../../../../../styles/variables.scss';
 @import '../../../../../styles/typography.scss';
 
-.price-card {
+.price-plan {
   box-shadow: rgba(0, 0, 0, 0.6) 1.95px 1.95px 2.6px;
   border-radius: 1rem;
 
@@ -11,12 +11,12 @@
   display: flex;
   justify-content: center;
   flex: 1;
-  &__package {
+  &__information {
     border-radius: 1rem;
     display: flex;
     gap: 2rem;
     flex-direction: column;
-    justify-content: space-evenly;
+    // justify-content: space-evenly;
     align-items: center;
     padding: 2.5rem;
     width: 100%;
@@ -42,18 +42,7 @@
     flex-direction: column;
     gap: 0.5rem;
     list-style: none;
-  }
-
-  &__btn {
-    background-color: var(--color-btn-primary);
-    color: var(--color-text-secondary);
-    padding: 1rem;
-    border: none;
-    cursor: pointer;
-    border-radius: 0.5rem;
-    width: 50%;
-    font-weight: bold;
-    font-family: sans-serif;
+    height: 100%;
   }
 }
 @media (min-width: 768px) {
