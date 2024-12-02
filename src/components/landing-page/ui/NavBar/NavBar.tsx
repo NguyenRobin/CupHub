@@ -19,7 +19,6 @@ function NavBar() {
     setIsOpen((prev) => !prev);
   }
 
-  console.log(isOpen);
   return (
     <>
       <nav className="nav">

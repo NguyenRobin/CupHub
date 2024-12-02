@@ -1,0 +1,41 @@
+.checkout-session {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  &__wrapper {
+    margin-top: 7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 2rem;
+    width: 100%;
+  }
+  &__status {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &__payment-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  &__info {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__details {
+    border: 1px solid var(--color-bg-secondary);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

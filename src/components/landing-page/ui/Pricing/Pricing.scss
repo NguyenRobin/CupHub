@@ -26,18 +26,42 @@
       font-weight: 200;
     }
   }
-  &__cards {
+  &__price-plans {
     display: flex;
     justify-content: center;
     flex-direction: column;
     gap: 2rem;
+  }
+
+  &__action {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__btn {
+    margin-top: 5rem;
+    background-color: var(--color-btn-primary);
+    color: var(--color-text-secondary);
+    padding: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    width: 50%;
+    font-weight: bold;
+    font-family: sans-serif;
+    text-align: center;
+    width: 15rem;
+    font-size: $font-size-sm;
   }
 }
 
 @media (min-width: 640px) {
   .pricing-container {
     // padding: 2.5rem 15rem;
-    &__cards {
+    &__price-plans {
       padding-left: 15rem;
       padding-right: 15rem;
     }
@@ -46,7 +70,7 @@
 
 @media (min-width: 768px) {
   .pricing-container {
-    &__cards {
+    &__price-plans {
       flex-direction: row;
       padding-left: 0;
       padding-right: 0;
@@ -58,7 +82,7 @@
   .pricing-container {
     padding: 2.5rem 15rem;
 
-    &__cards {
+    &__price-plans {
       flex-direction: row;
     }
   }

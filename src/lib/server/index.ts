@@ -348,3 +348,8 @@ export function sortStandingPointsByDescendingOrder(teams: TTeamStanding[]) {
     return 0; // everything is same
   });
 }
+
+export function formatPrice(amount: number) {
+  const price = (amount / 100).toFixed(2);
+  return price;
+}

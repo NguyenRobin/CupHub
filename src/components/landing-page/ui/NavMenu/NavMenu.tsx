@@ -28,30 +28,30 @@ function NavMenu({ closeModal }: Props) {
   }, [theme]);
 
   return (
-    <nav className="nav-menu" onClick={closeModal}>
+    <nav className="nav-menu">
       <ul className="nav-menu__ul">
-        <li className="nav-menu__ul--list">
+        <li className="nav-menu__ul--list" onClick={closeModal}>
           <AiOutlineHome className="nav-menu__ul--list-icon" />
           <Link className="nav-menu__ul--list-link" href="/">
             Hem
           </Link>
         </li>
 
-        <li className="nav-menu__ul--list">
+        <li className="nav-menu__ul--list" onClick={closeModal}>
           <GrGroup className="nav-menu__ul--list-icon" />
           <Link className="nav-menu__ul--list-link" href="/sport-events">
             Turneringar
           </Link>
         </li>
 
-        <li className="nav-menu__ul--list">
+        <li className="nav-menu__ul--list" onClick={closeModal}>
           <GrGroup className="nav-menu__ul--list-icon" />
           <Link className="nav-menu__ul--list-link" href="/about">
             Om Oss
           </Link>
         </li>
 
-        <li className="nav-menu__ul--list">
+        <li className="nav-menu__ul--list" onClick={closeModal}>
           <BsSend className="nav-menu__ul--list-icon" />
           <Link className="nav-menu__ul--list-link" href="/contact-us">
             Kontakt
