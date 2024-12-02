@@ -26,7 +26,7 @@
       font-weight: 200;
     }
   }
-  &__price-plan {
+  &__price-plans {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -42,6 +42,7 @@
   }
 
   &__btn {
+    margin-top: 5rem;
     background-color: var(--color-btn-primary);
     color: var(--color-text-secondary);
     padding: 1rem;
@@ -53,13 +54,14 @@
     font-family: sans-serif;
     text-align: center;
     width: 15rem;
+    font-size: $font-size-sm;
   }
 }
 
 @media (min-width: 640px) {
   .pricing-container {
     // padding: 2.5rem 15rem;
-    &__price-plan {
+    &__price-plans {
       padding-left: 15rem;
       padding-right: 15rem;
     }
@@ -68,7 +70,7 @@
 
 @media (min-width: 768px) {
   .pricing-container {
-    &__price-plan {
+    &__price-plans {
       flex-direction: row;
       padding-left: 0;
       padding-right: 0;
@@ -80,7 +82,7 @@
   .pricing-container {
     padding: 2.5rem 15rem;
 
-    &__price-plan {
+    &__price-plans {
       flex-direction: row;
     }
   }

@@ -4,6 +4,56 @@ import SubscriptionItem from './SubscriptionItem/SubscriptionItem';
 import './Pricing.scss';
 import Link from 'next/link';
 
+const plans = [
+  {
+    label: 'Starter',
+    value: '49 kr/månad',
+    currency: 'SEK',
+    href: '/checkout/subscription/free',
+    description:
+      'En prisvärd plan för att komma igång och skapa din första turnering enkelt.',
+    package: [
+      'Skapa en tunering',
+      'En användare',
+      'Begränsad lagring',
+      'Grundläggande support',
+    ],
+  },
+  {
+    label: 'Pro',
+    value: '199 kr/månad',
+    currency: 'SEK',
+    href: '/checkout/subscription/monthly',
+    description:
+      'Pro-planen ger full frihet med alla funktioner. Perfekt för föreningar.',
+    package: [
+      'Full tillgång till alla funktioner',
+      '3 antal användare',
+      'Obegränsad lagring',
+      'Prioriterad support"',
+      'Tillgång till gemenskap och forum',
+      'Riskfri: 15 dagars återbetalningsperiod',
+    ],
+  },
+  {
+    label: 'Unlimited',
+    value: '999 kr/år',
+    currency: 'SEK',
+    href: '/checkout/subscription/yearly',
+    description:
+      'Unlimited-planen ger maximal frihet med obegränsade användare, funktioner och support. Nu till ett rabatterat årspris.',
+    package: [
+      'Spara 34% jämfört med den månatliga planen',
+      'Full tillgång till alla funktioner',
+      'Obegränsat antal användare',
+      'Obegränsad lagring',
+      'Prioriterad support"',
+      'Tillgång till gemenskap och forum',
+      'Riskfri: 15 dagars återbetalningsperiod',
+    ],
+  },
+];
+
 function Pricing() {
   return (
     <section className="pricing-container" id="payments">
@@ -16,69 +66,28 @@ function Pricing() {
         </p>
       </section>
 
-      <section className="pricing-container__price-plan">
-        <PricePlan title="Gratis Plan" price="0 kr/Månad">
-          <SubscriptionItem item="Skapa en tunering" />
-          <SubscriptionItem item="En användare" />
-          <SubscriptionItem item="Begränsad lagring" />
-          <SubscriptionItem item="Grundläggande support" />
-
-          <section className="pricing-container__action">
-            <Link href="/" className="pricing-container__btn">
-              Välj Plan
-            </Link>
-          </section>
-        </PricePlan>
-
-        <PricePlan title="Månads Plan" price="249 kr/Månad">
-          <SubscriptionItem
-            item="Full tillgång till alla
-                  funktioner"
-          />
-          <SubscriptionItem item="En användare" />
-          <SubscriptionItem item="Obegränsat antal användare" />
-          <SubscriptionItem item="Obegränsad lagring" />
-          <SubscriptionItem item="Prioriterad support" />
-          <SubscriptionItem
-            item="Tillgång till gemenskap och
-                  forum"
-          />
-          <SubscriptionItem item="Riskfri: 15 dagars återbetalningsperiod" />
-
-          <section className="pricing-container__action">
-            <Link
-              href="/subscription-monthly"
-              className="pricing-container__btn"
+      <section className="pricing-container__price-plans">
+        {plans.map((plan) => {
+          return (
+            <PricePlan
+              key={plan.label}
+              title={plan.label}
+              price={plan.value}
+              optionalText={plan.label === 'Pro' ? '( Populärast )' : ''}
+              description={plan.description}
             >
-              Välj Plan
-            </Link>
-          </section>
-        </PricePlan>
+              {plan.package.map((item) => {
+                return <SubscriptionItem key={item} item={item} />;
+              })}
 
-        <PricePlan title="Årlig Plan" price="999 kr/År">
-          <SubscriptionItem
-            item="Spara 34% jämfört med den
-                  månatliga planen"
-          />
-          <SubscriptionItem
-            item="Full tillgång till alla
-                  funktioner"
-          />
-          <SubscriptionItem item="Obegränsat antal användare" />
-          <SubscriptionItem item="Obegränsad lagring" />
-          <SubscriptionItem item="Prioriterad support" />
-          <SubscriptionItem
-            item="Tillgång till gemenskap och
-                  forum"
-          />
-          <SubscriptionItem item="Riskfri: 15 dagars återbetalningsperiod" />
-
-          <section className="pricing-container__action">
-            <Link href="/" className="pricing-container__btn">
-              Välj Plan
-            </Link>
-          </section>
-        </PricePlan>
+              <section className="pricing-container__action">
+                <Link href={plan.href} className="pricing-container__btn">
+                  Välj Plan
+                </Link>
+              </section>
+            </PricePlan>
+          );
+        })}
 
         {/* <PricePlan title="Specifik funktion" price="250 kr/Funktion">
           <SubscriptionItem

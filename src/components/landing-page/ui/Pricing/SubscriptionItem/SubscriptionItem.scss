@@ -7,19 +7,20 @@ li {
   align-items: center;
   gap: 1rem;
   font-size: $font-size-sm;
+  color: #6a6a6a;
 
   .check-icon {
-    font-size: $font-size-lg;
+    font-size: $font-size-2xl;
     color: #008000;
   }
 }
 
 @media (min-width: 768px) {
   li {
-    font-size: $font-size-xs;
+    font-size: $font-size-sm;
 
     .check-icon {
-      font-size: $font-size-md;
+      font-size: $font-size-xl;
     }
   }
 }

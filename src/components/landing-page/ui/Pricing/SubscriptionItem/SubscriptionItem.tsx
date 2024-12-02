@@ -1,5 +1,6 @@
 import React from 'react';
-import { FaCheck } from 'react-icons/fa6';
+import { GoCheckCircle } from 'react-icons/go';
+
 import './SubscriptionItem.scss';
 
 type Props = {
@@ -9,8 +10,11 @@ type Props = {
 function SubscriptionItem({ item }: Props) {
   return (
     <li>
-      <FaCheck className="check-icon" />
-      {item}
+      <span>
+        <GoCheckCircle className="check-icon" />
+      </span>
+
+      <p>{item}</p>
     </li>
   );
 }
