@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { formatPrice } from '../../../../lib/server';
+import { formatPrice, formatUnixTimestampToDate } from '../../../../lib/server';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
@@ -12,7 +12,7 @@ export async function getCheckoutSessionById(id: string) {
     payment_status: session.payment_status,
     amount_total: formatPrice(session?.amount_total!),
     customer_email: session.customer_details?.email,
-    created: session.created,
+    created: formatUnixTimestampToDate(session.created),
     currency: session.currency,
   };
 }

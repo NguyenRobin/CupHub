@@ -353,3 +353,9 @@ export function formatPrice(amount: number) {
   const price = (amount / 100).toFixed(2);
   return price;
 }
+
+export function formatUnixTimestampToDate(unixTimestamp: number) {
+  const dateInMilliseconds = new Date(unixTimestamp * 1000); // to milliseconds
+  const date = dateInMilliseconds.toLocaleDateString();
+  return date;
+}

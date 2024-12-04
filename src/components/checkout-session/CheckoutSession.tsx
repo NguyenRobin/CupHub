@@ -66,7 +66,7 @@ function CheckoutSession() {
           <div className="checkout-session__payment-details">
             <p>Betalningsmetod:</p>
 
-            <div className="checkout-session__details">
+            <div className="checkout-session__summary">
               <div className="checkout-session__info">
                 <p>Transaktions ID</p>
                 <p>{id.slice(20, 30)}</p>
@@ -84,12 +84,16 @@ function CheckoutSession() {
 
               <div className="checkout-session__info">
                 <p>Status</p>
-                <p>{payment_status === 'paid' ? 'betald' : ''}</p>
+                <p>{payment_status === 'paid' ? 'Betald' : ''}</p>
+              </div>
+              <div className="checkout-session__info">
+                <p>Email</p>
+                <p>{customer_email}</p>
               </div>
             </div>
           </div>
 
-          <div>
+          <div className="checkout-session__total">
             <p>Totalt</p>
             <p>{amount_total} SEK</p>
           </div>
