@@ -3,14 +3,14 @@
   // display: flex;
   // justify-content: center;
   // align-items: center;
-  background-color: #eee;
+  background-color: var(--color-bg-body);
 }
 .checkmark__circle {
   stroke-dasharray: 166;
   stroke-dashoffset: 166;
   stroke-width: 2;
   stroke-miterlimit: 10;
-  stroke: var(--color-border-success);
+  stroke: #00c281;
   fill: none;
   animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
@@ -23,7 +23,7 @@
   stroke: #fff;
   stroke-miterlimit: 10;
   // margin: 10% auto;
-  box-shadow: inset 0px 0px 0px var(--color-border-success);
+  box-shadow: inset 0px 0px 0px #00c281;
   animation: fill 0.4s ease-in-out 0.4s forwards,
     scale 0.3s ease-in-out 0.9s both;
 }
@@ -49,6 +49,6 @@
 }
 @keyframes fill {
   100% {
-    box-shadow: inset 0px 0px 0px 30px var(--color-border-success);
+    box-shadow: inset 0px 0px 0px 30px #00c281;
   }
 }
