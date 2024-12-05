@@ -9,7 +9,7 @@ const TOKEN_NAME = process.env.TOKEN_NAME;
 
 export async function authMiddleware(request: NextRequest) {
   const token = request.cookies.get(TOKEN_NAME!)?.value;
-  console.log('authMiddleware logging in', token);
+
   if (!token) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
@@ -18,12 +18,13 @@ export async function authMiddleware(request: NextRequest) {
     const isTokenValid = await verifyTokenByJose(token);
     console.log('isTokenValid verifyTokenByJose  ->', isTokenValid);
     if (!isTokenValid) {
-      // console.log('!isTokenValid', isTokenValid);
       return NextResponse.redirect(new URL('/login', request.url));
-      // return NextResponse.next();
     }
-
-    return NextResponse.next();
+    if (isTokenValid) {
+      console.log('first');
+      return NextResponse.next();
+      // return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
   } catch (error) {
     return NextResponse.redirect(new URL('/login', request.url));
   }

@@ -1,5 +1,10 @@
 import Stripe from 'stripe';
-import { formatPrice, formatUnixTimestampToDate } from '../../../../lib/server';
+import {
+  formatPrice,
+  formatUnixTimestampToDate,
+  verifyToken,
+} from '../../../../lib/server';
+import { cookies } from 'next/headers';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
@@ -15,4 +20,11 @@ export async function getCheckoutSessionById(id: string) {
     created: formatUnixTimestampToDate(session.created),
     currency: session.currency,
   };
+}
+
+export function isUserLoggedIn() {
+  const cookieStore = cookies();
+  const token = cookieStore.get(process.env.TOKEN_NAME!)?.value;
+  const isTokenValid = verifyToken(token!);
+  return isTokenValid ? true : false;
 }

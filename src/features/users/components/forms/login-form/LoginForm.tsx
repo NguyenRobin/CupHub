@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './LoginForm.scss';
 import Link from 'next/link';
@@ -32,13 +32,43 @@ type TErrorMessages = {
   email?: string;
   password?: string;
 };
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 function LoginForm() {
   const [errorMessages, setErrorMessages] = useState<TErrorMessages>({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState('robinnguyen');
-  const [password, setPassword] = useState('papimami');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState<null | boolean>(null);
+  const [user, setUser] = useState('DemoUser');
+  const [password, setPassword] = useState('Demo123');
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token`
+        );
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch token validation');
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        if (data.isLoggedIn) {
+          setIsUserLoggedIn(true);
+          router.push('/dashboard');
+        } else {
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error('Error validating token:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.type === 'text') {
@@ -83,7 +113,9 @@ function LoginForm() {
 
       const data = await response.json();
 
-      if (data.status !== 200) {
+      if (data.status === 200) {
+        router.push('/dashboard');
+      } else {
         setErrorMessages({
           username: data.message,
           email: data.message,
@@ -91,13 +123,6 @@ function LoginForm() {
         setPassword('');
         setIsLoading(false);
       }
-
-      router.push('/dashboard');
-
-      //! REMOVE LATER MAYBE? BUT THIS CURRENT MAKES IT GO TO DASHBOARD MORE USE FRIENDLY
-      const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-      await delay(3000);
-      setIsLoading(false);
     } catch (error) {
       if (error instanceof z.ZodError) {
         const errorObj: TErrorMessages = {};
@@ -111,56 +136,68 @@ function LoginForm() {
     }
   }
 
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+          height: '100%',
+          gap: '4rem',
+        }}
+      >
+        <LoadingSpinner size={50} />
+        {isUserLoggedIn && <p>Loggar in...</p>}
+      </div>
+    );
+  }
+
   return (
     <div className="login">
       <NavBar />
-      {isLoading ? (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
-          <LoadingSpinner size={50} />
-          <p>Loggar in...</p>
+
+      <div className="login__container">
+        <div className="login__heading">
+          <h2>Logga in</h2>
+          <p>
+            Har du inget konto? <Link href="/signup">Skapa konto</Link>
+          </p>
         </div>
-      ) : (
-        <div className="login__container">
-          <div className="login__heading">
-            <h2>Logga in</h2>
-            <p>
-              Har du inget konto? <Link href="/signup">Skapa konto</Link>
-            </p>
-          </div>
 
-          <form className="login__form">
-            <AuthInput
-              htmlFor="text"
-              labelText="E-post/Användarnamn"
-              type="text"
-              name="text"
-              placeholder="användarnamn"
-              errorMessage={errorMessages.email || errorMessages.username || ''}
-              onChange={handleOnChange}
-              value={user}
-            />
+        <form className="login__form">
+          <AuthInput
+            htmlFor="text"
+            labelText="E-post/Användarnamn"
+            type="text"
+            name="text"
+            placeholder="användarnamn"
+            errorMessage={errorMessages.email || errorMessages.username || ''}
+            onChange={handleOnChange}
+            value={user}
+          />
 
-            <AuthInput
-              htmlFor="password"
-              labelText="Lösenord"
-              type="password"
-              name="password"
-              placeholder="******"
-              errorMessage={errorMessages.password || ''}
-              onChange={handleOnChange}
-              value={password}
-            />
+          <AuthInput
+            htmlFor="password"
+            labelText="Lösenord"
+            type="password"
+            name="password"
+            placeholder="******"
+            errorMessage={errorMessages.password || ''}
+            onChange={handleOnChange}
+            value={password}
+          />
 
-            <button
-              onClick={handleSubmit}
-              disabled={isLoading}
-              className="login__button"
-            >
-              {isLoading ? <LoadingSpinner /> : 'Logga in'}
-            </button>
-          </form>
-        </div>
-      )}
+          <button
+            onClick={handleSubmit}
+            disabled={isLoading}
+            className="login__button"
+          >
+            {isLoading ? <LoadingSpinner /> : 'Logga in'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
