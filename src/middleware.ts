@@ -10,8 +10,9 @@ if (process.env.TOKEN_NAME === undefined) {
 
 export async function middleware(request: NextRequest) {
   const TOKEN_NAME = process.env.TOKEN_NAME;
-  console.log(request.nextUrl.pathname);
   const token = request.cookies.get(TOKEN_NAME!)?.value;
+
+  console.log('------>', request.nextUrl.pathname, '+', token, '<------');
 
   if (
     request.nextUrl.pathname.startsWith('/api/checkout_sessions') ||
@@ -19,11 +20,17 @@ export async function middleware(request: NextRequest) {
   ) {
     return NextResponse.next();
   }
+
   if (
-    (request.nextUrl.pathname.startsWith('/api/auth/login') ||
-      request.nextUrl.pathname.startsWith('/api/auth/signup')) &&
+    (request.nextUrl.pathname.startsWith('/api/auth/signup') ||
+      request.nextUrl.pathname.startsWith('/api/auth/login')) &&
     !token
   ) {
+    return NextResponse.next();
+  }
+
+  if (request.nextUrl.pathname.startsWith('/api/auth/token') && token) {
+    console.log('true', ' YEHEEE');
     return NextResponse.next();
   }
 

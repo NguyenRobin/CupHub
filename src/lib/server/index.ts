@@ -44,6 +44,7 @@ export function createToken(user: { id: Types.ObjectId; username: string }) {
 
 export function verifyToken(encodedToken: string) {
   const decodedToken = jwt.verify(encodedToken, JWT_SECRET_KEY!);
+  console.log(decodedToken, 'decodedToken');
   return decodedToken as TJwtPayload;
 }
 
