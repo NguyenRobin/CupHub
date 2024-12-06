@@ -49,10 +49,6 @@ function LoginForm() {
           `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token`
         );
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch token validation');
-        }
-
         const data = await response.json();
         console.log(data);
 
