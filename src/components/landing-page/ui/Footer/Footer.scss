@@ -1,42 +1,74 @@
-@import "../../../../styles/variables.scss";
-@import "../../../../styles/typography.scss";
-@import "../../../../styles/dark.scss";
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/typography.scss';
+@import '../../../../styles/dark.scss';
 
 .footer-container {
-  background-color: $bg-color-primary;
+  background-color: var(--color-bg-secondary);
   padding: 2.5rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto;
-  gap: 2.5rem;
-  width: 100%;
+  // display: grid;
+  // grid-template-columns: repeat(2, 1fr);
+  // grid-template-rows: auto;
+  // gap: 2.5rem;
+  // width: 100%;
 
-  section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 2.5rem;
+    width: 100%;
 
-    h3 {
-      font-size: $font-size-xl;
-      color: $color-primary;
-    }
-    ul {
-      list-style-type: none;
+    section {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-      color: $color-primary;
 
-      li {
-        font-size: $font-size-sm;
-        color: #cfcece;
+      h3 {
+        font-size: $font-size-xl;
+        color: $color-primary;
+      }
+      ul {
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        color: $color-primary;
+
+        li {
+          font-size: $font-size-xs;
+          color: #cfcece;
+        }
       }
     }
   }
 }
 
-.dark {
+@media (min-width: 640px) {
   .footer-container {
-    background-color: $dark-bg-primary;
+    &__items {
+      grid-template-columns: repeat(3, 1fr);
+      padding: 0 5rem;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+}
+
+@media (min-width: 1280px) {
+  .footer-container {
+    padding: 4rem 15rem;
+  }
+}
+
+@media (min-width: 1536px) and (max-width: 1920px) {
+  .footer-container {
+    padding: 4rem 25rem;
+  }
+}
+
+@media (min-width: 1921px) {
+  .footer-container {
+    padding: 4rem 50rem;
   }
 }

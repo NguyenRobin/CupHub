@@ -1,12 +1,11 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import connectToMongoDB from '../../../../lib/server/connectToMongoDB';
-import UserModel from '../../../../models/User';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
+import UserModel from '../../../../features/users/models/User';
 import {
   compareUserInputPasswordWithHashedPassword,
   createToken,
 } from '../../../../lib/server';
-import { env } from 'process';
 
 export async function POST(request: Request) {
   try {
@@ -37,6 +36,7 @@ export async function POST(request: Request) {
 
     if (username && password) {
       await connectToMongoDB();
+
       const user = await UserModel.findOne({ username });
 
       if (!user) {
@@ -55,6 +55,22 @@ export async function POST(request: Request) {
           message: 'You have entered an invalid email or password',
         });
       } else {
+        // const userPayload = {
+        //   id: user._id,
+        //   username: user.username,
+        // };
+
+        // const token = createToken(userPayload);
+        // const oneDay = 24 * 60 * 60 * 1000;
+        // const session = cookies().set(process.env.TOKEN_NAME!, token, {
+        //   httpOnly: false,
+        //   secure: process.env.NODE_ENV === 'production',
+        //   sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+        //   path: '/',
+        //   maxAge: oneDay,
+        //   // maxAge: 60 * 15,
+        // });
+
         const userPayload = {
           id: user._id,
           username: user.username,
@@ -63,12 +79,9 @@ export async function POST(request: Request) {
         const token = createToken(userPayload);
         const oneDay = 24 * 60 * 60 * 1000;
         const session = cookies().set(process.env.TOKEN_NAME!, token, {
-          httpOnly: false,
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+          httpOnly: true,
           path: '/',
-          maxAge: oneDay,
-          // maxAge: 60 * 15,
+          maxAge: 60 * 15,
         });
 
         return NextResponse.json({

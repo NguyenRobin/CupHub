@@ -1,0 +1,108 @@
+@import '../../../../../styles/variables.scss';
+@import '../../../../../styles/typography.scss';
+
+.price-plan {
+  box-shadow: rgba(0, 0, 0, 0.6) 1.95px 1.95px 2.6px;
+  border-radius: 1rem;
+
+  background-color: #fff;
+
+  min-height: 41rem;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  &__information {
+    border-radius: 1rem;
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    // justify-content: space-evenly;
+    // align-items: center;
+    padding: 2rem;
+    width: 100%;
+  }
+
+  &__price {
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    gap: 0.5rem;
+
+    h4 {
+      font-size: $font-size-3xl;
+      color: var(--color-text-heading-tertiary);
+      font-weight: 600;
+    }
+    h2 {
+      font-size: $font-size-5xl;
+    }
+    &--subscription {
+      font-size: $font-size-md;
+      color: #6a6a6a;
+    }
+    p {
+      font-size: $font-size-sm;
+      color: #6a6a6a;
+    }
+  }
+
+  &__children {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    list-style: none;
+    height: 100%;
+  }
+}
+
+.price-plan:nth-child(2) {
+  border: 2.5px solid orange;
+  scale: 1.05;
+}
+@media (min-width: 768px) {
+  .price-card {
+    &__package {
+      padding: 2rem 1rem;
+    }
+    &__price {
+      h4 {
+        font-size: $font-size-lg;
+        color: #818181;
+      }
+      h2 {
+        font-size: $font-size-xl;
+      }
+    }
+    &__children {
+    }
+
+    &__btn {
+      margin-top: auto;
+      text-wrap: nowrap;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .price-card {
+    &__package {
+      padding: 4rem 2rem;
+    }
+    &__price {
+      h4 {
+        font-size: $font-size-xl;
+        color: #818181;
+      }
+      h2 {
+        font-size: $font-size-2xl;
+      }
+    }
+    &__children {
+      gap: 1rem;
+    }
+
+    &__btn {
+      margin-top: auto;
+    }
+  }
+}

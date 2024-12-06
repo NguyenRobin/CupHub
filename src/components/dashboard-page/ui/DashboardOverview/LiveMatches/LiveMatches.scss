@@ -1,0 +1,28 @@
+@import '../../../../../styles/typography.scss';
+@import '../../../../../styles/variables.scss';
+@import '../../../../../styles/dark.scss';
+.live-matches__title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  font-size: $font-size-lg;
+  color: black;
+  svg {
+    font-size: $font-size-3xl;
+  }
+
+  h2 {
+    font-size: $font-size-lg;
+    font-weight: 400;
+  }
+}
+.live-matches__ongoing {
+  width: 100%;
+  // display: flex;
+  // justify-content: space-between;
+  // align-items: center;
+  background-color: #f1f3f5;
+  background-color: #fff;
+  padding: 1.5rem;
+}

@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { updateMatchResult } from "../../../../../lib/server/dbCollections/match";
+import { NextResponse } from 'next/server';
+import { updateMatchResultDB } from '../../../../../features/matches/server/db/match';
 
 export async function PATCH(
   request: Request,
@@ -16,7 +16,7 @@ export async function PATCH(
       });
     }
 
-    const updatedMatchResults = await updateMatchResult(params.id, result);
+    const updatedMatchResults = await updateMatchResultDB(params.id, result);
 
     return NextResponse.json({
       status: 200,
@@ -26,7 +26,7 @@ export async function PATCH(
     return NextResponse.json({
       status: 500,
       error: error.message,
-      message: "Error updating a match",
+      message: 'Error updating a match',
       errorMsg: error,
     });
   }

@@ -1,19 +1,20 @@
-import { NextResponse } from "next/server";
-import { getMatch } from "../../../../lib/server/dbCollections/match";
-import { Types } from "mongoose";
+import { NextResponse } from 'next/server';
+import { getMatchDB } from '../../../../features/matches/server/db/match';
+import { Types } from 'mongoose';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: Types.ObjectId } }
 ) {
+  const { id } = params;
   try {
     console.log(params.id);
-    const match = await getMatch(params.id);
+    const match = await getMatchDB(id);
 
     if (!match) {
       return NextResponse.json({
         status: 404,
-        message: "Match not found",
+        message: 'Match not found',
       });
     }
     return NextResponse.json({
@@ -24,7 +25,7 @@ export async function GET(
     return NextResponse.json({
       status: 500,
       error: error.message,
-      message: "Error getting a match",
+      message: 'Error getting a match',
       errorMsg: error,
     });
   }
@@ -41,7 +42,7 @@ export async function UPDATE(
     return NextResponse.json({
       status: 500,
       error: error.message,
-      message: "Error updating a match",
+      message: 'Error updating a match',
       errorMsg: error,
     });
   }
@@ -74,7 +75,7 @@ export async function PATCH(
     return NextResponse.json({
       status: 500,
       error: error.message,
-      message: "Error updating a match",
+      message: 'Error updating a match',
       errorMsg: error,
     });
   }

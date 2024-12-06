@@ -1,0 +1,26 @@
+@import '../../../../../styles/variables.scss';
+@import '../../../../../styles/typography.scss';
+@import '../../../../../styles/dark.scss';
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: $font-size-sm;
+  color: #6a6a6a;
+
+  .check-icon {
+    font-size: $font-size-2xl;
+    color: #008000;
+  }
+}
+
+@media (min-width: 768px) {
+  li {
+    font-size: $font-size-sm;
+
+    .check-icon {
+      font-size: $font-size-xl;
+    }
+  }
+}

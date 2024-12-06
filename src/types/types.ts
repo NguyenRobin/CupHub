@@ -1,4 +1,5 @@
 import { Types } from 'mongoose';
+import { format } from 'path';
 
 export type KeyValue =
   | 'rounds'
@@ -13,7 +14,7 @@ export type KeyValue =
   | 'roundOf32'
   | 'roundOf62';
 
-export type TCreateTournamentBody = {
+export type TBodyTournament = {
   name: string;
   description?: string;
   sport?: string;
@@ -24,7 +25,7 @@ export type TCreateTournamentBody = {
   total_groups?: number;
   status: 'scheduled' | 'ongoing' | 'completed';
   points_system: {
-    win: number;
+    won: number;
     draw: number;
     loss: number;
     teamsPerGroupAdvancing?: number;
@@ -33,6 +34,54 @@ export type TCreateTournamentBody = {
   format: 'league' | 'knockout' | 'group_stage_with_knockout';
   teams_participating?: string[];
   groups: { group: string; teams: string[] }[];
+};
+
+export type TNewTournament = {
+  _id: Types.ObjectId;
+  name: string;
+  description: string;
+  location: string;
+  startDate: Date;
+  endDate: Date;
+  total_teams: number;
+  status: 'scheduled' | 'ongoing' | 'completed';
+  points_system: {
+    won: number;
+    draw: number;
+    loss: number;
+    numberOfMeetings: number;
+    teamsPerGroupAdvancing?: number;
+  };
+  format: 'league' | 'group_stage_with_knockout' | 'knockout';
+  groups: Types.ObjectId[];
+  createdByUserId: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+  teams_participating: { team_id: Types.ObjectId }[];
+};
+
+export type TTournament = {
+  _id: Types.ObjectId;
+  name: string;
+  description: string;
+  location: string;
+  startDate: Date;
+  endDate: Date;
+  total_teams: number;
+  status: 'scheduled' | 'ongoing' | 'completed';
+  points_system: {
+    won: number;
+    draw: number;
+    loss: number;
+    numberOfMeetings: number;
+    teamsPerGroupAdvancing?: number;
+  };
+  format: 'league' | 'group_stage_with_knockout' | 'knockout';
+  groups: Types.ObjectId[];
+  createdByUserId: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+  teams_participating: { team_id: Types.ObjectId }[];
 };
 
 export type TCreateLeague = {
@@ -46,7 +95,26 @@ export type TCreateLeague = {
   total_teams: number;
   status: string;
   points_system: {
-    win: number;
+    won: number;
+    draw: number;
+    loss: number;
+    numberOfMeetings: number;
+    teamsPerGroupAdvancing?: number;
+  };
+  format: string;
+};
+export type TBodyLeague = {
+  name: string;
+  description?: string;
+  location?: string;
+  startDate: Date;
+  endDate: Date;
+  sport?: string;
+  teams_participating?: string[];
+  total_teams: number;
+  status: string;
+  points_system: {
+    won: number;
     draw: number;
     loss: number;
     numberOfMeetings: number;
@@ -69,11 +137,35 @@ export type TGroup = {
   tournament_id: Types.ObjectId;
   group: string;
   teams: { team_id: Types.ObjectId; name: string }[];
-  standings: TStanding[];
+  standings: TTeamStanding[];
+  createdAt?: Date;
+  updatedAt?: Date;
+  __v?: number;
+};
+
+export type TTeamStanding = {
+  _id?: Types.ObjectId;
+  team_id: Types.ObjectId;
+  team: string;
+  won: number;
+  draw: number;
+  loss: number;
+  goals_scored: number;
+  goals_conceded: number;
+  goal_difference: number;
+  matches_played: number;
+  points: number;
 };
 
 export type TStanding = {
-  team_id: Types.ObjectId;;
+  _id?: Types.ObjectId;
+  league_id: Types.ObjectId;
+  name: string;
+  standings: TLeagueStanding[];
+};
+
+export type TLeagueStanding = {
+  team_id: Types.ObjectId;
   team: string;
   won: number;
   draw: number;
@@ -91,22 +183,57 @@ export type TMatch = {
   tournament_id?: Types.ObjectId;
   group_id?: Types.ObjectId;
   round_id?: string;
+  isPlayoff?: boolean;
+  index?: number;
+  round_type?: TRounds;
   league_id?: Types.ObjectId;
   status: 'scheduled' | 'ongoing' | 'completed';
-  homeTeam?: { team_id: string; name: string; score: number | null };
-  awayTeam?: { team_id: string; name: string; score: number | null };
+  homeTeam: {
+    team_id?: Types.ObjectId;
+    name: string;
+    score: number;
+  };
+  awayTeam: {
+    team_id?: Types.ObjectId;
+    name: string;
+    score: number;
+  };
   result?: string;
   winner?: string;
   date?: Date;
   location?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
+
+export type TRounds =
+  | 'round-64'
+  | 'round-32'
+  | 'round-16'
+  | 'quarterfinal'
+  | 'semifinal'
+  | 'final';
 
 export type TTeam = {
   _id: Types.ObjectId;
   name: string;
-  createdByUserId?: Types.ObjectId;
+  createdByUserId: Types.ObjectId;
+  tournaments_teamParticipates_in?: { tournament_id: Types.ObjectId }[];
+  leagues_teamParticipates_in?: { league_id: Types.ObjectId }[];
+};
+
+export type TCreateTeam = {
+  name: string;
   tournaments_teamParticipates_in?: Types.ObjectId[];
   leagues_teamParticipates_in?: Types.ObjectId[];
+  createdByUserId: Types.ObjectId;
 };
 
 export type TWho = 'homeTeam' | 'awayTeam';
+
+export type TPlayoff = {
+  round: string;
+  matches: TMatch[];
+};
+
+export type TStatus = 'scheduled' | 'ongoing' | 'completed';

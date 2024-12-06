@@ -1,0 +1,65 @@
+@import '../../../../../styles/variables.scss';
+@import '../../../../../styles/typography.scss';
+
+.match {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__team {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    &--home,
+    &--away {
+      background-color: #fff;
+      border-radius: 1rem;
+      border: 1px solid $border-color-success;
+      height: 5rem;
+      width: 5rem;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      p {
+        font-size: 3rem;
+      }
+    }
+  }
+  &__score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    &--date {
+      p {
+        font-size: $font-size-xs;
+      }
+    }
+    &--result {
+      p {
+        font-size: $font-size-2xl;
+        font-weight: 700;
+        color: black;
+        text-align: center;
+        letter-spacing: 0.2rem;
+      }
+    }
+
+    &--status {
+      p {
+        font-size: $font-size-xs;
+        font-weight: bold;
+      }
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+      }
+    }
+  }
+}

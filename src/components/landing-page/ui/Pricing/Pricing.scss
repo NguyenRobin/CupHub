@@ -1,37 +1,107 @@
-@import "../../../../styles/variables.scss";
-@import "../../../../styles/typography.scss";
-@import "../../../../styles/dark.scss";
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/typography.scss';
+@import '../../../../styles/dark.scss';
 
 .pricing-container {
-  background-color: $bg-color-primary;
+  background-color: var(--color-bg-secondary);
   padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
 
-  &_pricing-title {
+  &__title {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
+    margin-bottom: 3rem;
 
     h2 {
-      color: $color-primary;
+      color: var(--color-text-heading-secondary);
       font-size: $font-size-3xl;
       text-align: center;
       font-weight: 400;
     }
     p {
       text-align: center;
-      color: $color-primary;
+      color: var(--color-text-paragraph-secondary);
       font-size: $font-size-sm;
       font-weight: 200;
     }
   }
+  &__price-plans {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  &__action {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__btn {
+    margin-top: 5rem;
+    background-color: var(--color-btn-primary);
+    color: var(--color-text-secondary);
+    padding: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    width: 50%;
+    font-weight: bold;
+    font-family: sans-serif;
+    text-align: center;
+    width: 15rem;
+    font-size: $font-size-sm;
+  }
 }
 
-.dark {
+@media (min-width: 640px) {
   .pricing-container {
-    background-color: $dark-bg-primary;
+    // padding: 2.5rem 15rem;
+    &__price-plans {
+      padding-left: 15rem;
+      padding-right: 15rem;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .pricing-container {
+    &__price-plans {
+      flex-direction: row;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .pricing-container {
+    padding: 2.5rem 15rem;
+
+    &__price-plans {
+      flex-direction: row;
+    }
+  }
+}
+
+@media (min-width: 1280px) {
+  .pricing-container {
+    padding: 4rem 25rem;
+  }
+}
+
+@media (min-width: 1536px) and (max-width: 1920px) {
+  .pricing-container {
+    padding: 4rem 40rem;
+  }
+}
+
+@media (min-width: 1921px) {
+  .pricing-container {
+    padding: 4rem 80rem;
   }
 }

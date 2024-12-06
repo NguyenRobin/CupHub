@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import { NextResponse } from 'next/server';
-import connectToMongoDB from '../../../../lib/server/connectToMongoDB';
-import RoundModel from '../../../../models/Round';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
+import RoundModel from '../../../../features/rounds/models/Round';
+import MatchModel from '../../../../features/matches/models/Match';
 
 export async function GET(
   request: Request,
@@ -17,6 +18,13 @@ export async function GET(
     }
 
     await connectToMongoDB();
+
+    const test = await MatchModel.find({
+      tournament_id: tournament_id,
+      isPlayoff: true,
+    });
+
+    console.log(test);
 
     const { playoff } = await RoundModel.findOne({ tournament_id });
 

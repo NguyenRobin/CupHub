@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import connectToMongoDB from '../../../../lib/server/connectToMongoDB';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
 import mongoose from 'mongoose';
-import GroupModel from '../../../../models/Group';
-import MatchModel from '../../../../models/Match';
+import GroupModel from '../../../../features/groups/models/Group';
+import MatchModel from '../../../../features/matches/models/Match';
 
 export async function GET(
   request: Request,

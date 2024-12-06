@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
-import connectToMongoDB from '../../../../lib/server/connectToMongoDB';
-import TournamentModel from '../../../../models/Tournament';
-import UserModel from '../../../../models/User';
-import mongoose from 'mongoose';
-import MatchModel from '../../../../models/Match';
-import GroupModel from '../../../../models/Group';
-import RoundModel from '../../../../models/Round';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
+import TournamentModel from '../../../../features/tournaments/models/Tournament';
+import UserModel from '../../../../features/users/models/User';
+import mongoose, { Types } from 'mongoose';
+import MatchModel from '../../../../features/matches/models/Match';
+import GroupModel from '../../../../features/groups/models/Group';
+import RoundModel from '../../../../features/rounds/models/Round';
 import { exec } from 'child_process';
+import { deleteTournamentById } from '../../../../features/tournaments/server/actions/tournament';
 
 export async function GET(
   request: Request,
@@ -119,57 +120,76 @@ export async function PATCH(
   }
 }
 
+// export async function DELETE(
+//   request: Request,
+//   { params }: { params: { id: string } }
+// ) {
+//   const { id } = params;
+//   const { searchParams } = new URL(request.url);
+//   const userId = searchParams.get('userId');
+
+//   try {
+//     if (!userId || !mongoose.isValidObjectId(userId)) {
+//       return NextResponse.json({
+//         message: 'Invalid userId for ObjectId',
+//         status: 400,
+//       });
+//     }
+
+//     if (!id || !mongoose.isValidObjectId(id)) {
+//       return NextResponse.json({
+//         message: 'Invalid id for ObjectId',
+//         status: 400,
+//       });
+//     }
+
+//     await connectToMongoDB();
+
+//     const user = await UserModel.findById(userId);
+//     if (!user) {
+//       return NextResponse.json({
+//         status: 404,
+//         message: 'User not found in database',
+//       });
+//     }
+
+//     const tournament = await TournamentModel.findOne({
+//       _id: id,
+//       createdByUserId: userId,
+//     });
+
+//     if (!tournament) {
+//       return NextResponse.json({
+//         status: 404,
+//         message: 'Tournament not found in database',
+//       });
+//     }
+
+//     await TournamentModel.findByIdAndDelete(id);
+
+//     return NextResponse.json({
+//       status: 200,
+//       message: 'Tournament deleted successfully',
+//     });
+//   } catch (error: any) {
+//     return NextResponse.json({
+//       status: 500,
+//       error: error.message,
+//       message: 'Error deleting a tournament',
+//     });
+//   }
+// }
+
 export async function DELETE(
   request: Request,
-  { params }: { params: { tournament: string } }
+  { params }: { params: { id: Types.ObjectId } }
 ) {
-  const id = params.tournament;
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get('userId');
+  const { id } = params;
 
   try {
-    if (!userId || !mongoose.isValidObjectId(userId)) {
-      return NextResponse.json({
-        message: 'Invalid userId for ObjectId',
-        status: 400,
-      });
-    }
+    const deletedTournament = await deleteTournamentById(id);
 
-    if (!id || !mongoose.isValidObjectId(id)) {
-      return NextResponse.json({
-        message: 'Invalid id for ObjectId',
-        status: 400,
-      });
-    }
-
-    await connectToMongoDB();
-
-    const user = await UserModel.findById(userId);
-    if (!user) {
-      return NextResponse.json({
-        status: 404,
-        message: 'User not found in database',
-      });
-    }
-
-    const tournament = await TournamentModel.findOne({
-      _id: id,
-      createdByUserId: userId,
-    });
-
-    if (!tournament) {
-      return NextResponse.json({
-        status: 404,
-        message: 'Tournament not found in database',
-      });
-    }
-
-    await TournamentModel.findByIdAndDelete(id);
-
-    return NextResponse.json({
-      status: 200,
-      message: 'Tournament deleted successfully',
-    });
+    return NextResponse.json(deletedTournament);
   } catch (error: any) {
     return NextResponse.json({
       status: 500,

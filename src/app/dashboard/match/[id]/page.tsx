@@ -1,29 +1,16 @@
 import React, { Suspense } from 'react';
-import Match from '../../../../components/dashboard-page/ui/Match/Match';
-import { cookies } from 'next/headers';
-import { getMatchById } from '../../../actions';
-import LoadingSpinner from '../../../../components/loading-spinner/LoadingSpinner';
+import LoadingSpinner from '../../../../components/ui/loading-spinner/LoadingSpinner';
+import Match from '../../../../features/matches/components/ui/Match/Match';
+import { getMatchByID } from '../../../../features/matches/server/actions/match';
+import { Types } from 'mongoose';
 
-async function MatchPage({ params }: { params: { id: string } }) {
+async function MatchPage({ params }: { params: { id: Types.ObjectId } }) {
   const { id } = params;
-  const match = await getMatchById(id);
+  const match = await getMatchByID(id);
 
   return (
-    <Suspense
-      fallback={
-        <div
-          style={{
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <LoadingSpinner size={40} />
-        </div>
-      }
-    >
-      <Match match={match} />;
+    <Suspense fallback={<LoadingSpinner size={40} />}>
+      <Match match={match.match} />
     </Suspense>
   );
 }

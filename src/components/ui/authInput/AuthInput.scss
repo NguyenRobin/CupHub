@@ -1,0 +1,33 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/typography.scss';
+
+.auth-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-size: $font-size-md;
+    color: var(--color-text-paragraph-primary);
+  }
+  input {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(213, 213, 213);
+    font-size: $font-size-xl;
+  }
+
+  input:active,
+  input:focus {
+    border: 2px solid $bg-color-primary;
+    outline: none;
+  }
+
+  input.invalid {
+    border-color: red;
+  }
+
+  p.invalid {
+    color: red;
+  }
+}

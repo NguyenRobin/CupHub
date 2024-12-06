@@ -1,15 +1,11 @@
 import React from 'react';
-import Tournament from '../../../../../components/dashboard-page/ui/Tournament/Tournament';
-
-import {
-  getTournamentById,
-  getTournamentGroupsById,
-} from '../../../../actions';
+import Tournament from '../../../../../features/tournaments/components/ui/Tournament/Tournament';
+import { getTournamentGroupsById } from '../../../../actions';
 import { GiChampions } from 'react-icons/gi';
 
 async function page({ params }: { params: { id: string } }) {
   const { id } = params;
-  const tournament = await getTournamentById(id);
+
   const { groups } = await getTournamentGroupsById(id);
 
   const teams_participating = [];
@@ -23,7 +19,7 @@ async function page({ params }: { params: { id: string } }) {
     }
   }
   return (
-    <Tournament data={tournament}>
+    <Tournament tournamentId={id}>
       <div className="tournament-overview-details__teams-participating">
         <div className="tournament-overview-details__teams-participating__title">
           <GiChampions />

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import { RxDashboard } from 'react-icons/rx';
 import { IoSettingsOutline } from 'react-icons/io5';
@@ -11,16 +13,80 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 import Link from 'next/link';
 import './NavMenuDashboard.scss';
 import { useTheme } from '../../../../context/ThemeContext';
-import SwitchThemeMode from '../../../switch-theme-mode/SwitchThemeMode';
+import SwitchThemeMode from '../../../ui/switch-theme-mode/SwitchThemeMode';
+import { useRouter } from 'next/navigation';
 
 type Props = {
-  closeModal: () => void;
+  closeModal?: () => void;
 };
+
+const categories = [
+  {
+    category: 'Dashboard',
+    icon: <RxDashboard />,
+  },
+  {
+    category: 'Evenemang',
+    subCategories: [
+      { title: 'Evenemang', href: '/events' },
+      { title: 'Skapa Evenemang', href: '/create-event' },
+      { title: 'Hantera Evenemang', href: '/update-event' },
+    ],
+    icon: <SlEvent />,
+  },
+  {
+    category: 'Lag och Medlemmar',
+    subCategories: [
+      { title: 'Skapa Lag', href: '/create-teams' },
+      { title: 'Hantera Lag', href: '/update-teams' },
+      { title: 'Medlemslista', href: '/team-memberships' },
+    ],
+    icon: <RiTeamLine />,
+  },
+  {
+    category: 'Kommunikation',
+    subCategories: [
+      { title: 'Meddelanden', href: '/messages' },
+      { title: 'Notiser', href: '/notifications' },
+      { title: 'Forum / Diskussionsgrupper', href: '/forms' },
+    ],
+    icon: <GrChatOption />,
+  },
+
+  {
+    category: 'Betalning',
+    subCategories: [
+      { title: 'Fakturor och Betalningar', href: '/payments' },
+      { title: 'Prenumerationer', href: '/subscriptions' },
+    ],
+    icon: <RiSecurePaymentLine />,
+  },
+
+  {
+    category: 'Inställningar',
+    subCategories: [
+      { title: 'Profilinställningar', href: '/profile-settings' },
+      { title: 'Systeminställningar', href: '/system-settings' },
+      { title: 'Notisinställningar', href: '/notifications-settings' },
+    ],
+    icon: <IoSettingsOutline />,
+  },
+  {
+    category: 'Support och Hjälp',
+    subCategories: [
+      { title: 'Hjälpcenter', href: '/help' },
+      { title: 'Kontakt Support', href: '/contact' },
+      { title: 'Feedback', href: '/feedback' },
+    ],
+    icon: <IoIosHelpCircleOutline />,
+  },
+];
 
 function NavMenuDashboard({ closeModal }: Props) {
   const { theme, toggleTheme } = useTheme();
   const [isChecked, setIsChecked] = useState(false);
-  const [showMenu, setShowMenu] = useState<string | null>(null);
+  const [showMenu, setShowMenu] = useState<string | null>('Dashboard');
+  const router = useRouter();
 
   function handleIsChecked() {
     setIsChecked((prev) => !prev);
@@ -34,173 +100,62 @@ function NavMenuDashboard({ closeModal }: Props) {
   }, [theme]);
 
   function handleOnClick(title: string) {
+    if (title === 'Dashboard' && closeModal) {
+      router.push('/dashboard');
+      closeModal();
+    }
+
     setShowMenu((prev) => (prev === title ? null : title));
   }
 
   return (
     <nav className="nav-menu-dashboard">
-      <Link
-        href="/dashboard"
-        onClick={closeModal}
-        className={`nav-menu-dashboard__category ${
-          showMenu === 'dashboard' ? 'active' : ''
-        }`}
-      >
-        <section
-          onClick={() => handleOnClick('dashboard')}
-          style={{ alignSelf: 'start' }}
-        >
-          <RxDashboard />
-          <p>Dashboard</p>
+      {categories.map((category) => {
+        return (
+          <section
+            key={category.category}
+            className={`nav-menu-dashboard__category ${
+              showMenu === category.category && 'active'
+            }`}
+            onClick={() => handleOnClick(category.category)}
+          >
+            <section className="nav-menu-dashboard__menu">
+              <section className="nav-menu-dashboard__title">
+                {category.icon}
+                <p>{category.category}</p>
+              </section>
 
-          {/* {showMenu !== 'dashboard' ? (
-            <MdKeyboardArrowRight className="arrow" />
-          ) : (
-            <MdKeyboardArrowDown className="arrow" />
-          )} */}
-        </section>
+              <section className="nav-menu-dashboard__arrow">
+                {showMenu === category.category &&
+                category.subCategories?.length ? (
+                  <MdKeyboardArrowDown className="arrow" />
+                ) : (
+                  category.category !== 'Dashboard' && (
+                    <MdKeyboardArrowRight className="arrow" />
+                  )
+                )}
+              </section>
+            </section>
+            {showMenu === category.category && category.subCategories && (
+              <ul className="nav-menu-dashboard__subcategory">
+                {category.subCategories?.map((subCat) => {
+                  return (
+                    <Link
+                      key={subCat.href}
+                      href={subCat.href}
+                      onClick={closeModal}
+                    >
+                      {subCat.title}
+                    </Link>
+                  );
+                })}
+              </ul>
+            )}
+          </section>
+        );
+      })}
 
-        {/* {showMenu === "dashboard" && (
-          <ul className="nav-menu-dashboard__subcategory">
-            <li>Översikt</li>
-          </ul>
-        )} */}
-      </Link>
-
-      <section className="nav-menu-dashboard__category">
-        <section onClick={() => handleOnClick('event')}>
-          <SlEvent />
-          <p>Evenemang</p>
-
-          {showMenu !== 'event' ? (
-            <MdKeyboardArrowRight className="arrow" />
-          ) : (
-            <MdKeyboardArrowDown className="arrow" />
-          )}
-        </section>
-
-        {showMenu === 'event' && (
-          <ul className="nav-menu-dashboard__subcategory">
-            <Link href="/dashboard/events" onClick={closeModal}>
-              <li>Evenemang</li>
-            </Link>
-
-            <Link href="/dashboard/events" onClick={closeModal}>
-              <li>Skapa Evenemang</li>
-            </Link>
-
-            <Link href="/dashboard/events" onClick={closeModal}>
-              <li>Hantera Evenemang</li>
-            </Link>
-          </ul>
-        )}
-      </section>
-
-      <section className="nav-menu-dashboard__category">
-        <section onClick={() => handleOnClick('team')}>
-          <RiTeamLine />
-          <p>Lag och Medlemmar</p>
-
-          {showMenu !== 'team' ? (
-            <MdKeyboardArrowRight className="arrow" />
-          ) : (
-            <MdKeyboardArrowDown className="arrow" />
-          )}
-        </section>
-
-        {showMenu === 'team' && (
-          <ul className="nav-menu-dashboard__subcategory">
-            <li>Skapa Lag</li>
-            <li>Hantera Lag</li>
-            <li>Medlemslista</li>
-          </ul>
-        )}
-      </section>
-
-      <section className="nav-menu-dashboard__category">
-        <section onClick={() => handleOnClick('communication')}>
-          <GrChatOption />
-          <p>Kommunikation</p>
-
-          {showMenu !== 'communication' ? (
-            <MdKeyboardArrowRight className="arrow" />
-          ) : (
-            <MdKeyboardArrowDown className="arrow" />
-          )}
-        </section>
-
-        {showMenu === 'communication' && (
-          <ul className="nav-menu-dashboard__subcategory">
-            <li>Meddelanden</li>
-            <li>Notiser</li>
-            <li>Forum / Diskussionsgrupper</li>
-          </ul>
-        )}
-      </section>
-
-      <section className="nav-menu-dashboard__category">
-        <section onClick={() => handleOnClick('payment')}>
-          <RiSecurePaymentLine />
-          <p>Betalning</p>
-
-          {showMenu !== 'payment' ? (
-            <MdKeyboardArrowRight className="arrow" />
-          ) : (
-            <MdKeyboardArrowDown className="arrow" />
-          )}
-        </section>
-
-        {showMenu === 'payment' && (
-          <ul className="nav-menu-dashboard__subcategory">
-            <li>Fakturor och Betalningar</li>
-            <li>Prenumerationer</li>
-          </ul>
-        )}
-      </section>
-
-      <section className="nav-menu-dashboard__category">
-        <section onClick={() => handleOnClick('settings')}>
-          <IoSettingsOutline />
-          <p>Inställningar</p>
-
-          {showMenu !== 'settings' ? (
-            <MdKeyboardArrowRight className="arrow" />
-          ) : (
-            <MdKeyboardArrowDown className="arrow" />
-          )}
-        </section>
-
-        {showMenu === 'settings' && (
-          <ul className="nav-menu-dashboard__subcategory">
-            <li>Profilinställningar</li>
-            <li>Systeminställningar</li>
-            <li>Notisinställningar</li>
-          </ul>
-        )}
-      </section>
-
-      <section className="nav-menu-dashboard__category">
-        <section onClick={() => handleOnClick('help')}>
-          <IoIosHelpCircleOutline />
-          <p>Support och Hjälp</p>
-
-          {showMenu !== 'help' ? (
-            <MdKeyboardArrowRight className="arrow" />
-          ) : (
-            <MdKeyboardArrowDown className="arrow" />
-          )}
-        </section>
-
-        {showMenu === 'help' && (
-          <ul className="nav-menu-dashboard__subcategory">
-            <li>Hjälpcenter</li>
-            <li>Kontakt Support</li>
-            <li>Feedback</li>
-          </ul>
-        )}
-      </section>
-
-      <section style={{ height: '100%' }}>
+      <section className="nav-menu-dashboard__theme-settings">
         <SwitchThemeMode isChecked={isChecked} onChange={handleIsChecked} />
       </section>
     </nav>
