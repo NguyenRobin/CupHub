@@ -60,7 +60,8 @@ function LoginForm() {
         if (data.isLoggedIn) {
           setIsUserLoggedIn(true);
 
-          await delay(1000);
+          await delay(2000);
+          
           router.push('/dashboard');
         } else {
           setIsLoading(false);

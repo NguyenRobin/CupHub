@@ -35,7 +35,11 @@ export async function GET(
       });
     }
 
-    return NextResponse.json({ status: 200, message: 'success', playoff });
+    return NextResponse.json({
+      status: 200,
+      message: 'success',
+      playoff: playoff || [],
+    });
   } catch (error: any) {
     return NextResponse.json({
       status: 500,
