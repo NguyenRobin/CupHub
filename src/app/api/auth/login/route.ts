@@ -92,6 +92,7 @@ export async function POST(request: Request) {
     }
     if (email && password) {
       await connectToMongoDB();
+
       const user = await UserModel.findOne({ email });
 
       if (!user) {
