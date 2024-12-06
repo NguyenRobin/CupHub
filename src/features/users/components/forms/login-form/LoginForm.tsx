@@ -49,6 +49,11 @@ function LoginForm() {
           `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token`
         );
 
+        console.log(response);
+        if (!response.ok) {
+          return;
+        }
+
         const data = await response.json();
         console.log(data);
 
@@ -57,6 +62,7 @@ function LoginForm() {
           router.push('/dashboard');
         } else {
           setIsLoading(false);
+          setIsUserLoggedIn(false);
         }
       } catch (error) {
         console.error('Error validating token:', error);

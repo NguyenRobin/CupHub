@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { TRounds, TGroup, TMatch, TTeamStanding } from '../../types/types';
 import { Types } from 'mongoose';
 import { cookies } from 'next/headers';
-import { saveTournamentGroupDB } from '../../features/groups/server/db/groups';
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
@@ -44,7 +43,6 @@ export function createToken(user: { id: Types.ObjectId; username: string }) {
 
 export function verifyToken(encodedToken: string) {
   const decodedToken = jwt.verify(encodedToken, JWT_SECRET_KEY!);
-  console.log(decodedToken, 'decodedToken');
   return decodedToken as TJwtPayload;
 }
 
