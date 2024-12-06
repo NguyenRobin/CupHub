@@ -11,9 +11,11 @@ import Link from 'next/link';
 import { AiOutlineHome } from 'react-icons/ai';
 import { GrGroup } from 'react-icons/gr';
 import { BsSend } from 'react-icons/bs';
+import { useRouter } from 'next/navigation';
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   function handleOnClick() {
     setIsOpen((prev) => !prev);
@@ -23,7 +25,13 @@ function NavBar() {
     <>
       <nav className="nav">
         <section className="nav__logo">
-          <GiSoccerBall onClick={() => setIsOpen(false)} size={45} />
+          <GiSoccerBall
+            onClick={() => {
+              router.push('/');
+              setIsOpen(false);
+            }}
+            size={45}
+          />
         </section>
 
         <section className="nav__icons">

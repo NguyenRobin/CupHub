@@ -8,7 +8,6 @@ import { z } from 'zod';
 import NavBar from '../../../../../components/landing-page/ui/NavBar/NavBar';
 import AuthInput from '../../../../../components/ui/authInput/AuthInput';
 import LoadingSpinner from '../../../../../components/ui/loading-spinner/LoadingSpinner';
-import { delay } from '../../../../../lib/client';
 
 const SubmitFormSchema = z
   .object({
