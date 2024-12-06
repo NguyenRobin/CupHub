@@ -21,9 +21,7 @@ export async function authMiddleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
     if (isTokenValid) {
-      console.log('first');
       return NextResponse.next();
-      // return NextResponse.redirect(new URL('/dashboard', request.url));
     }
   } catch (error) {
     return NextResponse.redirect(new URL('/login', request.url));
