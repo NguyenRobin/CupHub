@@ -35,7 +35,7 @@ function CheckoutSession() {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [session_id]);
 
   const {
     id,

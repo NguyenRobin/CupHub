@@ -63,8 +63,8 @@ function DeleteTournamentBtn({ name, id }: { name: string; id: string }) {
         <div className="delete-modal">
           <div className="delete-modal__confirmation">
             <h3 className="delete-modal__title">
-              Are you <strong>sure</strong> you want to{' '}
-              <strong style={{ color: 'black' }}>DELETE</strong> this{' '}
+              Are you <strong>sure</strong> you want to
+              <strong style={{ color: 'black' }}> DELETE </strong> this
               <strong>tournament</strong>?
               <br />
               <br />
