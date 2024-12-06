@@ -112,7 +112,7 @@ function LoginForm() {
       }
 
       const data = await response.json();
-
+      console.log(data);
       if (data.status === 200) {
         router.push('/dashboard');
       } else {
@@ -120,6 +120,7 @@ function LoginForm() {
           username: data.message,
           email: data.message,
         });
+
         setPassword('');
         setIsLoading(false);
       }
