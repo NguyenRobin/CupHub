@@ -3,8 +3,6 @@
 import React, { useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import './DeleteTournamentBtn.scss';
-import { Types } from 'mongoose';
-import { cookies } from 'next/headers';
 import LoadingSpinner from '../../../../../components/ui/loading-spinner/LoadingSpinner';
 import { useRouter } from 'next/navigation';
 
@@ -68,7 +66,7 @@ function DeleteTournamentBtn({ name, id }: { name: string; id: string }) {
               <strong>tournament</strong>?
               <br />
               <br />
-              <strong>"{name}"</strong>
+              <strong>&quot;{name}&quot;</strong>
             </h3>
 
             <div className="delete-modal__actions">
