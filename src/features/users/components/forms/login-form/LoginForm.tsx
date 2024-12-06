@@ -68,7 +68,7 @@ function LoginForm() {
     };
 
     fetchData();
-  }, []);
+  }, [router]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.type === 'text') {

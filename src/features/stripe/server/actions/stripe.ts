@@ -21,10 +21,3 @@ export async function getCheckoutSessionById(id: string) {
     currency: session.currency,
   };
 }
-
-export function isUserLoggedIn() {
-  const cookieStore = cookies();
-  const token = cookieStore.get(process.env.TOKEN_NAME!)?.value;
-  const isTokenValid = verifyToken(token!);
-  return isTokenValid ? true : false;
-}

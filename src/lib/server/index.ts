@@ -95,6 +95,13 @@ export function validatePossibleTeamsPerGroupGoingToPlayoff(
   }
 }
 
+export function isUserLoggedIn() {
+  const cookieStore = cookies();
+  const token = cookieStore.get(process.env.TOKEN_NAME!)?.value;
+  const isTokenValid = verifyToken(token!);
+  return isTokenValid ? true : false;
+}
+
 // export function buildPlayoffSchedule(amountOfTeamsToPlayOff: number) {
 //   const stages = ['final', 'semifinal', 'quarterfinal', 'round 16', 'round 32'];
 //   const result = [];

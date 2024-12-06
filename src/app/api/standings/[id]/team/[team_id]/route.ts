@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
-import { updateLeagueStanding } from '../../../../../../features/standings/server/db/standings';
+import { updateLeagueStandingDB } from '../../../../../../features/standings/server/db/standings';
 
 const validProperties = [
   'won',
@@ -38,7 +38,11 @@ export async function PATCH(
         message: `${notValidKeys.toString()} is not a valid body input`,
       });
     }
-    const updatedLeagueStanding = await updateLeagueStanding(id, team_id, body);
+    const updatedLeagueStanding = await updateLeagueStandingDB(
+      id,
+      team_id,
+      body
+    );
 
     if (!updatedLeagueStanding) {
       return NextResponse.json({
