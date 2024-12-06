@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { isUserLoggedIn } from '../../../../features/stripe/server/actions/stripe';
+import { isUserLoggedIn } from '../../../../lib/server';
 
 export async function GET(request: NextRequest) {
   const isLoggedIn = isUserLoggedIn();
