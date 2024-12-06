@@ -8,6 +8,7 @@ import { z } from 'zod';
 import NavBar from '../../../../../components/landing-page/ui/NavBar/NavBar';
 import AuthInput from '../../../../../components/ui/authInput/AuthInput';
 import LoadingSpinner from '../../../../../components/ui/loading-spinner/LoadingSpinner';
+import { delay } from '../../../../../lib/client';
 
 const SubmitFormSchema = z
   .object({
@@ -32,7 +33,6 @@ type TErrorMessages = {
   email?: string;
   password?: string;
 };
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 function LoginForm() {
   const [errorMessages, setErrorMessages] = useState<TErrorMessages>({});
@@ -59,9 +59,6 @@ function LoginForm() {
 
         if (data.isLoggedIn) {
           setIsUserLoggedIn(true);
-
-          await delay(2000);
-          
           router.push('/dashboard');
         } else {
           setIsLoading(false);
@@ -118,10 +115,9 @@ function LoginForm() {
       }
 
       const data = await response.json();
-      console.log('1');
-      console.log(data);
+
       if (data.status === 200) {
-        console.log('2');
+        router.refresh();
         router.push('/dashboard');
       } else {
         setErrorMessages({

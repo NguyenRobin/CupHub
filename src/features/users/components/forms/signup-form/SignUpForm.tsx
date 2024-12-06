@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { z } from 'zod';
 import AuthInput from '../../../../../components/ui/authInput/AuthInput';
 import NavBar from '../../../../../components/landing-page/ui/NavBar/NavBar';
+import { delay } from '../../../../../lib/client';
 
 const SignUpFormSchema = z
   .object({
@@ -136,6 +137,7 @@ function SignUpForm() {
             break;
         }
       } else {
+        router.refresh();
         router.push('/dashboard');
       }
     } catch (error) {
