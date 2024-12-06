@@ -59,11 +59,14 @@ function LoginForm() {
 
         if (data.isLoggedIn) {
           setIsUserLoggedIn(true);
+
+          await delay(1000);
           router.push('/dashboard');
         } else {
           setIsLoading(false);
           setIsUserLoggedIn(false);
         }
+        setIsUserLoggedIn(false);
       } catch (error) {
         console.error('Error validating token:', error);
       }
@@ -114,8 +117,10 @@ function LoginForm() {
       }
 
       const data = await response.json();
+      console.log('1');
       console.log(data);
       if (data.status === 200) {
+        console.log('2');
         router.push('/dashboard');
       } else {
         setErrorMessages({
