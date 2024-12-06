@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import CheckoutSession from '../../components/checkout-session/CheckoutSession';
 
-async function page() {
-  return <CheckoutSession />;
+function page() {
+  return (
+    <Suspense>
+      <CheckoutSession />;
+    </Suspense>
+  );
 }
 
 export default page;
