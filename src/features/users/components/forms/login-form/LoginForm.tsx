@@ -58,7 +58,7 @@ function LoginForm() {
 
         if (data.isLoggedIn) {
           setIsUserLoggedIn(true);
-          router.push('/dashboard');
+          router.replace('/dashboard');
         } else {
           setIsLoading(false);
           setIsUserLoggedIn(false);
