@@ -8,6 +8,7 @@ import CardWrapper from '../../../ui/card-wrapper/CardWrapper';
 import LoadingSpinner from '../../../ui/loading-spinner/LoadingSpinner';
 import { Suspense } from 'react';
 import { delay } from '../../../../lib/client';
+import { redirect } from 'next/navigation';
 
 async function getDashboardOverview() {
   const token = cookies().get(process.env.TOKEN_NAME!);
@@ -25,7 +26,7 @@ async function getDashboardOverview() {
   );
 
   if (!response.ok) {
-    return;
+    redirect('/login');
   }
 
   const data = await response.json();
