@@ -11,7 +11,7 @@ import { delay } from '../../../../lib/client';
 import { redirect } from 'next/navigation';
 
 async function getDashboardOverview() {
-  const token = cookies().get(process.env.TOKEN_NAME!);
+  const token = cookies().get('AUTH_SESSION_TOKEN');
   console.log(token);
 
   const response = await fetch(
