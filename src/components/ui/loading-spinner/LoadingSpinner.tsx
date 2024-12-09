@@ -1,10 +1,15 @@
 import React from 'react';
 import { AiOutlineLoading } from 'react-icons/ai';
 import './LoadingSpinner.scss';
-function LoadingSpinner({ size = 20 }: { size?: number }) {
+
+type Props = {
+  size?: number;
+  color?: string;
+};
+function LoadingSpinner({ size = 20, color }: Props) {
   return (
     <div>
-      <AiOutlineLoading className="loading-spinner" size={size} />
+      <AiOutlineLoading className="loading-spinner" size={size} color={color} />
     </div>
   );
 }

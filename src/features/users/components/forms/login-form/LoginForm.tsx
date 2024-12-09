@@ -47,14 +47,11 @@ function LoginForm() {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token`
         );
-
-        console.log(response);
         if (!response.ok) {
           return;
         }
 
         const data = await response.json();
-        console.log(data);
 
         if (data.isLoggedIn) {
           setIsUserLoggedIn(true);
@@ -80,9 +77,10 @@ function LoginForm() {
     }
   };
 
-  async function handleSubmit() {
-  // event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    // event.preventDefault();
+  async function handleSubmit(
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    event.preventDefault();
 
     setIsLoading(true);
 
@@ -109,15 +107,8 @@ function LoginForm() {
       );
 
       if (!response.ok) {
-        throw new Error('Something went wrong');
-      }
-
-      const data = await response.json();
-
-      if (data.status === 200) {
-        router.refresh();
-        router.push('/dashboard');
-      } else {
+        // throw new Error('Something went wrong');
+        const data = await response.json();
         setErrorMessages({
           username: data.message,
           email: data.message,
@@ -125,7 +116,24 @@ function LoginForm() {
 
         setPassword('');
         setIsLoading(false);
+        return;
       }
+      router.push('/dashboard');
+
+      // const data = await response.json();
+
+      // if (data.status === 200) {
+      //   router.refresh();
+      //   router.push('/dashboard');
+      // } else {
+      //   setErrorMessages({
+      //     username: data.message,
+      //     email: data.message,
+      //   });
+
+      //   setPassword('');
+      //   setIsLoading(false);
+      // }
     } catch (error) {
       if (error instanceof z.ZodError) {
         const errorObj: TErrorMessages = {};

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { z } from 'zod';
 import AuthInput from '../../../../../components/ui/authInput/AuthInput';
 import NavBar from '../../../../../components/landing-page/ui/NavBar/NavBar';
+import LoadingSpinner from '../../../../../components/ui/loading-spinner/LoadingSpinner';
 
 const SignUpFormSchema = z
   .object({
@@ -60,6 +61,7 @@ function SignUpForm() {
   });
 
   const [errorMessages, setErrorMessages] = useState<TErrorMessages>({});
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const validateField = (name: string, value: string) => {
@@ -92,12 +94,12 @@ function SignUpForm() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
     const submitFormBody: TSubmitFormBody = form;
 
     try {
       SignUpFormSchema.parse(submitFormBody);
 
+      setIsLoading(true);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/auth/signup`,
         {
@@ -108,7 +110,7 @@ function SignUpForm() {
       );
 
       if (!response.ok) {
-        throw new Error('Something went wrong');
+        return;
       }
 
       const data = await response.json();
@@ -121,11 +123,13 @@ function SignUpForm() {
               username: data.message,
               email: data.message,
             });
+
             break;
           case 'username_taken':
             setErrorMessages({
               username: data.message,
             });
+
             break;
           case 'email_taken':
             setErrorMessages({
@@ -133,11 +137,15 @@ function SignUpForm() {
             });
             break;
           default:
+            // setIsLoading(false);
             break;
         }
-      } else {
-        router.refresh();
+        setIsLoading(false);
+      }
+
+      if (data.status === 201) {
         router.push('/dashboard');
+        setIsLoading(false);
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -217,8 +225,12 @@ function SignUpForm() {
             errorMessage={errorMessages.confirmPassword || ''}
           />
 
-          <button type="submit" className="signup__button">
-            Skapa konto
+          <button disabled={isLoading} type="submit" className="signup__button">
+            {isLoading ? (
+              <LoadingSpinner size={15} color="#fff" />
+            ) : (
+              'Skapa konto'
+            )}
           </button>
         </form>
       </div>

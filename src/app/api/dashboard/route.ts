@@ -17,6 +17,7 @@ export async function GET(request: Request) {
 
   try {
     await connectToMongoDB();
+
     const user = await UserModel.findById({ _id: tokenInfo.id });
     const userTournaments = await TournamentModel.find({
       createdByUserId: tokenInfo.id,
@@ -27,7 +28,7 @@ export async function GET(request: Request) {
       message: 'success',
       data: {
         username: user.username,
-        tournaments: userTournaments,
+        tournaments: userTournaments ?? [],
       },
     });
   } catch (error: any) {
