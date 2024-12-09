@@ -22,7 +22,8 @@ async function getDashboardOverview() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Cookie: `${process.env.TOKEN_NAME}=${token?.value}`,
+        // Cookie: `${process.env.TOKEN_NAME}=${token.value}`,
+        Cookie: `AUTH_SESSION_TOKEN=${token?.value}`,
       },
     }
   );
