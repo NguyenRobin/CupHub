@@ -22,7 +22,12 @@ async function getDashboardOverview() {
     }
   );
 
+  if (!response.ok) {
+    return;
+  }
+
   const data = await response.json();
+  console.log(data);
   return data;
 }
 async function Overview() {

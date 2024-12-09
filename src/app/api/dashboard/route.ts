@@ -18,17 +18,24 @@ export async function GET(request: Request) {
   try {
     await connectToMongoDB();
 
-    const user = await UserModel.findById({ _id: tokenInfo.id });
-    const userTournaments = await TournamentModel.find({
-      createdByUserId: tokenInfo.id,
-    });
+    // const user = await UserModel.findById({ _id: tokenInfo.id });
+    // const userTournaments = await TournamentModel.find({
+    //   createdByUserId: tokenInfo.id,
+    // });
+
+    const [user, userTournaments] = await Promise.all([
+      UserModel.findById({ _id: tokenInfo.id }),
+      TournamentModel.find({
+        createdByUserId: tokenInfo.id,
+      }),
+    ]);
 
     return NextResponse.json({
       status: 200,
       message: 'success',
       data: {
         username: user.username,
-        tournaments: userTournaments ?? [],
+        tournaments: userTournaments,
       },
     });
   } catch (error: any) {

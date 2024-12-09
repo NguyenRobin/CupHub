@@ -7,11 +7,16 @@ import ListTournamentMatches from '../../../../../features/matches/components/ui
 
 async function UpcomingMatches() {
   const response = await getMatchesByStatus('scheduled', 3);
+
   if (response.status !== 200) {
     return <p>{response.message}</p>;
   }
 
   const { matches } = response;
+
+  if (!matches) {
+    return [];
+  }
 
   return (
     <CardWrapper>

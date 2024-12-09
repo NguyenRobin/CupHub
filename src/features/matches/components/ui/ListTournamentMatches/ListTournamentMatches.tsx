@@ -4,7 +4,7 @@ import { getTournamentMatchesByID } from '../../../server/actions/match';
 import Pulse from '../../../../../components/ui/pulse/Pulse';
 import { TMatch } from '../../../../../types/types';
 
-async function ListTournamentMatches({ matches }: { matches: TMatch[] }) {
+function ListTournamentMatches({ matches }: { matches: TMatch[] }) {
   return (
     <div className="matches-container">
       {matches?.map((match) => (
