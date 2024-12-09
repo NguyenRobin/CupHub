@@ -10,7 +10,7 @@ if (process.env.TOKEN_NAME === undefined) {
 
 export async function middleware(request: NextRequest) {
   const TOKEN_NAME = process.env.TOKEN_NAME;
-  const token = request.cookies.get(TOKEN_NAME!)?.value;
+  const token = request.cookies.get(TOKEN_NAME!)?.value ?? undefined;
 
   console.log('------>', request.nextUrl.pathname, '+', token, '<------');
 
@@ -30,16 +30,15 @@ export async function middleware(request: NextRequest) {
   }
 
   if (request.nextUrl.pathname.startsWith('/api/auth/token') && token) {
-    console.log('true', ' YEHEEE');
     return NextResponse.next();
   }
 
   if (request.nextUrl.pathname.startsWith('/dashboard')) {
-    return await authMiddleware(request);
+    return await authMiddleware(token, request);
   }
 
   if (request.nextUrl.pathname.startsWith('/api')) {
-    return await authApiMiddleware(request);
+    return await authApiMiddleware(token);
   }
 }
 
