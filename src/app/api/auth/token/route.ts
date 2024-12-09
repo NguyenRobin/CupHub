@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isUserLoggedIn } from '../../../../lib/server';
-import { redirect } from 'next/navigation';
 
 export async function GET(request: NextRequest) {
   const isAuthenticated = isUserLoggedIn();

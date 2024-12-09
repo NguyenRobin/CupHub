@@ -82,7 +82,7 @@ function LoginForm() {
   };
 
   const handleSubmit1 = useCallback(
-    async (event) => {
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
       event.preventDefault();
 
       setIsLoading(true);
