@@ -584,9 +584,13 @@ export async function getTournamentPlayoffByID(id: Types.ObjectId) {
     return { status: 400, message: 'Matches for the tournament was not found' };
   }
 
+  console.log(matches);
+
   const playoffRounds = [...new Set(matches.map((match) => match.round_type))];
 
   const playoff: TPlayoff[] = [];
+
+  console.log(playoffRounds);
 
   for (let i = 0; i < playoffRounds.length; i++) {
     const obj: TPlayoff = {

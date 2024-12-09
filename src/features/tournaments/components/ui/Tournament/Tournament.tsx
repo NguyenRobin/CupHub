@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { Suspense } from 'react';
 import './Tournament.scss';
 import { SlEvent } from 'react-icons/sl';
 import { MdLocationOn } from 'react-icons/md';
@@ -12,6 +12,7 @@ import { dateFormatter } from '../../../../../lib/server';
 import { getTournamentById } from '../../../server/actions/tournament';
 import DeleteTournamentBtn from '../DeleteTournamentBtn/DeleteTournamentBtn';
 import { GiSoccerField } from 'react-icons/gi';
+import LoadingSpinner from '../../../../../components/ui/loading-spinner/LoadingSpinner';
 
 async function Tournament({ tournamentId, children }: any) {
   const response = await getTournamentById(tournamentId);
@@ -23,47 +24,49 @@ async function Tournament({ tournamentId, children }: any) {
   const { name, location, startDate, _id } = response?.tournament;
 
   return (
-    <CardWrapper>
-      <div className="actions">
-        <Link href={'/dashboard'}>
-          <IoIosArrowRoundBack size={25} />
-        </Link>
-        <DeleteTournamentBtn name={name} id={_id.toString()} />
-      </div>
+    <Suspense fallback={<LoadingSpinner size={40} />}>
+      <CardWrapper>
+        <div className="actions">
+          <Link href={'/dashboard'}>
+            <IoIosArrowRoundBack size={25} />
+          </Link>
+          <DeleteTournamentBtn name={name} id={_id.toString()} />
+        </div>
 
-      <div className="tournament-container">
-        <div className="tournament-container__overview">
-          {/* <Image
+        <div className="tournament-container">
+          <div className="tournament-container__overview">
+            {/* <Image
             src="/IFK_Uppsala_logo.svg.png"
             height={60}
             width={60}
             alt="IFk"
           /> */}
-          <GiSoccerField size={80} color="#006774" />
+            <GiSoccerField size={80} color="#006774" />
 
-          <div className="tournament-container__overview__details">
-            <div>
-              <TbTournament />
-              <p>{name}</p>
-            </div>
+            <div className="tournament-container__overview__details">
+              <div>
+                <TbTournament />
+                <p>{name}</p>
+              </div>
 
-            <div>
-              <SlEvent />
-              <p>{dateFormatter(startDate)}</p>
-            </div>
+              <div>
+                <SlEvent />
+                <p>{dateFormatter(startDate)}</p>
+              </div>
 
-            <div>
-              <MdLocationOn />
-              <p>{location}</p>
+              <div>
+                <MdLocationOn />
+                <p>{location}</p>
+              </div>
             </div>
           </div>
+
+          <ActiveTournamentDetailView tournamentId={_id.toString()} />
+
+          <div className="tournament-container__children">{children}</div>
         </div>
-
-        <ActiveTournamentDetailView tournamentId={_id.toString()} />
-
-        <div className="tournament-container__children">{children}</div>
-      </div>
-    </CardWrapper>
+      </CardWrapper>
+    </Suspense>
   );
 }
 

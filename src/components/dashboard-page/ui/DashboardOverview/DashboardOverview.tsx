@@ -35,8 +35,8 @@ async function getDashboardOverview() {
 }
 
 async function DashboardOverview() {
-  let overview = await getDashboardOverview();
-  let { tournaments, username } = overview?.data;
+  const overview = await getDashboardOverview();
+  const { tournaments, username } = overview?.data;
 
   return (
     <Suspense

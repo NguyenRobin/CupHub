@@ -44,8 +44,8 @@ function DeleteTournamentBtn({ name, id }: { name: string; id: string }) {
     if (response.status === 200) {
       setIsLoading(false);
 
-      router.push('/dashboard');
       router.refresh();
+      router.push('/dashboard');
     }
   };
 

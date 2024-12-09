@@ -11,11 +11,9 @@ async function page({ params }: { params: { id: Types.ObjectId } }) {
   const { id } = params;
 
   return (
-    <Suspense fallback={<LoadingSpinner size={40} />}>
-      <Tournament tournamentId={id}>
-        <TournamentOverviewDetails tournamentId={id} />
-      </Tournament>
-    </Suspense>
+    <Tournament tournamentId={id}>
+      <TournamentOverviewDetails tournamentId={id} />
+    </Tournament>
   );
 }
 
