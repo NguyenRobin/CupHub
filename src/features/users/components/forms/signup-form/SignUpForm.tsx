@@ -143,8 +143,8 @@ function SignUpForm() {
       }
 
       if (data.status === 201) {
+        router.push('/dashboard');
         router.refresh();
-        router.replace('/dashboard');
         setIsLoading(false);
       }
     } catch (error) {
