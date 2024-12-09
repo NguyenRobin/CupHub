@@ -80,10 +80,9 @@ function LoginForm() {
     }
   };
 
-  async function handleSubmit(
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) {
-    event.preventDefault();
+  async function handleSubmit() {
+  // event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    // event.preventDefault();
 
     setIsLoading(true);
 

@@ -5,6 +5,7 @@ import UpcomingEvents from './UpcomingEvents/UpcomingEvents';
 import LiveMatches from './LiveMatches/LiveMatches';
 import UpcomingMatches from './UpcomingMatches/UpcomingMatches';
 import CardWrapper from '../../../ui/card-wrapper/CardWrapper';
+import LoadingSpinner from '../../../ui/loading-spinner/LoadingSpinner';
 
 async function getDashboardOverview() {
   const token = cookies().get(process.env.TOKEN_NAME!);
@@ -20,10 +21,6 @@ async function getDashboardOverview() {
       },
     }
   );
-
-  if (!response.ok) {
-    throw new Error('Dashboard could not be fetched');
-  }
 
   const data = await response.json();
   return data;
