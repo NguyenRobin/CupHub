@@ -111,8 +111,6 @@ function LoginForm() {
 
       if (data.isAuthenticated) {
         setIsAuthenticated(true);
-        router.refresh();
-        router.replace('/dashboard');
       } else {
         setErrorMessages({
           username: data.message,
@@ -120,6 +118,7 @@ function LoginForm() {
         });
         setPassword('');
         setIsLoading(false);
+        return;
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -132,6 +131,7 @@ function LoginForm() {
         setIsLoading(false);
       }
     }
+    router.push('/dashboard');
   }
 
   if (isLoading) {
