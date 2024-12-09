@@ -11,35 +11,33 @@ import { delay } from '../../../../lib/client';
 import { redirect } from 'next/navigation';
 
 async function getDashboardOverview() {
-  const token = cookies().get('AUTH_SESSION_TOKEN');
-  console.log(token);
+  const token = cookies().get(process.env.TOKEN_NAME!);
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard`,
     {
       cache: 'no-store',
-      credentials: 'include',
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        // Cookie: `${process.env.TOKEN_NAME}=${token.value}`,
-        Cookie: `AUTH_SESSION_TOKEN=${token?.value}`,
+        Cookie: `${process.env.TOKEN_NAME}=${token?.value}`,
       },
     }
   );
 
-  console.log(response);
-  if (!response.ok) {
-    redirect('/login');
-  }
-
   const data = await response.json();
+
+  console.log(data);
 
   return data;
 }
 
 async function DashboardOverview() {
   const overview = await getDashboardOverview();
+
+  if (overview.status !== 200) {
+    return <p>NOT OK</p>;
+  }
   const { tournaments, username } = overview?.data;
 
   return (
