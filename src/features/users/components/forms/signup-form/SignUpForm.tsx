@@ -144,7 +144,7 @@ function SignUpForm() {
 
       if (data.status === 201) {
         router.refresh();
-        router.push('/dashboard');
+        router.replace('/dashboard');
         setIsLoading(false);
       }
     } catch (error) {

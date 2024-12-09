@@ -113,7 +113,7 @@ function LoginForm() {
       if (data.isAuthenticated) {
         setIsAuthenticated(true);
         router.refresh();
-        router.push('/dashboard');
+        router.replace('/dashboard');
       } else {
         setErrorMessages({
           username: data.message,
