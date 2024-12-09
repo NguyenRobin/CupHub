@@ -12,11 +12,13 @@ import { redirect } from 'next/navigation';
 
 async function getDashboardOverview() {
   const token = cookies().get(process.env.TOKEN_NAME!);
+  console.log(token);
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard`,
     {
       cache: 'no-store',
+      credentials: 'include',
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -25,6 +27,7 @@ async function getDashboardOverview() {
     }
   );
 
+  console.log(response);
   if (!response.ok) {
     redirect('/login');
   }
