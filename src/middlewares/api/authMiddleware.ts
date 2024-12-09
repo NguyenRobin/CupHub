@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyTokenByJose } from '../../lib/client';
-import { cookies } from 'next/headers';
-import { verifyToken } from '../../lib/server';
 
 if (process.env.TOKEN_NAME === undefined) {
   throw new Error('process.env.TOKEN_NAME NOT defined');
@@ -12,20 +10,19 @@ export async function authMiddleware(
   request: NextRequest
 ) {
   if (!token) {
+    console.warn('No token provided, redirecting to /login');
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
   try {
-    const isTokenValid = await verifyTokenByJose(token);
-
-    if (!isTokenValid) {
+    const isValid = await verifyTokenByJose(token);
+    if (!isValid) {
+      console.warn('Invalid token, redirecting to /login');
       return NextResponse.redirect(new URL('/login', request.url));
     }
-    // if (isTokenValid) {
-    //   console.log(isTokenValid);
-    //   // return NextResponse.next();
-    // }
+    return NextResponse.next();
   } catch (error) {
+    console.error('Error during token validation:', error);
     return NextResponse.redirect(new URL('/login', request.url));
   }
 }
@@ -34,7 +31,8 @@ export async function authApiMiddleware(token: string | undefined) {
   if (!token) {
     return NextResponse.json({
       status: 401,
-      message: 'Authentication failed. Token not provided. MIDDLEWARE',
+      error: 'Authentication failed',
+      message: 'Token not provided. MIDDLEWARE',
     });
   }
   const isTokenValid = await verifyTokenByJose(token);
@@ -42,7 +40,8 @@ export async function authApiMiddleware(token: string | undefined) {
   if (!isTokenValid) {
     return NextResponse.json({
       status: 401,
-      message: 'Authentication failed. Token not valid. MIDDLEWARE',
+      error: 'Authentication failed',
+      message: 'Token not valid. MIDDLEWARE',
     });
   }
 

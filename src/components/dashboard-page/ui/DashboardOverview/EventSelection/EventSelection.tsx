@@ -45,10 +45,7 @@ function EventSelection() {
         </section>
       </Link>
 
-      <Link
-        href="/dashboard/create-tournament/playoff"
-        className="event-selection__type"
-      >
+      <Link href="/dashboard/playoff/new" className="event-selection__type">
         <section className="event-selection__type--information">
           <h3>Slutspel</h3>
           <p>
@@ -70,3 +67,18 @@ function EventSelection() {
 }
 
 export default EventSelection;
+
+// const handleSubmit = useCallback((e) => {
+//   e.preventDefault();
+
+//   fetch('/api/login', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({
+//       /* Form data */
+//     }),
+//   }).then((res) => {
+//     // Do a fast client-side transition to the already prefetched dashboard page
+//     if (res.ok) router.push('/dashboard');
+//   });
+// }, []);
