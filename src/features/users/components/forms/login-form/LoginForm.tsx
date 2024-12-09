@@ -76,10 +76,8 @@ function LoginForm() {
     }
   };
 
-  async function handleSubmit(
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) {
-    // event.preventDefault();
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
 
     setIsLoading(true);
 
@@ -185,7 +183,7 @@ function LoginForm() {
             </p>
           </div>
 
-          <form className="login__form">
+          <form className="login__form" onSubmit={(e) => handleSubmit(e)}>
             <AuthInput
               htmlFor="text"
               labelText="E-post/Användarnamn"
@@ -208,11 +206,7 @@ function LoginForm() {
               value={password}
             />
 
-            <button
-              onClick={handleSubmit}
-              disabled={isLoading}
-              className="login__button"
-            >
+            <button disabled={isLoading} className="login__button">
               {isLoading ? <LoadingSpinner /> : 'Logga in'}
             </button>
           </form>
