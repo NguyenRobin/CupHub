@@ -137,13 +137,13 @@ function SignUpForm() {
             });
             break;
           default:
-            // setIsLoading(false);
             break;
         }
         setIsLoading(false);
       }
 
       if (data.status === 201) {
+        router.refresh();
         router.push('/dashboard');
         setIsLoading(false);
       }

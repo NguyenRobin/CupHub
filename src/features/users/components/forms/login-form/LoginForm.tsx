@@ -36,7 +36,7 @@ type TErrorMessages = {
 function LoginForm() {
   const [errorMessages, setErrorMessages] = useState<TErrorMessages>({});
   const [isLoading, setIsLoading] = useState(true);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState<null | boolean>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState('DemoUser');
   const [password, setPassword] = useState('Demo123');
   const router = useRouter();
@@ -53,14 +53,12 @@ function LoginForm() {
 
         const data = await response.json();
 
-        if (data.isLoggedIn) {
-          setIsUserLoggedIn(true);
-          router.replace('/dashboard');
+        if (data.isAuthenticated) {
+          setIsAuthenticated(true);
+          router.push('/dashboard');
         } else {
           setIsLoading(false);
-          setIsUserLoggedIn(false);
         }
-        setIsUserLoggedIn(false);
       } catch (error) {
         console.error('Error validating token:', error);
       }
@@ -107,8 +105,16 @@ function LoginForm() {
       );
 
       if (!response.ok) {
-        // throw new Error('Something went wrong');
-        const data = await response.json();
+        return;
+      }
+
+      const data = await response.json();
+
+      if (data.isAuthenticated) {
+        setIsAuthenticated(true);
+        router.refresh();
+        router.push('/dashboard');
+      } else {
         setErrorMessages({
           username: data.message,
           email: data.message,
@@ -116,24 +122,7 @@ function LoginForm() {
 
         setPassword('');
         setIsLoading(false);
-        return;
       }
-      router.push('/dashboard');
-
-      // const data = await response.json();
-
-      // if (data.status === 200) {
-      //   router.refresh();
-      //   router.push('/dashboard');
-      // } else {
-      //   setErrorMessages({
-      //     username: data.message,
-      //     email: data.message,
-      //   });
-
-      //   setPassword('');
-      //   setIsLoading(false);
-      // }
     } catch (error) {
       if (error instanceof z.ZodError) {
         const errorObj: TErrorMessages = {};
@@ -159,8 +148,10 @@ function LoginForm() {
           gap: '4rem',
         }}
       >
-        <LoadingSpinner size={50} />
-        {isUserLoggedIn && <p>Loggar in...</p>}
+        <LoadingSpinner size={40} />
+        {isAuthenticated && (
+          <p style={{ color: 'var(--color-text-tertiary)' }}>Loggar in...</p>
+        )}
       </div>
     );
   }
@@ -169,46 +160,64 @@ function LoginForm() {
     <div className="login">
       <NavBar />
 
-      <div className="login__container">
-        <div className="login__heading">
-          <h2>Logga in</h2>
-          <p>
-            Har du inget konto? <Link href="/signup">Skapa konto</Link>
-          </p>
+      {isAuthenticated ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center',
+            height: '100%',
+            gap: '4rem',
+          }}
+        >
+          <LoadingSpinner size={40} />
+          {isAuthenticated && (
+            <p style={{ color: 'var(--color-text-tertiary)' }}>Loggar in...</p>
+          )}
         </div>
+      ) : (
+        <div className="login__container">
+          <div className="login__heading">
+            <h2>Logga in</h2>
+            <p>
+              Har du inget konto? <Link href="/signup">Skapa konto</Link>
+            </p>
+          </div>
 
-        <form className="login__form">
-          <AuthInput
-            htmlFor="text"
-            labelText="E-post/Användarnamn"
-            type="text"
-            name="text"
-            placeholder="användarnamn"
-            errorMessage={errorMessages.email || errorMessages.username || ''}
-            onChange={handleOnChange}
-            value={user}
-          />
+          <form className="login__form">
+            <AuthInput
+              htmlFor="text"
+              labelText="E-post/Användarnamn"
+              type="text"
+              name="text"
+              placeholder="användarnamn"
+              errorMessage={errorMessages.email || errorMessages.username || ''}
+              onChange={handleOnChange}
+              value={user}
+            />
 
-          <AuthInput
-            htmlFor="password"
-            labelText="Lösenord"
-            type="password"
-            name="password"
-            placeholder="******"
-            errorMessage={errorMessages.password || ''}
-            onChange={handleOnChange}
-            value={password}
-          />
+            <AuthInput
+              htmlFor="password"
+              labelText="Lösenord"
+              type="password"
+              name="password"
+              placeholder="******"
+              errorMessage={errorMessages.password || ''}
+              onChange={handleOnChange}
+              value={password}
+            />
 
-          <button
-            onClick={handleSubmit}
-            disabled={isLoading}
-            className="login__button"
-          >
-            {isLoading ? <LoadingSpinner /> : 'Logga in'}
-          </button>
-        </form>
-      </div>
+            <button
+              onClick={handleSubmit}
+              disabled={isLoading}
+              className="login__button"
+            >
+              {isLoading ? <LoadingSpinner /> : 'Logga in'}
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

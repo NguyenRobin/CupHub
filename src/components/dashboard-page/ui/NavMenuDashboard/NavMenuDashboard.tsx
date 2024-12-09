@@ -10,6 +10,7 @@ import { GrChatOption } from 'react-icons/gr';
 import { RiTeamLine } from 'react-icons/ri';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { MdKeyboardArrowDown } from 'react-icons/md';
+import { PiSignOutLight } from 'react-icons/pi';
 import Link from 'next/link';
 import './NavMenuDashboard.scss';
 import { useTheme } from '../../../../context/ThemeContext';
@@ -80,6 +81,10 @@ const categories = [
     ],
     icon: <IoIosHelpCircleOutline />,
   },
+  {
+    category: 'Logga ut',
+    icon: <PiSignOutLight />,
+  },
 ];
 
 function NavMenuDashboard({ closeModal }: Props) {
@@ -108,6 +113,27 @@ function NavMenuDashboard({ closeModal }: Props) {
     setShowMenu((prev) => (prev === title ? null : title));
   }
 
+  async function handleLogout() {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/signout`,
+        {
+          method: 'POST',
+        }
+      );
+      if (!response.ok) {
+        return;
+      }
+
+      const data = await response.json();
+
+      if (data.status === 200) {
+        router.push('/login');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <nav className="nav-menu-dashboard">
       {categories.map((category) => {
@@ -120,7 +146,14 @@ function NavMenuDashboard({ closeModal }: Props) {
             onClick={() => handleOnClick(category.category)}
           >
             <section className="nav-menu-dashboard__menu">
-              <section className="nav-menu-dashboard__title">
+              <section
+                className="nav-menu-dashboard__title"
+                onClick={() => {
+                  if (category.category === 'Logga ut') {
+                    handleLogout();
+                  }
+                }}
+              >
                 {category.icon}
                 <p>{category.category}</p>
               </section>
@@ -130,7 +163,8 @@ function NavMenuDashboard({ closeModal }: Props) {
                 category.subCategories?.length ? (
                   <MdKeyboardArrowDown className="arrow" />
                 ) : (
-                  category.category !== 'Dashboard' && (
+                  category.category !== 'Dashboard' &&
+                  category.category !== 'Logga ut' && (
                     <MdKeyboardArrowRight className="arrow" />
                   )
                 )}
