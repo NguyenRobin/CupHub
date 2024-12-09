@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import './LoginForm.scss';
 import Link from 'next/link';
 import { z } from 'zod';
@@ -79,7 +79,7 @@ function LoginForm() {
   async function handleSubmit(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
-    event.preventDefault();
+    // event.preventDefault();
 
     setIsLoading(true);
 
@@ -120,7 +120,6 @@ function LoginForm() {
           username: data.message,
           email: data.message,
         });
-
         setPassword('');
         setIsLoading(false);
       }
