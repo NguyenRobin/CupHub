@@ -1,7 +1,7 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import { redirect, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import './LoginForm.scss';
 import Link from 'next/link';
 import { z } from 'zod';
@@ -68,11 +68,6 @@ function LoginForm() {
     fetchData();
   }, [router]);
 
-  useEffect(() => {
-    // Prefetch the dashboard page
-    router.prefetch('/dashboard');
-  }, [router]);
-
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.type === 'text') {
       setUser(e.target.value);
@@ -80,70 +75,6 @@ function LoginForm() {
       setPassword(e.target.value);
     }
   };
-
-  const handleSubmit1 = useCallback(
-    async (event: React.ChangeEvent<HTMLInputElement>) => {
-      event.preventDefault();
-
-      setIsLoading(true);
-
-      const submitFormBody: TSubmitFormBody = {
-        password: password,
-      };
-
-      if (typeof user === 'string' && user.includes('@')) {
-        submitFormBody.email = user;
-      } else {
-        submitFormBody.username = user;
-      }
-
-      try {
-        SubmitFormSchema.parse(submitFormBody); // z validation if any error occurred we skip the rest of the code and goe to catch bloc
-
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(submitFormBody),
-          }
-        );
-
-        if (!response.ok) {
-          return;
-        }
-
-        const data = await response.json();
-        console.log(data);
-
-        if (data.isAuthenticated) {
-          setIsAuthenticated(true);
-        } else {
-          setErrorMessages({
-            username: data.message,
-            email: data.message,
-          });
-          setPassword('');
-          setIsLoading(false);
-          return;
-        }
-
-        router.prefetch('/dashboard');
-        router.push('/dashboard');
-      } catch (error) {
-        if (error instanceof z.ZodError) {
-          const errorObj: TErrorMessages = {};
-          error.issues.forEach((error) => {
-            errorObj[error.path[0] as keyof TErrorMessages] = error.message;
-          });
-
-          setErrorMessages(errorObj);
-          setIsLoading(false);
-        }
-      }
-    },
-    [password, user, router]
-  );
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -191,7 +122,7 @@ function LoginForm() {
         return;
       }
 
-      router.prefetch('/dashboard');
+      router.refresh();
       router.push('/dashboard');
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -255,7 +186,7 @@ function LoginForm() {
             </p>
           </div>
 
-          <form className="login__form" onSubmit={(e) => handleSubmit1(e)}>
+          <form className="login__form" onSubmit={(e) => handleSubmit(e)}>
             <AuthInput
               htmlFor="text"
               labelText="E-post/Användarnamn"
