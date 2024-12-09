@@ -11,7 +11,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'Cup Maker',
+  title: 'CupHub',
   description: 'Simple',
 };
 

@@ -7,7 +7,7 @@ function Testimonials() {
   return (
     <section className="testimonials" id="testimonials">
       <section className="testimonials__title">
-        <h2>Vad våra nöjda kunder säger om Cup Maker</h2>
+        <h2>Vad våra nöjda kunder säger om CupHub</h2>
         <p>
           Hundratals turneringsarrangörer världen över litar på CupMaker för att
           effektivt hantera sina tävlingar. Oavsett om det gäller små lokala
