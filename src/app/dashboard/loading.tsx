@@ -1,7 +1,7 @@
 import React from 'react';
 
-function loading() {
+function LoadingWrapper() {
   return <div>BEFORE RENDERING LOADING</div>;
 }
 
-export default loading;
+export default LoadingWrapper;

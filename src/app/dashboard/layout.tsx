@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import './dashboard.scss';
 import NavBarDashboard from '../../components/dashboard-page/ui/NavBarDashboard/NavBarDashboard';
 import NavMenuDashboard from '../../components/dashboard-page/ui/NavMenuDashboard/NavMenuDashboard';
+import LoadingWrapper from './loading';
 
 type Props = {
   children: React.ReactNode;
@@ -18,7 +19,9 @@ function layout({ children }: Props) {
         <NavMenuDashboard />
       </section>
 
-      <main className="dashboard__main-children">{children}</main>
+      <main className="dashboard__main-children">
+        <Suspense fallback={<LoadingWrapper />}>{children}</Suspense>
+      </main>
     </section>
   );
 }
