@@ -6,6 +6,7 @@ import {
   compareUserInputPasswordWithHashedPassword,
   createToken,
 } from '../../../../lib/server';
+import { redirect } from 'next/navigation';
 
 export async function POST(request: Request) {
   try {
@@ -118,6 +119,8 @@ export async function POST(request: Request) {
         };
 
         const token = createToken(userPayload);
+
+        // redirect('/dashboard');
 
         return NextResponse.json({
           status: 200,
