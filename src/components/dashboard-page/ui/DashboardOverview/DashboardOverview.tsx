@@ -40,7 +40,9 @@ async function DashboardOverview() {
   return (
     <section className="overview">
       <section className="overview__welcome-text">
-        <h1>Välkommen, {username}! 👋</h1>
+        <Suspense fallback={<p>Loading USERNAME............</p>}>
+          <h1>Välkommen, {username}! 👋</h1>
+        </Suspense>
       </section>
 
       <section className="overview__widgets">
