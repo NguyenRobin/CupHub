@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyTokenByJose } from '../../lib/client';
+import { redirect } from 'next/dist/server/api-utils';
 
 if (process.env.TOKEN_NAME === undefined) {
   throw new Error('process.env.TOKEN_NAME NOT defined');

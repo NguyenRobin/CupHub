@@ -21,11 +21,11 @@ async function getDashboardOverview() {
       },
     }
   );
-
+  if (!response.ok) {
+    return { status: 500, message: 'Problem getting data..' };
+  }
   const data = await response.json();
-
   console.log(data);
-
   return data;
 }
 
@@ -33,7 +33,7 @@ async function DashboardOverview() {
   const overview = await getDashboardOverview();
 
   if (overview.status !== 200) {
-    return <p>NOT OK</p>;
+    return <p>{overview.message}</p>;
   }
   const { tournaments, username } = overview?.data;
 

@@ -607,17 +607,13 @@ export async function getTournamentPlayoffByID(id: Types.ObjectId) {
 }
 
 export async function getMatchesByStatus(status: TStatus, amount: number) {
-  try {
-    await connectToMongoDB();
+  await connectToMongoDB();
 
-    const matches = await getMatchesByStatusDB(status, amount);
+  const matches = await getMatchesByStatusDB(status, amount);
 
-    if (!matches) {
-      return { status: 404, message: 'No matches found by status' };
-    }
-
-    return { status: 200, matches: matches };
-  } catch (error) {
-    console.log(error);
+  if (!matches) {
+    return { status: 404, message: 'No matches found by status' };
   }
+
+  return { status: 200, matches: matches };
 }

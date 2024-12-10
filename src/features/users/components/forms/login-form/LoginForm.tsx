@@ -35,45 +35,37 @@ type TErrorMessages = {
 
 function LoginForm() {
   const [errorMessages, setErrorMessages] = useState<TErrorMessages>({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState('DemoUser');
   const [password, setPassword] = useState('Demo123');
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token`,
-          {
-            cache: 'no-cache',
-          }
-        );
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token`
+  //     );
 
-        const data = await response.json();
-        console.log('Token validation response:', data); // Lägg till detta
+  //     console.log(response);
 
-        if (data.isAuthenticated) {
-          setIsAuthenticated(true);
-          router.refresh();
-          router.push('/dashboard');
-        } else {
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.error('Error validating token:', error);
-        setIsLoading(false);
-      }
-    };
+  //     // if (response.ok) {
+  //     //   return { message: 'nos' };
+  //     // }
 
-    fetchData();
-  }, [router, isAuthenticated]);
+  //     const data = await response.json();
+  //     console.log('Token validation response:', data);
 
-  useEffect(() => {
-    // Prefetch the dashboard page
-    router.prefetch('/dashboard');
-  }, [router]);
+  //     if (data.isAuthenticated) {
+  //       setIsAuthenticated(true);
+  //     } else {
+  //       setIsLoading(false);
+  //     }
+  //     setIsLoading(false);
+  //   };
+
+  //   fetchData();
+  // }, [router, isAuthenticated]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.type === 'text') {
@@ -112,12 +104,11 @@ function LoginForm() {
       );
 
       const data = await response.json();
-      console.log('Login response:', data);
 
       if (data.isAuthenticated) {
         setIsAuthenticated(true);
         router.refresh();
-        router.push('/dashboard');
+        router.replace('/dashboard');
       } else {
         setErrorMessages({
           username: data.message,
@@ -126,6 +117,7 @@ function LoginForm() {
         setPassword('');
         setIsLoading(false);
       }
+      setIsLoading(false);
     } catch (error) {
       if (error instanceof z.ZodError) {
         const errorObj: TErrorMessages = {};
@@ -138,7 +130,7 @@ function LoginForm() {
       }
     }
   }
-  console.log('isAuthenticated', isAuthenticated);
+  // console.log('isAuthenticated', isAuthenticated);
   if (isLoading) {
     return (
       <div

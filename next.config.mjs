@@ -6,6 +6,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  sassOptions: {
+    silenceDeprecations: ['legacy-js-api'],
+  },
   // async headers() {
   //   return [
   //     {

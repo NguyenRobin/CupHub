@@ -50,7 +50,7 @@ export async function POST(request: Request) {
     }
 
     const newUser = new UserModel(user);
-    console.log(newUser);
+
     await newUser.save();
 
     const userPayload = {

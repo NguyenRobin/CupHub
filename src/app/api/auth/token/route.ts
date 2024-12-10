@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { isUserLoggedIn } from '../../../../lib/server';
-import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
+import { isAuthenticated } from '../../../../lib/server';
+import { cookies } from 'next/headers';
 
 export async function GET(request: NextRequest) {
-  await connectToMongoDB();
-
-  const isAuthenticated = isUserLoggedIn();
-
-  return NextResponse.json({ status: 200, isAuthenticated });
+  const sessionCookie = (await cookies()).get(process.env.TOKEN_NAME!);
+  const sessionToken = sessionCookie?.value;
+  const isAuth = isAuthenticated(sessionToken!);
+  // console.log('isAuth', isAuth);
+  return NextResponse.json({ status: 200, isAuthenticated: isAuth });
 }

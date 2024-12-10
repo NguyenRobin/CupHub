@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { TRounds, TGroup, TMatch, TTeamStanding } from '../../types/types';
 import { Types } from 'mongoose';
-import { cookies, type UnsafeUnwrappedCookies } from 'next/headers';
+import { cookies } from 'next/headers';
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
@@ -51,8 +51,8 @@ export function getCookieValue(request: Request) {
   return sessionToken;
 }
 
-export function getCookieFromServerComponent() {
-  const cookieStore = (cookies() as unknown as UnsafeUnwrappedCookies);
+export async function getCookieFromServerComponent() {
+  const cookieStore = await cookies();
   const token = cookieStore.get(process.env.TOKEN_NAME as string)?.value;
 
   return token;
@@ -93,11 +93,9 @@ export function validatePossibleTeamsPerGroupGoingToPlayoff(
   }
 }
 
-export function isUserLoggedIn() {
-  const cookieStore = (cookies() as unknown as UnsafeUnwrappedCookies);
-  const token = cookieStore.get(process.env.TOKEN_NAME!)?.value;
-  const isTokenValid = verifyToken(token!);
-  return isTokenValid ? true : false;
+export function isAuthenticated(sessionToken: string) {
+  const isTokenValid = verifyToken(sessionToken!);
+  return isTokenValid.id ? true : false;
 }
 
 // export function buildPlayoffSchedule(amountOfTeamsToPlayOff: number) {
