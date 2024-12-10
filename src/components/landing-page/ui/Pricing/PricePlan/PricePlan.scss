@@ -1,5 +1,4 @@
-@import '../../../../../styles/variables.scss';
-@import '../../../../../styles/typography.scss';
+@use '../../../../../styles/typography.scss' as typography;
 
 .price-plan {
   box-shadow: rgba(0, 0, 0, 0.6) 1.95px 1.95px 2.6px;
@@ -29,19 +28,19 @@
     gap: 0.5rem;
 
     h4 {
-      font-size: $font-size-3xl;
+      font-size: typography.$font-size-3xl;
       color: var(--color-text-heading-tertiary);
       font-weight: 600;
     }
     h2 {
-      font-size: $font-size-5xl;
+      font-size: typography.$font-size-5xl;
     }
     &--subscription {
-      font-size: $font-size-md;
+      font-size: typography.$font-size-md;
       color: #6a6a6a;
     }
     p {
-      font-size: $font-size-sm;
+      font-size: typography.$font-size-sm;
       color: #6a6a6a;
     }
   }
@@ -66,11 +65,11 @@
     }
     &__price {
       h4 {
-        font-size: $font-size-lg;
+        font-size: typography.$font-size-lg;
         color: #818181;
       }
       h2 {
-        font-size: $font-size-xl;
+        font-size: typography.$font-size-xl;
       }
     }
     &__children {
@@ -90,11 +89,11 @@
     }
     &__price {
       h4 {
-        font-size: $font-size-xl;
+        font-size: typography.$font-size-xl;
         color: #818181;
       }
       h2 {
-        font-size: $font-size-2xl;
+        font-size: typography.$font-size-2xl;
       }
     }
     &__children {

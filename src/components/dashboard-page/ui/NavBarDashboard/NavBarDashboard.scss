@@ -1,6 +1,4 @@
-@import '../../../../styles/typography.scss';
-@import '../../../../styles/variables.scss';
-@import '../../../../styles/dark.scss';
+@use '../../../../styles/typography.scss' as typography;
 
 .nav-dashboard-container {
   display: flex;
@@ -20,7 +18,7 @@
     // justify-content: center;
     // align-items: center;
     gap: 1rem;
-    font-size: $font-size-6xl;
+    font-size: typography.$font-size-6xl;
     cursor: pointer;
     width: 100%;
   }
@@ -50,7 +48,7 @@
       position: absolute;
       top: 0;
       right: 0;
-      font-size: $font-size-sm;
+      font-size: typography.$font-size-sm;
       min-width: 2.2rem;
       min-height: 2.2rem;
       border-radius: 50%;
@@ -77,7 +75,7 @@
   }
 
   &__search-input {
-    font-size: $font-size-lg;
+    font-size: typography.$font-size-lg;
     padding: 1rem;
     border: 1px solid var(--color-border-secondary);
     width: 100%;

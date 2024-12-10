@@ -5,8 +5,6 @@ import UpcomingEvents from './UpcomingEvents/UpcomingEvents';
 import LiveMatches from './LiveMatches/LiveMatches';
 import UpcomingMatches from './UpcomingMatches/UpcomingMatches';
 import CardWrapper from '../../../ui/card-wrapper/CardWrapper';
-import LoadingSpinner from '../../../ui/loading-spinner/LoadingSpinner';
-import { Suspense } from 'react';
 
 async function getDashboardOverview() {
   const token = (await cookies()).get(process.env.TOKEN_NAME!);
@@ -39,46 +37,30 @@ async function DashboardOverview() {
   const { tournaments, username } = overview?.data;
 
   return (
-    <Suspense
-      fallback={
-        <div
-          style={{
-            height: '100',
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <LoadingSpinner size={40} />
-        </div>
-      }
-    >
-      <section className="overview">
-        <section className="overview__welcome-text">
-          <h1>Välkommen, {username}! 👋</h1>
-        </section>
-
-        <section className="overview__widgets">
-          <UpcomingEvents events={tournaments} />
-          <EventSelection />
-          <LiveMatches />
-          <UpcomingMatches />
-          <CardWrapper>
-            <h1>Betalningar</h1>
-          </CardWrapper>
-          <CardWrapper>
-            <h1>Rekommenderade turneringar</h1>
-          </CardWrapper>
-          <CardWrapper>
-            <h1>Turneringens tabellställning</h1>
-          </CardWrapper>
-          <CardWrapper>
-            <h1>Nyheter och meddelanden</h1>
-          </CardWrapper>
-        </section>
+    <section className="overview">
+      <section className="overview__welcome-text">
+        <h1>Välkommen, {username}! 👋</h1>
       </section>
-    </Suspense>
+
+      <section className="overview__widgets">
+        <UpcomingEvents events={tournaments} />
+        <EventSelection />
+        <LiveMatches />
+        <UpcomingMatches />
+        <CardWrapper>
+          <h1>Betalningar</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Rekommenderade turneringar</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Turneringens tabellställning</h1>
+        </CardWrapper>
+        <CardWrapper>
+          <h1>Nyheter och meddelanden</h1>
+        </CardWrapper>
+      </section>
+    </section>
   );
 }
 

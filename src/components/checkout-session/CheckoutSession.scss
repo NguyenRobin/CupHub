@@ -1,4 +1,4 @@
-@import '../../styles/typography.scss';
+@use '../../styles/typography.scss' as typography;
 
 .checkout-session {
   height: 100%;
@@ -26,7 +26,7 @@
     gap: 2rem;
 
     p {
-      font-size: $font-size-xl;
+      font-size: typography.$font-size-xl;
       font-weight: 300;
     }
   }
@@ -37,7 +37,7 @@
     gap: 2rem;
 
     p {
-      font-size: $font-size-md;
+      font-size: typography.$font-size-md;
       font-weight: 500;
     }
   }
@@ -57,7 +57,7 @@
 
   &__info {
     p {
-      font-size: $font-size-sm;
+      font-size: typography.$font-size-sm;
       font-weight: 300;
     }
     p:nth-child(2) {
@@ -74,7 +74,7 @@
     margin-top: auto;
 
     p {
-      font-size: $font-size-lg;
+      font-size: typography.$font-size-lg;
       color: #fff;
     }
   }

@@ -99,12 +99,6 @@ function Event({ day, month, name, location, id }) {
           <p className="event__image-date--day">{day}</p>
           <p className="event__image-date--month">{month}</p>
         </section>
-        {/* <Image
-          src="/IFK_Uppsala_logo.svg.png"
-          height={60}
-          width={60}
-          alt="IFk"
-        /> */}
       </section>
 
       <section className="event__details">
@@ -113,9 +107,6 @@ function Event({ day, month, name, location, id }) {
         <section className="event__location">
           <MdLocationOn />
           <p>{location}</p>
-          {/* <Link href="#" className="upcomingEvent__location-info">
-        Info
-      </Link> */}
         </section>
       </section>
     </section>

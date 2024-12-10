@@ -24,7 +24,21 @@ async function Tournament({ tournamentId, children }: any) {
   const { name, location, startDate, _id } = response?.tournament;
 
   return (
-    <Suspense fallback={<LoadingSpinner size={40} />}>
+    <Suspense
+      fallback={
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <LoadingSpinner size={40} />
+        </div>
+      }
+    >
       <CardWrapper>
         <div className="actions">
           <Link href={'/dashboard'}>
@@ -35,12 +49,6 @@ async function Tournament({ tournamentId, children }: any) {
 
         <div className="tournament-container">
           <div className="tournament-container__overview">
-            {/* <Image
-            src="/IFK_Uppsala_logo.svg.png"
-            height={60}
-            width={60}
-            alt="IFk"
-          /> */}
             <GiSoccerField size={80} color="#006774" />
 
             <div className="tournament-container__overview__details">

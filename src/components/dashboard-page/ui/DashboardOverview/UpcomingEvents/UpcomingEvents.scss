@@ -1,9 +1,7 @@
-@import '../../../../../styles/typography.scss';
-@import '../../../../../styles/variables.scss';
-@import '../../../../../styles/dark.scss';
+@use '../../../../../styles/typography.scss' as typography;
 
 .upcoming-events {
-  color: $txt-color-secondary;
+  color: var(--color-text-tertiary);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -21,11 +19,11 @@
     padding: 1rem;
 
     svg {
-      font-size: $font-size-lg;
+      font-size: typography.$font-size-lg;
     }
 
     h2 {
-      font-size: $font-size-lg;
+      font-size: typography.$font-size-lg;
       font-weight: 400;
     }
   }
@@ -41,14 +39,14 @@
     align-items: center;
     gap: 0.5rem;
     align-self: flex-end;
-    font-size: $font-size-lg;
+    font-size: typography.$font-size-lg;
     cursor: pointer;
 
     span {
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: $font-size-2xl;
+      font-size: typography.$font-size-2xl;
     }
   }
 }
@@ -98,12 +96,12 @@
         font-weight: bolder;
         color: red;
 
-        font-size: $font-size-lg;
+        font-size: typography.$font-size-lg;
       }
 
       &--month {
         font-weight: bold;
-        font-size: $font-size-md;
+        font-size: typography.$font-size-md;
         color: var(--color-text-paragraph-primary);
       }
     }
@@ -117,7 +115,7 @@
     gap: 1rem;
 
     h3 {
-      font-size: $font-size-md;
+      font-size: typography.$font-size-md;
       padding-left: 0.5rem;
       font-weight: 400;
     }
@@ -129,11 +127,11 @@
     gap: 0.2rem;
 
     svg {
-      font-size: $font-size-lg;
+      font-size: typography.$font-size-lg;
       color: rgb(157, 155, 155);
     }
     p {
-      font-size: $font-size-sm;
+      font-size: typography.$font-size-sm;
       font-weight: 300;
     }
 

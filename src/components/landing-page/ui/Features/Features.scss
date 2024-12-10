@@ -1,8 +1,4 @@
-@import '../../../../styles/variables.scss';
-@import '../../../../styles/typography.scss';
-@import '../../../../styles/dark.scss';
-@import '../../../../app/globals.scss';
-
+@use '../../../../styles/typography.scss' as typography;
 .features-container {
   background-color: var(--color-bg-secondary);
   padding: 2.5rem;
@@ -19,14 +15,14 @@
 
     h2 {
       color: var(--color-text-heading-secondary);
-      font-size: $font-size-3xl;
+      font-size: typography.$font-size-3xl;
       text-align: center;
       font-weight: 400;
     }
     p {
       text-align: center;
       color: var(--color-text-paragraph-secondary);
-      font-size: $font-size-sm;
+      font-size: typography.$font-size-sm;
       font-weight: 200;
     }
   }
@@ -42,7 +38,7 @@
 
     li {
       list-style-type: none;
-      font-size: $font-size-lg;
+      font-size: typography.$font-size-lg;
       display: flex;
       align-items: center;
       background-color: transparent;
@@ -54,7 +50,7 @@
       // width: 100%;
       // height: 100%;
       transition: 0.2s;
-      font-size: $font-size-md;
+      font-size: typography.$font-size-md;
       color: var(--color-text-paragraph-secondary);
       cursor: pointer;
 
@@ -71,7 +67,7 @@
     }
 
     .icon {
-      font-size: $font-size-3xl;
+      font-size: typography.$font-size-3xl;
     }
   }
 }
@@ -98,7 +94,7 @@
 
     .icon {
       color: var(--color-icon-primary);
-      font-size: $font-size-5xl;
+      font-size: typography.$font-size-5xl;
     }
   }
   &__title {
@@ -113,7 +109,7 @@
       font-weight: 500;
     }
     p {
-      font-size: $font-size-xs;
+      font-size: typography.$font-size-xs;
       color: var(--color-text-paragraph-primary);
       text-align: center;
     }
@@ -148,7 +144,7 @@
         // width: 0%;
         // height: 0%;
         min-width: 10rem;
-        font-size: $font-size-xs;
+        font-size: typography.$font-size-xs;
         text-wrap: nowrap;
 
         span {

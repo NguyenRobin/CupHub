@@ -1,8 +1,7 @@
-@import '../../../styles/variables.scss';
-@import '../../../styles/typography.scss';
+@use '../../../styles/typography.scss' as typography;
 
 .card-wrapper {
-  color: $txt-color-secondary;
+  color: var(--color-text-tertiary);
   gap: 1.5rem;
   background-color: #dee2e6;
   padding: 1rem;

@@ -1,10 +1,10 @@
-@import '../../../../../styles/variables.scss';
-@import '../../../../../styles/typography.scss';
+@use '../../../../../styles/typography.scss' as typography;
 
 .delete-tournament {
   background-color: transparent;
   border: none;
-  &__icon {
+  &-btn__icon {
+    cursor: pointer;
   }
 }
 
@@ -23,7 +23,7 @@
   padding: 4rem;
 
   &__confirmation {
-    background-color: $bg-color-secondary;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -31,7 +31,7 @@
     border-radius: 1rem;
   }
   &__title {
-    font-size: $font-size-lg;
+    font-size: typography.$font-size-lg;
     font-weight: 400;
     text-align: center;
 
@@ -53,6 +53,7 @@
     border-radius: 1rem;
     min-height: 4rem;
     min-width: 10rem;
+    cursor: pointer;
 
     &--cancel {
       border: 1px solid grey;

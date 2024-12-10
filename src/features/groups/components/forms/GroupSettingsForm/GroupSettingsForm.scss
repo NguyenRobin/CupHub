@@ -1,6 +1,4 @@
-@import '../../../../../styles/typography.scss';
-@import '../../../../../styles/variables.scss';
-@import '../../../../../styles/dark.scss';
+@use '../../../../../styles/typography.scss' as typography;
 
 .group-settings {
   display: flex;
@@ -21,12 +19,12 @@
       gap: 1rem;
 
       p {
-        font-size: $font-size-lg;
+        font-size: typography.$font-size-lg;
         width: 100%;
         font-weight: 300;
       }
       input {
-        font-size: $font-size-xl; // on phone less the 16px will zoom in and fuck the design up
+        font-size: typography.$font-size-xl; // on phone less the 16px will zoom in and fuck the design up
         width: 100%;
         padding: 0.5rem;
       }
@@ -45,24 +43,23 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          background-color: $dark-bg-primary;
-          background-color: $color-primary;
+          background-color: #07383e;
           padding: 1rem;
           width: 3rem;
           height: 3rem;
           border-radius: 50%;
-          border: 1.4px solid $border-color-primary;
+          border: 1.4px solid var(--color-border-success);
           border: 1px solid lightgray;
 
           cursor: pointer;
 
           span {
-            font-size: $font-size-3xl;
-            color: black;
+            font-size: typography.$font-size-3xl;
+            color: #fff;
           }
         }
         span {
-          font-size: $font-size-2xl;
+          font-size: typography.$font-size-2xl;
         }
       }
     }
@@ -85,7 +82,7 @@
       border-radius: 2rem;
       cursor: pointer;
       font-weight: bold;
-      font-size: $font-size-xl;
+      font-size: typography.$font-size-xl;
       //   border: 2px solid black;
     }
 
@@ -97,7 +94,7 @@
 
     &--next {
       width: 60%;
-      background-color: black;
+      background-color: #07383e;
       color: white;
     }
   }

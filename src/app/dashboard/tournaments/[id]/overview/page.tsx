@@ -12,9 +12,25 @@ async function page(props: { params: Promise<{ id: Types.ObjectId }> }) {
   const { id } = params;
 
   return (
-    <Tournament tournamentId={id}>
-      <TournamentOverviewDetails tournamentId={id} />
-    </Tournament>
+    <Suspense
+      fallback={
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <LoadingSpinner size={40} />
+        </div>
+      }
+    >
+      <Tournament tournamentId={id}>
+        <TournamentOverviewDetails tournamentId={id} />
+      </Tournament>
+    </Suspense>
   );
 }
 

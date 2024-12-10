@@ -1,6 +1,4 @@
-@import '../../../../styles/variables.scss';
-@import '../../../../styles/typography.scss';
-@import '../../../../styles/dark.scss';
+@use '../../../../styles/typography.scss' as typography;
 
 .concept {
   width: 100%;
@@ -19,14 +17,14 @@
 
     h2 {
       color: var(--color-text-heading-primary);
-      font-size: $font-size-3xl;
+      font-size: typography.$font-size-3xl;
       text-align: center;
       font-weight: 400;
       margin-bottom: 2rem;
     }
     p {
       text-align: center;
-      font-size: $font-size-sm;
+      font-size: typography.$font-size-sm;
       font-weight: 200;
       color: var(--color-text-paragraph-primary);
     }

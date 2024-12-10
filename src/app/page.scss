@@ -1,5 +1,4 @@
-@import '../styles/variables.scss';
-@import '../styles/typography.scss';
+@use '../styles/typography.scss' as typography;
 
 .wrapper {
   padding-top: 7rem;

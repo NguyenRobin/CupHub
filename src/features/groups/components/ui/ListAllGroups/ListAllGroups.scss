@@ -1,6 +1,4 @@
-@import '../../../../../styles/typography.scss';
-@import '../../../../../styles/variables.scss';
-@import '../../../../../styles/dark.scss';
+@use '../../../../../styles/typography.scss' as typography;
 
 .groups {
   display: grid;
@@ -15,8 +13,8 @@
       grid-template-columns: repeat(10, 1fr);
       gap: 0.5rem;
       padding: 1rem;
-      background-color: $bg-color-primary;
-      color: $color-primary;
+      background-color: #197842;
+      color: #fff;
 
       &__sort {
         height: 2.5rem;
@@ -74,12 +72,12 @@
 
       &__place.leaders {
         background-color: rgb(0, 70, 130);
-        color: $color-primary;
+        color: #fff;
         border: none;
       }
       &__place.losers {
         background-color: red;
-        color: $color-primary;
+        color: #fff;
         border: none;
       }
       &__points {

@@ -1,6 +1,4 @@
-@import '../../../../styles/variables.scss';
-@import '../../../../styles/typography.scss';
-@import '../../../../styles/dark.scss';
+@use '../../../../styles/typography.scss' as typography;
 
 .nav-menu {
   height: 100%;
@@ -25,10 +23,10 @@
       color: var(--color-text-paragraph-primary);
 
       &-icon {
-        font-size: $font-size-xl;
+        font-size: typography.$font-size-xl;
       }
       &-link {
-        font-size: $font-size-lg;
+        font-size: typography.$font-size-lg;
       }
     }
   }

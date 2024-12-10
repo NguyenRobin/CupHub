@@ -1,5 +1,4 @@
-@import '../../styles//typography.scss';
-@import '../../styles/variables.scss';
+@use '../../styles//typography.scss' as typography;
 
 .dashboard {
   padding-top: 7rem;

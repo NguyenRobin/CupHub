@@ -1,5 +1,3 @@
-@import '../../../../../../styles/variables.scss';
-
 .playoff-view-mobile {
   display: flex;
   flex-direction: column;
@@ -21,7 +19,7 @@
 
 .playoff-view-mobile.btn {
   padding: 1rem 1.5rem;
-  background-color: $btn-color-primary-normal;
+  background-color: #07383e;
   color: #ffffff;
   font-weight: bold;
   border-radius: 5rem;

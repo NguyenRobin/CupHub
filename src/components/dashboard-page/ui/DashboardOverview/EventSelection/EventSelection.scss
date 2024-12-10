@@ -1,9 +1,7 @@
-@import '../../../../../styles/typography.scss';
-@import '../../../../../styles/variables.scss';
-@import '../../../../../styles/dark.scss';
+@use '../../../../../styles/typography.scss' as typography;
 
 .event-selection {
-  color: $txt-color-secondary;
+  color: var(--color-text-tertiary);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -19,14 +17,14 @@
     gap: 1rem;
     padding: 1rem;
     // border-bottom: 1px solid rgba(0, 0, 0, 0.16);
-    font-size: $font-size-lg;
+    font-size: typography.$font-size-lg;
     color: black;
     svg {
-      font-size: $font-size-3xl;
+      font-size: typography.$font-size-3xl;
     }
 
     h2 {
-      font-size: $font-size-lg;
+      font-size: typography.$font-size-lg;
       font-weight: 400;
     }
   }
@@ -48,11 +46,11 @@
       flex-direction: column;
       gap: 1rem;
       h3 {
-        font-size: $font-size-lg;
+        font-size: typography.$font-size-lg;
         font-weight: 200;
       }
       p {
-        font-size: $font-size-sm;
+        font-size: typography.$font-size-sm;
       }
     }
   }

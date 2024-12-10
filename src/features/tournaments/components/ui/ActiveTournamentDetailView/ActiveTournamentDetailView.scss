@@ -1,5 +1,4 @@
-@import '../../../../../styles/variables.scss';
-@import '../../../../../styles/typography.scss';
+@use '../../../../../styles/typography.scss' as typography;
 
 .active-tournament-detail-view {
   padding: 1.5rem;
@@ -8,7 +7,7 @@
     justify-content: space-between;
     list-style: none;
     li {
-      font-size: $font-size-md;
+      font-size: typography.$font-size-md;
       cursor: pointer;
     }
     li.active {
@@ -18,7 +17,7 @@
     .active {
       text-decoration: underline;
       text-underline-offset: 8px;
-      text-decoration-color: $border-color-success;
+      text-decoration-color: var(--color-border-success);
       text-decoration-thickness: 3px;
     }
   }

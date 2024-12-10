@@ -1,6 +1,4 @@
-@import '../../../../../styles/typography.scss';
-@import '../../../../../styles/variables.scss';
-@import '../../../../../styles/dark.scss';
+@use '../../../../../styles/typography.scss' as typography;
 
 .add-team {
   display: flex;
@@ -21,17 +19,17 @@
       gap: 1rem;
 
       p {
-        font-size: $font-size-lg;
+        font-size: typography.$font-size-lg;
         width: 100%;
         font-weight: 300;
         text-align: center;
       }
       input,
       select {
-        font-size: $font-size-xl; // on phone less the 16px will zoom in and fuck the design up
+        font-size: typography.$font-size-xl; // on phone less the 16px will zoom in and fuck the design up
         padding: 0.5rem;
         width: 100%;
-        border: 1px solid $border-color-primary;
+        border: 1px solid var(--color-border-success);
         border: 1px solid lightgray;
       }
       input,
@@ -39,12 +37,12 @@
         padding: 0.5rem;
         border-radius: 0.5rem;
         border: 1px solid rgb(213, 213, 213);
-        font-size: $font-size-xl;
+        font-size: typography.$font-size-xl;
       }
 
       select:active,
       select:focus {
-        border: 2px solid $bg-color-primary;
+        border: 2px solid var(--color-border-success);
         outline: none;
       }
     }
@@ -54,22 +52,22 @@
       gap: 1rem;
       // margin-bottom: 5rem;
       input {
-        font-size: $font-size-xl;
+        font-size: typography.$font-size-xl;
         width: 100%;
         padding: 0.5rem;
-        border: 1px solid $border-color-primary;
+        border: 1px solid var(--color-border-success);
         border: 1px solid lightgray;
       }
       input {
         padding: 0.5rem;
         border-radius: 0.5rem;
         border: 1px solid rgb(213, 213, 213);
-        font-size: $font-size-xl;
+        font-size: typography.$font-size-xl;
       }
 
       input:active,
       input:focus {
-        border: 2px solid $bg-color-primary;
+        border: 2px solid var(--color-border-success);
         outline: none;
       }
     }
@@ -80,17 +78,17 @@
       gap: 1rem;
 
       p {
-        font-size: $font-size-lg;
+        font-size: typography.$font-size-lg;
         width: 100%;
         font-weight: 300;
         text-align: center;
       }
 
       select {
-        font-size: $font-size-2xl;
+        font-size: typography.$font-size-2xl;
 
         padding: 0.5rem;
-        border: 1px solid $border-color-primary;
+        border: 1px solid var(--color-border-success);
         width: 100%;
       }
     }
@@ -111,7 +109,7 @@
       border-radius: 2rem;
       cursor: pointer;
       font-weight: bold;
-      font-size: $font-size-xl;
+      font-size: typography.$font-size-xl;
       //   border: 2px solid black;
     }
 
@@ -123,7 +121,7 @@
 
     &--next {
       width: 75%;
-      background-color: black;
+      background-color: #07383e;
       color: white;
     }
   }

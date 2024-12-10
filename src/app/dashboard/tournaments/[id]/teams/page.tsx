@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Tournament from '../../../../../features/tournaments/components/ui/Tournament/Tournament';
 import { getTournamentGroupsById } from '../../../../actions';
 import { GiChampions } from 'react-icons/gi';
+import './teams.scss';
+import LoadingSpinner from '../../../../../components/ui/loading-spinner/LoadingSpinner';
 
 async function page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -20,19 +22,35 @@ async function page(props: { params: Promise<{ id: string }> }) {
     }
   }
   return (
-    <Tournament tournamentId={id}>
-      <div className="tournament-overview-details__teams-participating">
-        <div className="tournament-overview-details__teams-participating__title">
-          <GiChampions />
-          <p>Lag medverkar:</p>
+    <Suspense
+      fallback={
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <LoadingSpinner size={40} />
         </div>
-        <div className="tournament-overview-details__teams-participating__teams">
-          {teams_participating.map((team) => (
-            <p key={team.name}>{team.name}</p>
-          ))}
+      }
+    >
+      <Tournament tournamentId={id}>
+        <div className="tournament-overview-teams">
+          <div className="tournament-overview-teams__title">
+            <GiChampions />
+            <p>Lag medverkar:</p>
+          </div>
+          <div className="tournament-overview-teams__teams">
+            {teams_participating.map((team) => (
+              <p key={team.name}>{team.name}</p>
+            ))}
+          </div>
         </div>
-      </div>
-    </Tournament>
+      </Tournament>
+    </Suspense>
   );
 }
 

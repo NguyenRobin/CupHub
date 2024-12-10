@@ -1,6 +1,5 @@
-@import '../../../../styles/typography.scss';
-@import '../../../../styles/variables.scss';
-@import '../../../../styles/dark.scss';
+@use '../../../../styles/typography.scss' as typography;
+
 .nav-menu-dashboard {
   display: flex;
   flex-direction: column;
@@ -30,15 +29,15 @@
     gap: 0.5rem;
 
     svg {
-      font-size: $font-size-xl;
+      font-size: typography.$font-size-xl;
     }
     p {
-      font-size: $font-size-sm;
+      font-size: typography.$font-size-sm;
     }
   }
 
   &__arrow {
-    font-size: $font-size-xl;
+    font-size: typography.$font-size-xl;
   }
 
   &__subcategory {

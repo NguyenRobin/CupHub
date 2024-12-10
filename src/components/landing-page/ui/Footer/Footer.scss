@@ -1,6 +1,4 @@
-@import '../../../../styles/variables.scss';
-@import '../../../../styles/typography.scss';
-@import '../../../../styles/dark.scss';
+@use '../../../../styles/typography.scss' as typography;
 
 .footer-container {
   background-color: var(--color-bg-secondary);
@@ -24,18 +22,17 @@
       gap: 0.5rem;
 
       h3 {
-        font-size: $font-size-xl;
-        color: $color-primary;
+        font-size: typography.$font-size-xl;
+        color: #fff;
       }
       ul {
         list-style-type: none;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-        color: $color-primary;
 
         li {
-          font-size: $font-size-xs;
+          font-size: typography.$font-size-xs;
           color: #cfcece;
         }
       }

@@ -1,6 +1,4 @@
-@import '../../../../styles/typography.scss';
-@import '../../../../styles/variables.scss';
-@import '../../../../styles/dark.scss';
+@use '../../../../styles/typography.scss' as typography;
 
 .overview {
   display: flex;
@@ -9,7 +7,7 @@
   &__welcome-text {
     margin-bottom: 2rem;
     h1 {
-      font-size: $font-size-2xl;
+      font-size: typography.$font-size-2xl;
       color: var(--color-text-primary);
     }
   }

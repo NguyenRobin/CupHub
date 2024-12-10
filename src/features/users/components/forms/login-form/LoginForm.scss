@@ -1,5 +1,4 @@
-@import '../../../../../styles/variables.scss';
-@import '../../../../../styles/typography.scss';
+@use '../../../../../styles/typography.scss' as typography;
 
 .login {
   width: 100%;
@@ -26,11 +25,11 @@
     gap: 1rem;
 
     h2 {
-      font-size: $font-size-5xl;
+      font-size: typography.$font-size-5xl;
       color: var(--color-text-primary);
     }
     p {
-      font-size: $font-size-md;
+      font-size: typography.$font-size-md;
       color: var(--color-text-paragraph-primary);
     }
     a {
@@ -55,7 +54,7 @@
       border-radius: 5rem;
       cursor: pointer;
       transition: 0.2s ease-in-out;
-      font-size: $font-size-lg;
+      font-size: typography.$font-size-lg;
     }
     button:hover {
       background-color: #30774f;

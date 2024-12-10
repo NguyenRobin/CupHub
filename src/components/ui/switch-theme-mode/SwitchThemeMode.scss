@@ -1,4 +1,4 @@
-@import '../../../styles/typography.scss';
+@use '../../../styles/typography.scss' as typography;
 
 /* The switch - the box around the slider */
 .switch-theme-mode {
@@ -93,7 +93,7 @@ input:checked + .slider:before {
     width: 50%;
 
     &_icon {
-      font-size: $font-size-xl;
+      font-size: typography.$font-size-xl;
       cursor: pointer;
     }
   }
