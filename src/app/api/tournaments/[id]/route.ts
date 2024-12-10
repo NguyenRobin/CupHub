@@ -9,10 +9,8 @@ import RoundModel from '../../../../features/rounds/models/Round';
 import { exec } from 'child_process';
 import { deleteTournamentById } from '../../../../features/tournaments/server/actions/tournament';
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const id = params.id;
   try {
     if (!id || !mongoose.isValidObjectId(id)) {
@@ -57,10 +55,8 @@ export async function GET(
   }
 }
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   try {
     const id = params.id;
 
@@ -180,10 +176,8 @@ export async function PATCH(
 //   }
 // }
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: Types.ObjectId } }
-) {
+export async function DELETE(request: Request, props: { params: Promise<{ id: Types.ObjectId }> }) {
+  const params = await props.params;
   const { id } = params;
 
   try {

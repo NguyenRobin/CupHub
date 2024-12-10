@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCheckoutSessionById } from '../../../../features/stripe/server/actions/stripe';
 
-export async function GET(
-  request: Request,
-  { params }: { params: { session_id: string } }
-) {
+export async function GET(request: Request, props: { params: Promise<{ session_id: string }> }) {
+  const params = await props.params;
   try {
     const { session_id } = params;
     const session = await getCheckoutSessionById(session_id);

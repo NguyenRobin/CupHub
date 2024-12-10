@@ -4,7 +4,8 @@ import Match from '../../../../features/matches/components/ui/Match/Match';
 import { getMatchByID } from '../../../../features/matches/server/actions/match';
 import { Types } from 'mongoose';
 
-async function MatchPage({ params }: { params: { id: Types.ObjectId } }) {
+async function MatchPage(props: { params: Promise<{ id: Types.ObjectId }> }) {
+  const params = await props.params;
   const { id } = params;
   const match = await getMatchByID(id);
 

@@ -7,11 +7,9 @@ import UpcomingMatches from './UpcomingMatches/UpcomingMatches';
 import CardWrapper from '../../../ui/card-wrapper/CardWrapper';
 import LoadingSpinner from '../../../ui/loading-spinner/LoadingSpinner';
 import { Suspense } from 'react';
-import { delay } from '../../../../lib/client';
-import { redirect } from 'next/navigation';
 
 async function getDashboardOverview() {
-  const token = cookies().get(process.env.TOKEN_NAME!);
+  const token = (await cookies()).get(process.env.TOKEN_NAME!);
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard`,

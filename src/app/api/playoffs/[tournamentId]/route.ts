@@ -4,10 +4,8 @@ import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
 import RoundModel from '../../../../features/rounds/models/Round';
 import MatchModel from '../../../../features/matches/models/Match';
 
-export async function GET(
-  request: Request,
-  { params }: { params: { tournamentId: string } }
-) {
+export async function GET(request: Request, props: { params: Promise<{ tournamentId: string }> }) {
+  const params = await props.params;
   const tournament_id = params.tournamentId;
   try {
     if (!mongoose.isValidObjectId(tournament_id)) {

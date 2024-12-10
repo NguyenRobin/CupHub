@@ -6,7 +6,8 @@ import { Types } from 'mongoose';
 
 import LoadingSpinner from '../../../../../components/ui/loading-spinner/LoadingSpinner';
 
-async function page({ params }: { params: { id: Types.ObjectId } }) {
+async function page(props: { params: Promise<{ id: Types.ObjectId }> }) {
+  const params = await props.params;
   const { id } = params;
 
   return (

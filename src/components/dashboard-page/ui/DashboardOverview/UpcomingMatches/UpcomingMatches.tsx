@@ -14,10 +14,6 @@ async function UpcomingMatches() {
 
   const { matches } = response;
 
-  if (!matches) {
-    return [];
-  }
-
   return (
     <Suspense fallback={<p>laddar</p>}>
       <CardWrapper>

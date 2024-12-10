@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import BracketGenerator from '../../../../features/rounds/components/ui/PlayoffView/PlayoffView';
 
 async function getPlayOffScheduleByTournament(id: string) {
-  const token = cookies().get(process.env.TOKEN_NAME!);
+  const token = (await cookies()).get(process.env.TOKEN_NAME!);
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/playoffs/${id}`,
@@ -23,7 +23,8 @@ async function getPlayOffScheduleByTournament(id: string) {
     console.log(error.message);
   }
 }
-async function page({ params }: { params: { id: string } }) {
+async function page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
   const data = await getPlayOffScheduleByTournament(id);
 

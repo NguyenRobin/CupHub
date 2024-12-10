@@ -5,7 +5,8 @@ import { Types } from 'mongoose';
 import LoadingSpinner from '../../../../../components/ui/loading-spinner/LoadingSpinner';
 import { getTournamentMatchesByID } from '../../../../../features/matches/server/actions/match';
 
-async function page({ params }: { params: { id: Types.ObjectId } }) {
+async function page(props: { params: Promise<{ id: Types.ObjectId }> }) {
+  const params = await props.params;
   const { id } = params;
 
   const response = await getTournamentMatchesByID(id);

@@ -6,17 +6,13 @@ import { getMatchesByStatus } from '../../../../../features/matches/server/actio
 import ListTournamentMatches from '../../../../../features/matches/components/ui/ListTournamentMatches/ListTournamentMatches';
 
 export default async function LiveMatches() {
-  let response = await getMatchesByStatus('ongoing', 3);
+  const response = await getMatchesByStatus('ongoing', 3);
 
   if (response.status !== 200) {
     return <p>{response.message}</p>;
   }
 
-  let { matches } = response;
-
-  if (!matches) {
-    return [];
-  }
+  const { matches } = response;
 
   return (
     <Suspense fallback={<p>laddar</p>}>

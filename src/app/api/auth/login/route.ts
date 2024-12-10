@@ -78,7 +78,7 @@ export async function POST(request: Request) {
 
         const token = createToken(userPayload);
         const oneDay = 24 * 60 * 60 * 1000;
-        const session = cookies().set(process.env.TOKEN_NAME!, token, {
+        const session = (await cookies()).set(process.env.TOKEN_NAME!, token, {
           httpOnly: true,
           path: '/',
           maxAge: 60 * 15,

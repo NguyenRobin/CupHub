@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server';
 import { updateMatchWinnerDB } from '../../../../../features/matches/server/db/match';
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
   try {
     const body = await request.json();

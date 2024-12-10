@@ -2,10 +2,8 @@ import { NextResponse } from 'next/server';
 import { Types } from 'mongoose';
 import { updateMatchStatus } from '../../../../../features/matches/server/actions/match';
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: { id: Types.ObjectId } }
-) {
+export async function PATCH(request: Request, props: { params: Promise<{ id: Types.ObjectId }> }) {
+  const params = await props.params;
   const match_id = params.id;
   try {
     const body = await request.json();

@@ -3,7 +3,8 @@ import Tournament from '../../../../../features/tournaments/components/ui/Tourna
 import { getTournamentGroupsById } from '../../../../actions';
 import { GiChampions } from 'react-icons/gi';
 
-async function page({ params }: { params: { id: string } }) {
+async function page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
 
   const { groups } = await getTournamentGroupsById(id);

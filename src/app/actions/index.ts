@@ -2,7 +2,7 @@ import { cookies, headers } from 'next/headers';
 
 export async function getUpcomingEvents() {
   // const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-  const token = cookies().get('AUTH_SESSION_TOKEN');
+  const token = (await cookies()).get('AUTH_SESSION_TOKEN');
   console.log(token);
 
   try {
@@ -29,7 +29,7 @@ export async function getUpcomingEvents() {
 }
 
 export async function getTournamentMatchesById(id: string) {
-  const token = cookies().get(process.env.TOKEN_NAME!);
+  const token = (await cookies()).get(process.env.TOKEN_NAME!);
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/tournaments/${id}/matches`,
@@ -52,7 +52,7 @@ export async function getTournamentMatchesById(id: string) {
 }
 
 export async function getTournamentById(id: string) {
-  const token = cookies().get(process.env.TOKEN_NAME!);
+  const token = (await cookies()).get(process.env.TOKEN_NAME!);
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/tournaments/${id}`,
@@ -75,7 +75,7 @@ export async function getTournamentById(id: string) {
 }
 
 export async function getTournamentGroupsById(id: string) {
-  const token = cookies().get(process.env.TOKEN_NAME!);
+  const token = (await cookies()).get(process.env.TOKEN_NAME!);
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/groups/${id}`,
@@ -98,7 +98,7 @@ export async function getTournamentGroupsById(id: string) {
 }
 
 export async function getTournamentPlayoffById(id: string) {
-  const token = cookies().get(process.env.TOKEN_NAME!);
+  const token = (await cookies()).get(process.env.TOKEN_NAME!);
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/playoffs/${id}`,
@@ -122,7 +122,7 @@ export async function getTournamentPlayoffById(id: string) {
 }
 
 export async function getMatchById(id: string) {
-  const token = cookies().get(process.env.TOKEN_NAME!);
+  const token = (await cookies()).get(process.env.TOKEN_NAME!);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/matches/${id}`,
     {

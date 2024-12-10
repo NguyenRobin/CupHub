@@ -60,7 +60,7 @@ export async function POST(request: Request) {
 
     const token = createToken(userPayload);
 
-    const session = cookies().set(process.env.TOKEN_NAME!, token, {
+    const session = (await cookies()).set(process.env.TOKEN_NAME!, token, {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',

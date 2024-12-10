@@ -14,8 +14,9 @@ const validProperties = [
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string; team_id: string } }
+  props: { params: Promise<{ id: string; team_id: string }> }
 ) {
+  const params = await props.params;
   const { id, team_id } = params;
 
   if (!mongoose.isValidObjectId(id) || !mongoose.isValidObjectId(team_id)) {
