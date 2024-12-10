@@ -68,6 +68,13 @@ function LoginForm() {
     fetchData();
   }, [router]);
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.refresh();
+      router.replace('/dashboard');
+    }
+  }, [isAuthenticated, router]);
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.type === 'text') {
       setUser(e.target.value);
@@ -117,9 +124,6 @@ function LoginForm() {
         setIsLoading(false);
         return;
       }
-
-      router.refresh();
-      router.push('/dashboard');
     } catch (error) {
       if (error instanceof z.ZodError) {
         const errorObj: TErrorMessages = {};
