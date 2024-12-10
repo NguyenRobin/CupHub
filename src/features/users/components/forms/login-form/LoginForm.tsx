@@ -52,11 +52,9 @@ function LoginForm() {
         }
 
         const data = await response.json();
-        console.log('useEffect', data);
+
         if (data.isAuthenticated) {
           setIsAuthenticated(true);
-          router.refresh();
-          router.replace('/dashboard');
         } else {
           setIsLoading(false);
         }
@@ -71,7 +69,7 @@ function LoginForm() {
   useEffect(() => {
     if (isAuthenticated) {
       router.refresh();
-      router.replace('/dashboard');
+      router.push('/dashboard');
     }
   }, [isAuthenticated, router]);
 
@@ -122,7 +120,6 @@ function LoginForm() {
         });
         setPassword('');
         setIsLoading(false);
-        return;
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
