@@ -25,13 +25,14 @@ import { TBodyTournament } from '../../../../types/types';
 import { createTournamentTeams } from '../../../teams/server/actions/teams';
 
 export async function createNewTournament(body: TBodyTournament) {
-  const token = getCookieFromServerComponent();
+  const token = await getCookieFromServerComponent();
 
+  console.log(token);
   if (!token) {
     return { status: 404, message: 'Cookie not provided' };
   }
 
-  const verifiedTokenCookie = verifyToken(token);
+  const verifiedTokenCookie = await verifyToken(token);
 
   if (!verifiedTokenCookie) {
     return {
@@ -193,7 +194,7 @@ export async function deleteTournamentById(id: Types.ObjectId) {
   if (!mongoose.isValidObjectId(id)) {
     return { status: 400, message: 'Invalid ID format. Must be a ObjectId' };
   }
-  
+
   await connectToMongoDB();
   const tournament = await deleteTournamentDB(id);
 

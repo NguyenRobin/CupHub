@@ -52,9 +52,7 @@ export function getCookieValue(request: Request) {
 }
 
 export async function getCookieFromServerComponent() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get(process.env.TOKEN_NAME as string)?.value;
-
+  const token = (await cookies()).get(process.env.TOKEN_NAME as string)?.value;
   return token;
 }
 
