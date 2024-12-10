@@ -56,8 +56,6 @@ function LoginForm() {
         if (data.isAuthenticated) {
           setIsAuthenticated(true);
           router.push('/dashboard');
-
-          console.log('isAuthenticated useEffect', isAuthenticated);
         } else {
           setIsLoading(false);
         }
@@ -115,8 +113,6 @@ function LoginForm() {
 
       if (data.isAuthenticated) {
         setIsAuthenticated(true);
-        console.log('isAuthenticated submit', isAuthenticated);
-
         router.push('/dashboard');
       } else {
         setErrorMessages({

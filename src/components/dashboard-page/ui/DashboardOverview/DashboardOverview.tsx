@@ -38,40 +38,42 @@ async function DashboardOverview() {
   const { tournaments, username } = overview?.data;
 
   return (
-    <section className="overview">
-      <section className="overview__welcome-text">
-        <Suspense fallback={<p>Loading USERNAME............</p>}>
-          <h1>Välkommen, {username}! 👋</h1>
-        </Suspense>
-      </section>
-
-      <section className="overview__widgets">
-        <Suspense fallback={<p>loading............</p>}>
-          <UpcomingEvents events={tournaments} />
-          <Suspense fallback={<p>loading EVENTSELECTOIN....</p>}>
-            <EventSelection />
+    <Suspense fallback={<p>Loading ALL DASHBORD CONTENT............🚀</p>}>
+      <section className="overview">
+        <section className="overview__welcome-text">
+          <Suspense fallback={<p>Loading USERNAME............</p>}>
+            <h1>Välkommen, {username}! 👋</h1>
           </Suspense>
+        </section>
 
-          <LiveMatches />
-          <Suspense fallback={<p>Loading UPCOMINGMATCHER............</p>}>
-            <UpcomingMatches />
+        <section className="overview__widgets">
+          <Suspense fallback={<p>loading............</p>}>
+            <UpcomingEvents events={tournaments} />
+            <Suspense fallback={<p>loading EVENTSELECTOIN....</p>}>
+              <EventSelection />
+            </Suspense>
+
+            <LiveMatches />
+            <Suspense fallback={<p>Loading UPCOMINGMATCHER............</p>}>
+              <UpcomingMatches />
+            </Suspense>
+
+            <CardWrapper>
+              <h1>Betalningar</h1>
+            </CardWrapper>
+            <CardWrapper>
+              <h1>Rekommenderade turneringar</h1>
+            </CardWrapper>
+            <CardWrapper>
+              <h1>Turneringens tabellställning</h1>
+            </CardWrapper>
+            <CardWrapper>
+              <h1>Nyheter och meddelanden</h1>
+            </CardWrapper>
           </Suspense>
-
-          <CardWrapper>
-            <h1>Betalningar</h1>
-          </CardWrapper>
-          <CardWrapper>
-            <h1>Rekommenderade turneringar</h1>
-          </CardWrapper>
-          <CardWrapper>
-            <h1>Turneringens tabellställning</h1>
-          </CardWrapper>
-          <CardWrapper>
-            <h1>Nyheter och meddelanden</h1>
-          </CardWrapper>
-        </Suspense>
+        </section>
       </section>
-    </section>
+    </Suspense>
   );
 }
 
