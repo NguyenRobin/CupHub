@@ -67,6 +67,13 @@ function LoginForm() {
   //   fetchData();
   // }, [router, isAuthenticated]);
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.refresh();
+      router.push('/dashboard');
+    }
+  }, [isAuthenticated, router]);
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.type === 'text') {
       setUser(e.target.value);
@@ -107,8 +114,6 @@ function LoginForm() {
 
       if (data.isAuthenticated) {
         setIsAuthenticated(true);
-        router.refresh();
-        router.replace('/dashboard');
       } else {
         setErrorMessages({
           username: data.message,

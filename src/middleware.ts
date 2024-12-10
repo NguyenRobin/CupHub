@@ -14,14 +14,13 @@ export async function middleware(request: NextRequest) {
   const sessionToken = request.cookies.get(sessionCookie!)?.value;
   const url = request.nextUrl.pathname;
 
-  console.log('------>', url, '+', sessionToken, '<------');
+  // console.log('------>', url, '+', sessionToken, '<------');
 
   if (url === '/login' && !sessionToken) {
     return NextResponse.next();
   }
 
   if (url === '/login' && sessionToken) {
-    console.log('hej');
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token`,
       {
@@ -45,7 +44,6 @@ export async function middleware(request: NextRequest) {
     url.startsWith('/api/checkout_sessions') ||
     url.startsWith('/api/session_status')
   ) {
-    console.log('checkout_sessions');
     return NextResponse.next();
   }
 
@@ -53,12 +51,10 @@ export async function middleware(request: NextRequest) {
     (url.startsWith('/api/auth/signup') || url.startsWith('/api/auth/login')) &&
     !sessionToken
   ) {
-    console.log('signup');
     return NextResponse.next();
   }
 
   if (sessionToken) {
-    console.log('sessionToken');
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token`,
       {
