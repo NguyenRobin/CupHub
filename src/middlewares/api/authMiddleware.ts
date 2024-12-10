@@ -16,6 +16,7 @@ export async function authMiddleware(
 
   try {
     const isValid = await verifyTokenByJose(token);
+
     if (!isValid) {
       console.warn('Invalid token, redirecting to /login');
       return NextResponse.redirect(new URL('/login', request.url));

@@ -47,14 +47,15 @@ async function DashboardOverview() {
         </section>
 
         <section className="overview__widgets">
-          <Suspense fallback={<p>loading............</p>}>
+          <Suspense fallback={<p>LOADING OVERVIEW............</p>}>
             <UpcomingEvents events={tournaments} />
-            <Suspense fallback={<p>loading EVENTSELECTOIN....</p>}>
-              <EventSelection />
+            <EventSelection />
+
+            <Suspense fallback={<p>loading LiveMatches....</p>}>
+              <LiveMatches />
             </Suspense>
 
-            <LiveMatches />
-            <Suspense fallback={<p>Loading UPCOMINGMATCHER............</p>}>
+            <Suspense fallback={<p>Loading UpcomingMatches............</p>}>
               <UpcomingMatches />
             </Suspense>
 

@@ -45,22 +45,25 @@ function LoginForm() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token`,
+          {
+            cache: 'no-cache',
+          }
         );
-        if (!response.ok) {
-          return;
-        }
 
         const data = await response.json();
+        console.log('Token validation response:', data); // Lägg till detta
 
         if (data.isAuthenticated) {
           setIsAuthenticated(true);
+          router.refresh();
           router.push('/dashboard');
         } else {
           setIsLoading(false);
         }
       } catch (error) {
         console.error('Error validating token:', error);
+        setIsLoading(false);
       }
     };
 
@@ -68,10 +71,9 @@ function LoginForm() {
   }, [router, isAuthenticated]);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/dashboard');
-    }
-  }, [isAuthenticated, router]);
+    // Prefetch the dashboard page
+    router.prefetch('/dashboard');
+  }, [router]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.type === 'text') {
@@ -102,6 +104,7 @@ function LoginForm() {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
         {
+          cache: 'no-cache',
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(submitFormBody),
@@ -109,10 +112,11 @@ function LoginForm() {
       );
 
       const data = await response.json();
-      console.log(data);
+      console.log('Login response:', data);
 
       if (data.isAuthenticated) {
         setIsAuthenticated(true);
+        router.refresh();
         router.push('/dashboard');
       } else {
         setErrorMessages({
