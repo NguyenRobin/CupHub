@@ -3,6 +3,7 @@ import {
   authApiMiddleware,
   authMiddleware,
 } from './middlewares/api/authMiddleware';
+import connectToMongoDB from './mongoose/connectToMongoDB';
 
 if (process.env.TOKEN_NAME === undefined) {
   throw new Error('process.env.TOKEN_NAME NOT defined');
@@ -13,6 +14,8 @@ export async function middleware(request: NextRequest) {
   const token = request.cookies.get(TOKEN_NAME!)?.value ?? undefined;
 
   console.log('------>', request.nextUrl.pathname, '+', token, '<------');
+
+  await connectToMongoDB();
 
   if (
     request.nextUrl.pathname.startsWith('/api/checkout_sessions') ||
