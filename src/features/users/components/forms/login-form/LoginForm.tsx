@@ -36,9 +36,17 @@ type TErrorMessages = {
 function LoginForm() {
   const [errorMessages, setErrorMessages] = useState<TErrorMessages>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState('DemoUser');
   const [password, setPassword] = useState('Demo123');
   const router = useRouter();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/dashboard');
+      router.refresh();
+    }
+  }, [isAuthenticated, router]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.type === 'text') {
@@ -52,7 +60,6 @@ function LoginForm() {
     event.preventDefault();
 
     setIsLoading(true);
-    setErrorMessages({});
 
     const submitFormBody: TSubmitFormBody = {
       password: password,
@@ -65,7 +72,7 @@ function LoginForm() {
     }
 
     try {
-      SubmitFormSchema.parse(submitFormBody); // zod-validation
+      SubmitFormSchema.parse(submitFormBody); // z validation if any error occurred we skip the rest of the code and goe to catch bloc
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
@@ -79,24 +86,26 @@ function LoginForm() {
       const data = await response.json();
 
       if (data.isAuthenticated) {
-        router.push('/dashboard');
+        setIsAuthenticated(true);
       } else {
         setErrorMessages({
           username: data.message,
           email: data.message,
         });
         setPassword('');
+        setIsLoading(false);
       }
+      setIsLoading(false);
     } catch (error) {
       if (error instanceof z.ZodError) {
         const errorObj: TErrorMessages = {};
-        error.issues.forEach((issue) => {
-          errorObj[issue.path[0] as keyof TErrorMessages] = issue.message;
+        error.issues.forEach((error) => {
+          errorObj[error.path[0] as keyof TErrorMessages] = error.message;
         });
+
         setErrorMessages(errorObj);
+        setIsLoading(false);
       }
-    } finally {
-      setIsLoading(false);
     }
   }
 
@@ -104,42 +113,60 @@ function LoginForm() {
     <div className="login">
       <NavBar />
 
-      <div className="login__container">
-        <div className="login__heading">
-          <h2>Logga in</h2>
-          <p>
-            Har du inget konto? <Link href="/signup">Skapa konto</Link>
-          </p>
+      {isAuthenticated ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center',
+            height: '100%',
+            gap: '4rem',
+          }}
+        >
+          <LoadingSpinner size={40} />
+          {isAuthenticated && (
+            <p style={{ color: 'var(--color-text-tertiary)' }}>Loggar in...</p>
+          )}
         </div>
+      ) : (
+        <div className="login__container">
+          <div className="login__heading">
+            <h2>Logga in</h2>
+            <p>
+              Har du inget konto? <Link href="/signup">Skapa konto</Link>
+            </p>
+          </div>
 
-        <form className="login__form" onSubmit={(e) => handleSubmit(e)}>
-          <AuthInput
-            htmlFor="text"
-            labelText="E-post/Användarnamn"
-            type="text"
-            name="text"
-            placeholder="användarnamn"
-            errorMessage={errorMessages.email || errorMessages.username || ''}
-            onChange={handleOnChange}
-            value={user}
-          />
+          <form className="login__form" onSubmit={(e) => handleSubmit(e)}>
+            <AuthInput
+              htmlFor="text"
+              labelText="E-post/Användarnamn"
+              type="text"
+              name="text"
+              placeholder="användarnamn"
+              errorMessage={errorMessages.email || errorMessages.username || ''}
+              onChange={handleOnChange}
+              value={user}
+            />
 
-          <AuthInput
-            htmlFor="password"
-            labelText="Lösenord"
-            type="password"
-            name="password"
-            placeholder="******"
-            errorMessage={errorMessages.password || ''}
-            onChange={handleOnChange}
-            value={password}
-          />
+            <AuthInput
+              htmlFor="password"
+              labelText="Lösenord"
+              type="password"
+              name="password"
+              placeholder="******"
+              errorMessage={errorMessages.password || ''}
+              onChange={handleOnChange}
+              value={password}
+            />
 
-          <button disabled={isLoading} className="login__button">
-            {isLoading ? <LoadingSpinner /> : 'Logga in'}
-          </button>
-        </form>
-      </div>
+            <button disabled={isLoading} className="login__button">
+              {isLoading ? <LoadingSpinner /> : 'Logga in'}
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }
