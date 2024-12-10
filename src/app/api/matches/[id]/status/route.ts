@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server';
 import { Types } from 'mongoose';
 import { updateMatchStatus } from '../../../../../features/matches/server/actions/match';
+import connectToMongoDB from '../../../../../mongoose/connectToMongoDB';
 
-export async function PATCH(request: Request, props: { params: Promise<{ id: Types.ObjectId }> }) {
+export async function PATCH(
+  request: Request,
+  props: { params: Promise<{ id: Types.ObjectId }> }
+) {
   const params = await props.params;
   const match_id = params.id;
   try {
@@ -15,6 +19,7 @@ export async function PATCH(request: Request, props: { params: Promise<{ id: Typ
         message: 'body must include "status"',
       });
     }
+    await connectToMongoDB();
 
     const updatedMatchStatusResponse = await updateMatchStatus(
       match_id,

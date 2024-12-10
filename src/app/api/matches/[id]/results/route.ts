@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
 import { updateMatchResultDB } from '../../../../../features/matches/server/db/match';
+import connectToMongoDB from '../../../../../mongoose/connectToMongoDB';
 
-export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+export async function PATCH(
+  request: Request,
+  props: { params: Promise<{ id: string }> }
+) {
   const params = await props.params;
   try {
     const body = await request.json();
@@ -13,6 +17,7 @@ export async function PATCH(request: Request, props: { params: Promise<{ id: str
         message: 'body must include "result"',
       });
     }
+    await connectToMongoDB();
 
     const updatedMatchResults = await updateMatchResultDB(params.id, result);
 

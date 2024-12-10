@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server';
 import { updateMatchTeamScore } from '../../../../../features/matches/server/actions/match';
 import { Types } from 'mongoose';
+import connectToMongoDB from '../../../../../mongoose/connectToMongoDB';
 
-export async function PATCH(request: Request, props: { params: Promise<{ id: Types.ObjectId }> }) {
+export async function PATCH(
+  request: Request,
+  props: { params: Promise<{ id: Types.ObjectId }> }
+) {
   const params = await props.params;
   const { id } = params;
   try {
@@ -19,6 +23,8 @@ export async function PATCH(request: Request, props: { params: Promise<{ id: Typ
 
     const teamWhoScored = homeTeam ? 'homeTeam' : 'awayTeam';
     const point = homeTeam ? homeTeam : awayTeam;
+
+    await connectToMongoDB();
 
     const response = await updateMatchTeamScore(
       id,

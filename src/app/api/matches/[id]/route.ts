@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server';
 import { getMatchDB } from '../../../../features/matches/server/db/match';
 import { Types } from 'mongoose';
+import connectToMongoDB from '../../../../mongoose/connectToMongoDB';
 
-export async function GET(request: Request, props: { params: Promise<{ id: Types.ObjectId }> }) {
+export async function GET(
+  request: Request,
+  props: { params: Promise<{ id: Types.ObjectId }> }
+) {
   const params = await props.params;
   const { id } = params;
   try {
-    console.log(params.id);
+    await connectToMongoDB();
     const match = await getMatchDB(id);
 
     if (!match) {

@@ -15,25 +15,23 @@ export default async function LiveMatches() {
   const { matches } = response;
 
   return (
-    <Suspense fallback={<p>laddar</p>}>
-      <CardWrapper>
-        <section className="live-matches__title">
-          <RiLiveLine />
-          <h2>Pågående matcher</h2>
-        </section>
+    <CardWrapper>
+      <section className="live-matches__title">
+        <RiLiveLine />
+        <h2>Pågående matcher</h2>
+      </section>
 
-        <section className="live-matches__ongoing">
-          {!matches.length ? (
-            <p>Inga pågående live matcher.</p>
-          ) : (
-            <ListTournamentMatches matches={matches} />
-          )}
-        </section>
+      <section className="live-matches__ongoing">
+        {!matches.length ? (
+          <p>Inga pågående live matcher.</p>
+        ) : (
+          <ListTournamentMatches matches={matches} />
+        )}
+      </section>
 
-        <section className="">
-          {/* <ListTournamentMatches matches={matches} /> */}
-        </section>
-      </CardWrapper>
-    </Suspense>
+      <section className="">
+        {/* <ListTournamentMatches matches={matches} /> */}
+      </section>
+    </CardWrapper>
   );
 }

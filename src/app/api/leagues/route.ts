@@ -3,9 +3,12 @@ import { getCookieValue, verifyToken } from '../../../lib/server';
 import { TCreateLeague } from '../../../types/types';
 
 import { createNewLeague } from '../../../features/leagues/server/actions/league';
+import connectToMongoDB from '../../../mongoose/connectToMongoDB';
 
 export async function POST(request: Request) {
   try {
+    await connectToMongoDB();
+
     const body: TCreateLeague = await request.json();
 
     const newLeague = await createNewLeague(body);

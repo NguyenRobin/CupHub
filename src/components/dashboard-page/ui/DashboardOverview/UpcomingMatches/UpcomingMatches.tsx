@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import CardWrapper from '../../../../ui/card-wrapper/CardWrapper';
 import './UpcomingMatches.scss';
 import { LuCalendarClock } from 'react-icons/lu';
@@ -15,22 +15,20 @@ async function UpcomingMatches() {
   const { matches } = response;
 
   return (
-    <Suspense fallback={<p>laddar</p>}>
-      <CardWrapper>
-        <section className="upcoming-matches__title">
-          <LuCalendarClock />
-          <h2>Kommande matcher</h2>
-        </section>
-        <section className="upcoming-matches__scheduled">
-          {!matches?.length ? (
-            <p>Inga kommande matcher.</p>
-          ) : (
-            <ListTournamentMatches matches={matches} />
-          )}
-        </section>
-        <section className=""></section>
-      </CardWrapper>
-    </Suspense>
+    <CardWrapper>
+      <section className="upcoming-matches__title">
+        <LuCalendarClock />
+        <h2>Kommande matcher</h2>
+      </section>
+      <section className="upcoming-matches__scheduled">
+        {!matches?.length ? (
+          <p>Inga kommande matcher.</p>
+        ) : (
+          <ListTournamentMatches matches={matches} />
+        )}
+      </section>
+      <section className=""></section>
+    </CardWrapper>
   );
 }
 

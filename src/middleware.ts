@@ -15,8 +15,6 @@ export async function middleware(request: NextRequest) {
 
   console.log('------>', request.nextUrl.pathname, '+', token, '<------');
 
-  await connectToMongoDB();
-
   if (
     request.nextUrl.pathname.startsWith('/api/checkout_sessions') ||
     request.nextUrl.pathname.startsWith('/api/session_status')
