@@ -5,11 +5,7 @@ import { LuCalendarClock } from 'react-icons/lu';
 import { getMatchesByStatus } from '../../../../../features/matches/server/actions/match';
 import ListTournamentMatches from '../../../../../features/matches/components/ui/ListTournamentMatches/ListTournamentMatches';
 
-async function UpcomingMatches() {
-  const response = await getMatchesByStatus('scheduled', 3);
-  console.log('from UpcomingMatches', response);
-  const { matches } = response;
-
+async function UpcomingMatches({ matches }: any) {
   return (
     <CardWrapper>
       <section className="upcoming-matches__title">
@@ -23,7 +19,6 @@ async function UpcomingMatches() {
           <ListTournamentMatches matches={matches} />
         )}
       </section>
-      <section className=""></section>
     </CardWrapper>
   );
 }

@@ -5,11 +5,7 @@ import './LiveMatches.scss';
 import { getMatchesByStatus } from '../../../../../features/matches/server/actions/match';
 import ListTournamentMatches from '../../../../../features/matches/components/ui/ListTournamentMatches/ListTournamentMatches';
 
-export default async function LiveMatches() {
-  const response = await getMatchesByStatus('ongoing', 3);
-  console.log('from LiveMatches', response);
-  const { matches } = response;
-
+export default async function LiveMatches({ matches }: any) {
   return (
     <CardWrapper>
       <section className="live-matches__title">
@@ -23,10 +19,6 @@ export default async function LiveMatches() {
         ) : (
           <ListTournamentMatches matches={matches} />
         )}
-      </section>
-
-      <section className="">
-        {/* <ListTournamentMatches matches={matches} /> */}
       </section>
     </CardWrapper>
   );

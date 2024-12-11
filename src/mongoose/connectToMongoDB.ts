@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 declare global {
   var mongoose: any; // This must be a `var` and not a `let / const`
 }
@@ -7,36 +7,37 @@ const MONGODB_URI = process.env.MONGODB_URI as string;
 
 if (!MONGODB_URI) {
   throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
+    'Please define the MONGODB_URI environment variable inside .env.local'
   );
 }
 
-// create one connection then use it everywhere instead of creating a connection everytime
+if (!MONGODB_URI) {
+  throw new Error('Please define the MONGODB_URI environment variable');
+}
+
 let cached = global.mongoose;
 
 if (!cached) {
-  cached = global.mongoose = { connection: null, promise: null };
+  cached = global.mongoose = { conn: null, promise: null };
 }
 
 async function connectToMongoDB() {
-  if (cached.connection) {
-    // if we already is connected we want to return that connection
-    return cached.connection;
+  if (cached.conn) {
+    return cached.conn;
   }
+
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
     };
-    // cached.promise = await mongoose.connect(MONGODB_URI, opts);
-    cached.promise = await mongoose.connect(MONGODB_URI, opts);
+
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      return mongoose;
+    });
   }
-  try {
-    cached.connection = await cached.promise;
-  } catch (error) {
-    cached.promise = null;
-    throw error;
-  }
-  return cached.connection;
+
+  cached.conn = await cached.promise;
+  return cached.conn;
 }
 
 export default connectToMongoDB;
