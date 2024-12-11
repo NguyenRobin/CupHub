@@ -49,7 +49,7 @@ async function DashboardOverview() {
 
             <LiveMatches />
 
-            <UpcomingMatches />
+            {/* <UpcomingMatches /> */}
 
             <CardWrapper>
               <h1>Betalningar</h1>
