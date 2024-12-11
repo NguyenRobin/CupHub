@@ -85,7 +85,7 @@ export async function updateMatchTeamScore(
       };
       break;
     default:
-      throw new Error('Invalid operator');
+      return;
   }
 
   if (match[team].score < 0) {

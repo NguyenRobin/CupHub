@@ -1,7 +1,7 @@
 import React from 'react';
 
 function LoadingWrapper() {
-  return <div>BEFORE RENDERING LOADING</div>;
+  return <div>DASHBOARD loading.tsx file</div>;
 }
 
 export default LoadingWrapper;

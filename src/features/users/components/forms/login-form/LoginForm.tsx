@@ -162,7 +162,11 @@ function LoginForm() {
             />
 
             <button disabled={isLoading} className="login__button">
-              {isLoading ? <LoadingSpinner /> : 'Logga in'}
+              {isLoading ? (
+                <LoadingSpinner color="#fff" size={15} />
+              ) : (
+                'Logga in'
+              )}
             </button>
           </form>
         </div>

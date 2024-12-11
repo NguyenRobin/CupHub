@@ -2,8 +2,7 @@ import { cookies, headers } from 'next/headers';
 
 export async function getUpcomingEvents() {
   // const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-  const token = (await cookies()).get('AUTH_SESSION_TOKEN');
-  console.log(token);
+  const token = (await cookies()).get(process.env.TOKEN_NAME!);
 
   try {
     const response = await fetch(
@@ -16,10 +15,6 @@ export async function getUpcomingEvents() {
         },
       }
     );
-
-    if (!response.ok) {
-      throw new Error(`Error: ${response.statusText}`);
-    }
 
     const data = await response.json();
     return data;
@@ -133,10 +128,6 @@ export async function getMatchById(id: string) {
       },
     }
   );
-
-  if (!response.ok) {
-    throw new Error('Match not found');
-  }
 
   const data = await response.json();
   return data;
