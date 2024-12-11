@@ -612,7 +612,7 @@ export async function getMatchesByStatus(status: TStatus, amount: number) {
   const matches = await getMatchesByStatusDB(status, amount);
 
   if (!matches) {
-    return { status: 404, message: 'No matches found by status' };
+    return { status: 404, message: 'No matches found by status', matches: [] };
   }
 
   return { status: 200, matches: matches };

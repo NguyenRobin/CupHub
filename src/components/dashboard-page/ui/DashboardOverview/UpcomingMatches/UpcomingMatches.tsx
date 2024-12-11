@@ -7,11 +7,7 @@ import ListTournamentMatches from '../../../../../features/matches/components/ui
 
 async function UpcomingMatches() {
   const response = await getMatchesByStatus('scheduled', 3);
-
-  if (response.status !== 200) {
-    return <p>{response.message}</p>;
-  }
-
+  console.log('from UpcomingMatches', response);
   const { matches } = response;
 
   return (

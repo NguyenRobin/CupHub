@@ -22,7 +22,6 @@ async function getDashboardOverview() {
   );
 
   const data = await response.json();
-  console.log(data);
   return data;
 }
 
@@ -48,13 +47,9 @@ async function DashboardOverview() {
             <UpcomingEvents events={tournaments} />
             <EventSelection />
 
-            {/* <Suspense fallback={<p>loading LiveMatches....</p>}>
-              <LiveMatches />
-            </Suspense>
+            <LiveMatches />
 
-            <Suspense fallback={<p>Loading UpcomingMatches............</p>}>
-              <UpcomingMatches />
-            </Suspense> */}
+            <UpcomingMatches />
 
             <CardWrapper>
               <h1>Betalningar</h1>

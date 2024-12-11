@@ -7,11 +7,7 @@ import ListTournamentMatches from '../../../../../features/matches/components/ui
 
 export default async function LiveMatches() {
   const response = await getMatchesByStatus('ongoing', 3);
-
-  if (response.status !== 200) {
-    return <p>{response.message}</p>;
-  }
-
+  console.log('from LiveMatches', response);
   const { matches } = response;
 
   return (
