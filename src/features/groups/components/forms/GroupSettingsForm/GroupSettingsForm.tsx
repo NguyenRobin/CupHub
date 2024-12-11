@@ -37,7 +37,27 @@ function GroupSettingsForm() {
     }
   }
   return (
-    <FormSettingsWrapper title="Gruppspelsinställningar">
+    <FormSettingsWrapper
+      title="Gruppspelsinställningar"
+      btn={
+        <div className="group-settings__buttons">
+          <button
+            className="group-settings__buttons--back"
+            onClick={handleBack}
+          >
+            <IoIosArrowRoundBack size={25} />
+            Tillbaka
+          </button>
+          <button
+            className="group-settings__buttons--next"
+            onClick={handleNext}
+          >
+            Nästa
+            <IoIosArrowRoundForward size={25} />
+          </button>
+        </div>
+      }
+    >
       <div className="group-settings">
         <form
           onSubmit={handleOnSubmit}
@@ -110,23 +130,6 @@ function GroupSettingsForm() {
             </section>
           </label>
         </form>
-
-        <div className="group-settings__buttons">
-          <button
-            className="group-settings__buttons--back"
-            onClick={handleBack}
-          >
-            <IoIosArrowRoundBack size={25} />
-            Tillbaka
-          </button>
-          <button
-            className="group-settings__buttons--next"
-            onClick={handleNext}
-          >
-            Nästa
-            <IoIosArrowRoundForward size={25} />
-          </button>
-        </div>
       </div>
     </FormSettingsWrapper>
   );

@@ -8,11 +8,17 @@ function TournamentInfoForm() {
   const { description, name, startDate, endDate, setPage, handleOnChange } =
     useFormContext();
 
-  const handlePrev = () => setPage((prev) => prev - 1);
   const handleNext = () => setPage((prev) => prev + 1);
 
   return (
-    <FormSettingsWrapper title="Information">
+    <FormSettingsWrapper
+      title="Information"
+      btn={
+        <button className="tournament-info__btn" onClick={handleNext}>
+          Nästa
+        </button>
+      }
+    >
       <div className="tournament-info">
         <form className="tournament-info__form">
           <label htmlFor="title" className="tournament-info__form--label">
@@ -59,12 +65,6 @@ function TournamentInfoForm() {
             />
           </label>
         </form>
-
-        {/* <div> */}
-        <button className="tournament-info__btn" onClick={handleNext}>
-          Nästa
-        </button>
-        {/* </div> */}
       </div>
     </FormSettingsWrapper>
   );

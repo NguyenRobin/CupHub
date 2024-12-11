@@ -92,7 +92,7 @@ function AddTeamForm() {
       setIsLoading(false);
       router.push(`/dashboard/tournaments/${result.tournament._id}/overview`);
     } else {
-      window.alert('Testa igen');
+      window.alert('Du missade fylla i namn och datum');
       setIsLoading(false);
     }
   };
