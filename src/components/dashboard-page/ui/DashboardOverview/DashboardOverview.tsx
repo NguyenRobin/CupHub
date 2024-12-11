@@ -20,9 +20,7 @@ async function getDashboardOverview() {
       },
     }
   );
-  if (!response.ok) {
-    return { status: 500, message: 'Problem getting data..' };
-  }
+
   const data = await response.json();
   console.log(data);
   return data;
@@ -50,13 +48,13 @@ async function DashboardOverview() {
             <UpcomingEvents events={tournaments} />
             <EventSelection />
 
-            <Suspense fallback={<p>loading LiveMatches....</p>}>
+            {/* <Suspense fallback={<p>loading LiveMatches....</p>}>
               <LiveMatches />
             </Suspense>
 
             <Suspense fallback={<p>Loading UpcomingMatches............</p>}>
               <UpcomingMatches />
-            </Suspense>
+            </Suspense> */}
 
             <CardWrapper>
               <h1>Betalningar</h1>
