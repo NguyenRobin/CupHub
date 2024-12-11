@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
         },
       ],
       ui_mode: 'embedded',
-      return_url: `http://localhost:3000/checkout?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${process.env.NEXT_PUBLIC_API_URL}/checkout?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     return NextResponse.json({

@@ -172,5 +172,6 @@ export async function getMatchesByStatusDB(status: TStatus, amount?: number) {
     query = query.limit(amount);
   }
   const matches = await query;
+
   return matches;
 }
