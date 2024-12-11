@@ -27,19 +27,12 @@ async function getDashboardOverview() {
 }
 
 async function DashboardOverview() {
-  // const results = await Promise.allSettled([
-  //   getDashboardOverview(),
-  //   getMatchesByStatus('ongoing', 3),
-  //   getMatchesByStatus('scheduled', 3),
-  // ]);
   const overview = await getDashboardOverview();
 
   const results = await Promise.allSettled([
     getMatchesByStatus('ongoing', 3),
     getMatchesByStatus('scheduled', 3),
   ]);
-
-  console.log(results);
 
   const ongoingMatches =
     results[0].status === 'fulfilled' ? results[0].value : { matches: [] };
