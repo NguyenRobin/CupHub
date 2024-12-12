@@ -584,15 +584,25 @@ export async function getTournamentPlayoffByID(id: Types.ObjectId) {
     return { status: 400, message: 'Matches for the tournament was not found' };
   }
 
-  console.log(matches);
-
+  const correctOrderByRound = [
+    'round-32',
+    'round-16',
+    'quarterfinal',
+    'semifinal',
+    'final',
+  ];
   const playoffRounds = [...new Set(matches.map((match) => match.round_type))];
 
+  const correctSortedOrderByRound: string[] = correctOrderByRound.filter(
+    (round) => playoffRounds.includes(round)
+  );
+
+  // console.log(matches);
   const playoff: TPlayoff[] = [];
 
-  console.log(playoffRounds);
+  // console.log(playoffRounds);
 
-  for (let i = 0; i < playoffRounds.length; i++) {
+  for (let i = 0; i < correctSortedOrderByRound.length; i++) {
     const obj: TPlayoff = {
       round: playoffRounds[i],
       matches: matches

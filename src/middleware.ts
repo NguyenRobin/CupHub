@@ -3,6 +3,7 @@ import {
   authApiMiddleware,
   authMiddleware,
 } from './middlewares/api/authMiddleware';
+import { verifyTokenByJose } from './lib/client';
 
 if (process.env.TOKEN_NAME === undefined) {
   throw new Error('process.env.TOKEN_NAME NOT defined');
@@ -14,7 +15,7 @@ export async function middleware(request: NextRequest) {
   const sessionToken = request.cookies.get(sessionCookie!)?.value;
   const url = request.nextUrl.pathname;
 
-  // console.log('------>', url, '+', sessionToken, '<------');
+  console.log('------>', url, '+', sessionToken, '<------');
 
   if (url === '/login' && !sessionToken) {
     return NextResponse.next();
@@ -55,19 +56,22 @@ export async function middleware(request: NextRequest) {
   }
 
   if (sessionToken) {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token`,
-      {
-        headers: {
-          Cookie: `${sessionCookie}=${sessionToken};`,
-        },
-      }
-    );
-    const data = await response.json();
+    const isAuthenticated = await verifyTokenByJose(sessionToken);
+    console.log(isAuthenticated?.id);
+    // const response = await fetch(
+    //   `${process.env.NEXT_PUBLIC_API_URL}/api/auth/token`,
+    //   {
+    //     headers: {
+    //       Cookie: `${sessionCookie}=${sessionToken};`,
+    //     },
+    //   }
+    // );
+    // const data = await response.json();
 
-    const { isAuthenticated } = data;
+    // const { isAuthenticated } = data;
 
-    if (isAuthenticated) {
+    if (isAuthenticated?.id) {
+      // if (isAuthenticated) {
       return NextResponse.next();
     } else {
       return NextResponse.redirect(new URL('/login', request.url));

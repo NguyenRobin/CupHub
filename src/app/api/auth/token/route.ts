@@ -3,6 +3,7 @@ import { isAuthenticated } from '../../../../lib/server';
 import { cookies } from 'next/headers';
 
 export async function GET(request: NextRequest) {
+  console.log(request.url);
   const sessionCookie = (await cookies()).get(process.env.TOKEN_NAME!);
   const sessionToken = sessionCookie?.value;
   const isAuth = isAuthenticated(sessionToken!);
